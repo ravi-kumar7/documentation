@@ -11,3 +11,8 @@ Developers can use this to build loan application journeys, wealth management ap
 ::: tip Try Bank Connect
 Click [here](https://finbox.in/contact-us) to contact us and request for an API key
 :::
+
+## Getting started
+Head towards [Basics](/bank-connect/basics.html) to understand the standard terms, then proceed to your preferred client library:
+- [REST API](/bank-connect/rest-api)
+- [Python](/bank-connect/python)

@@ -27,23 +27,19 @@ module.exports = {
              ]
            },
            {
-             title: 'REST API',
-             path: '/rest',
+             title: 'API Reference',
              collapsable: false,
-             sidebarDepth: 2,
              children: [
-               '/'
+               {
+                 title: 'REST API',
+                 path: '/bank-connect/rest-api.html'
+               },
+               {
+                 title: 'Python',
+                 path: '/bank-connect/python.html'
+               }
              ]
-           },
-           {
-             title: 'Python',
-             path: '/bank-connect/python.html',
-             collapsable: false,
-             sidebarDepth: 2,
-             children: [
-               '/'
-             ]
-           },
+           }
          ]
        }
    }
