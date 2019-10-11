@@ -120,5 +120,11 @@ On successful fetching, the API gives a **200 HTTP code** with following respons
 `progress_data` here contains the list of objects, each having `entity_id`, `months` and `bank`. `months` holds list of month and year for which data is available for the given entity. `bank` and `months` are `null` and `[]` respectively if no statement were uploaded / processed under that entity.
 
 
-## Uploading Statement specifying bank name
-In case you already know the bank name, then you can use this API to upload a bank statement pdf specifying the bank name.
+## Uploading Statement
+In case you already know the bank name, then you can use the API below to upload a bank statement pdf specifying the bank name.
+
+WIP
+
+In case you don't know bank name, and wants us to identify the bank name automatically use the API below.
+
+WIP
