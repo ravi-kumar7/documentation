@@ -33,6 +33,6 @@ footer: Copyright © 2019 Moshpit Technologies Pvt. Ltd.
 }
 </style>
 <p class="finbox-buttons">
-  <a href="/bank-connect/" class="action-button green">Bank Connect SDK→</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <a href="/device-connect/" class="action-button blue">Device Connect SDK→</a>
+  <a href="bank-connect/" class="action-button green">Bank Connect SDK→</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <a href="device-connect/" class="action-button blue">Device Connect SDK→</a>
 </p>
