@@ -228,12 +228,12 @@ Sample error response:
 It is to be noted that even though an error is thrown, an entity for the statement upload is created (if `entity_id` was not specified in the request) and `entity_id` is hence always given in response.
 :::
 
-## Progress
-When a statement is uploaded, identity information and basic fraud checks happen at the same time. However other statement analysis, like transaction extraction, salary, recurring transactions, advanced fraud checks, enrichment happen asynchronously. Hence all the GET APIs for these **analysis parameters** have a `progress` field. You can track the progress of a statement uploaded using this.
+## Progress Field
+When a statement is uploaded, identity information and basic fraud checks happen at the same time. However other statement analysis, like transaction extraction, salary, recurring transactions, advanced fraud checks, enrichment happen asynchronously. Hence all the GET APIs for these **analysis fields** have a `progress` field. You can track the progress of a statement uploaded using this.
 
 `progress` is an array of objects. Each object represents a statement, it has `status` field that can be `processing`, `completed` or `failed` and `statement_id` field which identifies a statement uniquely.
 
-Sample progress value:
+Sample `progress` value:
 ```json
 [
   {
@@ -254,3 +254,80 @@ A general rule of thumb would be to make sure all objects in the `progress` fiel
 
 Also this progress `status` gets changed only when all analysis is `completed`, hence if you have all statement as `completed`, and no upload has happened to the same entity in meantime, you can fetch all other analysis APIs directly without having to worry about the progress.
 :::
+
+## Fraud Field
+In all of the analysis field APIs (transaction, accounts, etc.), there is always a field `fraud`, that holds two fields `fraudulent_statements` (array of `statement_id`s which have some sort detected after analysis or in first basic check) and `fraud_type` (array of objects having `statement_id` and `fraud_type` indicating fraud of which type was found for which statement).
+
+To know more about `fraud_type`, refer to [Fraud](/bank-connect/basics.html#fraud) section in Basics.
+
+Sample `fraud` field value:
+```json
+{
+    "fraudulent_statements": [
+        "uuid4_for_statement"
+    ],
+    "fraud_type": [
+        {
+            "statement_id": "uuid4_for_statement",
+            "fraud_type": "some_fraud_type"
+        }
+    ]
+}
+```
+
+
+## List Accounts
+Lists accounts under a given entity.
+
+### Endpoint
+
+::: tip
+GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/`<entity_id>`/accounts/**
+:::
+
+### Response
+On fetching information successfully, the response would be of the following format with **200 HTTP code**:
+```json
+{
+    "entity_id": "uuid4_for_entity",
+    "progress": [
+        {
+            "status": "completed",
+            "message": null,
+            "statement_id": "uuid4_for_statement"
+        }
+    ],
+    "accounts": [
+        {
+            "months": [
+                "2018-11",
+                "2018-12",
+                "2019-01"
+            ],
+            "statements": [
+                "uuid4_for_statement"
+            ],
+            "account_id": "uuid4_for_account",
+            "ifsc": null,
+            "micr": null,
+            "account_number": "Account Number Extracted",
+            "bank": "axis"
+        }
+    ],
+    "fraud": {
+        "fraudulent_statements": [
+            "uuid4_for_statement"
+        ],
+        "fraud_type": [
+            {
+                "statement_id": "uuid4_for_statement",
+                "fraud_type": "some_fraud_type"
+            }
+        ]
+    }
+}
+```
+The response has following fields:
+- `accounts` holds the array of account objects, each having `months` (month and year for which data is available), `statements` (list of statement unique identifiers under the account), `account_id` (unique identifier for account), `bank` (name of the bank to which the account belongs) and some account level extracted fields like `ifsc`, `micr`, `account_number` (which can be `null` or could hold a `string` value)
+- `progress` (read more in [Progress Field](/bank-connect/rest-api.html#progress-field) section)
+- `fraud` (read more in [Fraud Field](/bank-connect/rest-api.html#fraud-field) section)
