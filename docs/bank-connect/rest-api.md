@@ -162,6 +162,10 @@ POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/statement/up
 | entity_id | string | an `entity_id` against which you want to upload the statement | No | - |
 | pdf_password | string | password for the pdf in case it is password protected | No | - |
 
+::: warning
+Refer to [this](/bank-connect/appendix.html#bank-identifiers) to get list of valid bank name identifiers
+:::
+
 In case you **don't know bank name**, and want Bank Connect to automatically identify the bank name:
 
 ### Endpoint
@@ -331,3 +335,142 @@ The response has following fields:
 - `accounts` holds the array of account objects, each having `months` (month and year for which data is available), `statements` (list of statement unique identifiers under the account), `account_id` (unique identifier for account), `bank` (name of the bank to which the account belongs) and some account level extracted fields like `ifsc`, `micr`, `account_number` (which can be `null` or could hold a `string` value)
 - `progress` (read more in [Progress Field](/bank-connect/rest-api.html#progress-field) section)
 - `fraud` (read more in [Fraud Field](/bank-connect/rest-api.html#fraud-field) section)
+
+## Identity
+Lists extracted identities for a given entity.
+
+### Endpoint
+
+::: tip
+GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/`<entity_id>`/identity/**
+:::
+
+### Response
+On fetching information successfully, the response would be of the following format with **200 HTTP code**:
+```json
+{
+    "entity_id": "uuid4_for_entity",
+    "progress": [
+        {
+            "status": "completed",
+            "message": null,
+            "statement_id": "uuid4_for_statement"
+        }
+    ],
+    "accounts": [
+        {
+            "months": [
+                "2018-11",
+                "2018-12",
+                "2019-01"
+            ],
+            "statements": [
+                "uuid4_for_statement"
+            ],
+            "account_id": "uuid4_for_account",
+            "ifsc": null,
+            "micr": null,
+            "account_number": "Account Number Extracted",
+            "bank": "axis"
+        }
+    ],
+    "fraud": {
+        "fraudulent_statements": [
+            "uuid4_for_statement"
+        ],
+        "fraud_type": [
+            {
+                "statement_id": "uuid4_for_statement",
+                "fraud_type": "some_fraud_type"
+            }
+        ]
+    },
+    "identity": [
+        {
+            "address": "Extracted Address",
+            "account_number": "Extracted Account Number",
+            "account_id": "uuid4_for_account",
+            "name": "Extracted Name"
+        }
+    ]
+}
+```
+The response fields are same as in [List Accounts](/bank-connect/rest-api.html#list-accounts), but there is an additional `identity` field that holds an array of identity objects. Each object has `account_id` (a unique identifier for the account for which the identity information is referred to in the object) and extracted identity fields like `name`, `address`, `account_number`.
+
+## Transactions
+Get extracted and enriched transactions for a given entity.
+
+### Endpoint
+
+::: tip
+GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/`<entity_id>`/transactions/**
+:::
+
+### Response
+On fetching information successfully, the response would be of the following format with **200 HTTP code**:
+```json
+{
+    "entity_id": "uuid4_for_entity",
+    "progress": [
+        {
+            "status": "completed",
+            "message": null,
+            "statement_id": "uuid4_for_statement"
+        }
+    ],
+    "accounts": [
+        {
+            "months": [
+                "2018-11",
+                "2018-12",
+                "2019-01"
+            ],
+            "statements": [
+                "uuid4_for_statement"
+            ],
+            "account_id": "uuid4_for_account",
+            "ifsc": null,
+            "micr": null,
+            "account_number": "Account Number Extracted",
+            "bank": "axis"
+        }
+    ],
+    "fraud": {
+        "fraudulent_statements": [
+            "uuid4_for_statement"
+        ],
+        "fraud_type": [
+            {
+                "statement_id": "uuid4_for_statement",
+                "fraud_type": "some_fraud_type"
+            }
+        ]
+    },
+    "transactions": [
+      {
+            "transaction_note": "SOME LONG TRANSACTION NOTE",
+            "hash": "unique_transaction_identifier",
+            "description": "lender_transaction",
+            "account_id": "uuid4_for_account",
+            "transaction_type": "debit",
+            "amount": 5188.0,
+            "date": "2019-01-08 00:00:00",
+            "merchant_category": "",
+            "balance": 922.15,
+            "transaction_channel": "salary"
+      },
+      //...
+    ]
+}
+```
+The response fields are same as in [List Accounts](/bank-connect/rest-api.html#list-accounts), but there is an additional `transactions` field that holds an array of transaction objects. Each object has following fields:
+- `transaction_note`: exact transaction note / description present in the statement PDF
+- `hash`: a unique identifying hash for each transaction
+- `description`:
+- `account_id`: unique UUID4 identifier for the account of which the transaction belongs to
+- `transaction_type`: can be `debit` or `credit`
+- `amount`: indicates the transaction amount
+- `date`: date of transaction
+- `merchant_category`:
+- `balance`: account balance until this transaction
+- `transaction_channel`: Refer to [this](/bank-connect/appendix.html#transaction-channel) list for possible values.

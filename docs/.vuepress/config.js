@@ -40,6 +40,11 @@ module.exports = {
                  path: '/bank-connect/python.html'
                }
              ]
+           },
+           {
+             title: 'Appendix',
+             path: '/bank-connect/appendix.html',
+             collapsable: false
            }
          ]
        }
