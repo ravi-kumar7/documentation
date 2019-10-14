@@ -67,3 +67,24 @@ The list below indicates the possible value for `transaction_channel` field:
 | bank_charge | Debit done by bank for some service or tax like GST or SMS service
 | auto_debit_payment_bounce | Debit bank charge because of auto debit payment bounce
 | auto_debit_payment | Debit like NACH or ECS
+
+## Description
+The list below indicates the possible values for `description` field of the transaction object:
+
+| `description` | Description |
+| - | - |
+| penalty_charge | penalty charged by bank. Transaction channel is `bank_charge` |
+| ach_bounce_charge | ACH bounce charge. Transaction channel is `bank_charge` |
+| lender_transaction | lender transaction |
+| credit_card_bill | credit card bill transaction. Transaction channel is `bill_payment` |
+| telco_bill | telecommunications bill transaction. Transaction channel is `bill_payment` |
+| chq_bounce_insuff_funds | check bounced due to insufficient funds. Transaction channel is `inward_cheque_bounce` or `outward_cheque_bounce` |
+| neft_return | NEFT return. Transaction channel is `refund` |
+
+## Merchant Category
+The list below indicates the possible value for `merchant_category` field:
+
+| `merchant_category` | Description |
+| - | - |
+| alcohol | Alcohol |
+| gambling | Gambling |
