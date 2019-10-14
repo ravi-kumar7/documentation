@@ -216,7 +216,7 @@ Sample `progress` value:
 ::: warning TIP
 A general rule of thumb would be to make sure all objects in the `progress` field have their `status` as `completed`, by polling the required analysis field API in intervals. As soon as all status are `completed`, the same API will give the correct required values.
 
-Also this progress `status` gets changed only when all analysis is `completed`, hence if you have all statement as `completed`, and no upload has happened to the same entity in meantime, you can fetch all other analysis APIs directly without having to worry about the progress.
+It is to be noted that `status` for all different analysis APIs are separate, that is identity and progress might have different status for the document, depending on whichever is taking less or more time. So make sure to check the status for each of the analysis API before trying to use the extracted values.
 :::
 
 ## Fraud Field
