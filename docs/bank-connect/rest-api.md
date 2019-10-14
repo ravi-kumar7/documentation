@@ -16,17 +16,16 @@ FinBox also provides an additional layer of authentication on request. If enable
 :::
 
 ## Creating Entity
-::: warning
+::: warning TIP
 This is required only if you want to generate an `entity_id` against a `link_id`, if you use upload statement APIs directly, it will generate `entity_id` automatically, but the option for `link_id` linking id will not be present in that case.
 :::
 Creates an entity for the given `link_id`. You can also specify if you want to enforce single account for the given entity. By enforcing single account, the upload statement API against the entity id will throw an error if statement uploaded is of different account, but will accept if different statements of same bank accounts are uploaded. By default, every entity supports multiple accounts.
 
-::: warning
+::: warning TIP
 Same `link_id` can be used to generate multiple entities.
 :::
 
-### Endpoint
-::: tip
+::: tip Endpoint
 POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/**
 :::
 
@@ -48,8 +47,7 @@ On successful creation, the API gives a **201 HTTP code** with following respons
 ## List Entities
 Lists all entities (paginated) created under your account.
 
-### Endpoint
-::: tip
+::: tip Endpoint
 GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/**
 :::
 
@@ -57,6 +55,7 @@ GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/**
 | Name | Type | Description | Required  | Default |
 | - | - | - | - | - |
 | page | integer  | page number | No | 1 |
+| link_id | string | to filter based on link_id | No | - |
 
 ### Response
 On successful fetching, the API gives a **200 HTTP code** with following response:
@@ -79,51 +78,14 @@ On successful fetching, the API gives a **200 HTTP code** with following respons
 ```
 `count` here indicates the total number of entities, `next` and `previous` have URLs for next and previous pages respectively. If no page exists, they store `null` as value.
 
-
-## List Entities by `link_id`
-Lists all entities linked to a given `link_id`.
-
-### Endpoint
-::: tip
-GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/link_overview/**
+::: warning NOTE
+There are **10 records** per page at max.
 :::
-
-### Parameters
-| Name | Type | Description | Required  | Default |
-| - | - | - | - | - |
-| link_id | string  | link_id value | Yes | - |
-
-### Response
-On successful fetching, the API gives a **200 HTTP code** with following response format:
-```json
-{
-    "progress_data": [
-        {
-            "entity_id": "some_uuid4_1",
-            "months": [
-                "2019-04",
-                "2019-05",
-                "2019-06",
-                "2019-07"
-            ],
-            "bank": "axis"
-        },
-        {
-            "entity_id": "some_uuid4_2",
-            "months": [],
-            "bank": null
-        }
-    ],
-    "link_id": "link_id_you_sent"
-}
-```
-`progress_data` here contains the list of objects, each having `entity_id`, `months` and `bank`. `months` holds list of month and year for which data is available for the given entity. `bank` and `months` are `null` and `[]` respectively if no statement were uploaded / processed under that entity.
 
 ## `link_id` from `entity_id`
 If required you can fetch `link_id` from an `entity_id` using the API below:
 
-### Endpoint
-::: tip
+::: tip Endpoint
 GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/`<entity_id>`/**
 :::
 
@@ -137,20 +99,19 @@ On successful fetching, the API gives a **200 HTTP code** with following respons
 ```
 In case no `link_id` exists for the given entity, the value of `link_id` comes as `null` in response.
 
-::: danger
+::: danger Not Found
 In case not entity with the provided `entity_id` exists, the API will return a response with **404 (Not Found) error code**.
 :::
 
 ## Uploading Statement
 
-::: warning
+::: warning entity_id field
 `entity_id`, is an optional parameter for the below two APIs, if specified, the statement gets uploaded against that entity. If not specified, a new entity is created and the statement is uploaded against it.
 :::
 
 In case you already **know the bank name**:
 
-### Endpoint
-::: tip
+::: tip Endpoint
 POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/statement/upload/?identity=true**
 :::
 
@@ -162,14 +123,13 @@ POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/statement/up
 | entity_id | string | an `entity_id` against which you want to upload the statement | No | - |
 | pdf_password | string | password for the pdf in case it is password protected | No | - |
 
-::: warning
+::: warning Bank Name Identifiers
 Refer to [this](/bank-connect/appendix.html#bank-identifiers) to get list of valid bank name identifiers
 :::
 
 In case you **don't know bank name**, and want Bank Connect to automatically identify the bank name:
 
-### Endpoint
-::: tip
+::: tip Endpoint
 POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/statement/bankless_upload/?identity=true**
 :::
 
@@ -203,19 +163,19 @@ Both the APIs above give the response in the format below in case of successful 
     "fraud_type": null
 }
 ```
-::: warning
+::: warning fraud_type field
 `fraud_type` field is `null` in case `is_fraud` field is false, otherwise it is a string. Please refer to [Fraud](/bank-connect/basics.html#fraud) section in Basics to know more about it.
 :::
 
-::: warning
+::: warning null fields
 Some of the fields within the identity dictionary, or the `from_date` and `to_date` maybe `null` for few statements depending on the bank statement format and what all information is present on the top of the statement. The `from_date` and `to_date` in case was null, are updated for the statement at a later stage when transaction are extracted.
 :::
 
-::: warning
+::: warning identity query parameter
 The query parameter `?identity=true` is optional for both the APIs above, if not specified the response will only include `entity_id`, `statement_id` and `bank_name` fields in case of successful upload.
 :::
 
-::: danger
+::: danger Bad Request
 The bank less upload API will throw an error with code **400 (Bad Request)** along with appropriate message in case it is **not able to identify the bank name** from the statement pdf file.
 Other cases where both the APIs above throws 400 error (with appropriate message in `message` field) are:
 - **Incorrect Password**
@@ -253,7 +213,7 @@ Sample `progress` value:
 ]
 ```
 
-::: warning
+::: warning TIP
 A general rule of thumb would be to make sure all objects in the `progress` field have their `status` as `completed`, by polling the required analysis field API in intervals. As soon as all status are `completed`, the same API will give the correct required values.
 
 Also this progress `status` gets changed only when all analysis is `completed`, hence if you have all statement as `completed`, and no upload has happened to the same entity in meantime, you can fetch all other analysis APIs directly without having to worry about the progress.
@@ -283,9 +243,7 @@ Sample `fraud` field value:
 ## List Accounts
 Lists accounts under a given entity.
 
-### Endpoint
-
-::: tip
+::: tip Endpoint
 GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/`<entity_id>`/accounts/**
 :::
 
@@ -339,9 +297,7 @@ The response has following fields:
 ## Identity
 Lists extracted identities for a given entity.
 
-### Endpoint
-
-::: tip
+::: tip Endpoint
 GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/`<entity_id>`/identity/**
 :::
 
@@ -400,9 +356,7 @@ The response fields are same as in [List Accounts](/bank-connect/rest-api.html#l
 ## Transactions
 Get extracted and enriched transactions for a given entity.
 
-### Endpoint
-
-::: tip
+::: tip Endpoint
 GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/`<entity_id>`/transactions/**
 :::
 
@@ -466,11 +420,241 @@ On fetching information successfully, the response would be of the following for
 The response fields are same as in [List Accounts](/bank-connect/rest-api.html#list-accounts), but there is an additional `transactions` field that holds an array of transaction objects. Each object has following fields:
 - `transaction_note`: exact transaction note / description present in the statement PDF
 - `hash`: a unique identifying hash for each transaction
-- `description`:
-- `account_id`: unique UUID4 identifier for the account of which the transaction belongs to
+- `description`: describes more information about the `transaction_channel` field. Refer to [this](/bank-connect/appendix.html#description) list for possible values.
+- `account_id`: unique UUID4 identifier for the account to which the transaction belongs to
 - `transaction_type`: can be `debit` or `credit`
 - `amount`: indicates the transaction amount
 - `date`: date of transaction
-- `merchant_category`:
-- `balance`: account balance until this transaction
-- `transaction_channel`: Refer to [this](/bank-connect/appendix.html#transaction-channel) list for possible values.
+- `merchant_category`: the category of the merchant in case a transaction is with a merchant. Refer to [this](/bank-connect/appendix.html#merchant-category) list of possible values.
+- `balance`: account balance just after this transaction
+- `transaction_channel`: refer to [this](/bank-connect/appendix.html#transaction-channel) list for possible values.
+
+## Salary
+Get extracted and salary transactions for a given entity.
+
+::: tip Endpoint
+GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/`<entity_id>`/salary/**
+:::
+
+### Response
+On fetching information successfully, the response would be of the following format with **200 HTTP code**:
+```json
+{
+    "entity_id": "uuid4_for_entity",
+    "progress": [
+        {
+            "status": "completed",
+            "message": null,
+            "statement_id": "uuid4_for_statement"
+        }
+    ],
+    "accounts": [
+        {
+            "months": [
+                "2018-11",
+                "2018-12",
+                "2019-01"
+            ],
+            "statements": [
+                "uuid4_for_statement"
+            ],
+            "account_id": "uuid4_for_account",
+            "ifsc": null,
+            "micr": null,
+            "account_number": "Account Number Extracted",
+            "bank": "axis"
+        }
+    ],
+    "fraud": {
+        "fraudulent_statements": [
+            "uuid4_for_statement"
+        ],
+        "fraud_type": [
+            {
+                "statement_id": "uuid4_for_statement",
+                "fraud_type": "some_fraud_type"
+            }
+        ]
+    },
+    "transactions": [
+        {
+            "balance": 32682.78,
+            "hash": "unique_transaction_identifier_1",
+            "description": "",
+            "clean_transaction_note": "Clean Transaction Note",
+            "account_id": "uuid4_for_account",
+            "transaction_type": "credit",
+            "date": "2018-12-12 00:00:00",
+            "amount": 27598.0,
+            "month_year": "12-2018",
+            "merchant_category": "",
+            "transaction_channel": "net_banking_transfer",
+            "transaction_note": "SOME LONG TRANSACTION NOTE"
+        },
+        {
+            "balance": 29979.15,
+            "hash": "unique_transaction_identifier_2",
+            "description": "",
+            "clean_transaction_note": "Clean Transaction Note",
+            "account_id": "uuid4_for_account",
+            "transaction_type": "credit",
+            "date": "2019-01-11 00:00:00",
+            "amount": 29057.0,
+            "month_year": "1-2019",
+            "merchant_category": "",
+            "transaction_channel": "net_banking_transfer",
+            "transaction_note": "SOME LONG TRANSACTION NOTE"
+        }
+    ]
+}
+```
+The response fields are same as in [List Accounts](/bank-connect/rest-api.html#list-accounts), but there is an additional `transactions` field that holds an array of salary transaction objects. Each object has following fields:
+- `balance`: account balance just after this transaction
+- `hash`: a unique identifying hash for each transaction
+- `description`: describes more information about the `transaction_channel` field. Refer to [this](/bank-connect/appendix.html#description) list for possible values.
+- `clean_transaction_note`: Transaction in note in clean english words
+- `account_id`: unique UUID4 identifier for the account to which the transaction belongs to
+- `transaction_type`: can be `debit` or `credit`
+- `date`: date of transaction
+- `amount`: indicates the transaction amount
+- `month_year`: month and year for which the salary is
+- `merchant_category`: the category of the merchant in case a transaction is with a merchant. Refer to [this](/bank-connect/appendix.html#merchant-category) list of possible values.
+- `transaction_channel`: refer to [this](/bank-connect/appendix.html#transaction-channel) list for possible values.
+- `transaction_note`: exact transaction note / description present in the statement PDF
+
+## Recurring Transactions
+Get extracted recurring transactions for a given entity.
+
+::: tip Endpoint
+GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/`<entity_id>`/recurring_transactions/**
+:::
+
+### Response
+On fetching information successfully, the response would be of the following format with **200 HTTP code**:
+```json
+{
+    "entity_id": "uuid4_for_entity",
+    "progress": [
+        {
+            "status": "completed",
+            "message": null,
+            "statement_id": "uuid4_for_statement"
+        }
+    ],
+    "accounts": [
+        {
+            "months": [
+                "2018-11",
+                "2018-12",
+                "2019-01"
+            ],
+            "statements": [
+                "uuid4_for_statement"
+            ],
+            "account_id": "uuid4_for_account",
+            "ifsc": null,
+            "micr": null,
+            "account_number": "Account Number Extracted",
+            "bank": "axis"
+        }
+    ],
+    "fraud": {
+        "fraudulent_statements": [
+            "uuid4_for_statement"
+        ],
+        "fraud_type": [
+            {
+                "statement_id": "uuid4_for_statement",
+                "fraud_type": "some_fraud_type"
+            }
+        ]
+    },
+    "transactions": {
+        "credit_transactions": [
+            {
+                "account_id": "uuid4_for_account",
+                "end_date": "2019-01-11 00:00:00",
+                "transactions": [
+                    {
+                        "transaction_channel": "net_banking_transfer",
+                        "transaction_note": "SOME LONG TRANSACTION NOTE",
+                        "hash": "unique_transaction_identifier_1",
+                        "account_id": "uuid4_for_account",
+                        "transaction_type": "credit",
+                        "amount": 27598.0,
+                        "date": "2018-12-12 00:00:00",
+                        "balance": 32682.78,
+                        "description": ""
+                    },
+                    {
+                        "transaction_channel": "net_banking_transfer",
+                        "transaction_note": "SOME LONG TRANSACTION NOTE",
+                        "hash": "unique_transaction_identifier_2",
+                        "account_id": "uuid4_for_account",
+                        "transaction_type": "credit",
+                        "amount": 29057.0,
+                        "date": "2019-01-11 00:00:00",
+                        "balance": 29979.15,
+                        "description": ""
+                    }
+                ],
+                "median": 29057.0,
+                "start_date": "2018-12-12 00:00:00",
+                "transaction_channel": "NET_BANKING_TRANSFER"
+            }
+        ],
+        "debit_transactions": [
+            {
+                "account_id": "uuid4_for_account",
+                "end_date": "2019-01-18 00:00:00",
+                "transactions": [
+                    {
+                        "transaction_channel": "debit_card",
+                        "transaction_note": "SOME LONG TRANSACTION NOTE",
+                        "hash": "unique_transaction_identifier_3",
+                        "account_id": "uuid4_for_account",
+                        "transaction_type": "debit",
+                        "amount": 80.0,
+                        "date": "2019-01-16 00:00:00",
+                        "balance": 1912.85,
+                        "description": ""
+                    },
+                    {
+                        "transaction_channel": "debit_card",
+                        "transaction_note": "SOME LONG TRANSACTION NOTE",
+                        "hash": "unique_transaction_identifier_4",
+                        "account_id": "uuid4_for_account",
+                        "transaction_type": "debit",
+                        "amount": 70.0,
+                        "date": "2019-01-17 00:00:00",
+                        "balance": 1840.85,
+                        "description": ""
+                    },
+                    {
+                        "transaction_channel": "debit_card",
+                        "transaction_note": "SOME LONG TRANSACTION NOTE",
+                        "hash": "unique_transaction_identifier_5",
+                        "account_id": "uuid4_for_account",
+                        "transaction_type": "debit",
+                        "amount": 70.0,
+                        "date": "2019-01-18 00:00:00",
+                        "balance": 249335.95,
+                        "description": ""
+                    }
+                ],
+                "median": 70.0,
+                "start_date": "2019-01-16 00:00:00",
+                "transaction_channel": "DEBIT_CARD"
+            }
+        ]
+    }
+}
+```
+The response fields are same as in [List Accounts](/bank-connect/rest-api.html#list-accounts), but there are two additional fields `credit_transactions` and `debit_transactions` that holds array of **recurring transaction set** objects for credit and debit transaction type respectively.
+Each of the recurring transaction set object has following fields:
+- `account_id`: unique UUID4 identifier for the account to which transaction set belongs to
+- `start_date`: start date for the recurring transaction set
+- `end_date`: end date for the recurring transaction set
+- `transaction_channel`: transaction channel in upper case. Refer to [this](/bank-connect/appendix.html#transaction-channel) list for possible values.
+- `median`: median of the transaction amounts under the given recurring transaction set
+- `transactions`: list of transaction objects under the recurring transaction set. Each transaction object here same field as transaction object in transactions API (Refer the response section [here](/bank-connect/rest-api.html/transactions) to know about the fields).
