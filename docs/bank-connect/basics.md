@@ -5,7 +5,7 @@ One must be familiar with following terms to use the Bank Connect library:
 An entity represents your customer. It could be an individual or a company applying financial product in your system.
 The `entity_id` is the identifier for the entity in the FinBox system, the `link_id` is an optional field that you can use to map your id to the Entity in the FinBox system.
 
-::: warning
+::: warning NOTE
 There can be multiple entities associated with same `link_id`.
 :::
 
@@ -15,13 +15,13 @@ A statement corresponds to a single file uploaded for an entity. There can be mu
 ## Account
 An account represents a bank account. One entity can have multiple accounts, as one company / individual can have multiple bank accounts. Each account information stores the information pertaining to the bank like account number, bank name, also the month and year for which data is available and a unique `account_id` that can be used to segregate things like transactions, if required.
 
-::: warning
+::: warning NOTE
 If multiple statements are uploaded against an entity, Bank Connect will automatically pick and store unique bank accounts information.
 :::
 
 ## Identity
 Identity refers to identity information (name, address, etc.) for the given entity.
-::: warning
+::: warning NOTE
 While using client libraries, you get the latest identity information for the given entity, however while using the REST APIs you have identity in form of an array of objects, each object corresponding to identity information of unique bank account for the entity.
 :::
 
