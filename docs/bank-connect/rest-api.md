@@ -127,7 +127,7 @@ POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/statement/up
 Refer to [this](/bank-connect/appendix.html#bank-identifiers) to get list of valid bank name identifiers
 :::
 
-In case you **don't know bank name**, and want Bank Connect to automatically identify the bank name:
+In case you **don't know bank name** <Badge text="beta" type="warn"/>, and want Bank Connect to automatically identify the bank name:
 
 ::: tip Endpoint
 POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/statement/bankless_upload/?identity=true**
@@ -430,7 +430,7 @@ The response fields are same as in [List Accounts](/bank-connect/rest-api.html#l
 - `transaction_channel`: refer to [this](/bank-connect/appendix.html#transaction-channel) list for possible values.
 
 ## Salary
-Get extracted and salary transactions for a given entity.
+Get extracted salary transactions for a given entity.
 
 ::: tip Endpoint
 GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/`<entity_id>`/salary/**
@@ -657,4 +657,91 @@ Each of the recurring transaction set object has following fields:
 - `end_date`: end date for the recurring transaction set
 - `transaction_channel`: transaction channel in upper case. Refer to [this](/bank-connect/appendix.html#transaction-channel) list for possible values.
 - `median`: median of the transaction amounts under the given recurring transaction set
-- `transactions`: list of transaction objects under the recurring transaction set. Each transaction object here same field as transaction object in transactions API (Refer the response section [here](/bank-connect/rest-api.html/transactions) to know about the fields).
+- `transactions`: list of transaction objects under the recurring transaction set. Each transaction object here same field as transaction object in transactions API (Refer the response section [here](/bank-connect/rest-api.html/#transactions) to know about the fields).
+
+## Lender Transactions
+Get extracted lender transactions for a given entity.
+
+::: tip Endpoint
+GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/`<entity_id>`/lender_transaction/**
+:::
+
+### Response
+On fetching information successfully, the response would be of the following format with **200 HTTP code**:
+```json
+{
+    "entity_id": "uuid4_for_entity",
+    "progress": [
+        {
+            "status": "completed",
+            "message": null,
+            "statement_id": "uuid4_for_statement"
+        }
+    ],
+    "accounts": [
+        {
+            "months": [
+                "2018-11",
+                "2018-12",
+                "2019-01"
+            ],
+            "statements": [
+                "uuid4_for_statement"
+            ],
+            "account_id": "uuid4_for_account",
+            "ifsc": null,
+            "micr": null,
+            "account_number": "Account Number Extracted",
+            "bank": "axis"
+        }
+    ],
+    "fraud": {
+        "fraudulent_statements": [
+            "uuid4_for_statement"
+        ],
+        "fraud_type": [
+            {
+                "statement_id": "uuid4_for_statement",
+                "fraud_type": "some_fraud_type"
+            }
+        ]
+    },
+    "transactions": [
+      {
+          "transaction_note": "SOME LONG TRANSACTION NOTE",
+          "hash": "unique_transaction_identifier_1",
+          "description": "lender_transaction",
+          "account_id": "uuid4_for_account",
+          "transaction_type": "debit",
+          "amount": 5188.0,
+          "date": "2018-12-12 00:00:00",
+          "merchant_category": "",
+          "balance": 27494.78,
+          "transaction_channel": "net_banking_transfer"
+      },
+      {
+          "transaction_note": "SOME LONG TRANSACTION NOTE",
+          "hash": "unique_transaction_identifier_2",
+          "description": "lender_transaction",
+          "account_id": "uuid4_for_account",
+          "transaction_type": "debit",
+          "amount": 5188.0,
+          "date": "2019-01-08 00:00:00",
+          "merchant_category": "",
+          "balance": 922.15,
+          "transaction_channel": "net_banking_transfer"
+      }
+    ]
+}
+```
+The response fields are same as in [List Accounts](/bank-connect/rest-api.html#list-accounts), but there is an additional `transactions` field that holds an array of lender transaction objects. Each object has following fields:
+- `transaction_note`: exact transaction note / description present in the statement PDF
+- `hash`: a unique identifying hash for each transaction
+- `description`: describes more information about the `transaction_channel` field. Refer to [this](/bank-connect/appendix.html#description) list for possible values.
+- `account_id`: unique UUID4 identifier for the account to which the transaction belongs to
+- `transaction_type`: can be `debit` or `credit`
+- `amount`: indicates the transaction amount
+- `date`: date of transaction
+- `merchant_category`: the category of the merchant in case a transaction is with a merchant. Refer to [this](/bank-connect/appendix.html#merchant-category) list of possible values.
+- `balance`: account balance just after this transaction
+- `transaction_channel`: refer to [this](/bank-connect/appendix.html#transaction-channel) list for possible values.
