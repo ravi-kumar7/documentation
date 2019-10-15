@@ -33,14 +33,29 @@ POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/**
 | Name | Type | Description | Required  | Default |
 | - | - | - | - | - |
 | link_id | string  | link_id value | No | null |
-| is_single_account | boolean | Enforce single account for the entity | No | false |
+| is_single_account | boolean | enforce single account for the entity | No | false |
+| meta_data | string | any additional information that you want to store along with link_id | No | null |
+
+::: warning meta_data field
+`meta_data` field is to be used if you want to store any additional information along with `link_id`. It expects the value to be a string.
+
+So suppose if you want to store a JSON object, then it has to _stringified_ and then stored. For example, the following json:
+```json
+{
+    "id":123,
+    "value":"Hello World"
+}
+```
+will be stored as `"{\"id\":123,\"value\":\"Hello World\"}"`.
+:::
 
 ### Response
-On successful creation, the API gives a **201 HTTP code** with following response:
+On successful creation, the API gives a **201 HTTP code** with a response in following format:
 ```json
 {
     "entity_id": "a_uuid4_string",
-    "link_id": "link_id_you_sent"
+    "link_id": "link_id_you_sent",
+    "meta_data": "meta_data_value"
 }
 ```
 
@@ -67,11 +82,13 @@ On successful fetching, the API gives a **200 HTTP code** with following respons
     "results": [
         {
             "entity_id": "some_uuid4_1",
-            "link_id": null
+            "link_id": null,
+            "meta_data": null
         },
         {
             "entity_id": "some_uuid4_2",
-            "link_id": null
+            "link_id": null,
+            "meta_data": null
         }
     ]
 }
@@ -94,7 +111,8 @@ On successful fetching, the API gives a **200 HTTP code** with following respons
 ```json
 {
     "entity_id": "uuid4_you_sent",
-    "link_id": "the_link_id"
+    "link_id": "the_link_id",
+    "meta_data": "meta_data_value"
 }
 ```
 In case no `link_id` exists for the given entity, the value of `link_id` comes as `null` in response.
@@ -179,7 +197,7 @@ The query parameter `?identity=true` is optional for both the APIs above, if not
 The bank less upload API will throw an error with code **400 (Bad Request)** along with appropriate message in case it is **not able to identify the bank name** from the statement pdf file.
 Other cases where both the APIs above throws 400 error (with appropriate message in `message` field) are:
 - **Incorrect Password**
-- **Unparsable PDF** (PDF file has only images or is corrupted)
+- **Non Parsable PDF** (PDF file has only images or is corrupted)
 
 Sample error response:
 ```json
@@ -663,7 +681,7 @@ Each of the recurring transaction set object has following fields:
 Get extracted lender transactions for a given entity.
 
 ::: tip Endpoint
-GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/`<entity_id>`/lender_transaction/**
+GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/`<entity_id>`/lender_transactions/**
 :::
 
 ### Response
