@@ -38,7 +38,15 @@ module.exports = {
                {
                  title: 'Python',
                  path: '/bank-connect/python.html'
-               }
+               },
+               {
+                 title: 'Android Client',
+                 path: '/bank-connect/android.html'
+               },
+               {
+                 title: 'JavaScript Client',
+                 path: '/bank-connect/javascript-client.html'
+               },
              ]
            },
            {
