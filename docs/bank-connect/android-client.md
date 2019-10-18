@@ -86,9 +86,7 @@ As the user interacts, callbacks can be received in real time using `getPayloadL
 
 FinBox Bank Connect uses life cycle aware live data to provide real time callbacks. You need to do the following steps to listen for events: 
 
-<CodeSwitcher :languages="{kotlin:'Kotlin',java:'Java'}">
-<template v-slot:kotlin>
-
+In Kotlin:
 ```kotlin
 bankConnect.getPayloadLiveData().observe(this, Observer {
     when (it) {
@@ -111,9 +109,7 @@ bankConnect.getPayloadLiveData().observe(this, Observer {
 }) 
 ```
 
-</template>
-<template v-slot:java>
-
+In Java:
 ```java
 bankConnect.getPayloadLiveData().observe(this, new Observer < FinboxResult > () {
     @Override public void onChanged(@Nullable FinboxResult finboxResult) {
@@ -138,9 +134,6 @@ bankConnect.getPayloadLiveData().observe(this, new Observer < FinboxResult > () 
     }
 });
 ```
-
-</template>
-</CodeSwitcher>
 
 ## Events
 
