@@ -19,7 +19,7 @@ Head towards [Basics](/bank-connect/basics.html) to understand the standard term
 
 
 ### Accepting Bank Statements <Badge text="New" type="tip"/>
-Other than APIs and client libraries to upload and process bank statement PDFs, Bank Connect also provide client libraries for accepting the PDF files from user, both manual as well as through **Net Banking**.
+Other than APIs and libraries to upload and process bank statement PDFs, Bank Connect also provide client libraries for accepting the PDF files from user, both manual as well as through **Net Banking**.
 
 In the **Net Banking mode**, users just have to enter net banking credentials, and the statements will be directly/automatically fetched from their net banking accounts, saving them a lot of time and effort to download/obtain the PDF File.
 
