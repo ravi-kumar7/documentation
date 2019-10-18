@@ -1,10 +1,10 @@
 # Android Client
 This **SDK** helps users to upload bank statements. It includes two methods to upload the file:
-- **Using Netbanking:** In this method user only need to enter the credentials of Net Banking to upload their bank statement. The server will automatically download and then upload the pdf.
+- **Using Net Banking:** In this method user only need to enter the credentials of Net Banking to upload their bank statement. The server will automatically download and then upload the pdf.
 ::: warning NOTE
 Currently only five banks: **HDFC, Axis, SBI, Kotak** and **ICICI** are supported in this method.  
 :::
-- **Uploading manually:** In this method users are required to manually upload the pdf of the bank statement.
+- **Uploading Manually:** In this method users are required to manually upload the pdf of the bank statement.
 
 :::tip Fetching Transactions
 The client SDK will give you an `entity_id` after successful statement upload. This can be used with any of the libraries or REST API to fetch extracted and enriched data like identity, salary, lender, recurring transactions, etc.
@@ -59,8 +59,9 @@ This will show the bank connect view to the user.
 ## Live Data and Callbacks
 As the user interacts, callbacks can be received in real time using `getPayloadLiveData()`.  
 
-Finbox Bank Connect uses life cycle aware live data to provide real time callbacks. You need to do the following steps to listen for events:  
+Finbox Bank Connect uses life cycle aware live data to provide real time callbacks. You need to do the following steps to listen for events: 
 
+In Kotlin:
 ```kotlin
 bankConnect = findViewById(R.id.bankConnect)
 bankConnect.getPayloadLiveData().observe(this, Observer {
@@ -85,7 +86,6 @@ bankConnect.getPayloadLiveData().observe(this, Observer {
 ```
 
 In Java:
-
 ```java
 bankConnectView.getPayloadLiveData().observe(this, new Observer < FinboxResult > () {
     @Override public void onChanged(@Nullable FinboxResult finboxResult) {
@@ -136,8 +136,8 @@ In case of **internet banking mode**, the `screenName` holds the following meani
 | - | - |
 | 1 | Bank list screen |
 | 2 | Enter credentials screen |
-| 3 | Processing screen |
-| 4 | Additional security check page (captcha / security) |
+| 3 | Authentication or Upload in process screen |
+| 4 | Additional security check screen (captcha / question / OTP) |
 
 ### `FinboxResult.OnEntityDestroyed`
 `FinboxResult.OnEntityDestroyed` will be called when a user navigates back and selects a different bank.

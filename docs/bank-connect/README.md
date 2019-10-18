@@ -24,5 +24,5 @@ Other than APIs and client libraries to upload and process bank statement PDFs, 
 In the **Net Banking mode**, users just have to enter net banking credentials, and the statements will be directly/automatically fetched from their net banking accounts, saving them a lot of time and effort to download/obtain the PDF File.
 
 You can look at your preferred client library for this:
-- [Android](/bank-connect/android.html)
+- [Android Client](/bank-connect/android-client.html)
 - [JavaScript Client](/bank-connect/javascript-client.html)
