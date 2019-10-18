@@ -1,4 +1,5 @@
 module.exports = {
+  plugins: [ 'code-switcher' ],
   title: 'FinBox Documentation',
   description: 'Documentation for FinBox SDK',
   base: '/documentation/',
