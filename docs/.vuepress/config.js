@@ -7,8 +7,8 @@ module.exports = {
     lastUpdated: 'Last Updated',
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Bank Connect', link: '/bank-connect/' },
       { text: 'Device Connect', link: '/device-connect/' },
+      { text: 'Bank Connect', link: '/bank-connect/' },
       { text: 'About', link: 'https://finbox.in' },
     ],
     sidebar: {

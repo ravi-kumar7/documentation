@@ -1,38 +1,39 @@
 ---
 home: true
-heroImage: https://vuepress.vuejs.org/hero.png
+heroImage: ./logo.png
 footer: Copyright © 2019 Moshpit Technologies Pvt. Ltd.
 ---
 <style>
-.finbox-buttons{
-  margin: 1.8rem auto;
-  text-align: center;
+.home .feature {
+  flex-basis: 45% !important;
+  max-width: 45% !important;
 }
-.finbox-buttons .action-button{
-  display: inline-block;
-  font-size: 1.2rem;
-  color: #fff;
-  padding: 0.8rem 1.6rem;
-  border-radius: 4px;
-  transition: background-color 0.1s ease;
-  box-sizing: border-box;
+.home .doc_link {
 }
-.finbox-buttons .green{
-  background-color: #3eaf7c;
-  border-bottom: 1px solid #389d70;
+.home .doc_link:hover {
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    padding-bottom: 3px;
 }
-.finbox-buttons .green:hover{
-  background-color: #4abf8a;
-}
-.finbox-buttons .blue{
-  background-color: #3953de;
-  border-bottom: 1px solid #1734cf;
-}
-.finbox-buttons .blue:hover{
-  background-color: #5a70e8;
-}
+
 </style>
-<p class="finbox-buttons">
-  <a href="bank-connect/" class="action-button green">Bank Connect SDK→</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <a href="device-connect/" class="action-button blue">Device Connect SDK→</a>
-</p>
+<div class="features">
+  <div class="feature">
+    <h2>Device Connect</h2>
+    <p>
+      Lets businesses get access to enriched Android mobile device data of customers to build lending and wealth management apps.
+    </p>
+    <p>
+      <a href="device-connect/" class="doc_link">See Documentation →</a>
+    </p>
+  </div>
+  <div class="feature">
+    <h2>Bank Connect</h2>
+    <p>
+      Lets businesses get access to enriched transaction data of customers using bank statements uploaded manually or via Net Banking.
+    </p>
+    <p>
+      <a href="bank-connect/" class="doc_link">See Documentation →</a>
+    </p>
+  </div>
+</div>
