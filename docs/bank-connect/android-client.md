@@ -35,7 +35,7 @@ FinBox Bank Connect supports an additional layer of security (timestamp and acce
   
 ## Initialize the SDK  
   
-In your application class initialize Finbox library as follows:
+In your application class initialize FinBox Bank Connect SDK as follows:
 ```kotlin
 FinboxBankConnect.init(this);
 ```
@@ -50,11 +50,36 @@ In order to start showing the Upload screens all you have to do is add the `Finb
         app:type="NET_BANKING"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
- ```  
+ ```
+ This will show the bank connect view to the user.
   
-`app:type` specifies the type of upload flow that you want to give the user. If user wants to enter his statement manually then pass `app:type="MANUAL"` otherwise `app:type="NET_BANKING"`  
-  
-This will show the bank connect view to the user.
+`app:type` specifies the type of upload flow that you want to give the user. If user wants to enter his statement manually then pass `app:type="MANUAL"` otherwise `app:type="NET_BANKING"`.
+
+There are **additional optional attributes** that can be used as well:
+
+`app:fromDate` specifies the date from which you want the statement to be collected in **yyyy-mm** format. 
+
+`app:toDate` specifies the date till which you want the statement to be collected in **yyyy-mm** format. 
+
+`app:bank` specifies a bank name identifier in case you don't want user to select the bank and take the specified one directly. See [here](/bank-connect/appendix.html#bank-identifiers) to see the list of possible bank name identifiers.
+
+::: warning Period Values
+Please make sure from date is always less than to date, and is set either in xml or in runtime. There is no default value for the periods if not specified.
+:::
+
+## Setting Attributes in Runtime
+After initializing the FinBox Bank Connect SDK, you can set the values to the attributes defined in layout in runtime as follows:
+```kotlin
+bankConnect.setLinkId("your_link_id")
+bankConnect.setJourneyFromDate("2019-04")
+bankConnect.setJourneyToDate("2019-05")
+bankConnect.invalidate()
+```
+Here `bankConnect` is the `View` object for `FinBoxBankConnectView` added in the layout.
+
+::: tip Setting link_id
+`link_id` can be set only in runtime as showing in the example above.
+:::
 
 ## Live Data and Callbacks
 As the user interacts, callbacks can be received in real time using `getPayloadLiveData()`.  
@@ -90,18 +115,21 @@ In Java:
 bankConnectView.getPayloadLiveData().observe(this, new Observer < FinboxResult > () {
     @Override public void onChanged(@Nullable FinboxResult finboxResult) {
         if (finboxResult != null) {
-            if (finboxResult instanceof FinboxResult.OnUpload) {
-                FinboxOnUploadPayload payload = ((FinboxResult.OnUpload) finboxResult).getUploadPayload();
-                Log.i(TAG, "Upload payload " + payload);
+            if (finboxResult instanceof FinboxResult.OnExit) {
+                FinboxOnExitPayload payload = ((FinboxResult.OnExit) finboxResult).getExitPayload();
+                Log.i(TAG, "Exit payload " + payload);
+            } else if (finboxResult instanceof FinboxResult.OnEntityDestroyed) {
+                FinboxOnEntityDestroyed payload = ((FinboxResult.OnEntityDestroyed) finboxResult).getEntityDestroyed();
+                Log.i(TAG, "On Entity Destroyed payload " + payload);
+            } else if (finboxResult instanceof FinboxResult.OnFinished) {
+                FinboxOnFinishedPayload payload = ((FinboxResult.OnFinished) finboxResult).getFinishPayload();
+                Log.i(TAG, "On Finished payload " + payload);
             } else if (finboxResult instanceof FinboxResult.OnError) {
                 FinboxOnErrorPayload payload = ((FinboxResult.OnError) finboxResult).getErrorPayload();
                 Log.i(TAG, "Error payload " + payload);
-            } else if (finboxResult instanceof FinboxResult.OnExit) {
-                FinboxOnExitPayload payload = ((FinboxResult.OnExit) finboxResult).getExitPayload();
-                Log.i(TAG, "Exit payload " + payload);
-            } else if (finboxResult instanceof FinboxResult.OnFinished) {
-                FinboxOnFinishedPayload payload = ((FinboxResult.OnFinished) finboxResult).getFinishPayload();
-                Log.i(TAG, "OnFinished payload " + payload);
+            } else if (finboxResult instanceof FinboxResult.OnUpload) {
+                FinboxOnUploadPayload payload = ((FinboxResult.OnUpload) finboxResult).getUploadPayload();
+                Log.i(TAG, "Upload payload " + payload);
             }
         }
     }
