@@ -238,7 +238,9 @@ It is to be noted that `status` for all different analysis APIs are separate, th
 :::
 
 ## Fraud Field
-In all of the analysis field APIs (transaction, accounts, etc.), there is always a field `fraud`, that holds two fields `fraudulent_statements` (array of `statement_id`s which have some sort detected after analysis or in first basic check) and `fraud_type` (array of objects having `statement_id` and `fraud_type` indicating fraud of which type was found for which statement).
+In all of the analysis field APIs (transaction, accounts, etc.), there is always a field `fraud`, that holds two fields `fraudulent_statements` (array of `statement_id`s which have some sort detected after analysis or in first basic check) and `fraud_type` (array of objects having `statement_id` and `fraud_type` (string) indicating fraud of which type was found for which statement).
+Optionally a key `transaction_hash` may be present in some cases in `fraud_type` (array) for transaction level frauds indicating the transaction in which the fraud was found.
+
 
 To know more about `fraud_type`, refer to [Fraud](/bank-connect/basics.html#fraud) section in Basics.
 
