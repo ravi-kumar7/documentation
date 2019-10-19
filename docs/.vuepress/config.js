@@ -12,6 +12,32 @@ module.exports = {
       { text: 'About', link: 'https://finbox.in' },
     ],
     sidebar: {
+      '/device-connect/': [
+        {
+          title: 'Overview',
+          collapsable: false,
+          children: [
+            {
+              title: 'Introduction',
+              path: '/device-connect/'
+            }
+          ]
+        },
+        {
+          title: 'API Reference',
+          collapsable: false,
+          children: [
+            {
+              title: 'Android SDK',
+              path: '/device-connect/android.html'
+            },
+            {
+              title: 'REST API',
+              path: '/device-connect/rest-api.html'
+            },
+          ]
+        }
+      ],
       '/bank-connect/': [
         {
           title: 'Overview',
