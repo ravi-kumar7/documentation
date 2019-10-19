@@ -1,3 +1,8 @@
+---
+base_url: https://portal.finbox.in #base URL in python library
+version: v1 # version of API
+---
+
 # Python
 FinBox provides an official python package for Bank Connect product. This package has functions to upload statement PDF Files and get enriched data.
 
@@ -55,7 +60,7 @@ To fetch an entity using `entity_id`, use the `get` method as follows:
 entity = fbc.Entity.get(entity_id="uuid4_for_entity")
 ```
 
-## Entity properties
+## Entity Properties
 Each entity instance has two **read only properties** that can be accessed at any time:
 
 ### **`entity_id`**
@@ -96,7 +101,7 @@ print(entity.entity_id)
 ```
 :::
 
-## Uploading statement
+## Uploading Statement
 For any entity instance at any point, a PDF statement can be uploaded using the `upload_statement` method of entity instance. Its syntax is follows:
 ```python
 is_authentic = entity.upload_statement("path/to/file", bank_name="axis")
@@ -141,4 +146,27 @@ is_authentic = entity.upload_statement("path/to/file", pdf_password="PDF_PASSWOR
 (`finbox_bankconnect.custom_exceptions.FileProcessFailedError`)
 :::
 
+## Fetching Transactions
+To fetch transactions use the 
 
+## Advanced Settings <Badge text="Caution" type="error"/>
+Other than `api_key`, following values can also be modified globally as per requirement:
+
+| Property | Description | Default Value |
+| - | - | - |
+| `max_retry_limit` | To set the maximum times library will retry if server was unavailable or unreachable | 2 | 
+| `poll_timeout` | To set the timeout time **(in seconds)** after which `ServiceTimeOutError` will be thrown in case of fetching functions | 2 |
+| `poll_interval` | To set the polling intervals **(in seconds)** after which the library will try to make an API call | 10 |
+| `api_version` | To set the API version to use | {{$page.frontmatter.version}} |
+| `base_url` | In case you are using a proxy and want to change the base url for REST API calls that python library makes | {{$page.frontmatter.base_url}} |
+
+::: danger Changing base_url property
+In case you are using a proxy, and changed the `base_url` property, just keep in mind that the library will internally make an API call in following format:
+
+`base_url`/bank-connect/`api_version`/`<endpoints>`
+:::
+
+Example for changing polling interval to 1 second:
+```python
+fbc.poll_interval = 1
+```
