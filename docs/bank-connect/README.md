@@ -1,4 +1,4 @@
-# Introduction
+# Bank Connect: Introduction
 The FinBox Bank Connect parses bank account statements (PDFs) and provides:
 
 - User Identity data
@@ -7,6 +7,8 @@ The FinBox Bank Connect parses bank account statements (PDFs) and provides:
 - Credit Assessment metrics (Asset Report)
 
 Developers can use this to build loan application journeys, wealth management apps and personal finance management apps.
+
+Other than parsing bank account statements it also provides client libraries to accept the statement PDFs manually or via net banking credentials.
 
 ::: tip Try Bank Connect
 Click [here](https://finbox.in/contact-us) to contact us and request for an API key
