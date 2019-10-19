@@ -1,7 +1,7 @@
 # Android Client
 This **SDK** helps users to upload bank statements.
 <p style="text-align:center">
-<img :src="$withBase('../../bc_android.gif')" alt="Animated Demo" />
+<img src="/documentation/bc_android.gif" alt="Animated Demo" />
 </p>
 It includes two methods to upload the file:
 - **Using Net Banking:** In this method user only need to enter the credentials of Net Banking to upload their bank statement. The server will automatically download and then upload the pdf.
