@@ -84,22 +84,20 @@ This gives the `link_id` string value. The table below indicates the results of 
 | `create` without `link_id` | Yes | `None` |
 | `create` without `link_id` | No | throws `ValueError` |
 
-::: warning Exceptions
+### Exceptions
 - In both the properties, whenever server is being contacted and in case it could not reach, it will throw `ServiceTimeOutError`
 (`finbox_bankconnect.custom_exceptions.ServiceTimeOutError`).
 
 - In case `get` method was used, `link_id` was being fetched and `entity_id` doesn't existed on our server then it will throw `EntityNotFoundError`
 (`finbox_bankconnect.custom_exceptions.EntityNotFoundError`).
-:::
 
-::: tip Using Properties
+### Using Properties
 To use properties, you can simply treat them as read only members of `Entity` instance as follows:
 ```python
 # printing link_id and entity_id, where entity is instance of Entity class
 print(entity.link_id)
 print(entity.entity_id)
 ```
-:::
 
 ## Uploading Statement
 For any entity instance at any point, a PDF statement can be uploaded using the `upload_statement` method of entity instance. Its syntax is follows:
@@ -124,7 +122,7 @@ is_authentic = entity.upload_statement("path/to/file")
 is_authentic = entity.upload_statement("path/to/file", pdf_password="PDF_PASSWORD")
 ```
 
-::: warning Exceptions
+### Exceptions
 - In case there is any problem with arguments passed, it throws `ValueError` and if in reading file, it throws standard python file exceptions.
 
 - In case server could not be reached, it throws `ServiceTimeOutError`
@@ -142,12 +140,239 @@ is_authentic = entity.upload_statement("path/to/file", pdf_password="PDF_PASSWOR
 - In case `bank_name` was not specified, and our server could not detect the bank, it will throw `CannotIdentityBankError`
 (`finbox_bankconnect.custom_exceptions.CannotIdentityBankError`)
 
-- In due to any other reason, file could not be processed by us, we throw `FileProcessFailedError`
+- In due to any other reason, file could not be processed by us, it will throw `FileProcessFailedError`
 (`finbox_bankconnect.custom_exceptions.FileProcessFailedError`)
+
+## Identity
+To fetch identity information for an entity use the `get_identity` method.
+```python
+identity_dict = entity.get_identity()
+```
+
+It returns the identity `dict` for the last uploaded / updated account within the entity. The dictionary has the `account_id` and extracted identity keys like `address`, etc. as shown in a sample dictionary value below:
+```python
+{
+    "account_id": "uuid4_for_account",
+    "account_number": "Account Number Extracted",
+    "address": "Address extracted",
+    "name": "Name Extracted"
+}
+```
+::: warning NOTE
+If the value was not previously retrieved, it will poll and check for progress, and then fetch and cache the retrieved value for next usage.
 :::
 
-## Fetching Transactions
-To fetch transactions use the 
+### Arguments
+This method also has following **optional** arguments:
+| Argument | Type | Description | Default |
+| - | - | - | - |
+| reload | Boolean | If provided as `True`, it will ignore the cached value, and again make an API call and re-fetch the values | `False` |
+
+### Exceptions
+- In case `create` method was used while creating the entity instance and the entity object was not created on server yet, it throws `ValueError`.
+
+- In case server could not be reached, it throws `ServiceTimeOutError`
+(`finbox_bankconnect.custom_exceptions.ServiceTimeOutError`).
+
+- In case `entity_id` cannot be found in our server, it throws `EntityNotFoundError`
+(`finbox_bankconnect.custom_exceptions.EntityNotFoundError`)
+
+- In case the identity could not be extracted by us, it will throw `ExtractionFailedError`
+(`finbox_bankconnect.custom_exceptions.ExtractionFailedError`)
+
+## Accounts
+To fetch accounts use the `get_accounts` method. It returns an **iterator** to the account dictionary list, after fetching.
+
+```python
+accounts = entity.get_accounts()
+
+# printing the account dictionary using iterator
+for account in accounts:
+    print(account)
+```
+
+::: warning NOTE
+If the value was not previously retrieved, it will poll and check for progress, and then fetch and cache the retrieved value for next usage.
+:::
+
+### Arguments
+This method also has following **optional** arguments:
+| Argument | Type | Description | Default |
+| - | - | - | - |
+| reload | Boolean | If provided as `True`, it will ignore the cached value, and again make an API call and re-fetch the values | `False` |
+
+
+### Exceptions
+- In case `create` method was used while creating the entity instance and the entity object was not created on server yet, it throws `ValueError`.
+
+- In case server could not be reached, it throws `ServiceTimeOutError`
+(`finbox_bankconnect.custom_exceptions.ServiceTimeOutError`).
+
+- In case `entity_id` cannot be found in our server, it throws `EntityNotFoundError`
+(`finbox_bankconnect.custom_exceptions.EntityNotFoundError`)
+
+- In case the account information could not be extracted by us, it will throw `ExtractionFailedError`
+(`finbox_bankconnect.custom_exceptions.ExtractionFailedError`)
+
+### Account Dictionary
+Sample account dictionary:
+```python
+{
+    "months": [
+        "2018-11",
+        "2018-12",
+        "2019-01"
+    ],
+    "statements": [
+        "uuid4_for_statement"
+    ],
+    "account_id": "uuid4_for_account",
+    "ifsc": None,
+    "micr": None,
+    "account_number": "Account Number Extracted",
+    "bank": "axis"
+}
+```
+Each of the account dictionary in the account list has following keys:
+- `months`: month and year for which data is available. Each of string in this list is of format `"YYYY-MM"`
+- `statements`: list of statement unique identifiers under the account
+- `account_id`: unique identifier for account
+- `bank`: name of the bank to which the account belongs
+
+It also has some account level extracted fields like `ifsc`, `micr`, `account_number` (which can be `None` or could hold a `string` value)
+
+## Fraud
+To fetch fraud information use the `get_fraud_info` method. It returns an **iterator** to the fraud dictionary list, after fetching.
+
+```python
+fraud_list_iter = entity.get_fraud_info()
+
+# printing the fraud dict dictionary using iterator
+for fraud_dict in fraud_list_iter:
+    print(fraud_dict)
+```
+
+::: warning NOTE
+If the value was not previously retrieved, it will poll and check for progress, and then fetch and cache the retrieved value for next usage.
+:::
+
+### Arguments
+This method also has following **optional** arguments:
+| Argument | Type | Description | Default |
+| - | - | - | - |
+| reload | Boolean | If provided as `True`, it will ignore the cached value, and again make an API call and re-fetch the values | `False` |
+
+
+### Exceptions
+- In case `create` method was used while creating the entity instance and the entity object was not created on server yet, it throws `ValueError`.
+
+- In case server could not be reached, it throws `ServiceTimeOutError`
+(`finbox_bankconnect.custom_exceptions.ServiceTimeOutError`).
+
+- In case `entity_id` cannot be found in our server, it throws `EntityNotFoundError`
+(`finbox_bankconnect.custom_exceptions.EntityNotFoundError`)
+
+- In case the statement could not be extracted by us, it will throw `ExtractionFailedError`
+(`finbox_bankconnect.custom_exceptions.ExtractionFailedError`)
+
+### Fraud Dictionary
+Sample fraud dictionary:
+```python
+{
+    "statement_id": "uuid4_for_statement",
+    "fraud_type": "some_fraud_type"
+}
+```
+Each of the fraud dictionary includes the keys `statement_id` and `fraud_type` indicating fraud of which type was found in which statement. 
+
+Optionally a key `transaction_hash` may be present in some cases in this dictionary for transaction level frauds indicating the transaction in which the fraud was found.
+
+To know more about `fraud_type`, refer to [Fraud](/bank-connect/basics.html#fraud) section in Basics.
+
+## Transactions
+To fetch transactions use the `get_transactions` method. It returns an **iterator** to the transaction dictionary list, after fetching.
+
+```python
+transactions = entity.get_transactions()
+
+# printing the transaction dictionary using iterator
+for transaction in transactions:
+    print(transaction)
+```
+
+::: warning NOTE
+If the value was not previously retrieved, it will poll and check for progress, and then fetch and cache the retrieved value for next usage.
+:::
+
+### Arguments
+This method also has following **optional** arguments:
+| Argument | Type | Description | Default |
+| - | - | - | - |
+| reload | Boolean | If provided as `True`, it will ignore the cached value, and again make an API call and re-fetch the values | `False` |
+| account_id | String | If provided, only the transactions of specific `account_id` will be retrieved | - |
+| from_date | `datetime.date` object | If provided, only the transactions with date greater than or equal to `from_date` will be retrieved. | - |
+| to_date | `datetime.date` object | If provided, only the transactions with date less than or equal to `to_date` will be retrieved.  | - |
+
+An example for fetching transactions from last 10 days till today:
+```python
+import datetime
+import finbox_bankconnect as fbc
+
+entity = fbc.Entity.get(entity_id="uuid_for_entity")
+
+# fetching transactions from last 10 days
+from_date = (datetime.datetime.today() - datetime.timedelta(days=10)).date()
+to_date = datetime.datetime.today().date()
+transactions = entity.get_transactions(from_date=from_date, to_date=to_date)
+
+# print the transaction dictionary using iterator
+for transaction in transactions:
+    print(transaction)
+```
+
+### Exceptions
+- In case there is any problem with arguments passed or if `create` method was used while creating the entity instance and the entity object was not created on server yet, it throws `ValueError`.
+
+- In case server could not be reached, it throws `ServiceTimeOutError`
+(`finbox_bankconnect.custom_exceptions.ServiceTimeOutError`).
+
+- In case `entity_id` cannot be found in our server, it throws `EntityNotFoundError`
+(`finbox_bankconnect.custom_exceptions.EntityNotFoundError`)
+
+- In case the transactions could not be extracted by us, it will throw `ExtractionFailedError`
+(`finbox_bankconnect.custom_exceptions.ExtractionFailedError`)
+
+### Transaction Dictionary
+Sample transaction dictionary:
+```python
+{
+    "transaction_note": "SOME LONG TRANSACTION NOTE",
+    "hash": "unique_transaction_identifier",
+    "description": "lender_transaction",
+    "account_id": "uuid4_for_account",
+    "transaction_type": "debit",
+    "amount": 5188.0,
+    "date": "2019-01-08 00:00:00",
+    "merchant_category": "",
+    "balance": 922.15,
+    "transaction_channel": "salary"
+}
+```
+
+Each of the transaction dictionary in the transaction list has following keys:
+- `transaction_note`: exact transaction note / description present in the statement PDF
+- `hash`: a unique identifying hash for each transaction
+- `description`: describes more information about the `transaction_channel` field. Refer to [this](/bank-connect/appendix.html#description) list for possible values.
+- `account_id`: unique UUID4 identifier for the account to which the transaction belongs to
+- `transaction_type`: can be `debit` or `credit`
+- `amount`: indicates the transaction amount
+- `date`: date of transaction
+- `merchant_category`: the category of the merchant in case a transaction is with a merchant. Refer to [this](/bank-connect/appendix.html#merchant-category) list of possible values.
+- `balance`: account balance just after this transaction
+- `transaction_channel`: refer to [this](/bank-connect/appendix.html#transaction-channel) list for possible values.
+
+
+
 
 ## Advanced Settings <Badge text="Caution" type="error"/>
 Other than `api_key`, following values can also be modified globally as per requirement:
