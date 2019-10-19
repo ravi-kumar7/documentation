@@ -441,6 +441,97 @@ Each of the salary dictionary in the transaction list has following keys:
 - `transaction_channel`: refer to [this](/bank-connect/appendix.html#transaction-channel) list for possible values.
 - `transaction_note`: exact transaction note / description present in the statement PDF
 
+
+
+## Recurring Transactions
+To fetch recurring transactions use the `get_credit_recurring` and `get_debit_rucurring` methods for credit and debit respectively. Both of these return an **iterator** to the recurring dictionary list, after fetching.
+
+```python
+credit_recurring = entity.get_credit_recurring()
+
+# printing the credit recurring dictionary using iterator
+for credit_recurr_dict in credit_recurring:
+    print(credit_recurr_dict)
+```
+
+```python
+debit_recurring = entity.get_debit_recurring()
+
+# printing the debit recurring dictionary using iterator
+for debit_recurr_dict in debit_recurring:
+    print(debit_recurr_dict)
+```
+
+::: warning NOTE
+If the value was not previously retrieved, it will poll and check for progress, and then fetch and cache the retrieved value for next usage.
+:::
+
+### Arguments
+Both of these methods have following **optional** arguments:
+| Argument | Type | Description | Default |
+| - | - | - | - |
+| reload | Boolean | If provided as `True`, it will ignore the cached value, and again make an API call and re-fetch the values | `False` |
+| account_id | String | If provided, only the recurring transactions of specific `account_id` will be retrieved | - |
+
+### Exceptions
+- In case there is any problem with arguments passed or if `create` method was used while creating the entity instance and the entity object was not created on server yet, it throws `ValueError`.
+
+- In case server could not be reached, it throws `ServiceTimeOutError`
+(`finbox_bankconnect.custom_exceptions.ServiceTimeOutError`).
+
+- In case `entity_id` cannot be found in our server, it throws `EntityNotFoundError`
+(`finbox_bankconnect.custom_exceptions.EntityNotFoundError`)
+
+- In case the transactions could not be extracted by us, it will throw `ExtractionFailedError`
+(`finbox_bankconnect.custom_exceptions.ExtractionFailedError`)
+
+### Recurring Transaction Dictionary
+Sample recurring transaction dictionary:
+```python
+{
+    "account_id": "uuid4_for_account",
+    "end_date": "2019-01-11 00:00:00",
+    "transactions": [
+        {
+            "transaction_channel": "net_banking_transfer",
+            "transaction_note": "SOME LONG TRANSACTION NOTE",
+            "hash": "unique_transaction_identifier_1",
+            "account_id": "uuid4_for_account",
+            "transaction_type": "credit",
+            "amount": 27598.0,
+            "date": "2018-12-12 00:00:00",
+            "balance": 32682.78,
+            "description": ""
+        },
+        {
+            "transaction_channel": "net_banking_transfer",
+            "transaction_note": "SOME LONG TRANSACTION NOTE",
+            "hash": "unique_transaction_identifier_2",
+            "account_id": "uuid4_for_account",
+            "transaction_type": "credit",
+            "amount": 29057.0,
+            "date": "2019-01-11 00:00:00",
+            "balance": 29979.15,
+            "description": ""
+        }
+    ],
+    "median": 29057.0,
+    "start_date": "2018-12-12 00:00:00",
+    "transaction_channel": "NET_BANKING_TRANSFER"
+}
+```
+
+Each of the recurring transaction dictionary (both credit and debit) has following keys:
+- `account_id`: unique UUID4 identifier for the account to which transaction set belongs to
+- `start_date`: start date for the recurring transaction set
+- `end_date`: end date for the recurring transaction set
+- `transaction_channel`: transaction channel in upper case. Refer to [this](/bank-connect/appendix.html#transaction-channel) list for possible values.
+- `median`: median of the transaction amounts under the given recurring transaction set
+- `transactions`: list of transaction dictionary under the recurring transaction set. Each transaction dictionary here has same keys as transaction dictionary in `get_transactions` (Refer [here](/bank-connect/python.html#transaction-dictionary) to know about the keys).
+
+
+
+
 ## Lender Transactions
 To fetch lender transactions use the `get_lender_transactions` method. It returns an **iterator** to the lender transaction dictionary list, after fetching.
 

@@ -677,7 +677,7 @@ Each of the recurring transaction set object has following fields:
 - `end_date`: end date for the recurring transaction set
 - `transaction_channel`: transaction channel in upper case. Refer to [this](/bank-connect/appendix.html#transaction-channel) list for possible values.
 - `median`: median of the transaction amounts under the given recurring transaction set
-- `transactions`: list of transaction objects under the recurring transaction set. Each transaction object here same field as transaction object in transactions API (Refer the response section [here](/bank-connect/rest-api.html/#transactions) to know about the fields).
+- `transactions`: list of transaction objects under the recurring transaction set. Each transaction object here has same fields as the transaction object in transactions API (Refer the response section [here](/bank-connect/rest-api.html/#transactions) to know about the fields).
 
 ## Lender Transactions
 Get extracted lender transactions for a given entity.
