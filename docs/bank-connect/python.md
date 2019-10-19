@@ -372,6 +372,74 @@ Each of the transaction dictionary in the transaction list has following keys:
 - `transaction_channel`: refer to [this](/bank-connect/appendix.html#transaction-channel) list for possible values.
 
 
+## Salary
+To fetch salary transactions use the `get_salary` method. It returns an **iterator** to the salary dictionary list, after fetching.
+
+```python
+salary_iter = entity.get_salary()
+
+# printing the salary dictionary using iterator
+for salary_dict in salary_iter:
+    print(salary_dict)
+```
+
+::: warning NOTE
+If the value was not previously retrieved, it will poll and check for progress, and then fetch and cache the retrieved value for next usage.
+:::
+
+### Arguments
+This method also has following **optional** arguments:
+| Argument | Type | Description | Default |
+| - | - | - | - |
+| reload | Boolean | If provided as `True`, it will ignore the cached value, and again make an API call and re-fetch the values | `False` |
+| account_id | String | If provided, only the salary of specific `account_id` will be retrieved | - |
+| from_date | `datetime.date` object | If provided, only the salary with date greater than or equal to `from_date` will be retrieved. | - |
+| to_date | `datetime.date` object | If provided, only the salary with date less than or equal to `to_date` will be retrieved.  | - |
+
+### Exceptions
+- In case there is any problem with arguments passed or if `create` method was used while creating the entity instance and the entity object was not created on server yet, it throws `ValueError`.
+
+- In case server could not be reached, it throws `ServiceTimeOutError`
+(`finbox_bankconnect.custom_exceptions.ServiceTimeOutError`).
+
+- In case `entity_id` cannot be found in our server, it throws `EntityNotFoundError`
+(`finbox_bankconnect.custom_exceptions.EntityNotFoundError`)
+
+- In case the transactions could not be extracted by us, it will throw `ExtractionFailedError`
+(`finbox_bankconnect.custom_exceptions.ExtractionFailedError`)
+
+### Salary Dictionary
+Sample salary dictionary:
+```python
+{
+    "balance": 29979.15,
+    "hash": "unique_transaction_identifier_2",
+    "description": "",
+    "clean_transaction_note": "Clean Transaction Note",
+    "account_id": "uuid4_for_account",
+    "transaction_type": "credit",
+    "date": "2019-01-11 00:00:00",
+    "amount": 29057.0,
+    "month_year": "1-2019",
+    "merchant_category": "",
+    "transaction_channel": "net_banking_transfer",
+    "transaction_note": "SOME LONG TRANSACTION NOTE"
+}
+```
+
+Each of the salary dictionary in the transaction list has following keys:
+- `balance`: account balance just after this transaction
+- `hash`: a unique identifying hash for each transaction
+- `description`: describes more information about the `transaction_channel` field. Refer to [this](/bank-connect/appendix.html#description) list for possible values.
+- `clean_transaction_note`: Transaction in note in clean english words
+- `account_id`: unique UUID4 identifier for the account to which the transaction belongs to
+- `transaction_type`: can be `debit` or `credit`
+- `date`: date of transaction
+- `amount`: indicates the transaction amount
+- `month_year`: month and year for which the salary is
+- `merchant_category`: the category of the merchant in case a transaction is with a merchant. Refer to [this](/bank-connect/appendix.html#merchant-category) list of possible values.
+- `transaction_channel`: refer to [this](/bank-connect/appendix.html#transaction-channel) list for possible values.
+- `transaction_note`: exact transaction note / description present in the statement PDF
 
 
 ## Advanced Settings <Badge text="Caution" type="error"/>
