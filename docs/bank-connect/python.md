@@ -441,6 +441,72 @@ Each of the salary dictionary in the transaction list has following keys:
 - `transaction_channel`: refer to [this](/bank-connect/appendix.html#transaction-channel) list for possible values.
 - `transaction_note`: exact transaction note / description present in the statement PDF
 
+## Lender Transactions
+To fetch lender transactions use the `get_lender_transactions` method. It returns an **iterator** to the lender transaction dictionary list, after fetching.
+
+```python
+lender_transactions = entity.get_lender_transactions()
+
+# printing the lender transaction dictionary using iterator
+for lender_transaction in lender_transactions:
+    print(lender_transaction)
+```
+
+::: warning NOTE
+If the value was not previously retrieved, it will poll and check for progress, and then fetch and cache the retrieved value for next usage.
+:::
+
+### Arguments
+This method also has following **optional** arguments:
+| Argument | Type | Description | Default |
+| - | - | - | - |
+| reload | Boolean | If provided as `True`, it will ignore the cached value, and again make an API call and re-fetch the values | `False` |
+| account_id | String | If provided, only the lender transactions of specific `account_id` will be retrieved | - |
+| from_date | `datetime.date` object | If provided, only the lender transactions with date greater than or equal to `from_date` will be retrieved. | - |
+| to_date | `datetime.date` object | If provided, only the lender transactions with date less than or equal to `to_date` will be retrieved.  | - |
+
+### Exceptions
+- In case there is any problem with arguments passed or if `create` method was used while creating the entity instance and the entity object was not created on server yet, it throws `ValueError`.
+
+- In case server could not be reached, it throws `ServiceTimeOutError`
+(`finbox_bankconnect.custom_exceptions.ServiceTimeOutError`).
+
+- In case `entity_id` cannot be found in our server, it throws `EntityNotFoundError`
+(`finbox_bankconnect.custom_exceptions.EntityNotFoundError`)
+
+- In case the transactions could not be extracted by us, it will throw `ExtractionFailedError`
+(`finbox_bankconnect.custom_exceptions.ExtractionFailedError`)
+
+### Lender Transaction Dictionary
+Sample lender transaction dictionary:
+```python
+{
+    "transaction_note": "SOME LONG TRANSACTION NOTE",
+    "hash": "unique_transaction_identifier_2",
+    "description": "lender_transaction",
+    "account_id": "uuid4_for_account",
+    "transaction_type": "debit",
+    "amount": 5188.0,
+    "date": "2019-01-08 00:00:00",
+    "merchant_category": "",
+    "balance": 922.15,
+    "transaction_channel": "net_banking_transfer"
+}
+```
+
+Each of the lender transaction dictionary in the transaction list has following keys:
+- `transaction_note`: exact transaction note / description present in the statement PDF
+- `hash`: a unique identifying hash for each transaction
+- `description`: describes more information about the `transaction_channel` field. Refer to [this](/bank-connect/appendix.html#description) list for possible values.
+- `account_id`: unique UUID4 identifier for the account to which the transaction belongs to
+- `transaction_type`: can be `debit` or `credit`
+- `amount`: indicates the transaction amount
+- `date`: date of transaction
+- `merchant_category`: the category of the merchant in case a transaction is with a merchant. Refer to [this](/bank-connect/appendix.html#merchant-category) list of possible values.
+- `balance`: account balance just after this transaction
+- `transaction_channel`: refer to [this](/bank-connect/appendix.html#transaction-channel) list for possible values.
+
+
 
 ## Advanced Settings <Badge text="Caution" type="error"/>
 Other than `api_key`, following values can also be modified globally as per requirement:
