@@ -149,7 +149,7 @@ API will give a JSON Response with following keys:
 ::: danger data key
 In case of **Transactions** and **Accounts** endpoints, the `data` key is an **array** instead of an **object/dictionary**, having transaction and account objects as element respectively.
 
-The list of predictors in `data` key and the keys in transaction / account object is gonna change based on the Result API Endpoint, Feature set version and requester. This **list will hence be shared separately** by FinBox team during the integration.
+The list of predictors in `data` key and the keys in transaction / account object will be different based on the Result API Endpoint, Feature set version and requester. This **list will hence be shared separately** by FinBox team during the integration.
 :::
 
 ::: warning NOTE
