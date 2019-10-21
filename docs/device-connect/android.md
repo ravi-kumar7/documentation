@@ -46,7 +46,7 @@ FinBox.createUser("provided-api-key", "client_side_borrower_id",
         }
     });
 ```
-::: warning NOTE
+::: danger IMPORTANT
 This method needs to be called every time the user opens the app.
 :::
 
@@ -108,7 +108,7 @@ The recommended behavior is to leave the permissions untouched, as it is easier 
 In case the Manifest merger is not enabled add the above specified permissions manually.
 
 
-## FCM Notifications
+## Forward Notifications to SDK
 
 Using FCM notifications, the SDK requests the device to generate appropriate data for the server to analyze. So, if the FinBox servers sends a notification, you need to forward the data payload to the SDK.
 
@@ -158,7 +158,11 @@ FinBox.initLibrary(this);
 
 ## Error Codes
 
-Below table contains the constant name, error code value and the description of error code
+Below table contains the constant name, error code value and the description of error code:
+
+::: tip TIP
+All the constants stated below are available as constants in SDK.
+:::
 
 | Constant Name                       | Constant Value| Description |
 | :------------------------- | :------------- | --------------- |
