@@ -168,7 +168,7 @@ Depending on the availability of data, there can be different cases with differe
 | [Bad request](/device-connect/rest-api.html#case-5-bad-request) | `"error"` | 400 | The request input is incorrect / malformed. More details available in `message` key |
 | [Unauthorized](/device-connect/rest-api.html#case-6-unauthorized) | `"error"` | 403 | This happens in case API key is incorrect or IP address in not whitelisted |
 | [Internal Server Error](/device-connect/rest-api.html#case-6-unauthorized) | `"error"` | 5xx | The request processing failed because of some internal error. Please retry with exponential back-off. If the issue persists, please contact support |
-| [Quota Exceeded](/device-connect/rest-api.html#case-8-rate-limit-exceeded) | `"error"` | 429 | This happens in case the maximum allowed rate limit on API exceeds |
+| [Rate Limit Exceeded](/device-connect/rest-api.html#case-8-rate-limit-exceeded) | `"error"` | 429 | This happens in case the maximum allowed rate limit on API exceeds |
 
 ### Case 1 - Calculation in Progress
 
