@@ -1,355 +1,296 @@
 # Device Connect: REST API
 
-FinBox DeviceConnect Android SDK enables borrowers to share device data to avail credit even if they are new to credit or thin file customers and helps them get better terms based on the shared data.
+The FinBox Device Connect REST API enables **"server to server data"** fetching of customers' Android device data. The customer's data can be fetched using the `customer_id`. API accepts JSON-encoded request bodies, returns JSON-encoded responses.
 
-This document will enable integration of FinBox DeviceConnect API for &quot; **server to server data**&quot; fetching by the client from its end customers&#39; Android mobile devices.
+## Authentication
 
-# 2. FinBox DeviceConnect REST API
+FinBox provides a valid and signed certificate for all API methods and endpoints. To access the API methods requester must ensure that their connection library supports HTTPS.
 
-Using FinBox DeviceConnect SDK API, client can get the feature vector corresponding to the requested **customer\_id.**
+Authentication for the APIs are based on **API key** provided by the FinBox. Server to server communication can commence when **IP of requester are whitelisted** on the FinBox servers. This can be easily done upon request.
 
-## 2.1 Request Response Format
+## API Integration Workflow
 
-The FinBox DeviceConnect API is a JSON REST API. The request and response will be in JSON.
+### Results API
 
-## 2.2 Security and SSL
+Once FinBox DeviceConnect SDK is initialized, data from device is sent to FinBox processing engine against an anonymous `customer_id` which will be the primary key from retrieving any information from the server.
 
-FinBox provides a valid and signed certificate for all API methods and endpoints. To access the API methods clients must ensure that their connection library supports HTTPS.
+Clients need to call the **Results API** with `customer_id` to get the predictors for a given customer. A sample workflow is shown in section [below](/device-connect/rest-api.html#sample-workflow). In case results API returns with status `"in_progress"` (meaning data is currently being processed), client should poll the Results API with a delay of at least **10 seconds**
 
-## 2.3 Authentication based on API Key and IP Whitelisting
+### Sample Workflow
 
-1. The FinBox servers authenticate based on **FinBox**** server API key** provided by the FinBox.
-2. Server to server communication can commence when **client&#39;s IP&#39;s** are whitelisted on the FinBox servers. This can be easily done upon request.
-
-# 3. API Integration Workflow
-
-## 3.1 Fetching Data for a customer\_id
-
-Once FinBox DeviceConnect SDK is initialized, data from device is sent to FinBox processing engine against an anonymous customer\_id which will be the primary key from retrieving any information from the server.
-
-### 3.1.1 Results API
-
-Clients need to call the results API with customer\_id to get the predictors for a given customer. A sample workflow is shown in section 3.1.2. In case results API returns with status **&quot;in\_progress&quot;** (meaning data is currently being processed), client should poll the Results API with a delay of at least 10 seconds
-
-### 3.1.2 Sample Workflow
-
-Image Here
+<img src="/documentation/sample_workflow.png" alt="Sample Workflow" />
 
 1. Call FinBox Results API
-2. In case response status = &quot;in\_progress&quot;, retry after 10 seconds
-3. In case response status = &quot;success&quot;, receive data as per format mentioned in Section 4.1.3
+2. In case the response status is `"in_progress"`, retry after 10 seconds
+3. In case the response status is `"complete"`, receive data as per format mentioned in [this](/device-connect/rest-api.html#results-api-response) section.
 
-# 4. API Details
+## Results API Endpoints
 
-## 4.1 API URL and Request Structure
+::: tip Base URL
+For all the endpoints, the base URL is **https://insights.finbox.in/v2/**
+:::
 
-#### Results API URL
+| Results | Endpoint | Request Type | Description |
+| - | - | -| - |
+| General Predictors | **/risk/predictors** | POST | General features extracted from customer's data |
+| Apps Predictors | **/apps** | POST | Features based on apps on customer's Android device|
+| Device Predictors | **/device** | POST | Features based on customer's Android device |
+| Transactions | **/risk/transactions** | POST | Captured and enriched bank account transactions of customer |
+| Accounts | **/risk/accounts** | POST | Captured bank account details of customer |
 
-|   | UAT Endpoint | Production Endpoint |
+## Results API Request
+
+### Request Header and Body
+For all the results API request structure is same, all requests must have `x-api-key` field in **header** having the value as the API Key shared by FinBox team. The following **parameters** must be passed in every request body as keys to a json document:
+
+**Request Body**
+| Name | Type | Description |
 | --- | --- | --- |
-| Base URL | [https://insightsdev.finbox.in/v2](https://insightsdev.finbox.in/v2/risk/predictors) | [https://insights.finbox.in/v2](https://insights.finbox.in/v2/) |
-| Request Type | POST | POST |
-| General Predictors | /risk/predictors | /risk/predictors |
-| Apps Predictors | /apps | /apps |
-| Device Predictors | /device | /device |
+| `customer_id` | String | Customer ID for which feature vector is required |
+| version | Integer | Version of the feature set. The latest version applicable for client will be communicated by FinBox team |
+| salt | String | A secret key which is computed basis logic mentioned in section below |
 
-The request-response structure of all the resources is same. The key names of predictors in response will change only.
-
-#### Request
-
-Following parameters must be passed in request
-
-**Body**
-
-| Parameter Name | Parameter Type | Parameter Description |
-| --- | --- | --- |
-| customer\_id | STRING | Customer ID for which feature vector is required |
-| version | INTEGER | Version of the feature set. The latest version applicable for client will be communicated by FinBox team |
-| salt | STRING | A secret key which is computed basis logic mentioned in section below |
-
-#### Calculating salt
+### Calculating salt
 
 Salt is calculated as follows:
-
-1. A = Create MD5 hash of customer\_id
-2. B = Concatenated string of A and secret key shared by FinBox.
-3. C = Create SHA 256 hash of B
+1. A = Create MD5 hash of `customer_id`
+2. B = Concatenate string of A and secret key shared by FinBox.
+3. C = Create SHA-256 hash of B
 4. Salt = base64 encoded version of C
 
-Sample Java and Python codes for salt calculation will be shared separately
+Sample code for salt generation in **Java**:
+```java
+/**
+ * Method that takes customer_id and secret key as input, and returns the salt
+ *
+ * @param clientId String representing the customer_id
+ * @param finboxKey String representing the secret key shared by FinBox
+ * @return Salt
+ */
+private static String getSecretKey(String clientId, String finboxKey) throws NoSuchAlgorithmException {
+    MessageDigest mdigest = MessageDigest.getInstance("MD5");
+    mdigest.update(clientId.getBytes());
+    String hashedOutput = DatatypeConverter.printHexBinary(mdigest.digest());
+    String concatString = hashedOutput + finboxKey;
+    return get256Encoded(concatString);
+}
 
-#### Headers
+/**
+ * Helper method that converts the string into SHA 256 and returns it
+ *
+ * @param s String to be 256 encoded
+ * @return Converted 256 hash
+ */
+private static String get256Encoded(final String s) {
+    MessageDigest digest = null;
+    String hash = null;
+    try {
+        digest = MessageDigest.getInstance("SHA-256");
+        digest.update(s.getBytes());
 
-| Header Name | Header Description |
-| --- | --- |
-| x-api-key | API Key shared by FinBox team |
+        hash = Base64.getEncoder().encodeToString(digest.digest());
+        System.out.println("SHA-256 -> " + hash);
+        return hash;
+    } catch (NoSuchAlgorithmException e1) {
+        e1.printStackTrace();
+    }
+    return "";
+}
+```
 
+Sample code for salt generation in **Python**:
+```python
+import hashlib, base64
 
+def create_salt(customer_id, client_secret):
+    """
+    Takes customer_id (unique identifier of customer)
+    and client_secret (shared by FinBox) as input
+    and returns salt in response
+    """
+    customer_hash = hashlib.md5(customer_id.encode('utf-8')).hexdigest().upper()
+    intermediate_hash = customer_hash + client_secret
+    salt_encoded = hashlib.sha256(intermediate_hash.encode('utf-8')).digest()
+    salt = base64.b64encode(salt_encoded).decode()
+    return salt
+```
+### Sample Request
 
-#### Sample Snippets
-
-Image Here
-
-
-
-**/\*\* Headers \*\*/**
-
+**Headers**
+```yaml
 Content-Type: application/json
-
 x-api-key: XXXX-XXXX-XXXX
+```
 
-
-
-Image Here
-
-**/\*\* REQUEST BODY \*\*/**
-
+**Request Body**
+```json
 {
-
-&quot;customer\_id&quot;:&quot;1234ABCD4567&quot;,
-
-&quot;version&quot;: 1,
-
-&quot;salt&quot;: &quot;5vVMNofMy5kQXx647sBdYBoMolMb1GGBSYLkzwaa9v8=&quot;
-
+    "customer_id": "1234ABCD4567",
+    "version": 1,
+    "salt": "5vVMNofMy5kQXx647sBdYBoMolMb1GGBSYLkzwaa9v8="
 }
+```
 
-## 4.2 API Response Structure
+## Results API Response
+API will give a JSON Response with following keys:
 
-In case of successful processing, API would return with predictors data.
+### Response Keys
 
-Depending on the availability of data response could be:
-
-1. **Case 1 : Calculation in progress** –  The request input is correct and processing has started. Please retry in 10 seconds
-2. **Case 2 : Calculation complete and data is available** – The request input is correct and processing has completed. Response contains the predictors
-3. **Case 3** : **Calculation complete and data is unavailable** – The request input is correct and processing has completed but response contains no predictors because of lack of data from user&#39;s device
-4. **Case 4** : **Invalid customer ID**** –** User does not exist in FinBox system
-5. **Case 5** : **Bad request –** The request input is incorrect / malformed. More details available in description key
-6. **Case 6 : Unauthorized  -** This happens in case API key is incorrect or IP address in not whitelisted
-7. **Case 7** : **Internal Server Error –** The request processing failed because of some internal error. Please retry with exponential back-off. If the issue persists, please contact support
-8. **Case 8** : **Quota Exceeded –** This happens in case the maximum allowed rate limit on API exceeds
-
-#### Response Keys
-
-| **Sl. No.** | **Column Name** | **Description** | **Type** | **Nullable** |
-| --- | --- | --- | --- | --- |
-| **1** | customer\_id | Customer ID for which data was requested | STRING [260] | Yes |
-| **2** | request\_id | A unique string for each request | STRING [32] | Yes |
-| **3** | status | Status of the operation. | STRING [20] | No |
-| **4** | message | Description of status | STRING [200] | No |
-| **5** | date\_requested | Timestamp of processing request | STRING YYYY-MM-DDThh:mm:ss:mil | Yes |
-| **6** | date\_processed | Timestamp of processing completion | STRING YYYY-MM-DDThh:mm:ss:mil | Yes |
-| **7** | data | A dictionary of predictors. Key – predictor nameValue – predictor value **The keys for different resources will be different and will be shared separately** | JSON | Yes |
-
-
-
-### 4.2.1 Case 1 – Calculation in Progress
-
-Image Here
-
-**HTTP Status Code = 202**
-
-**/\*\* RESPONSE BODY \*\*/**
-
-{
-
-&quot;customer\_id&quot;:&quot;A145BC6312B50CA2B58233288F81C02114A6A74E9A62482169F9F&quot;,
-
-&quot;request\_id&quot;:&quot;abcd-def-dfdf-xcds1&quot;,
-
-&quot;date\_requested&quot;:&quot;2019-01-03T06:37:44:003&quot;,
-
-&quot;status&quot;:&quot;in\_progress&quot;,
-
-&quot;message&quot;:&quot;Featurization in Progress, please try again in 10 Seconds&quot;
-
-}
-
-
-
-### 4.2.2 Case 2 – Calculation complete and data is available
-
-Image Here
-
-**HTTP Status Code = 200**
-
-##### **/\*\* RESPONSE BODY\*\*/**
-
- {
-
-&quot;customer\_id&quot;:&quot;A145BC6312B50CA2B58233288F81C02114A6A74E9A62482169F9F&quot;,
-
-&quot;request\_id&quot;:&quot;abcd-def-dfdf-jjj1&quot;,
-
-&quot;date\_requested&quot;:&quot;2019-01-03T06:37:44:003&quot;,
-
-&quot;date\_processed&quot;:&quot;2018-12-12T01:01:57:221&quot;,
-
-&quot;status&quot;: &quot;complete&quot;,
-
-&quot;message&quot;:&quot;data processed successfully&quot;,
-
-&quot;data&quot;: {
-
-                        &quot;av\_balance\_c30&quot;: 7890.1,
-
-                        &quot;num\_cheque\_bounces\_c30&quot;:0,
-
-                        ...
-
-                        ...
-
-                        &quot;is\_postpaid&quot;: false
-
-          }
-
- }
-
-A list of predictor keys will be made available along with the integration document.
-
-
-
-### 4.2.3 Case 3 – Calculation complete and data is unavailable
-
-Image Here
-
-**HTTP Status Code = 200**
-
-**/\*\* RESPONSE BODY \*\*/**
-
-{
-
-&quot;customer\_id&quot;:&quot;A145BC6312B50CA2B58233288F81C02114A6A74E9A62482169F9F&quot;,
-
-&quot;request\_id&quot;:&quot;abcd-def-dfdf-000l&quot;,
-
-&quot;date\_requested&quot;:&quot;2019-01-03T06:37:44:003&quot;,
-
-&quot;date\_processed&quot;:&quot;2018-12-12T01:01:57:221&quot;,
-
-&quot;status&quot;: &quot;no\_data&quot;,
-
-&quot;message&quot;:&quot;No data available for user&quot;,
-
-&quot;data&quot;: null
-
-}
-
-
-
-### 4.2.4 Case 4 – Invalid Customer ID
-
-Image Here
-
-**HTTP Status Code = 200**
-
-**/\*\* RESPONSE BODY \*\*/**
-
-{
-
-&quot;customer\_id&quot;:&quot;A145BC6312B50CA2B58233288F81C02114A6A74E9A62482160F9F&quot;,
-
-&quot;request\_id&quot;:&quot;abcd-def-dfdf-ddd1&quot;,
-
-&quot;date\_requested&quot;:&quot;2019-01-03T06:37:44:003&quot;,
-
-&quot;date\_processed&quot;:null,
-
-&quot;status&quot;: &quot;not\_found&quot;,
-
-&quot;message&quot;:&quot;User not found&quot;,
-
-&quot;data&quot;: null
-
-#### }
-
-
-
-### 4.2.5 Case 5 – Bad Request
-
-Image Here
-
-**HTTP Status Code = 400**
-
-**/\*\* RESPONSE BODY \*\*/**
-
-{
-
-&quot;customer\_id&quot;:&quot;A145BC6312B50CA2B58233288F81C02114A6A74E9A62482160F9F&quot;,
-
-&quot;request\_id&quot;:&quot;abcd-def-dfdf-ddd1&quot;,
-
-&quot;date\_requested&quot;:&quot;2019-01-03T06:37:44:003&quot;,
-
-&quot;status&quot;: &quot;error&quot;,
-
-&quot;message&quot;:&quot;Missing Key version&quot;
-
-}
-
-### 4.2.6 Case 6 – Unauthorized
-
-Image Here
-
-**HTTP Status Code = 403**
-
-**/\*\* RESPONSE BODY \*\*/**
-
-{
-
-&quot;status&quot;: &quot;error&quot;,
-
-&quot;message&quot;:&quot;Incorrect API Key&quot;
-
-#### }
-
-
-
-### 4.2.7 Case 7 – Internal Server Error
-
-Image Here
-
-**HTTP Status Code = 5xx**
-
-**/\*\* RESPONSE BODY \*\*/**
-
-{
-
-&quot;status&quot;: &quot;error&quot;,
-
-&quot;message&quot;:&quot;Internal Server Error. Please retry. If issue persists, please                    contact support&quot;
-
-#### }
-
-### 4.2.8 Case 8 – Rate Limit Exceeded
-
-Image Here
-
-**HTTP Status Code = 429**
-
-**/\*\* RESPONSE BODY \*\*/**
-
-{
-
-&quot;status&quot;: &quot;error&quot;,
-
-&quot;message&quot;:&quot;Rate limit exceeded&quot;
-
-#### }
-
-## 4.3 Status Codes and Messages
-
-| **Sl. No.** | **HTTP Status Code** | **Status** | **Message** |
+| Key | Description | Type | Nullable |
 | --- | --- | --- | --- |
-| **1** | 200 | complete | Request processed successfully.  Predictor vector returned in response |
-| **2** | 200 | no\_data | Request processed successfully. No data exists for user |
-| **3** | 202 | in\_progress | Request processing in Progress, Please Try Again in 10 Seconds |
-| **4** | 200 | not\_found | Unrecognised customer\_id  |
-| **5** | 400 | error | Bad Request. Missing Keys |
-| **6** | 400 | error | Bad Request. Timestamp format incorrect |
-| **7** | 400 | error | Bad Request. Version is not correct |
-| **8** | 429 | error | Rate Limit Exceeded. Please try again |
-| **9** | 403 | error | Unauthorized. Incorrect API Key |
-| **10** | 403 | error | Unauthorized IP address |
-| **11** | 500 | error | Internal Server Error. Please contact support |
-| **12** | 429 | error | Rate limit exceeded |
+| customer_id | Customer ID for which data was requested | STRING [260] | Yes |
+| request_id | A unique string for each request | STRING [32] | Yes |
+| status | Status of the operation. | STRING [20] | No |
+| message | Description of status | STRING [200] | No |
+| date_requested | Timestamp of processing request | STRING with `YYYY-MM-DDThh:mm:ss:mil` format | Yes |
+| date_processed | Timestamp of processing completion | STRING with `YYYY-MM-DDThh:mm:ss:mil` format | Yes |
+| data | An object/dictionary of predictors with key representing predictor name and its value the predictor value | JSON | Yes |
+
+::: danger data key
+In case of **Transactions** and **Accounts** endpoints, the `data` key is an **array** instead of an **object/dictionary**, having transaction and account objects as element respectively.
+
+The list of predictors in `data` key and the keys in transaction / account object is gonna change based on the Result API Endpoint, Feature set version and requester. This **list will hence be shared separately** by FinBox team during the integration.
+:::
+
+::: warning NOTE
+Some of the keys in response may be missing based on availability of data and HTTP Status code. Please refer to examples for each of the cases listed [here](/device-connect/rest-api.html#status-values).
+:::
+
+### `status` values
+Depending on the availability of data, there can be different cases with different `status` values as follows:
+
+| Case | `status` value | HTTP Status Code | Description / Action |
+| - | - | - | - |
+| [Calculation in progress](/device-connect/rest-api.html#case-1-calculation-in-progress) | `"in_progress"` | 202 | The request input is correct and processing has started. Please retry in 10 seconds |
+| [Calculation complete and data is available](/device-connect/rest-api.html#case-2-calculation-complete-and-data-is-available) | `"complete"` | 200 | The request input is correct and processing has completed. Response contains the predictors |
+| [Calculation complete and data is unavailable](/device-connect/rest-api.html#case-3-calculation-complete-and-data-is-unavailable) | `"no_data"` | 200 | The request input is correct and processing has completed but response contains no predictors because of lack of data from user's device |
+| [Invalid customer ID](/device-connect/rest-api.html#case-4-invalid-customer-id) | `"not_found"` | 200 | User does not exist in FinBox system |
+| [Bad request](/device-connect/rest-api.html#case-5-bad-request) | `"error"` | 400 | The request input is incorrect / malformed. More details available in `message` key |
+| [Unauthorized](/device-connect/rest-api.html#case-6-unauthorized) | `"error"` | 403 | This happens in case API key is incorrect or IP address in not whitelisted |
+| [Internal Server Error](/device-connect/rest-api.html#case-6-unauthorized) | `"error"` | 5xx | The request processing failed because of some internal error. Please retry with exponential back-off. If the issue persists, please contact support |
+| [Quota Exceeded](/device-connect/rest-api.html#case-8-rate-limit-exceeded) | `"error"` | 429 | This happens in case the maximum allowed rate limit on API exceeds |
+
+### Case 1 - Calculation in Progress
+
+HTTP Status Code: **202**
+
+Sample Response Body:
+
+```json
+{
+    "customer_id": "A145BC6312B50CA2B58233288F81C02114A6A74E9A62482169F9F",
+    "request_id": "abcd-def-dfdf-xcds1",
+    "date_requested": "2019-01-03T06:37:44:003",
+    "status": "in_progress",
+    "message": "Featurization in Progress, please try again in 10 Seconds"
+}
+```
+
+### Case 2 - Calculation complete and data is available
+
+HTTP Status Code: **200**
+
+Sample Response Body:
+
+```json
+{
+    "customer_id": "A145BC6312B50CA2B58233288F81C02114A6A74E9A62482169F9F",
+    "request_id": "abcd-def-dfdf-jjj1",
+    "date_requested": "2019-01-03T06:37:44:003",
+    "date_processed": "2018-12-12T01:01:57:221",
+    "status": "complete",
+    "message": "data processed successfully",
+    "data": // {} or [] based on results API endpoint with keys representing the features
+}
+```
+
+### Case 3 - Calculation complete and data is unavailable
+
+HTTP Status Code: **200**
+
+Sample Response Body:
+
+```json
+{
+    "customer_id": "A145BC6312B50CA2B58233288F81C02114A6A74E9A62482169F9F",
+    "request_id": "abcd-def-dfdf-000l",
+    "date_requested": "2019-01-03T06:37:44:003",
+    "date_processed": "2018-12-12T01:01:57:221",
+    "status": "no_data",
+    "message": "No data available for user",
+    "data": null
+}
+```
+
+### Case 4 - Invalid Customer ID
+
+HTTP Status Code: **200**
+
+Sample Response Body:
+
+```json
+{
+    "customer_id": "A145BC6312B50CA2B58233288F81C02114A6A74E9A62482160F9F",
+    "request_id": "abcd-def-dfdf-ddd1",
+    "date_requested": "2019-01-03T06:37:44:003",
+    "date_processed":null,
+    "status": "not_found",
+    "message": "User not found",
+    "data": null
+}
+```
+
+### Case 5 - Bad Request
+
+HTTP Status Code: **400**
+
+Sample Response Body:
+
+```json
+{
+    "customer_id": "A145BC6312B50CA2B58233288F81C02114A6A74E9A62482160F9F",
+    "request_id": "abcd-def-dfdf-ddd1",
+    "date_requested": "2019-01-03T06:37:44:003",
+    "status": "error",
+    "message":"Missing Key version"
+}
+```
+
+### Case 6 - Unauthorized
+
+HTTP Status Code: **403**
+
+Sample Response Body:
+
+```json
+{
+    "status": "error",
+    "message": "Incorrect API Key"
+}
+```
+
+### Case 7 - Internal Server Error
+
+HTTP Status Code: **5xx**
+
+Sample Response Body:
+
+```json
+{
+    "status": "error",
+    "message": "Internal Server Error. Please retry. If issue persists, please contact support"
+}
+```
+
+### Case 8 - Rate Limit Exceeded
+
+HTTP Status Code: **429**
+
+Sample Response Body:
+
+```json
+{
+    "status": "error",
+    "message": "Rate limit exceeded"
+}
+```
