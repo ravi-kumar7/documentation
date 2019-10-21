@@ -1,4 +1,4 @@
-# Android SDK
+# Device Connect: Android SDK
 The Android SDK can be used to integrate mobile apps with Device Connect to share customers' device data.
 
 ## Adding Dependency

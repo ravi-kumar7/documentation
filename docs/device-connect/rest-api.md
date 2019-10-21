@@ -1,4 +1,4 @@
-## WIP
+# Device Connect: REST API
 
 FinBox DeviceConnect Android SDK enables borrowers to share device data to avail credit even if they are new to credit or thin file customers and helps them get better terms based on the shared data.
 

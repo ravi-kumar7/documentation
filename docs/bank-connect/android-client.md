@@ -1,4 +1,4 @@
-# Android Client
+# Bank Connect: Android Client
 This **SDK** helps users to upload bank statements.
 <p style="text-align:center">
 <img src="/documentation/bc_android.gif" alt="Animated Demo" />

@@ -1,4 +1,4 @@
-# Basics
+# Bank Connect: Basics
 One must be familiar with following terms to use the Bank Connect library:
 
 ## Entity

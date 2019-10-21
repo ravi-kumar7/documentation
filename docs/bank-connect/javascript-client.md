@@ -1,4 +1,4 @@
-# JavaScript Client
+# Bank Connect: JavaScript Client
 This **SDK** helps users to upload bank statements.
 <p style="text-align:center">
 <img src="/documentation/bc_js.gif" alt="Animated Demo" />
