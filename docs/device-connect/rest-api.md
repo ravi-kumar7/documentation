@@ -41,12 +41,12 @@ For all the endpoints, the base URL is **https://insights.finbox.in/v2/**
 ## Results API Request
 
 ### Request Header and Body
-For all the results API request structure is same, all requests must have `x-api-key` field in **header** having the value as the API Key shared by FinBox team. The following **parameters** must be passed in every request body as keys to a json document:
+For all the results API request structure is same, all requests must have `x-api-key` field in **header** having the value as the API Key shared by FinBox team. The following **keys** must be passed in every request body as keys to a json document:
 
 **Request Body**
-| Name | Type | Description |
+| Key | Type | Description |
 | --- | --- | --- |
-| `customer_id` | String | Customer ID for which feature vector is required |
+| customer_id | String | Customer ID for which feature vector is required |
 | version | Integer | Version of the feature set. The latest version applicable for client will be communicated by FinBox team |
 | salt | String | A secret key which is computed basis logic mentioned in section below |
 
