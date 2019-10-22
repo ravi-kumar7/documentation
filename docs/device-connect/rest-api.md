@@ -33,10 +33,10 @@ For all the endpoints, the base URL is **https://insights.finbox.in/v2/**
 | Results | Endpoint | Request Type | Description |
 | - | - | -| - |
 | General Predictors | **/risk/predictors** | POST | General features extracted from customer's data |
-| Apps Predictors | **/apps** | POST | Features based on apps on customer's Android device|
-| Device Predictors | **/device** | POST | Features based on customer's Android device |
-| Transactions | **/risk/transactions** | POST | Captured and enriched bank account transactions of customer |
-| Accounts | **/risk/accounts** | POST | Captured bank account details of customer |
+
+::: tip Predictors
+Other than general predictors, there are also more predictor endpoints which will be shared based on the  requirement by FinBox team.
+:::
 
 ## Results API Request
 
@@ -144,12 +144,10 @@ API will give a JSON Response with following keys:
 | message | Description of status | STRING [200] | No |
 | date_requested | Timestamp of processing request | STRING with `YYYY-MM-DDThh:mm:ss:mil` format | Yes |
 | date_processed | Timestamp of processing completion | STRING with `YYYY-MM-DDThh:mm:ss:mil` format | Yes |
-| data | An object/dictionary of predictors with key representing predictor name and its value the predictor value | JSON | Yes |
+| data | An array of objects, each object representing the predictors, having keys `name` indicating the predictor name and `value` indicating the values | JSON | Yes |
 
 ::: danger data key
-In case of **Transactions** and **Accounts** endpoints, the `data` key is an **array** instead of an **object/dictionary**, having transaction and account objects as element respectively.
-
-The list of predictors in `data` key and the keys in transaction / account object will be different based on the Result API Endpoint, Feature set version and requester. This **list will hence be shared separately** by FinBox team during the integration.
+The list of predictors in `data` key will be different based on the Result API Endpoint, Feature set version and requester. This **list will hence be shared separately** by FinBox team during the integration.
 :::
 
 ::: warning NOTE
@@ -200,7 +198,7 @@ Sample Response Body:
     "date_processed": "2018-12-12T01:01:57:221",
     "status": "complete",
     "message": "data processed successfully",
-    "data": // {} or [] based on results API endpoint with keys representing the features
+    "data": [] // will hold the predictor objects
 }
 ```
 
