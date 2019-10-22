@@ -3,6 +3,7 @@ node_js:
   - lts/*
 script:
   - yarn docs:build
+  - echo 'docs.finbox.in' > docs/.vuepress/dist/CNAME
 
 deploy:
   provider: pages
