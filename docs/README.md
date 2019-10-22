@@ -8,8 +8,13 @@ footer: Copyright © 2019 Moshpit Technologies Pvt. Ltd.
   flex-basis: 45% !important;
   max-width: 45% !important;
 }
-.home .doc_link {
+@media (max-width: 719px){
+  .home .feature {
+    max-width: 100% !important;
+    padding: 0 2.5rem !important;
+  }
 }
+
 .home .doc_link:hover {
     border-bottom-width: 1px;
     border-bottom-style: solid;
