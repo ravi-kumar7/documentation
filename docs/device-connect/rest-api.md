@@ -18,7 +18,7 @@ Clients need to call the **Results API** with `customer_id` to get the predictor
 
 ### Sample Workflow
 
-<img src="/documentation/sample_workflow.png" alt="Sample Workflow" />
+<img src="/sample_workflow.png" alt="Sample Workflow" />
 
 1. Call FinBox Results API
 2. In case the response status is `"in_progress"`, retry after 10 seconds
