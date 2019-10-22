@@ -147,7 +147,7 @@ API will give a JSON Response with following keys:
 | data | An array of objects, each object representing the predictors, having keys `name` indicating the predictor name and `value` indicating the values | JSON | Yes |
 
 ::: danger data key
-The list of predictors in `data` key will be different based on the Result API Endpoint, Feature set version and requester. This **list will hence be shared separately** by FinBox team during the integration.
+The list of predictors in `data` key will be different based on the result API endpoint, feature set version and requester. This **list will hence be shared separately** by FinBox team during the integration.
 :::
 
 ::: warning NOTE
