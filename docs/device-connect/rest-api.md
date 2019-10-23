@@ -10,27 +10,27 @@ Authentication for the APIs are based on **API key** provided by the FinBox. Ser
 
 ## API Integration Workflow
 
-### Results API
+### Insights API
 
 Once FinBox DeviceConnect SDK is initialized, data from device is sent to FinBox processing engine against an anonymous `customer_id` which will be the primary key from retrieving any information from the server.
 
-Clients need to call the **Results API** with `customer_id` to get the predictors for a given customer. A sample workflow is shown in section [below](/device-connect/rest-api.html#sample-workflow). In case results API returns with status `"in_progress"` (meaning data is currently being processed), client should poll the Results API with a delay of at least **10 seconds**
+Clients need to call the **Insights API** with `customer_id` to get the predictors for a given customer. A sample workflow is shown in section [below](/device-connect/rest-api.html#sample-workflow). In case Insights API returns with status `"in_progress"` (meaning data is currently being processed), client should poll the Insights API with a delay of at least **10 seconds**
 
 ### Sample Workflow
 
 <img src="/sample_workflow.png" alt="Sample Workflow" />
 
-1. Call FinBox Results API
+1. Call FinBox Insights API
 2. In case the response status is `"in_progress"`, retry after 10 seconds
-3. In case the response status is `"complete"`, receive data as per format mentioned in [this](/device-connect/rest-api.html#results-api-response) section.
+3. In case the response status is `"complete"`, receive data as per format mentioned in [this](/device-connect/rest-api.html#insights-api-response) section.
 
-## Results API Endpoints
+## Insights API Endpoints
 
 ::: tip Base URL
 For all the endpoints, the base URL is **https://insights.finbox.in/v2/**
 :::
 
-| Results | Endpoint | Request Type | Description |
+| Insights | Endpoint | Request Type | Description |
 | - | - | -| - |
 | General Predictors | **/risk/predictors** | POST | General features extracted from customer's data |
 
@@ -38,10 +38,10 @@ For all the endpoints, the base URL is **https://insights.finbox.in/v2/**
 Other than general predictors, there are also more predictor endpoints which will be shared based on the  requirement by FinBox team.
 :::
 
-## Results API Request
+## Insights API Request
 
 ### Request Header and Body
-For all the results API request structure is same, all requests must have `x-api-key` field in **header** having the value as the API Key shared by FinBox team. The following **keys** must be passed in every request body as keys to a json document:
+For all the Insights API request structure is same, all requests must have `x-api-key` field in **header** having the value as the API Key shared by FinBox team. The following **keys** must be passed in every request body as keys to a json document:
 
 **Request Body**
 | Key | Type | Description |
@@ -131,7 +131,7 @@ x-api-key: XXXX-XXXX-XXXX
 }
 ```
 
-## Results API Response
+## Insights API Response
 API will give a JSON Response with following keys:
 
 ### Response Keys
