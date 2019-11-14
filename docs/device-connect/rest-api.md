@@ -60,41 +60,67 @@ Salt is calculated as follows:
 
 Sample code for salt generation in **Java**:
 ```java
-/**
- * Method that takes customer_id and secret key as input, and returns the salt
- *
- * @param clientId String representing the customer_id
- * @param finboxKey String representing the secret key shared by FinBox
- * @return Salt
- */
-private static String getSecretKey(String clientId, String finboxKey) throws NoSuchAlgorithmException {
-    MessageDigest mdigest = MessageDigest.getInstance("MD5");
-    mdigest.update(clientId.getBytes());
-    String hashedOutput = DatatypeConverter.printHexBinary(mdigest.digest());
-    String concatString = hashedOutput + finboxKey;
-    return get256Encoded(concatString);
-}
-
-/**
- * Helper method that converts the string into SHA 256 and returns it
- *
- * @param s String to be 256 encoded
- * @return Converted 256 hash
- */
-private static String get256Encoded(final String s) {
-    MessageDigest digest = null;
-    String hash = null;
-    try {
-        digest = MessageDigest.getInstance("SHA-256");
-        digest.update(s.getBytes());
-
-        hash = Base64.getEncoder().encodeToString(digest.digest());
-        System.out.println("SHA-256 -> " + hash);
-        return hash;
-    } catch (NoSuchAlgorithmException e1) {
-        e1.printStackTrace();
+import java.security.*;
+import java.util.*;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.math.BigInteger;
+​
+​
+public class SaltGeneration {
+    private static final int HEX_255 = 0xFF;
+    private static final String UNICODE_TRANSFORMATIONAL_FORMAT_8_BIT = "UTF-8";
+    private static String CUSTOMER_ID = "<CUSTOMER_ID>";
+    private static String SECRET = "<SECRET>";
+    
+    private static String getSaltForBody() {
+        String hashedOutput = getMd5Hash(CUSTOMER_ID);
+        String concatString = hashedOutput + SECRET;
+        String shaOutput = get256Encoded(concatString);
+        return shaOutput;
     }
-    return "";
+​
+​
+    private static String getMd5Hash(final String s) {
+        try {
+            // Create MD5 Hash
+            MessageDigest digest = MessageDigest.getInstance("MD5");
+            digest.update(s.getBytes(Charset.forName(UNICODE_TRANSFORMATIONAL_FORMAT_8_BIT)));
+            byte[] messageDigest = digest.digest();
+    
+            // Create Hex String
+            StringBuilder hexString = new StringBuilder();
+            for (byte mDigest : messageDigest) {
+                StringBuilder h = new StringBuilder(Integer.toHexString(HEX_255 & mDigest));
+                while (h.length() < 2) {
+                    h.insert(0, "0");
+                }
+                hexString.append(h);
+            }
+            return hexString.toString().toUpperCase();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+​
+    /**
+     * Method converts the string into SHA 256 and returns it
+     *
+     * @param s String to be 256 encoded
+     * @return Converted 256 hash
+     */
+    private static String get256Encoded(final String text) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(text.getBytes(StandardCharsets.UTF_8));
+            return Base64.getEncoder().encodeToString(hash);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
 ```
 
