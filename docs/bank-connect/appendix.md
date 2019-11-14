@@ -90,3 +90,15 @@ The list below indicates the possible value for `merchant_category` field:
 | - | - |
 | alcohol | Alcohol |
 | gambling | Gambling |
+| shopping | Shopping |
+| groceries | Groceries | 
+| entertainment | Entertainment |
+| medical | Medical |
+| travel | Includes cabs, hotels and travel tickets |
+| food | Food |
+| fuel | Fuel |
+| investments | Investments |
+| trading | Trading |
+| bills | Bills |
+| ewallet | E-Wallet |
+| loans | Lender |
