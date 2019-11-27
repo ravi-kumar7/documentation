@@ -31,6 +31,10 @@ module.exports = {
               path: '/device-connect/android.html'
             },
             {
+              title: 'React Native',
+              path: '/device-connect/react-native.html'
+            },
+            {
               title: 'REST API',
               path: '/device-connect/rest-api.html'
             },

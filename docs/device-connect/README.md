@@ -6,6 +6,7 @@ Click [here](https://finbox.in/contact-us) to contact us and request for a pilot
 :::
 
 ## Getting Started
-FinBox Device Connect requires two integrations, first on Android app to share the device data, then on backend to fetch data from customers' Android mobile devices. The documentation for both the SDKs are as follows:
+FinBox Device Connect requires two integrations, first on Android app (using Android SDK or React Native) to share the device data, then on backend to fetch data from customers' Android mobile devices. The documentation for the SDKs are as follows:
 - [Android SDK](/device-connect/android.html)
+- [React Native](/device-connect/react-native.html)
 - [REST API](/device-connect/rest-api.html)
