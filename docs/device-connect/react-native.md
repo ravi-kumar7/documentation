@@ -4,7 +4,7 @@ Device connect can be integrated to mobile apps via React Native to share custom
 ## Step 1: Adding Dependency
 Add the Gradle dependency in your Native app's `android` folder.
 ```groovy
-implementation('in.finbox:mobileriskmanager:2.1.5:pfm-release@aar') {  
+implementation('in.finbox:mobileriskmanager:<version>:parent-release@aar') {  
     transitive = true  
 }
 ```
@@ -15,8 +15,8 @@ In the project level `build.gradle` add the Repository path as follows:
 maven {  
     url "s3://risk-manager-android-sdk/artifacts"  
     credentials(AwsCredentials) {  
-        accessKey = "<access-key-provided-in-mail>"
-	secretKey = "<secret-key-provided-in-mail>"  
+        accessKey = "<access-key>"
+	secretKey = "<secret-key>"  
     }
 }
 ```
