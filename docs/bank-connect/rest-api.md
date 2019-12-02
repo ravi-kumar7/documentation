@@ -449,6 +449,40 @@ The response fields are same as in [List Accounts](/bank-connect/rest-api.html#l
 - `balance`: account balance just after this transaction
 - `transaction_channel`: refer to [this](/bank-connect/appendix.html#transaction-channel) list for possible values.
 
+## Transactions in Excel Workbook<Badge text="new" />
+Get extracted and enriched transactions for a given entity in .xlsx (Excel workbook) format.
+
+::: tip Endpoint
+GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/`<entity_id>`/raw_excel_report/**
+:::
+
+### Response
+On fetching information successfully, the response would be of the following format with **200 HTTP code**:
+```json
+{
+    "entity_id": "327bc6eb-f6b0-4a6b-9695-27a9a5822c00",
+    "progress": [
+        {
+            "status": "completed",
+            "message": null,
+            "statement_id": "uuid4_for_statement"
+        }
+    ],
+    "reports": [
+        {
+            "link": "long_url_for_the_excel_report",
+            "account_id": "uuid4_for_account"
+        }
+    ]
+}
+```
+
+The list value of `reports` key will be empty if any one of the statements have a **non** `completed` `status` in `progress`. When the transactions are successfully processed for all statements, within the entity, a list of report links will be available account wise.
+
+In case of multiple accounts within the same entity, you can have multiple reports within the `reports` key. The `account_id` will represent the account for which the report is, while `link` key holds url for the ***.xlsx file**. The link will be be active only for **1 hour**, post which the API has to re-hit to obtain the new link.
+
+The Excel workbook will contain two worksheets, first containing the extracted information like Account Holder's Name, Bank, Account Number, Missing Periods, Available Periods, etc., while the second sheet contains the enriched extracted transactions for the account.
+
 ## Salary
 Get extracted salary transactions for a given entity.
 
