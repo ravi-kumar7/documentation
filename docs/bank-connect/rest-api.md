@@ -449,7 +449,7 @@ The response fields are same as in [List Accounts](/bank-connect/rest-api.html#l
 - `balance`: account balance just after this transaction
 - `transaction_channel`: refer to [this](/bank-connect/appendix.html#transaction-channel) list for possible values.
 
-## Transactions in Excel Workbook<Badge text="new" />
+## Transactions in Excel Workbook <Badge text="New" />
 Get extracted and enriched transactions for a given entity in .xlsx (Excel workbook) format.
 
 ::: tip Endpoint
