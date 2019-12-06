@@ -21,10 +21,21 @@ maven {
     url "s3://risk-manager-android-sdk/artifacts"  
     credentials(AwsCredentials) {  
         accessKey = "<access-key>"
-	secretKey = "<secret-key>"  
+	    secretKey = "<secret-key>"  
     }
 }
 ```
+
+::: warning NOTE
+We'll provide you with the `<access-key>` and `<secret-key>` for AWS access. 
+:::
+
+Add your AWS access and secret keys in `local.properties` file also as follows:
+```
+AWS_KEY=<access-key>
+AWS_SECRET=<secret-key>
+```
+
 
 Final change required is in the `MainApplication` class of your native app.
 
