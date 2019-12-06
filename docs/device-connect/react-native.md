@@ -52,13 +52,12 @@ protected List<ReactPackage> getPackages() {
 That's it. Now that the bridge is complete we need to go to React to call the method to trigger the SDK.
 
 ## React Implementation
-Once the bridge is complete, we should be able to call the methods exposed using the `NativeModules`. Below is a snippet of react code to call the exposed methods.
+Once the bridge is complete, we should be able to get the `FinBoxRiskSdk` instance from the package that is installed. Below is a snippet of react code to call the exposed methods.
 `createUser` function creates a user with the `username` provided and the periodic sync will be for the assigned `username`
 Once the `createUser` is successful you need to call `startPeriodicSync` with the duration to start fetching data from device.
 
 ```javascript
-import { NativeModules } from 'react-native';
-const { FinBoxRiskSdk } = NativeModules
+import FinBoxRiskSdk from 'react-native-risk-sdk';
 
 //Function to trigger RiskSdk
 const callModule = () => {
