@@ -20,7 +20,7 @@ After requesting, the `createUser` method can be called specifying a `CUSTOMER_I
 
 ::: tip TIP
 - It is recommended that `CUSTOMER_ID` is a masked value not a unique personal identifier like phone number or email id, so that user remains anonymous to FinBox.
-- SDK will automatically consider syncing based on whether permission was granted by user or not and what was configured, hence the method must be called even though user denies certain permissions.
+- SDK will automatically consider syncing based on whether permission was granted by user or not and what was configured, hence the `createUser` method must be called even though user denies certain permissions.
 :::
 
 `createUser` in general acts as a check for API credentials. For the first time when the user doesn't exists, it will create user on FinBox side. The next steps will work only if this function returns a success response.
