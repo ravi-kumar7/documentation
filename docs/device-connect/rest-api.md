@@ -23,9 +23,9 @@ Once FinBox DeviceConnect SDK is initialized, data from device is sent to FinBox
 
 Clients need to call the **Insights API** with `CUSTOMER_ID` to get the predictors for a given customer. A sample workflow is shown in section [below](/device-connect/rest-api.html#sample-workflow). In case Insights API returns with status `"in_progress"` (meaning data is currently being processed), client should poll the Insights API with a delay of at least **10 seconds**
 
-### Sample Workflow
+### Workflow
 
-<img src="/sample_workflow.png" alt="Sample Workflow" />
+<img src="/rest_api_workflow.png" alt="Rest API Workflow" />
 
 1. Call FinBox Insights API
 2. In case the response status is `"in_progress"`, retry after 10 seconds

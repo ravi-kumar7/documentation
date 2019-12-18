@@ -12,6 +12,8 @@ Following will be shared by FinBox team at the time of integration:
 ## Integration Flow
 Assuming the bridge has been setup between your project and device connect as per [this](/device-connect/react-native.html#setting-up-the-bridge) section, the following would be the flow in your app:
 
+<img src="/client_workflow.png" alt="Client Workflow" style="width:80%;height:80%" />
+
 ### Step 1: Requesting Runtime Permissions
 It is required to show what all permissions you will be needing from users in app, and then ask them for the permissions. Please refer [this](/device-connect/react-native.html#handle-permissions) section to get the list of permissions the SDK needs. Also in case you want to exclude certain permissions, you can use a `remove` rule as mentioned in the same article.
 
