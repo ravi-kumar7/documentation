@@ -23,7 +23,7 @@ After requesting, the `createUser` method can be called specifying a `CUSTOMER_I
 - SDK will automatically consider syncing based on whether permission was granted by user or not and what was configured, hence the `createUser` method must be called even though user denies certain permissions.
 :::
 
-`createUser` in general acts as a check for API credentials. For the first time when the user doesn't exists, it will create user on FinBox side. The next steps will work only if this function returns a success response.
+`createUser` in general acts as a check for API credentials. For the first time when the user doesn't exists, it will create user on FinBox side. The next step will work only if this function returns a success response.
 
 ### Step 3: Start Syncing Data
 If the `createUser` response is successful, you can call `startPeriodicSync` function (Refer [this](/device-connect/android.html#start-periodic-sync-method) article) which will sync data in period intervals in background.

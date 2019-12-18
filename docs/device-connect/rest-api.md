@@ -1,20 +1,27 @@
 # Device Connect: REST API
 
-The FinBox Device Connect REST API enables **"server to server data"** fetching of customers' Android device data. The customer's data can be fetched using the `customer_id`. API accepts JSON-encoded request bodies, returns JSON-encoded responses.
+The FinBox Device Connect REST API enables **"server to server data"** fetching of customers' Android device data. The customer's data can be fetched using the `CUSTOMER_ID`. API accepts JSON-encoded request bodies, returns JSON-encoded responses.
+
+::: warning NOTE
+Following will be shared by FinBox team at the time of integration:
+- `SERVER_API_KEY`
+- `SERVER_HASH`
+- `DC_PREDICTORS_VERSION`
+:::
 
 ## Authentication
 
 FinBox provides a valid and signed certificate for all API methods and endpoints. To access the API methods requester must ensure that their connection library supports HTTPS.
 
-Authentication for the APIs are based on **API key** provided by the FinBox. Server to server communication can commence when **IP of requester are whitelisted** on the FinBox servers. This can be easily done upon request.
+Authentication for the APIs are based on **SERVER_API_KEY** provided by the FinBox. Server to server communication can commence when **IP of requester are whitelisted** on the FinBox servers. This can be easily done upon request.
 
 ## API Integration Workflow
 
 ### Insights API
 
-Once FinBox DeviceConnect SDK is initialized, data from device is sent to FinBox processing engine against an anonymous `customer_id` which will be the primary key from retrieving any information from the server.
+Once FinBox DeviceConnect SDK is initialized, data from device is sent to FinBox processing engine against an anonymous `CUSTOMER_ID` which will be the primary key from retrieving any information from the server.
 
-Clients need to call the **Insights API** with `customer_id` to get the predictors for a given customer. A sample workflow is shown in section [below](/device-connect/rest-api.html#sample-workflow). In case Insights API returns with status `"in_progress"` (meaning data is currently being processed), client should poll the Insights API with a delay of at least **10 seconds**
+Clients need to call the **Insights API** with `CUSTOMER_ID` to get the predictors for a given customer. A sample workflow is shown in section [below](/device-connect/rest-api.html#sample-workflow). In case Insights API returns with status `"in_progress"` (meaning data is currently being processed), client should poll the Insights API with a delay of at least **10 seconds**
 
 ### Sample Workflow
 
@@ -41,20 +48,24 @@ Other than general predictors, there are also more predictor endpoints which wil
 ## Insights API Request
 
 ### Request Header and Body
-For all the Insights API request structure is same, all requests must have `x-api-key` field in **header** having the value as the API Key shared by FinBox team. The following **keys** must be passed in every request body as keys to a json document:
+For all the Insights API request structure is same, all requests must have `x-api-key` field in **header** having the value as the `SERVER_API_KEY` shared by FinBox team. The following **keys** must be passed in every request body as keys to a json document:
 
 **Request Body**
 | Key | Type | Description |
 | --- | --- | --- |
-| customer_id | String | Customer ID for which feature vector is required |
-| version | Integer | Version of the feature set. The latest version applicable for client will be communicated by FinBox team |
-| salt | String | A secret key which is computed basis logic mentioned in section below |
+| customer_id | String | `CUSTOMER_ID` for which feature vector is required |
+| version | Integer | Version of the feature set shared by FinBox team as `DC_PREDICTORS_VERSION` |
+| salt | String | A salt which is computed basis logic mentioned in section below |
+
+:::danger IMPORTANT
+Please not that this `CUSTOMER_ID` is the same used as the unique identifier used in Android SDK while syncing the data.
+:::
 
 ### Calculating salt
 
 Salt is calculated as follows:
-1. A = Create MD5 hash of `customer_id`
-2. B = Concatenate string of A and secret key shared by FinBox.
+1. A = Create MD5 hash of `CUSTOMER_ID`
+2. B = Concatenate string of A and `SERVER_HASH` shared by FinBox.
 3. C = Create SHA-256 hash of B
 4. Salt = base64 encoded version of C
 
@@ -72,11 +83,11 @@ public class SaltGeneration {
     private static final int HEX_255 = 0xFF;
     private static final String UNICODE_TRANSFORMATIONAL_FORMAT_8_BIT = "UTF-8";
     private static String CUSTOMER_ID = "<CUSTOMER_ID>";
-    private static String SECRET = "<SECRET>";
+    private static String SERVER_HASH = "<SERVER_HASH>";
     
     private static String getSaltForBody() {
         String hashedOutput = getMd5Hash(CUSTOMER_ID);
-        String concatString = hashedOutput + SECRET;
+        String concatString = hashedOutput + SERVER_HASH;
         String shaOutput = get256Encoded(concatString);
         return shaOutput;
     }
@@ -128,14 +139,14 @@ Sample code for salt generation in **Python**:
 ```python
 import hashlib, base64
 
-def create_salt(customer_id, client_secret):
+def create_salt(customer_id, server_hash):
     """
     Takes customer_id (unique identifier of customer)
-    and client_secret (shared by FinBox) as input
+    and server_hash (shared by FinBox) as input
     and returns salt in response
     """
     customer_hash = hashlib.md5(customer_id.encode('utf-8')).hexdigest().upper()
-    intermediate_hash = customer_hash + client_secret
+    intermediate_hash = customer_hash + server_hash
     salt_encoded = hashlib.sha256(intermediate_hash.encode('utf-8')).digest()
     salt = base64.b64encode(salt_encoded).decode()
     return salt
@@ -164,7 +175,7 @@ API will give a JSON Response with following keys:
 
 | Key | Description | Type | Nullable |
 | --- | --- | --- | --- |
-| customer_id | Customer ID for which data was requested | STRING [260] | Yes |
+| customer_id | CUSTOMER_ID for which data was requested | STRING [260] | Yes |
 | request_id | A unique string for each request | STRING [32] | Yes |
 | status | Status of the operation. | STRING [20] | No |
 | message | Description of status | STRING [200] | No |
@@ -190,7 +201,7 @@ Depending on the availability of data, there can be different cases with differe
 | [Calculation complete and data is unavailable](/device-connect/rest-api.html#case-3-calculation-complete-and-data-is-unavailable) | `"no_data"` | 200 | The request input is correct and processing has completed but response contains no predictors because of lack of data from user's device |
 | [Invalid customer ID](/device-connect/rest-api.html#case-4-invalid-customer-id) | `"not_found"` | 200 | User does not exist in FinBox system |
 | [Bad request](/device-connect/rest-api.html#case-5-bad-request) | `"error"` | 400 | The request input is incorrect / malformed. More details available in `message` key |
-| [Unauthorized](/device-connect/rest-api.html#case-6-unauthorized) | `"error"` | 403 | This happens in case API key is incorrect or IP address in not whitelisted |
+| [Unauthorized](/device-connect/rest-api.html#case-6-unauthorized) | `"error"` | 403 | This happens in case SERVER_API_KEY is incorrect or IP address in not whitelisted |
 | [Internal Server Error](/device-connect/rest-api.html#case-6-unauthorized) | `"error"` | 5xx | The request processing failed because of some internal error. Please retry with exponential back-off. If the issue persists, please contact support |
 | [Rate Limit Exceeded](/device-connect/rest-api.html#case-8-rate-limit-exceeded) | `"error"` | 429 | This happens in case the maximum allowed rate limit on API exceeds |
 

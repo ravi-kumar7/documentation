@@ -10,5 +10,5 @@ FinBox Device Connect requires two integrations - first on Android app from whic
 - [Android SDK](/device-connect/android.html)
 - [React Native](/device-connect/react-native.html)
 
-And then on backend to **fetch predictors** responsible for making the lending decision:
+And then on backend to **fetch predictors** responsible for making decisions:
 - [REST API](/device-connect/rest-api.html)
