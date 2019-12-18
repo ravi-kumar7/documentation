@@ -16,19 +16,19 @@ Assuming the dependency has been added for your project as per [this](/device-co
 It is required to show what all permissions you will be needing from users in app, and then ask them for the permissions. Please refer [this](/device-connect/android.html#handle-permissions) section to get the list of permissions the SDK needs. Also in case you want to exclude certain permissions, you can use a `remove` rule as mentioned in the same article.
 
 ### Step 2: Creating the User
-Once all permissions are granted, you can call the `createUser` method specifying a `username` (Refer to [this](/device-connect/android.html#create-user-method) section for sample code and response), this username represents a unique identifier for the user.
+Once all permissions are granted, you can call the `createUser` method specifying a `USERNAME` (Refer to [this](/device-connect/android.html#create-user-method) section for sample code and response), which represents a unique identifier for the user.
 
 ::: tip TIP
-It is recommended that `username` is a masked value not a unique personal identifier like phone number or email id, so that user remains anonymous to FinBox.
+It is recommended that `USERNAME` is a masked value not a unique personal identifier like phone number or email id, so that user remains anonymous to FinBox.
 :::
 
 `createUser` in general acts as a check for API credentials. For the first time when the user doesn't exists, it will create user on FinBox side. The next steps will work only if this function returns a success response.
 
 ### Step 3: Start Syncing Data
-If the `createUser` response is successful, you can call `startPeriodSync` function (Refer [this](/device-connect/android.html#start-period-sync-method) article) which will sync data in period intervals in background.
+If the `createUser` response is successful, you can call `startPeriodicSync` function (Refer [this](/device-connect/android.html#start-period-sync-method) article) which will sync data in period intervals in background.
 
 ::: danger IMPORTANT
-- Recommended approach is to call `createUser` (and then `startPeriodSync` on success) method every time user accesses the app, so that background sync process remains in check.
+- Recommended approach is to call `createUser` (and then `startPeriodicSync` on success) method every time user accesses the app, so that background sync process remains in check.
 - In certain cases, FinBox server often requests critical data from sdk directly (other than scheduled sync period), to make sure this works it is required to **forward FCM Notifications to SDK**. Refer to [this](/device-connect/android.html#forward-notifications-to-sdk) article for it.
 - In case of multi process application, it is required to initialize the SDK manually before calling the `createUser` method. Refer [here](/device-connect/android.html#multi-process-support) for such cases.
 :::
@@ -90,17 +90,16 @@ In case the Manifest merger is not enabled add the above specified permissions m
 
 ## Create User Method
 
-Call `createUser` method to create the user (first time) or check the API credentials for the SDK. It takes `username` as one of its arguments which is a unique identifier for a user.
+Call `createUser` method to create the user (first time) or check the API credentials for the SDK. It takes `USERNAME` as one of its arguments which is a unique identifier for a user.
 
 ::: danger IMPORTANT
-Please make sure `username` is **not more than 64** characters and is **alphanumeric** (with no special characters).
+Please make sure `USERNAME` is **not more than 64** characters and is **alphanumeric** (with no special characters).
 :::
 
 The response to this method (success or failure) can be captured using the callback `FinBoxAuthCallback`.
 
 ```java
-// Create the username or get a reference to an existing username
-FinBox.createUser("API_KEY", "username",
+FinBox.createUser("API_KEY", "USERNAME",
     new FinBox.FinBoxAuthCallback() {
         @Override
         public void onSuccess(@NonNull String accessToken) {
@@ -116,7 +115,7 @@ FinBox.createUser("API_KEY", "username",
 
 You can read about the error codes in [this](/device-connect/android.html#error-codes) section.
 
-## Start Period Sync Method
+## Start Periodic Sync Method
 
 This is to be called only on successful response to `createUser` method's callback. On calling this the syncs will start for all the data sources configured as per permissions. The method below syncs data in background at regular intervals:
 
