@@ -1,5 +1,5 @@
 # Device Connect: Android SDK
-The Android SDK can be used to integrate mobile apps with Device Connect to share customers' device data.
+The Android SDK can be used to integrate mobile apps with Device Connect, so that users can share their data.
 
 ::: warning NOTE
 Following will be shared by FinBox team at the time of integration:

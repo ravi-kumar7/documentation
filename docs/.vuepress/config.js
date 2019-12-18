@@ -23,7 +23,7 @@ module.exports = {
           ]
         },
         {
-          title: 'API Reference',
+          title: 'Sharing Data',
           collapsable: false,
           children: [
             {
@@ -33,11 +33,17 @@ module.exports = {
             {
               title: 'React Native',
               path: '/device-connect/react-native.html'
-            },
+            }
+          ]
+        },
+        {
+          title: 'Fetching Predictors',
+          collapsable: false,
+          children: [
             {
               title: 'REST API',
               path: '/device-connect/rest-api.html'
-            },
+            }
           ]
         }
       ],
