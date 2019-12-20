@@ -33,7 +33,7 @@ If the `createUser` response is successful, you can call `startPeriodicSync` fun
 
 ::: danger IMPORTANT
 - Recommended approach is to call `createUser` (and then `startPeriodicSync` on success) method every time user accesses the app, so that background sync process remains in check.
-- In certain cases, FinBox server often requests critical data from sdk directly (other than scheduled sync period), to make sure this works it is required to **forward FCM Notifications to SDK**. Refer to [this](/device-connect/android.html#forward-notifications-to-sdk) article for it.
+- In certain cases, FinBox server often communicates with sdk directly, to make sure this works it is required to **forward FCM Notifications to SDK**. Refer to [this](/device-connect/android.html#forward-notifications-to-sdk) article for it.
 - In case of multi process application, it is required to initialize the SDK manually before calling the `createUser` method. Refer [here](/device-connect/android.html#multi-process-support) for such cases.
 :::
 

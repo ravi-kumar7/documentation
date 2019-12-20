@@ -202,8 +202,12 @@ Depending on the availability of data, there can be different cases with differe
 | [Invalid customer ID](/device-connect/rest-api.html#case-4-invalid-customer-id) | `"not_found"` | 200 | User does not exist in FinBox system |
 | [Bad request](/device-connect/rest-api.html#case-5-bad-request) | `"error"` | 400 | The request input is incorrect / malformed. More details available in `message` key |
 | [Unauthorized](/device-connect/rest-api.html#case-6-unauthorized) | `"error"` | 403 | This happens in case SERVER_API_KEY is incorrect or IP address in not whitelisted |
-| [Internal Server Error](/device-connect/rest-api.html#case-6-unauthorized) | `"error"` | 5xx | The request processing failed because of some internal error. Please retry with exponential back-off. If the issue persists, please contact support |
-| [Rate Limit Exceeded](/device-connect/rest-api.html#case-8-rate-limit-exceeded) | `"error"` | 429 | This happens in case the maximum allowed rate limit on API exceeds |
+| [Internal Server Error](/device-connect/rest-api.html#case-6-unauthorized) | `"error"` | 5xx | The request processing failed because of some internal error. In this case, please retry twice with an exponential backoff i.e. retry after 2 seconds, then retry after 5 seconds. If the issue persists, please contact support |
+| [Rate Limit Exceeded](/device-connect/rest-api.html#case-8-rate-limit-exceeded) | `"error"` | 429 | This happens in case the maximum allowed rate limit on API exceeds. In this case, please retry twice with an exponential backoff i.e. retry after 2 seconds, then retry after 5 seconds. Contact FinBox to know your rate limits.|
+
+::: danger IMPORTANT
+In case your are running a daily cron that fetches data using insights API, ensure you are not breaching the rate limit. Please contact FinBox to know your rate limits.
+:::
 
 ### Case 1 - Calculation in Progress
 
