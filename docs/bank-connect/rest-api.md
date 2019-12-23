@@ -4,7 +4,11 @@ version: v1 # version of API
 ---
 
 # Bank Connect: REST API
-The REST APIs have predictable resource-oriented URLs, accepts JSON-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.
+The REST APIs have predictable resource-oriented URLs, accepts request with form fields, return JSON responses, and uses standard HTTP response codes, authentication, and verbs.
+
+:::danger Request Format
+Bank connect accepts all requests with form fields, so please make sure that all requests must be made with content type `application/x-www-form-urlencoded` or `multipart/form-data; boundary={boundary string}`
+:::
 
 ## Authentication
 FinBox Bank Connect REST API uses API keys to authenticate requests. Please keep the API keys secure! Do not share your secret API keys in publicly accessible areas such as GitHub, client-side code, and so forth. All API requests must be made over HTTPS. Calls made over plain HTTP will fail. API requests without authentication will also fail.
