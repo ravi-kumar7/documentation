@@ -63,7 +63,7 @@ module.exports = {
           ]
         },
         {
-          title: 'API Reference',
+          title: 'Direct PDF Mode & Fetching',
           collapsable: false,
           children: [
             {
@@ -73,7 +73,13 @@ module.exports = {
             {
               title: 'Python',
               path: '/bank-connect/python.html'
-            },
+            }
+          ]
+        },
+        {
+          title: 'Net Banking Mode',
+          collapsable: false,
+          children: [
             {
               title: 'Android Client',
               path: '/bank-connect/android-client.html'
