@@ -197,6 +197,34 @@ POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/statement/ba
 | entity_id | string | an `entity_id` against which you want to upload the statement | No | - |
 | pdf_password | string | password for the pdf in case it is password protected | No | - |
 
+### CASE 5: Bank name known and file is to be fetched using a URL
+
+::: tip Endpoint
+POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/statement/upload/?identity=true**
+:::
+
+### Parameters
+| Name | Type | Description | Required  | Default |
+| - | - | - | - | - |
+| file_url | string  | publicly accessible full file URL with protocol (HTTP / HTTPS) | Yes | - |
+| entity_id | string | an `entity_id` against which you want to upload the statement | No | - |
+| pdf_password | string | password for the pdf in case it is password protected | No | - |
+
+### CASE 6: Bank name not known <Badge text="beta" type="warn"/> and file is to be fetched using a URL
+
+In case you don't know bank name, and want Bank Connect to automatically identify the bank name:
+
+::: tip Endpoint
+POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/statement/bankless_upload/?identity=true**
+:::
+
+### Parameters
+| Name | Type | Description | Required  | Default |
+| - | - | - | - | - |
+| file_url | string  | publicly accessible full file URL with protocol (HTTP / HTTPS) | Yes | - |
+| entity_id | string | an `entity_id` against which you want to upload the statement | No | - |
+| pdf_password | string | password for the pdf in case it is password protected | No | - |
+
 ### Response for all Cases
 
 All the above APIs give the response in the format below in case of successful file upload with a **200 HTTP Code**:
@@ -226,7 +254,7 @@ All the above APIs give the response in the format below in case of successful f
 - The query parameter `?identity=true` is optional for both the APIs above, if not specified the response will only include `entity_id`, `statement_id` and `bank_name` fields in case of successful upload.
 :::
 
-::: danger Bad Request
+::: danger Bad Request Cases
 1. In case a compulsory field is missing the APIs will throw a **400 (Bad Request)** as follows:
     ```json
     {"file": ["This field is required."]}
@@ -235,7 +263,11 @@ All the above APIs give the response in the format below in case of successful f
     ```json
     {"file": ["Invalid Base 64 string"]}
     ```
-2. In other error cases, the APIs will throw a **400 (Bad Request)** with appropriate message in `message` field:
+2. In case the request content type is not `application/x-www-form-urlencoded` or `multipart/form-data; boundary={boundary string}`, APIs will throw **400 (Bad Request)** as follows:
+    ```json
+    {"file": ["This field must be present as a form field. Send request with content type x-www-form-urlencoded or form-data"]}
+    ```
+3. In other error cases, the APIs will throw a **400 (Bad Request)** with appropriate message in `message` field:
     - **Not able to identify the bank name** (In bank less upload only)
     - **Incorrect bank name specified** (When bank is provided with request, and we detected it to be of different bank)
     - **Incorrect Password**
