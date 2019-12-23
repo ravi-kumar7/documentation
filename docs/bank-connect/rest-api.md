@@ -231,7 +231,7 @@ All the above APIs give the response in the format below in case of successful f
     ```json
     {"file": ["Invalid Base 64 string"]}
     ```
-2. In other error cases the APIs will throw 400 error (with appropriate message in `message` field). Such cases are:
+2. In other error cases, the APIs will throw a **400 (Bad Request)** with appropriate message in `message` field:
     - **Not able to identify the bank name** (In bank less upload only)
     - **Incorrect bank name specified** (When bank is provided with request, and we detected it to be of different bank)
     - **Incorrect Password**
