@@ -124,10 +124,10 @@ In case not entity with the provided `entity_id` exists, the API will return a r
 ## Uploading Statement
 
 ::: warning entity_id field
-`entity_id`, is an optional parameter for the below two APIs, if specified, the statement gets uploaded against that entity. If not specified, a new entity is created and the statement is uploaded against it.
+`entity_id`, is an optional parameter for the below APIs, if specified, the statement gets uploaded against that entity. If not specified, a new entity is created and the statement is uploaded against it.
 :::
 
-In case you already **know the bank name**:
+### CASE 1: Bank Name known
 
 ::: tip Endpoint
 POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/statement/upload/?identity=true**
@@ -145,7 +145,9 @@ POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/statement/up
 Refer to [this](/bank-connect/appendix.html#bank-identifiers) to get list of valid bank name identifiers
 :::
 
-In case you **don't know bank name** <Badge text="beta" type="warn"/>, and want Bank Connect to automatically identify the bank name:
+### CASE 2: Bank name not known <Badge text="beta" type="warn"/>
+
+In case you don't know bank name, and want Bank Connect to automatically identify the bank name:
 
 ::: tip Endpoint
 POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/statement/bankless_upload/?identity=true**
@@ -158,9 +160,42 @@ POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/statement/ba
 | entity_id | string | an `entity_id` against which you want to upload the statement | No | - |
 | pdf_password | string | password for the pdf in case it is password protected | No | - |
 
-### Response
+### CASE 3: Bank name known and file is base 64 encoded 
 
-Both the APIs above give the response in the format below in case of successful file upload with a **200 HTTP Code**:
+::: tip Endpoint
+POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/statement/upload_base64/?identity=true**
+:::
+
+### Parameters
+| Name | Type | Description | Required  | Default |
+| - | - | - | - | - |
+| file | string  | the statement pdf file in base 64 encoded string | Yes | - |
+| bank_name | string | a valid bank identifier | Yes | - |
+| entity_id | string | an `entity_id` against which you want to upload the statement | No | - |
+| pdf_password | string | password for the pdf in case it is password protected | No | - |
+
+::: warning Bank Name Identifiers
+Refer to [this](/bank-connect/appendix.html#bank-identifiers) to get list of valid bank name identifiers
+:::
+
+### CASE 4: Bank name not known <Badge text="beta" type="warn"/> and file is base 64 encoded
+
+In case you don't know bank name, and want Bank Connect to automatically identify the bank name:
+
+::: tip Endpoint
+POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/statement/bankless_upload_base64/?identity=true**
+:::
+
+### Parameters
+| Name | Type | Description | Required  | Default |
+| - | - | - | - | - |
+| file | string  | the statement pdf file in base 64 encoded format | Yes | - |
+| entity_id | string | an `entity_id` against which you want to upload the statement | No | - |
+| pdf_password | string | password for the pdf in case it is password protected | No | - |
+
+### Response for all Cases
+
+All the above APIs give the response in the format below in case of successful file upload with a **200 HTTP Code**:
 
 ```json
 {
@@ -181,33 +216,32 @@ Both the APIs above give the response in the format below in case of successful 
     "fraud_type": null
 }
 ```
-::: warning fraud_type field
-`fraud_type` field is `null` in case `is_fraud` field is false, otherwise it is a string. Please refer to [Fraud](/bank-connect/basics.html#fraud) section in Basics to know more about it.
-:::
-
-::: warning null fields
-Some of the fields within the identity dictionary, or the `from_date` and `to_date` maybe `null` for few statements depending on the bank statement format and what all information is present on the top of the statement. The `from_date` and `to_date` in case was null, are updated for the statement at a later stage when transaction are extracted.
-:::
-
-::: warning identity query parameter
-The query parameter `?identity=true` is optional for both the APIs above, if not specified the response will only include `entity_id`, `statement_id` and `bank_name` fields in case of successful upload.
+::: warning NOTE
+- `fraud_type` field is `null` in case `is_fraud` field is false, otherwise it is a string. Please refer to [Fraud](/bank-connect/basics.html#fraud) section in Basics to know more about it.
+- Some of the fields within the identity dictionary, or the `from_date` and `to_date` maybe `null` for few statements depending on the bank statement format and what all information is present on the top of the statement. The `from_date` and `to_date` in case was null, are updated for the statement at a later stage when transaction are extracted.
+- The query parameter `?identity=true` is optional for both the APIs above, if not specified the response will only include `entity_id`, `statement_id` and `bank_name` fields in case of successful upload.
 :::
 
 ::: danger Bad Request
-The bank less upload API will throw an error with code **400 (Bad Request)** along with appropriate message in case it is **not able to identify the bank name** from the statement pdf file.
-Other cases where both the APIs above throws 400 error (with appropriate message in `message` field) are:
-- **Incorrect Password**
-- **Non Parsable PDF** (PDF file has only images or is corrupted)
-
-Sample error response:
-```json
-{
-    "entity_id": "some_entity_id_created",
-    "message": "PDF is not parsable"
-}
-```
-
-It is to be noted that even though an error is thrown, an entity for the statement upload is created (if `entity_id` was not specified in the request) and `entity_id` is hence always given in response.
+1. In case a compulsory field is missing the APIs will throw a **400 (Bad Request)** as follows:
+    ```json
+    {"file": ["This field is required."]}
+    ```
+    This error is also thrown in case of base64 encoded files, if base64 to file decoding fails. Error in that case is as follows:
+    ```json
+    {"file": ["Invalid Base 64 string"]}
+    ```
+2. In other error cases the APIs will throw 400 error (with appropriate message in `message` field). Such cases are:
+    - **Not able to identify the bank name** (In bank less upload only)
+    - **Incorrect bank name specified** (When bank is provided with request, and we detected it to be of different bank)
+    - **Incorrect Password**
+    - **Non Parsable PDF** (PDF file has only images or is corrupted)
+    ```json
+    {
+        "entity_id": "some_entity_id_created",
+        "message": "error message here"
+    }
+    ```
 :::
 
 ## Progress Field
