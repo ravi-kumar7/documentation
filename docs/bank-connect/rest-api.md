@@ -6,9 +6,18 @@ version: v1 # version of API
 # Bank Connect: REST API
 The REST APIs have predictable resource-oriented URLs, accepts request with form fields, return JSON responses, and uses standard HTTP response codes, authentication, and verbs.
 
-:::danger Request Format
+:::warning Request Format
 Bank connect accepts all requests with form fields, so please make sure that all requests must be made with content type `application/x-www-form-urlencoded` or `multipart/form-data; boundary={boundary string}`
 :::
+
+## Postman Collection
+[Postman](https://www.getpostman.com/) **Collection** for Bank Connect can be found [here](/finbox_bankconnect.postman_collection.json).
+
+The APIs will also require an **environment** file that can be found [here](/finbox_bankconnect.postman_environment.json).
+
+Please replace `x-api-key` in the Postman environment with the **API Key** provided by FinBox Team.
+
+After using the upload statement APIs, replace the Postman variable `entity_id` in transactions, identity, and other APIs to fetch the corresponding details.
 
 ## Authentication
 FinBox Bank Connect REST API uses API keys to authenticate requests. Please keep the API keys secure! Do not share your secret API keys in publicly accessible areas such as GitHub, client-side code, and so forth. All API requests must be made over HTTPS. Calls made over plain HTTP will fail. API requests without authentication will also fail.
