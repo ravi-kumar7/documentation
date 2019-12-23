@@ -15,16 +15,20 @@ Click [here](https://finbox.in/contact-us) to contact us and request for an API 
 :::
 
 ## Getting started
-Head towards [Basics](/bank-connect/basics.html) to understand the standard terms, then proceed to your preferred language for SDK:
+Head towards [Basics](/bank-connect/basics.html) to understand the standard terms, then proceed to your preferred language for SDK. The SDK is available in two modes:
+
+### Direct PDF Mode
+Here the statement PDF is directly provided to the SDK
 - [REST API](/bank-connect/rest-api.html)
 - [Python](/bank-connect/python.html)
 
-
-### Accepting Bank Statements <Badge text="New" type="tip"/>
-Other than APIs and libraries to upload and process bank statement PDFs, Bank Connect also provide client libraries for accepting the PDF files from user, both manual as well as through **Net Banking**.
-
+### Net Banking Mode <Badge text="New" type="tip"/>
 In the **Net Banking mode**, users just have to enter net banking credentials, and the statements will be directly/automatically fetched from their net banking accounts, saving them a lot of time and effort to download/obtain the PDF File.
 
 You can look at your preferred client library for this:
 - [Android Client](/bank-connect/android-client.html)
 - [JavaScript Client](/bank-connect/javascript-client.html)
+
+:::warning NOTE
+**Net Banking Mode** will only help in fetching the statement for the user and uploading it to the FinBox server for processing. However, to get extracted and enriched identity / transactions, the use of **REST API** will be required.
+:::
