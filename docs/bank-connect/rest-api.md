@@ -11,9 +11,9 @@ Bank connect accepts all requests with form fields, so please make sure that all
 :::
 
 ## Postman Collection
-[Postman](https://www.getpostman.com/) **Collection** for Bank Connect can be found [here](/finbox_bankconnect.postman_collection.json).
+[Postman](https://www.getpostman.com/) **Collection** for Bank Connect can be found <a href="/finbox_bankconnect.postman_collection.json" download>here</a>.
 
-The APIs will also require an **environment** file that can be found [here](/finbox_bankconnect.postman_environment.json).
+The APIs will also require an **environment** file that can be found <a href="/finbox_bankconnect.postman_environment.json" download>here</a>.
 
 Please replace `x-api-key` in the Postman environment with the **API Key** provided by FinBox Team.
 
