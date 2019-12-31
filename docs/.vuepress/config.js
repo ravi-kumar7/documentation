@@ -72,7 +72,7 @@ module.exports = {
               path: '/bank-connect/rest-api.html'
             },
             {
-              title: 'Python',
+              title: 'Python Package',
               path: '/bank-connect/python.html'
             }
           ]
