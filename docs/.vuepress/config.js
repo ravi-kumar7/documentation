@@ -1,6 +1,7 @@
 module.exports = {
   title: 'FinBox Documentation',
   description: 'Documentation for FinBox SDK',
+  plugins: ['code-switcher'],
   themeConfig: {
     smoothScroll: true,
     lastUpdated: 'Last Updated',

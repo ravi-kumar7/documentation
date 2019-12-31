@@ -69,7 +69,11 @@ Salt is calculated as follows:
 3. C = Create SHA-256 hash of B
 4. Salt = base64 encoded version of C
 
-Sample code for salt generation in **Java**:
+Sample code for salt generation in different languages:
+
+<CodeSwitcher :languages="{java:'Java',python:'Python',go:'Go'}">
+<template v-slot:java>
+
 ```java
 import java.security.*;
 import java.util.*;
@@ -135,7 +139,9 @@ public class SaltGeneration {
 }
 ```
 
-Sample code for salt generation in **Python**:
+</template>
+<template v-slot:python>
+
 ```python
 import hashlib, base64
 
@@ -151,6 +157,35 @@ def create_salt(customer_id, server_hash):
     salt = base64.b64encode(salt_encoded).decode()
     return salt
 ```
+
+</template>
+
+<template v-slot:go>
+
+```go
+import (
+	"crypto/md5"
+	"crypto/sha256"
+	"fmt"
+	"encoding/base64"
+	"encoding/hex"
+	"strings"
+)
+func GetSaltForCustomer(customerId string, serverHash string) string {
+    hasher := md5.New()
+	hasher.Write([]byte(customerId))
+	hexHasher := hex.EncodeToString(hasher.Sum(nil))
+	data := strings.ToUpper(hexHasher)+ serverHash
+	newSha256 := sha256.New()
+	newSha256.Write([]byte(data))
+    finalData := base64.StdEncoding.EncodeToString(newSha256.Sum(nil))
+	return finalData
+}
+```
+
+</template>
+</CodeSwitcher>
+
 ### Sample Request
 
 **Headers**

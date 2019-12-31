@@ -6,5 +6,7 @@
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs"
   },
-  "dependencies": {}
+  "dependencies": {
+    "vuepress-plugin-code-switcher": "^1.0.3"
+  }
 }
