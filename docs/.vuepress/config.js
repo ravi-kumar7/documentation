@@ -1,7 +1,9 @@
 module.exports = {
   title: 'FinBox Documentation',
   description: 'Documentation for FinBox SDK',
-  plugins: ['code-switcher'],
+  plugins: ['code-switcher', ['@vuepress/search', {
+    test: ["^((?!device-connect\/transactions).)*$"]
+  }]],
   themeConfig: {
     smoothScroll: true,
     lastUpdated: 'Last Updated',
