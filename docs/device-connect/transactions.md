@@ -5,7 +5,7 @@ This page is an **extension** to the documentation [here](/device-connect/rest-a
 :::danger IMPORTANT
 - Please refer to [Insights API Request](/device-connect/rest-api.html#insights-api-request) and [Insights API Response](/device-connect/rest-api.html#insights-api-response) to understand the **request** and **response** structure (including the data key) respectively.
  - It is to be noted that for **Transactions** and **Accounts** APIs, instead of `customer_id`, you have to provide `user_hash` key.
- - `user_hash` can be obtained using List Devices API. It is same as the `device_name` key in the `data` key object, as mentioned [here](/device-connect/transactions.html#list-devices-api).
+ - `user_hash` can be obtained using List Devices API. It is same as the `device_id` key in the `data` key object, as mentioned [here](/device-connect/transactions.html#list-devices-api).
 :::
 
 
@@ -19,7 +19,7 @@ This page is an **extension** to the documentation [here](/device-connect/rest-a
 ## `data` Key
 
 ### List Devices API
-List Devices API lists the devices that a customer has logged into. We use the keyword `device_name` to denote a unique pair of customer and device. **It is important to note that two customers using the same device will generate two different device names.**
+List Devices API lists the devices that a customer has logged into. We use the keyword `device_id` to denote a unique pair of customer and device. **It is important to note that two customers using the same device will generate two different device names.**
 
 A sample response for the API is listed below:
 ```json
@@ -32,7 +32,7 @@ A sample response for the API is listed below:
     "message": "data processed successfully",
     "data": [
         {
-            "device_name": "4aba67b51ef8c95bef2dd9f5cd6c0d08",
+            "device_id": "4aba67b51ef8c95bef2dd9f5cd6c0d08",
             "last_opened": "2020-01-06T14:52:52Z",
             "created": "2020-01-06T14:52:51Z",
             "mobile_model": "GOOGLE PIXEL 3A",
@@ -52,9 +52,9 @@ A sample response for the API is listed below:
 ```
 
 Each of the object in `data` key has following keys:
-- **device_name**: A unique identifier for each device logged in by a user.
+- **device_id**: A unique identifier for each device logged in by a user.
 - **last_opened**: Last time user opened the app on this device.
-- **created**: UTC time of when the device_name was created.
+- **created**: UTC time of when the device_id was created.
 - **mobile_model**: A clean human readable name of the model of the device from which the data is collected. Can be displayed to the user. Not suitable to be used in a program.
 - **app_open_count**: The count of invocation of the `createUser` method in the Device Connect Android SDK (Refer [here](/device-connect/android.html#create-user-method)). It is a directional indicator of the number of times the customer has opened the app, though not necessarily the exact number (depends on your Android integration).
 - **given_permissions**: The permissions granted by the user on the device. It can have following values in the list:
@@ -70,7 +70,7 @@ Each of the object in `data` key has following keys:
 
 :::danger IMPORTANT
 - In the **Transactions** and **Accounts** API you need `user_hash` key instead of `customer_id` in the request body.
-- `user_hash` key value is the `device_name` key value in the **List Devices** API response.
+- `user_hash` key value is the `device_id` key value in the **List Devices** API response.
 :::
 
 ### Transactions API
