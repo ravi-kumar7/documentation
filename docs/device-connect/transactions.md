@@ -12,7 +12,7 @@ This page is an **extension** to the documentation [here](/device-connect/rest-a
 ## Insights Endpoint Request
 | Insights | Endpoint | Request Type | Description | 
 | - | - | - | - |
-| List Devices | /risk/list-devices | POST | Lists all the devices a customer has logged into |
+| List Devices | /risk/device-ids | POST | Lists all the devices a customer has logged into |
 | Transactions | /risk/transactions | POST | Captured and enriched bank transactions of customer |
 | Accounts | /risk/accounts | POST | Captured financial accounts of customer |
 
@@ -52,7 +52,7 @@ A sample response for the API is listed below:
 ```
 
 Each of the object in `data` key has following keys:
-- **device_id**: A unique identifier for each device logged in by a user.
+- **device_id**: A unique identifier for each device a user has logged into.
 - **last_opened**: Last time user opened the app on this device.
 - **created**: UTC time of when the device_id was created.
 - **mobile_model**: A clean human readable name of the model of the device from which the data is collected. Can be displayed to the user. Not suitable to be used in a program.
@@ -70,7 +70,7 @@ Each of the object in `data` key has following keys:
 
 :::danger IMPORTANT
 - In the **Transactions** and **Accounts** API you need `user_hash` key instead of `customer_id` in the request body.
-- `user_hash` key value is the `device_id` key value in the **List Devices** API response.
+- `user_hash` key value is the same as `device_id` key value in the **List Devices** API response.
 :::
 
 ### Transactions API
