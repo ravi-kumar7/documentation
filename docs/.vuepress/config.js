@@ -36,6 +36,10 @@ module.exports = {
             {
               title: 'React Native',
               path: '/device-connect/react-native.html'
+            },
+            {
+              title: 'Cordova',
+              path: '/device-connect/cordova.html'
             }
           ]
         },

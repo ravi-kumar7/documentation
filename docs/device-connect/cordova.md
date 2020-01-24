@@ -1,5 +1,5 @@
 # Device Connect: Cordova
-The Cordova package can be used to integrate mobile apps with Device Connect, so that users can share their data.
+The Cordova plugin can be used to integrate mobile apps with Device Connect, so that users can share their data.
 
 ::: warning NOTE
 Following will be shared by FinBox team at the time of integration:
