@@ -9,6 +9,7 @@ Click [here](https://finbox.in/contact-us) to contact us and request for a pilot
 FinBox Device Connect requires two integrations - first on Android app from which **users can share data**:
 - [Android SDK](/device-connect/android.html)
 - [React Native](/device-connect/react-native.html)
+- [Cordova](/device-connect/cordova.html)
 
 And then on backend to **fetch predictors** responsible for making decisions:
 - [REST API](/device-connect/rest-api.html)
