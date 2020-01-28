@@ -1,0 +1,2 @@
+## PFM SDK
+FinBox provides UI SDK **(UI as a service)** that can be integrated in Android Apps for personal finance management (PFM) app. This can be used to engage users in the sourcing entity apps. PFM SDK is an add-on to FinBox's Device Connect product. See documentation for Device Connect [here](/device-connect/).

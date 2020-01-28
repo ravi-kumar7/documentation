@@ -102,6 +102,60 @@ module.exports = {
           path: '/bank-connect/appendix.html',
           collapsable: false
         }
+      ],
+      '/middleware/': [
+        {
+          title: 'Overview',
+          collapsable: false,
+          children: [
+            {
+              title: 'Introduction',
+              path: '/middleware/'
+            }
+          ]
+        },
+        {
+          title: 'Sourcing Entity',
+          collapsable: false,
+          children: [
+            {
+              title: 'User',
+              path: '/middleware/user.html'
+            },
+            {
+              title: 'KYC',
+              path: '/middleware/kyc.html'
+            },
+            {
+              title: 'Loan Application',
+              path: '/middleware/loan-application.html'
+            }
+          ]
+        },
+        {
+          title: 'Lenders',
+          collapsable: false,
+          children: [
+            {
+              title: 'Loan Status',
+              path: '/middleware/loan-status.html'
+            },
+            {
+              title: 'Data Services',
+              path: '/middleware/data-services.html'
+            }
+          ]
+        },
+        {
+          title: 'User Engagement',
+          collapsable: false,
+          children: [
+            {
+              title: 'PFM SDK',
+              path: '/middleware/pfm-sdk.html'
+            }
+          ]
+        },
       ]
     }
   }
