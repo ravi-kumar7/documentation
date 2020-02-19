@@ -22,7 +22,7 @@ maven { url  "https://dl.bintray.com/finbox/BankConnect" }
 
 - Then add the following dependency to your `gradle` file:  
 ```groovy  
-implementation 'in.finbox.bankconnect:bankconnect:1.0.7'  
+implementation 'in.finbox.bankconnect:bankconnect:1.0.8'  
 ```
 
 ## Authentication
