@@ -19,11 +19,10 @@ You need to to include the FinBox Bank Connect JavaScript client library using t
 
 ```html
 <script type="text/javascript" 
-            src="https://s3.ap-south-1.amazonaws.com/finboximages/JS/bankuploader.js" 
+            src="https://s3.ap-south-1.amazonaws.com/finbox-cdn/JS/bankuploader.js" 
+            finbox-redirect-url="<CLIENT-REDIRECT-URL>" 
             finbox-api-key="<FINBOX-API-KEY>"
-            finbox-uploadType="<UPLOAD-TYPE>" 
-            finbox-date-from='<dd/MM/yyyy>' 
-            finbox-date-to='<dd/MM/yyyy>'>
+            finbox-uploadType="<UPLOAD-TYPE>" >
 </script>
 ```
 `src` attribute specifies the URL to the client library js file
@@ -39,9 +38,7 @@ FinBox Bank Connect supports an additional layer of security (timestamp and acce
 - `manual`: Manual PDF upload only
 - `both`: Ask user to choose from Net Banking or Manual PDF upload
 
-`finbox-date-from` attribute holds the date from which you want the statement to be collected. This attribute is **optional** and if not specified, is set to date 6 months back from current date. If specified it accepts the value in **dd/MM/yyyy** format. 
-
-`finbox-date-to` attribute holds the date till which you want the statement to be collected. This attribute is **optional** and if not specified, is set to current date. If specified it accepts the value in **dd/MM/yyyy** format.
+`finbox-redirect-url` attribute specifies the redirect url once either the statment upload is successful or has failed for some reason. The status of the statement upload is updated to client via a webhook which contains reason of failure or success payload
 
 ::: warning Period Values
 Please make sure from date is always less than to date. 
@@ -56,7 +53,7 @@ Add the `<div>` tag below with the `id` as `finbox-bsm-root` to show the upload 
 
 ## Setting Period in Runtime
 
-Values for attribute `finbox-date-from` and `finbox-date-to` can be set in runtime by defining a ``getFinboxDatePeriod()`` function. The SDK will look for a function with this name, and expect a function as follows (in this example it sets period for last 5 months):
+For netbanking statement upload a date range is needed to fetch the statemens. By default the SDK fetches data for last 6 months. In order to define custom date range a function called ``getFinboxDatePeriod()`` needs to be defined. The SDK will look for a function with this name, and expect a function as follows (in this example it sets period for last 5 months):
 
 ```js 
 function getFinboxDatePeriod() {
@@ -91,19 +88,4 @@ Please make sure from date is always less than to date.
 
 
 ## Callback
-You can define a callback function with the name `statementCallback` to receive a callback:
-```js
-function statementCallback(payload) {
-  // payload contains status, request_id, message.
-}
-```
-`payload` in the function above is an **object** that contains the following **properties**:
-
-`status` is the status code returned by the server. It can be:
-- `BSM200`: PDF Upload was successful
-- `BSM500`: Some error occurred in uploading of the pdf.
-- `BSM101`: User exited the statement upload.
-
-`request_id` represents the `entity_id` that can be used to fetch the analyzed result.
-
-`message` is the status message given by the server.
+All callbacks are given to the client via a webhook which specifies the reason for failure or success.
