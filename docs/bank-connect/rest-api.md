@@ -878,3 +878,23 @@ The response fields are same as in [List Accounts](/bank-connect/rest-api.html#l
 - `merchant_category`: the category of the merchant in case a transaction is with a merchant. Refer to [this](/bank-connect/appendix.html#merchant-category) list of possible values.
 - `balance`: account balance just after this transaction
 - `transaction_channel`: refer to [this](/bank-connect/appendix.html#transaction-channel) list for possible values.
+
+## Web hook
+In case you are using net banking mode or manual upload, on request we can also configure a custom web hook. This will be invoked whenever extraction process is completed or failed (because of invalid statement file or user entering a wrong credentials).
+
+To configure this, you have to share with us an endpoint, that can receive a POST request, and returns a 200 status code on successful reception.
+
+We'll be sending payload on following format:
+```json
+{
+    "entity_id": "unique_entity_id",
+    "statement_id": "unique_statement_id",
+    "link_id": "link_id",
+    "progress": "completed",
+    "reason": ""
+}
+```
+
+Here, `progress` field can be `completed` or `failed`. In case of `failed`, `reason` field will specify the reason for failure.
+
+In case of failure in Net Banking mode, actual upload might not have happened as in case of wrong credentials entered by user, hence `entity_id` and `statement_id` will be unavailable, and will be blank strings `""`. Similarly in case of manual upload if `link_id` doesn't exists, its value will be `null`.
