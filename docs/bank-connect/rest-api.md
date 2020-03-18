@@ -884,7 +884,7 @@ In case you are using net banking mode or manual upload, on request we can also 
 
 To configure this, you have to share with us an endpoint, that can receive a POST request, and returns a 200 status code on successful reception.
 
-We'll be sending payload on following format:
+We'll be sending json encoded body in following payload format:
 ```json
 {
     "entity_id": "unique_entity_id",
