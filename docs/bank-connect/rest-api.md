@@ -879,11 +879,36 @@ The response fields are same as in [List Accounts](/bank-connect/rest-api.html#l
 - `balance`: account balance just after this transaction
 - `transaction_channel`: refer to [this](/bank-connect/appendix.html#transaction-channel) list for possible values.
 
-## Web hook
-In case you are using net banking mode or manual upload, on request we can also configure a custom web hook. This will be invoked whenever extraction process is completed or failed (because of invalid statement file or user entering a wrong credentials).
+## Web hook <Badge text="New" />
+In case you are using net banking mode, you can also configure a custom web hook. This will be invoked whenever extraction process is completed or failed (because of user entering a wrong credentials for example).
 
-To configure this, you have to share with us an endpoint, that can receive a POST request, and returns a 200 status code on successful reception.
+To configure this, you have to share with us a **valid endpoint**.
 
+:::danger A Valid Endpoint:
+- receives a POST request
+- receives a request body with content type `application/json`
+- returns a 200 status code on successful reception.
+:::
+
+### Updating web hook endpoint
+To update your valid endpoint use the API below:
+
+::: tip Endpoint
+POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/update_webhook/**
+:::
+
+It receives following **request body** in `application/json` content type:
+```json
+{
+    "webhook_url": "https://postman-echo.com/post"
+}
+```
+Here, `https://postman-echo.com/post` is an example for valid endpoint.
+
+On updating the web hook endpoint successfully, the `update_webhook` API will give **200 Status Code**.
+
+
+### Receiving payload
 We'll be sending json encoded body in following payload format:
 ```json
 {
@@ -897,4 +922,5 @@ We'll be sending json encoded body in following payload format:
 
 Here, `progress` field can be `completed` or `failed`. In case of `failed`, `reason` field will specify the reason for failure.
 
-In case of failure in Net Banking mode, actual upload might not have happened as in case of wrong credentials entered by user, hence `entity_id` and `statement_id` will be unavailable, and will be blank strings `""`. Similarly in case of manual upload if `link_id` doesn't exists, its value will be `null`.
+In case of failure in Net Banking mode, actual upload might not have happened as in case of wrong credentials entered by user, hence `entity_id` and `statement_id` will be unavailable, and will be blank strings `""`.
+ <!-- Similarly in case of manual upload if `link_id` doesn't exists, its value will be `null`. -->
