@@ -896,7 +896,7 @@ To update your valid endpoint use the API below:
 ::: tip Endpoint
 POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/update_webhook/**
 :::
-
+This API uses the same authentication method with API key as listed [here](/bank-connect/rest-api.html#authentication).
 It receives following **request body** in `application/json` content type:
 ```json
 {
