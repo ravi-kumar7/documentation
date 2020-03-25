@@ -119,16 +119,12 @@ module.exports = {
           collapsable: false,
           children: [
             {
-              title: 'User',
-              path: '/middleware/user.html'
+              title: 'REST API',
+              path: '/middleware/sourcing-rest-api.html'
             },
             {
-              title: 'KYC',
-              path: '/middleware/kyc.html'
-            },
-            {
-              title: 'Loan Application',
-              path: '/middleware/loan-application.html'
+              title: 'Android SDK',
+              path: '/middleware/android-sdk.html'
             }
           ]
         },
@@ -137,22 +133,8 @@ module.exports = {
           collapsable: false,
           children: [
             {
-              title: 'Loan Status',
-              path: '/middleware/loan-status.html'
-            },
-            {
-              title: 'Data Services',
-              path: '/middleware/data-services.html'
-            }
-          ]
-        },
-        {
-          title: 'User Engagement',
-          collapsable: false,
-          children: [
-            {
-              title: 'PFM SDK',
-              path: '/middleware/pfm-sdk.html'
+              title: 'REST API',
+              path: '/middleware/lender-rest-api.html'
             }
           ]
         },

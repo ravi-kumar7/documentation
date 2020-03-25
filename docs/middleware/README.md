@@ -1,18 +1,28 @@
 # Lending Middleware
 
-FinBox provides a lending middleware that connects the sourcing entity to lenders. The middleware provides APIs to manage KYC, loan application and repayments; underwriting decisions and user engagement in sourcing apps.
+FinBox provides a lending middleware that connects the sourcing entity to lenders. It provides ease to both **sourcing entity** to include a loan journey on their apps or websites, as well as **lenders** on their dashboard to manage loan applications coming from different sources.
 
-## Basic Flow
-The integration for the middleware involves **REST API integration** at both sourcing entity and lender side. The overall process involves following steps:
-1) Creation of User and initiating the KYC
-2) Creating a loan application
-3) Approve Loans based on external / FinBox or custom credit model
-4) Record Repayments, send payment reminders and engage users in apps.
+Here, **"sourcing entity"** is referred to as the entity that acquires and bring the customer to initiate the loan journey, while **"lender"** is the entity that gives the loan.
 
-## API Authentication
-FinBox Lending Middleware uses API keys to authenticate requests made to REST APIs. Please keep the API keys secure! Do not share your secret API keys in publicly accessible areas such as GitHub, client-side code, and so forth. All API requests must be made over HTTPS. Calls made over plain HTTP will fail. API requests without authentication will also fail.
+## Loan Journey
+A loan journey with the middleware involves following steps:
+- First sourcing entity **acquires the customer**
+- Through sourcing entity, customer registers with the middleware and **fills the loan application**
+- **Basic KYC** is then submitted at sourcing entity side
+- **KYC is approved** automatically or manually depending on the lenders middleware has forwarded the application to
+- In specific cases, lenders can also **request additional documents** from customer
+- After all documents are approved, lender **approves the loan application**
+- Lender **offers are generated** automatically based on lender defined templates
+- Customer **selects the offer**, and then **submits bank details**
+- On successful verification of bank details, user **signs the loan agreement**
+- Lender then **dispatches the money** and informs the middleware on every **repayment received**
+- Repayment timeline with EMI **status is visible** to both sourcing entity and lenders.
 
-To provide API key while making a request, `X-API-KEY` must be present in the request header with API key value.
+## Sourcing Entity
+At sourcing entity side, integration can be done via one of the following:
+- [REST API](/middleware/sourcing-rest-api.html)
+- [Android SDK](/middleware/android-sdk.html) (UI as a service)
 
-## Request Format
-FinBox middleware receives all requests in JSON format so please make sure that all requests must be made with content type `application/json`.
+## Lender
+At lender side, FinBox provides its own **dashboard** which is easy to use and provides a one stop solution for all the lender-related actions. In case lenders have an existing dashboard or workflow, they can make use of provided [REST API](/middleware/lender-rest-api.html)s.
+
