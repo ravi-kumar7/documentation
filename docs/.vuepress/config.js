@@ -138,6 +138,11 @@ module.exports = {
             }
           ]
         },
+        {
+          title: 'Appendix',
+          path: '/middleware/appendix.html',
+          collapsable: false
+        },
       ]
     }
   }

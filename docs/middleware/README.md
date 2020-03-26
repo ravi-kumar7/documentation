@@ -9,7 +9,7 @@ A loan journey with the middleware involves following steps:
 - First sourcing entity **acquires the customer**
 - Through sourcing entity, customer registers with the middleware and **fills the loan application**
 - **Basic KYC** is then submitted at sourcing entity side
-- **KYC is approved** automatically or manually depending on the lenders middleware has forwarded the application to
+- **KYC is approved** automatically or manually, depending on the lenders who receive the application
 - In specific cases, lenders can also **request additional documents** from customer
 - After all documents are approved, lender **approves the loan application**
 - Lender **offers are generated** automatically based on lender defined templates
