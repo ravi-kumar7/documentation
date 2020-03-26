@@ -1,5 +1,5 @@
 # Sourcing Entity - Android SDK
-FinBox Lending SDK is a one stop solution for seamlessly onboard users to a loan application journey.
+FinBox Lending SDK is a one stop solution to seamlessly onboard users to a loan application journey.
 
 ## Modules
 The SDK is broken down into multiple modules which can be customizable as per requirements. Complete SDK has following modules:
@@ -152,4 +152,39 @@ private fun routeMessage(remoteMessage: RemoteMessage) {
 }
 ```
 
+## Customizing Theme
+FinBox Lending SDK allows you to customize colors and theme to match your brand
 
+### App Bar Text
+​
+Currently, the app bar shows the name of the application, You can update app bar text by the updating the `app_name` in the `strings.xml` file.
+
+```xml​
+<string name="app_name">FinBox</string>
+```
+### App Bar and Status Colors
+​
+App bar and status colors can be overridden by overwriting `colorPrimary` and `colorPrimaryDark` colors in the `colors.xml`.
+
+```xml​
+<color name="colorPrimary">#00C398</color>
+<color name="colorPrimaryDark">#00574B</color>
+```
+### Fonts
+​
+Default font can be changed to the desired font by specifying `fontFamily` under the style with name `AppTheme.FinBox`.
+
+```xml
+<style name="AppTheme.FinBox" parent="AppTheme.NoActionBar">
+    <item name="android:fontFamily">@font/lato</item>
+</style>
+```
+### Window Background Color
+​
+Use `windowBackground` item to update the background color of the screens.
+
+```xml
+<style name="AppTheme.FinBox" parent="AppTheme.NoActionBar">
+    <item name="android:windowBackground">@color/colorBlackText</item>
+</style>
+```
