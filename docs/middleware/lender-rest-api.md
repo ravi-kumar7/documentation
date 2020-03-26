@@ -136,6 +136,7 @@ Requires `token` in header and takes `loanApplicationID` (page number) as query 
             }
 }
 ```
+Through `status` field in `bankDetails`, `ekycDetails` and `kycDocs` field, status can be tracked individually for modules. Values for these are explained in [Appendix](/middleware/appendix.html).
 
 ## KYC
 ### Approve KYC
