@@ -170,6 +170,60 @@ Requires FinBox shared `X-API-KEY` in header.
 
 ## Underwriting and Loan Offer
 
+### Get Underwriting
+Used to fetch underwriting rules and results
+::: tip Endpoint
+GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/lender/getUnderwriting**
+:::
+
+**Request Format**
+Requires `token` in header and `loanApplicationID` as query parameter.
+
+**Response**
+```json
+{
+    "status": true,
+    "error": "",
+    "data": [
+        {
+            "decision": "PASS",
+            "details": "some details",
+            "rule": "rule to check",
+            "value": "value to check in rule if present"
+        },
+        ...]
+}
+```
+Here `decision` value can be:
+- PASS
+- FAIL
+- CAN'T DECIDE
+
+### Get Agreement and KYC Zip files
+Used to fetch document
+::: tip Endpoint
+GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/lender/getFiles**
+:::
+
+**Request Format**
+Requires `token` in header and `loanApplicationID` and `document` as a query parameter.
+
+Here `document` can be `unsigned_agreement`, `signed_agreement`, `kyc_zip_file`.
+
+:::warning Zip File
+- On successful loan agreement signing, registered lender emails will receive a signed agreement along with KYC zip file.
+- KYC Zip file in email as well as the one retrieved from this API are password protected, password for which is shared to the lender by FinBox Team.
+:::
+
+**Response**
+```json
+{
+    "status": true,
+    "error": "",
+    "data": "URL FOR REQUESTED FILE"
+}
+```
+
 ### Approve Loan
 Approves Loan for a given loan application
 ::: tip Endpoint
