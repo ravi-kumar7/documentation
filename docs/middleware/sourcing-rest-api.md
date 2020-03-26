@@ -378,6 +378,7 @@ Requires `token` in header and takes `loanApplicationID` (page number) as query 
             }
 }
 ```
+Through `status` field in `bankDetails`, `ekycDetails` and `kycDocs` field, status can be tracked individually for modules. Values for these are explained in [Appendix](/middleware/appendix.html).
 
 ## KYC
 ### Get KYC Rules
@@ -477,7 +478,7 @@ Requires `token` in header and file in the body with form field `file`.
 ### Fetch Media
 Used to fetch an image file from server
 ::: tip Endpoint
-POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/services/fetchMedia**
+GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/services/getMedia**
 :::
 
 **Request Format**
@@ -516,30 +517,296 @@ Requires `token` in header and `mediaID` as a query parameter.
 In case `backMediaID` is not required, blank string `""` can be sent as a value.
 
 ### E-KYC
+E-KYC integration flow is specific to E-KYC partner. But in general requires calling of two APIs, one before starting the process and second to report the response id from E-KYC partner.
+::: tip Endpoint
+POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/kyc/startEkyc**
+:::
+**Request Format**
+Requires `token` in header.
+```json
+{
+    "loanApplicationID": "loan application id"
+}
+```
+**Response**
+```json
+{
+    "status": true,
+    "error": false,
+    "data": "request id"
+}
+```
 
+::: tip Endpoint
+POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/kyc/submitEkyc**
+:::
+**Request Format**
+Requires `token` in header.
+```json
+{
+    "requestID": "request id received in previous API",
+    "responseID": "response id received from E-KYC partner"
+}
+```
 
 ## Loan Offers
 ### Get Loan Offers
+
+::: tip Endpoint
+GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/loan/getLoanOffers**
+:::
+
+**Request Format**
+Requires `token` in header and `loanApplicationID` as a query parameter.
+
+**Response**
+```json
+{
+    "status": true,
+    "error": "",
+    "data": [
+        {
+            "loanOfferID": "unique identifier",
+            "interest": 2,
+            "tenure": 6,
+            "processingFee": 250,
+            "amount": 20000
+        },
+        ...
+    ]
+}
+```
+Here `interest` is annually and in percentage and `tenure` is in months.
+
+
 ### Accept Loan Offer
+Accepts an offer for an application
+::: tip Endpoint
+POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/loan/addOfferToLoan**
+:::
+
+**Request Format**
+Requires `token` in header.
+```json
+{
+    "loanApplicationID": "loan application id",
+    "loanOfferID": "loan offer id retrieved in getLoanOffers API"
+}
+```
 
 ## Bank Details
 ### List Banks
+This API lists all the available banks.
+::: tip Endpoint
+GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/master/getBanks**
+:::
+
+**Request Format**
+Requires `token` in header.
+
+**Response**
+```json
+{
+    "status": true,
+    "error": "",
+    "data": [
+        {
+            "bankID": "bank identifier",
+            "bankName": "Bank Name",
+            "bankIcon": "URL to bank logo image"
+        },
+        ...
+    ]
+}
+```
+
 ### Submit Bank Details
-### Fetch User Bank Details
+Submit bank details for a loan application
+::: tip Endpoint
+POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/user/submitBankDetails**
+:::
+
+**Request Format**
+Requires `token` in header.
+```json
+{
+    "loanApplicationID": "loan application id",
+    "bankID": "unique identifier for bank got from getBanks API",
+    "accountNum": "Account Number",
+    "ifsc": "IFSC Code"
+}
+```
 
 ## Signing the Agreement
 ### Fetch Unsigned Agreement
+This API retrives an unsigned agreement in HTML format.
+
+::: tip Endpoint
+GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/services/getAgreement**
+:::
+
+**Request Format**
+Requires `token` in header and `loanApplicationID` as a query parameter.
+
+**Response**
+Here response is in HTML format.
+
+### Update User Location
+Updates the user location. Required from the point the user reads the agreement until signing. It updates the location if was already stored.
+::: tip Endpoint
+POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/loan/setUserLoanLocation**
+:::
+
+**Request Format**
+Requires `token` in header.
+```json
+{
+    "loanApplicationID": "loan application id",
+    "lat": "latitude",
+    "lon": "longitude",
+    "height": "height",
+    "accuracy": "accuracy",
+    "userLocation": "full address after geo coding",
+}
+```
+
 ### E-Sign the Agreement
+Attaches uploaded e-sign media to agreement and completes the agreement signing.
+::: tip Endpoint
+POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/loan/eSignLoan**
+:::
+
+**Request Format**
+Requires `token` in header.
+```json
+{
+    "loanApplicationID": "loan application id",
+    "mediaID": "media id for uploaded e signature",
+}
+```
 
 ## Repayments
 ### Get Payment Timeline
-### Fetch User Loan
+Fetches payment timeline for a loan application.
+
+::: tip Endpoint
+GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/loan/fetchLoanPaymentTimeline**
+:::
+
+**Request Format**
+Requires `token` in header and `loanApplicationID` as a query parameter.
+
+**Response**
+```json
+{
+    "status": true,
+    "error": "",
+    "data": [
+        {
+            "loanPaymentID": "unique identifier",
+            "status": 1
+            "dueDate": "YYYY-MM-DD",
+            "lateCharge": 233,
+            "installmentNum": 1,
+            "amount": 20000
+        },
+        ...
+    ]
+}
+```
+Here `status` values are explained [here](/middleware/appendix.html#list-of-loan-payment-status).
+
+### Report notified
+Notifies the middleware that a reminder was sent to customer for the given installment
+::: tip Endpoint
+POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/sourcing/reportNotify**
+:::
+
+**Request Format**
+Requires `token` in header.
+```json
+{
+    "loanApplicationID": "loan application id",
+    "installmentNum": 1,
+}
+```
 
 ## Integrations
 ### Get FinBox Inclusion Score (FIS)
+This API gives FIS score for user.
+
+::: tip Endpoint
+GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/sourcing/getFIS**
+:::
+
+**Request Format**
+Requires FinBox shared `X-API-KEY` in header and `userID` as a query parameter.
+
+**Response**
+```json
+{
+    "status": true,
+    "error": "",
+    "data": 0.09
+}
+```
+
 ### Get Bureau Score
+This API gives FIS score for user.
+
+::: tip Endpoint
+GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/sourcing/getBureauScore**
+:::
+
+**Request Format**
+Requires FinBox shared `X-API-KEY` in header and `userID`, `bureau` as a query parameter. `bureau` can have valid values like `SIBIL`.
+
+**Response**
+```json
+{
+    "status": true,
+    "error": "",
+    "data": 750
+}
+```
 
 ## Configurations
 ### Configure Loan Application Form
+In case additional fields are required at application form, then this API can be used to configure.
+
+::: tip Endpoint
+POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/sourcing/updateCustomFields**
+:::
+
+**Request Format**
+Requires FinBox shared `X-API-KEY` in header.
+```json
+{
+    "field1": {
+        "title": "Annual Salary",
+        "type": "float"
+    },
+    ...
+}
+```
+Here `type` can be:
+- float
+- string
+- integer
+- boolean
+
 ### Update emails
-### Update KYC Rule
+Updates emails and documents to share for them. If called with `DELETE` method type, the emails are removed.
+
+::: tip Endpoint
+POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/sourcing/updateEmails**
+:::
+
+**Request Format**
+Requires FinBox shared `X-API-KEY` in header.
+```json
+{
+    "emails": ["some1@company.com", "some2@company.xyz"],
+    "documents": ["unsigned_agreement", "signed_agreement"]
+}
+```
