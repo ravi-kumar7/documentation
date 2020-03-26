@@ -159,14 +159,14 @@ FinBox Lending SDK allows you to customize colors and theme to match your brand
 ​
 Currently, the app bar shows the name of the application, You can update app bar text by the updating the `app_name` in the `strings.xml` file.
 
-```xml​
+```xml
 <string name="app_name">FinBox</string>
 ```
 ### App Bar and Status Colors
 ​
 App bar and status colors can be overridden by overwriting `colorPrimary` and `colorPrimaryDark` colors in the `colors.xml`.
 
-```xml​
+```xml
 <color name="colorPrimary">#00C398</color>
 <color name="colorPrimaryDark">#00574B</color>
 ```
