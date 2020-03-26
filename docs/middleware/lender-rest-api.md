@@ -307,6 +307,20 @@ Requires `token` in header.
     "amountReceived": 2000
 }
 ```
+### Register Late Fee
+::: tip Endpoint
+POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/lender/registerLateFee**
+:::
+
+**Request Format**
+Requires `token` in header.
+```json
+{
+    "loanApplicationID": "loan application id",
+    "installmentNum" : 1,
+    "lateFee": 233
+}
+```
 
 ## Configuration
 ### Update emails
@@ -323,6 +337,28 @@ Requires FinBox shared `X-API-KEY` in header.
     "emails": ["some1@company.com", "some2@company.xyz"]
 }
 ```
+
+### Update auto approval rule
+Updates/Adds auto approval rules
+
+::: tip Endpoint
+POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/lender/autoApproveRule**
+:::
+
+**Request Format**
+Requires FinBox shared `X-API-KEY` in header.
+```json
+{
+    "rules": [
+        "rule": "rule here",
+        "condition": "boolean expression here",
+        "approve": true
+    ],...
+}
+```
+here `condition` is a boolean expression, while `rule` indicates the title.
+`approve` is a boolean indicating whether `approve` or `reject` will happen when `condition` evaluates to true.
+
 ## Customer Notifications
 ### Sending Custom SMS
 Sending custom SMS to a customer
@@ -355,8 +391,59 @@ Requires `token` in header.
 ```
 
 ## Portfolio
-On request, FinBox also provides following additional filters over `GetLoanDetails` API:
-### Getting loans with payments missed
-specify query parameter `missedPayment=true`.
+### Get missed payments list
+Fetches all missed payments in a date range
+::: tip Endpoint
+GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/lender/getMissedPayments**
+:::
+**Request Format**
+Requires `token` in header and takes `fromDate` and `toDate` as query strings in `YYYY-MM-DD` format.
+
+**Response**
+```json
+{
+    "status": true,
+    "error": "",
+    "data": [
+        {
+            "loanApplicationID": "Internal ID",
+            "loanApplicationNum": "Customer shared ID",
+            "customerName": "SOME NAME",
+            "installmentNum": 2,
+            "amountDue": 12000
+        },
+        ....
+    ]
+}
+```
+
 ### Get Loan Application in a date range
-specify query parameters `from=YYYY-MM-DD&to=YYYY-MM-DD`
+This API can be used to fetch all loans in specified date range
+::: tip Endpoint
+GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/lender/getLoanListRange**
+:::
+
+**Request Format**
+Requires `token` in header and takes `fromDate` and `toDate` as query strings in `YYYY-MM-DD` format.
+
+**Response**
+```json
+{
+    "status": true,
+    "error": "",
+    "data": [
+        {
+            "loanApplicationID": "Internal ID",
+            "loanApplicationNum": "Customer shared ID",
+            "status": 1,
+            "kyc_status": 0,
+            "name": "Customer name in application",
+            "createdAt": "YYYY-MM-DD HH:MM:SS",
+            "updatedAt": "YYYY-MM-DD HH:MM:SS",
+            "data": {
+                ... contains same field as getLoanDetails API
+            }
+        }
+    ]
+}
+```
