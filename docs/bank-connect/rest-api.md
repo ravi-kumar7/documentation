@@ -880,7 +880,7 @@ The response fields are same as in [List Accounts](/bank-connect/rest-api.html#l
 - `transaction_channel`: refer to [this](/bank-connect/appendix.html#transaction-channel) list for possible values.
 
 ## Web hook <Badge text="New" />
-In case you are using net banking mode, you can also configure a custom web hook. This will be invoked whenever extraction process is completed or failed (because of user entering a wrong credentials for example).
+You can also configure a custom web hook to be invoked whenever extraction process is completed or failed (because of extraction failure in manual mode or user entering a wrong credentials for example in net banking mode).
 
 To configure this, you have to share with us a **valid endpoint**.
 
@@ -907,6 +907,17 @@ Here, `https://postman-echo.com/post` is an example for valid endpoint.
 
 On updating the web hook endpoint successfully, the `update_webhook` API will give **200 Status Code**.
 
+:::danger IMPORTANT
+By default web hook is enabled only for net banking mode, in case you want it to be enabled for manual mode as well, then you need to pass an additional field `webhook_mode` with a value `1`. Hence the payload will look like this:
+```json
+{
+    "webhook_url": "https://postman-echo.com/post",
+    "webhook_mode": 1
+}
+```
+Make sure to specify webhook mode every time you update webhook in case you want web hook to be invoked for both manual as well as net banking mode, if not specified `webhook_mode` will reset to default value `0` (Net Banking Mode only)  
+:::
+
 
 ### Receiving payload
 We'll be sending json encoded body in following payload format:
@@ -922,5 +933,4 @@ We'll be sending json encoded body in following payload format:
 
 Here, `progress` field can be `completed` or `failed`. In case of `failed`, `reason` field will specify the reason for failure.
 
-In case of failure in Net Banking mode, actual upload might not have happened as in case of wrong credentials entered by user, hence `entity_id` and `statement_id` will be unavailable, and will be blank strings `""`.
- <!-- Similarly in case of manual upload if `link_id` doesn't exists, its value will be `null`. -->
+In case of failure in Net Banking mode, actual upload might not have happened as in case of wrong credentials entered by user, hence `entity_id` and `statement_id` will be unavailable, and will be blank strings `""`. Similarly in case of manual upload if `link_id` doesn't exists, its value will be `null`.
