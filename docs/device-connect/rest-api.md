@@ -34,7 +34,11 @@ Clients need to call the **Insights API** with `CUSTOMER_ID` to get the predicto
 ## Insights API Endpoints
 
 ::: tip Base URL
-For all the endpoints, the base URL is **https://insights.finbox.in/v2/**
+For all the endpoints, the base URL for different environments are as follows: 
+| Environment | Base URL |
+| - | - | -| - |
+| Production | **https://insights.finbox.in/v2/** |
+| Development | **https://insights.finbox.in/staging/** |
 :::
 
 | Insights | Endpoint | Request Type | Description |
