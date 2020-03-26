@@ -26,6 +26,58 @@ All APIs accept request body with `application/json` content type, the response 
 On successful response you'll receive 200 HTTP status, with `status` value as `true`.
 On failure, response will have `status` key as `false`, and `error` will hold the message indicating the failure.
 
+## Authentication
+Most of the APIs requires a `token` in header. This can be obtained by signing in using registered lender account. Lender accounts can be added by contacting FinBox team.
+
+### Step 1: Send OTP
+::: tip Endpoint
+POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/lender/loginOtp**
+:::
+
+**Request Format**
+```json
+{
+    "mobile": "XXXXXXXXXX"
+}
+```
+**Response**
+```json
+{
+    "status": true,
+    "error": "",
+    "data": ""
+}
+```
+
+### Step 2: Verify OTP
+::: tip Endpoint
+POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/lender/loginOtpVerify**
+:::
+
+**Request Format**
+```json
+{
+    "mobile": "XXXXXXXXXX",
+    "otp": "XXXX"
+}
+```
+**Response**
+```json
+{
+    "status": true,
+    "error": "",
+    "data": {
+        "userData": {
+            "userID": "XXXX",
+            "status": 1,
+            "name": "Lender User Name",
+            "email": "lenderuser@lender.com"
+        },
+        "token": "TOKEN"
+    }
+}
+```
+
 ## Loan Application
 ### Get Active Loans
 This API can be used to fetch all active loans for the lender
