@@ -35,7 +35,6 @@ The table below lists the supported banks with their corresponding identifier. T
 | rbl | RBL Bank |
 | sbi | State Bank of India |
 | sib | South Indian Bank |
-| stanchar | Standard Chartered |
 | syndicate | Syndicate Bank |
 | tamil_mercantile | Tamilnad Mercantile Bank |
 | ubi | Union Bank of India |
@@ -44,6 +43,9 @@ The table below lists the supported banks with their corresponding identifier. T
 | vijaya | Vijaya Bank |
 | vilas | Lakshmi Vilas Bank |
 | yesbnk | Yes Bank |
+
+
+<!-- | stanchar | Standard Chartered | -->
 
 ## Transaction Channel
 The list below indicates the possible value for `transaction_channel` field:
