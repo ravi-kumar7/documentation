@@ -795,6 +795,80 @@ Here `type` can be:
 - integer
 - boolean
 
+
+### Update KYC Rules
+KYC Rules can be updated as per needs of sourcing entity
+
+::: tip Endpoint
+POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/sourcing/updateKycRule**
+:::
+
+**Request Format**
+Requires FinBox shared `X-API-KEY` in header.
+```json
+{
+    "rule": [
+    {
+      "type": "Photo",
+      "maxDoc": 1,
+      "minDoc": 1,
+      "docData": [
+        {
+          "documentID": "8dbdcaf9-5570-4385-ac5e-77dd33c3b2cd",
+          "isMandatory": true,
+          "documentName": "Photo",
+          "bothSides": false
+        }
+      ]
+    },
+    {
+      "type": "Pan_Card",
+      "maxDoc": 1,
+      "minDoc": 1,
+      "docData": [
+        {
+          "documentID": "480dcfbb-b090-44f5-937c-8dc52ed3a4d2",
+          "isMandatory": true,
+          "documentName": "Pan Card",
+          "bothSides": false
+        }
+      ]
+    },
+    {
+      "type": "Address_Proof",
+      "maxDoc": 1,
+      "minDoc": 1,
+      "docData": [
+        {
+          "documentID": "907fd5c5-4a13-4dca-9005-0bfb5e6face0",
+          "isMandatory": false,
+          "documentName": "Aadhaar",
+          "bothSides": true
+        },
+        {
+          "documentID": "2216f613-7f18-4f24-80f6-edcb15d03e25",
+          "isMandatory": false,
+          "documentName": "Driving License",
+          "bothSides": true
+        },
+        {
+          "documentID": "a4e7b6f9-5a94-43b5-a0aa-8dd1e00b9191",
+          "isMandatory": false,
+          "documentName": "Passport",
+          "bothSides": true
+        },
+        {
+          "documentID": "b00f3562-5030-4dc9-a256-c4ac589ceaeb",
+          "isMandatory": false,
+          "documentName": "Voter ID",
+          "bothSides": true
+        }
+      ]
+    }
+  ]
+}
+```
+
 ### Update emails
 Updates emails and documents to share for them. If called with `DELETE` method type, the emails are removed.
 
