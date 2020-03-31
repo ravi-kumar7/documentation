@@ -101,6 +101,11 @@ module.exports = {
           title: 'Appendix',
           path: '/bank-connect/appendix.html',
           collapsable: false
+        },
+        {
+          title: 'Startup Program',
+          path: '/bank-connect/startup-program.html',
+          collapsable: false
         }
       ],
       '/middleware/': [
