@@ -35,9 +35,9 @@ _* can vary based on affiliated accelerator and VC partners._
 
 **How do I find out if I’ve been accepted to the Finbox Startup Program?** If you’ve been accepted to the program, you’ll receive the status of the application via email with a welcome message and next steps. If you haven’t received an email, you can also check in your FinBox Dashboard portal and look for a Startup Program icon in the top right corner.
 
-**Where can I view the credits applied to my Segment account?** The Startup Program credits are reflected in the Dashboard usage and billing page.
+**Where can I view the credits applied to my FinBox account?** The Startup Program credits are reflected in the Dashboard usage and billing page.
 
-**Do I have to be a “new” customer to receive a coupon?** New and current Segment users who have not previously received any other coupon are eligible to apply. Only current customers with usage less than 500$ till now are eligible.
+**Do I have to be a “new” customer to receive a coupon?** New and current FinBox users who have not previously received any other coupon are eligible to apply. Only current customers with usage less than 500$ till now are eligible.
 
 **What happens if I go over my total credit applied?** When you reach 80% of credits, you will get a reminder to upgrade it, failing which you will lose access once you exhaust your total credit received as part of Startup Program offer. 
 
