@@ -939,7 +939,7 @@ In case of failure in Net Banking mode, actual upload might not have happened as
 In case the webhook server is down or a webhook call was failed, you can request for all the webhook payloads for a given `link_id` using the following API:
 
 ::: tip Endpoint
-POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/webhook_payloads/?link_id=`link_id`**
+GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/webhook_payloads/?link_id=`link_id`**
 :::
 Response format will be as follows:
 ```json
