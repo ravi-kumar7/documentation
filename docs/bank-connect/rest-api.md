@@ -933,4 +933,33 @@ We'll be sending json encoded body in following payload format:
 
 Here, `progress` field can be `completed` or `failed`. In case of `failed`, `reason` field will specify the reason for failure.
 
-In case of failure in Net Banking mode, actual upload might not have happened as in case of wrong credentials entered by user, hence `entity_id` and `statement_id` will be unavailable, and will be blank strings `""`. Similarly in case of manual upload if `link_id` doesn't exists, its value will be `null`.
+In case of failure in Net Banking mode, actual upload might not have happened as in case of wrong credentials entered by user, hence `statement_id` will be unavailable, and will be blank string `""`. Similarly in case of manual upload if `link_id` doesn't exists, its value will be `null`.
+
+### Handling cases when webhook server is down
+In case the webhook server is down or a webhook call was failed, you can request for all the webhook payloads for a given `link_id` using the following API:
+
+::: tip Endpoint
+POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/webhook_payloads/?link_id=`link_id`**
+:::
+Response format will be as follows:
+```json
+{
+    "payloads": [
+        {
+            "statement_id": "STATEMENT_UUID4",
+            "entity_id": "ENTITY_UUID4",
+            "link_id": "LINK ID HERE",
+            "progress": "completed",
+            "reason": "",
+            "date_time": "2020-03-06 12:46:33"
+        },
+        ....
+    ]
+}
+```
+
+This API returns the data in decreasing order of time, i.e. the latest payloads will be on top and the oldest on the bottom. In each of the payload there is an additional field `date_time` which indicates the date and time at which the webhook payload was supposed to be sent. `date_time` is in `YYYY-MM-DD HH:MM:SS` format.
+
+:::warning Manual PDF Mode
+Unlike Net Banking mode where you might only have `link_id`, in case of manual mode since you already have `entity_id`, you can make use of `progress` fields in the Transactions API directly.
+:::
