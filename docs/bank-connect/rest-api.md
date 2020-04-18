@@ -263,6 +263,10 @@ All the above APIs give the response in the format below in case of successful f
 - The query parameter `?identity=true` is optional for both the APIs above, if not specified the response will only include `entity_id`, `statement_id` and `bank_name` fields in case of successful upload.
 :::
 
+::: danger 402 HTTP Status Code
+In case you are in **dev** environment and your **trial period has expired**, then upload APIs will give you a response with 402 HTTP Code. To fix this please request FinBox to upgrade your plan.
+:::
+
 ::: danger Bad Request Cases
 1. In case a compulsory field is missing the APIs will throw a **400 (Bad Request)** as follows:
     ```json

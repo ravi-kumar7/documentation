@@ -15,9 +15,9 @@ The table below lists the supported banks with their corresponding identifier. T
 | citi | Citibank |
 | citi_union | City Union Bank |
 | corporation | Corporation Bank |
-| dcbbnk | DCB Bank |
 | dena | Dena Bank |
 | deutsche | Deutsche Bank |
+| federal | Federal Bank |
 | hdfc | HDFC Bank |
 | icici | ICICI India |
 | idbi | IDBI Bank |
@@ -41,10 +41,10 @@ The table below lists the supported banks with their corresponding identifier. T
 | uco | UCO Bank |
 | united | United Bank of India |
 | vijaya | Vijaya Bank |
-| vilas | Lakshmi Vilas Bank |
 | yesbnk | Yes Bank |
 
-
+<!-- | vilas | Lakshmi Vilas Bank | -->
+<!-- | dcbbnk | DCB Bank | -->
 <!-- | stanchar | Standard Chartered | -->
 
 ## Transaction Channel
