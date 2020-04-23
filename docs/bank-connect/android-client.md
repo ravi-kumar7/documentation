@@ -5,9 +5,7 @@ This **SDK** helps users to upload bank statements.
 </p>
 It includes two methods to upload the file:
 - **Using Net Banking:** In this method user only need to enter the credentials of Net Banking to upload their bank statement. The server will automatically download and then upload the pdf.
-::: warning NOTE
-Currently only five banks: **HDFC, Axis, SBI, Kotak** and **ICICI** are supported in this method.  
-:::
+
 - **Uploading Manually:** In this method users are required to manually upload the pdf of the bank statement.
 
 :::tip Fetching Transactions
@@ -47,42 +45,36 @@ FinboxBankConnect.init(this);
 ## Showing Upload Screen 
 
 In order to start showing the Upload screens all you have to do is add the `FinboxBankConnectView` to your layout file.  
-
-```xml
-<in.finbox.bankconnect.baseui.FinboxBankConnectView
-        android:id="@+id/bankConnect"
-        app:type="NET_BANKING"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
- ```
- This will show the bank connect view to the user.
   
-`app:type` specifies the type of upload flow that you want to give the user. If user wants to enter his statement manually then pass `app:type="MANUAL"` otherwise `app:type="NET_BANKING"`.
+```xml  
+<in.finbox.bankconnect.baseui.FinboxBankConnectView  
+    android:id="@+id/bankConnect"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />
+ ```  
+ 
+ In order to initialize the view and the SDK following statement is mandatory.
+```kotlin
+bankConnect = findViewById(R.id.bankConnect)
+FinBoxBankConnect.Builder(applicationContext, bankConnect)  
+    .linkId(UUID.randomUUID().toString())
+    .fromDate("01/01/2020") //Optional: Default 3 months old date
+    .toDate("01/04/2020") //Optional: Default value 1 day less than current date
+    .bank("sbi") //Optional
+    .build()
+```
+Once this is added a series of checks are done to make sure the SDK is implemented correctly. A `RunTimeException` will be thrown while trying to build the project in case any of the checks are not completed.
+::: warning NOTE
+Following are the minimal requirement for the SDK to get integrated.
+1. LinkId is mandatory. And should be atleast 8 character long
+2. API Key should be present in the manifest
+3. In case fromDate/toDate is provided. Make sure they are of correct date format. FinBox requires date to be passed as `dd/MM/yyyy`
+:::
 
-There are **additional optional attributes** that can be used as well:
-
-`app:fromDate` specifies the date from which you want the statement to be collected in **yyyy-mm** format. 
-
-`app:toDate` specifies the date till which you want the statement to be collected in **yyyy-mm** format. 
-
-`app:bank` specifies a bank name identifier in case you don't want user to select the bank and take the specified one directly. See [here](/bank-connect/appendix.html#bank-identifiers) to see the list of possible bank name identifiers.
+Once all these conditions are met  the bank connect view will be visible to the user. Callbacks can be received in real time as the user interacts using `LiveData`.  
 
 ::: warning Period Values
 Please make sure from date is always less than to date, and is set either in xml or in runtime. There is no default value for the periods if not specified.
-:::
-
-## Setting Attributes in Runtime
-After initializing the FinBox Bank Connect SDK, you can set the values to the attributes defined in layout in runtime as follows:
-```kotlin
-bankConnect.setLinkId("your_link_id")
-bankConnect.setJourneyFromDate("2019-04")
-bankConnect.setJourneyToDate("2019-05")
-bankConnect.invalidate()
-```
-Here `bankConnect` is the `View` object for `FinBoxBankConnectView` added in the layout.
-
-::: tip Setting link_id
-`link_id` can be set only in runtime as showing in the example above.
 :::
 
 ## Live Data and Callbacks
@@ -225,3 +217,20 @@ On upload will have a payload structure as follows:
 `bank` field contains the bank name identifier (click [here](/bank-connect/appendix.html#bank-identifiers) to see the full list).
 
 `progress` field gives the month and year for which the statement was uploaded.
+
+# Customization
+Since FinBox BankConnect is a view embedded in your application in order to make it look compatible there are certain view level customization that can be done.
+
+1. Button color. View uses `accentColor` for all button colors
+	```xml
+	<style name="FinBoxButton"  parent="Button.FinBox">
+	  <item name="backgroundColor">@color/colorAccent</item>
+	</style>
+	```
+	Button style can be modified here as per application.
+2. Theme: `light` and `dark` 
+	```xml
+	<style name="FinBoxView" parent="Theme.FinBox">
+	  <item name="backgroundColor">@color/colorAccent</item>
+	</style>	
+	```
