@@ -218,7 +218,7 @@ On upload will have a payload structure as follows:
 
 `progress` field gives the month and year for which the statement was uploaded.
 
-# Customization
+## Customization
 Since FinBox BankConnect is a view embedded in your application in order to make it look compatible there are certain view level customization that can be done.
 
 1. Button color. View uses `accentColor` for all button colors
