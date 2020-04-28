@@ -12,9 +12,9 @@ This page is an **extension** to the documentation [here](/device-connect/rest-a
 ## Insights Endpoint Request
 | Insights | Endpoint | Request Type | Description | 
 | - | - | - | - |
-| List Devices | /risk/device-ids | POST | Lists all the devices a customer has logged into |
-| Transactions | /risk/transactions | POST | Captured and enriched bank transactions of customer |
-| Accounts | /risk/accounts | POST | Captured financial accounts of customer |
+| List Devices | /device-ids | POST | Lists all the devices a customer has logged into |
+| Transactions | /transactions | POST | Captured and enriched bank transactions of customer |
+| Accounts | /accounts | POST | Captured financial accounts of customer |
 
 ## `data` Key
 
