@@ -18,38 +18,35 @@ The client SDK will give you an `entity_id` after successful statement upload. T
 You need to to include the FinBox Bank Connect JavaScript client library using the `<script>` tag in your HTML page.
 
 ```html
+<div id="finbox-bsm-root" 
+    data-finbox-api-key="<FINBOX-API-KEY>"
+    data-finbox-redirect-url="<REDIRECT-URL>" 
+    data-finbox-from="<DATE-RANGE-FROM>" 
+    data-finbox-to="<DATE-RANGE-TO>" 
+    data-finbox-user-id="<LINK-ID>">
+  </div>
 <script type="text/javascript" 
-            src="https://s3.ap-south-1.amazonaws.com/finbox-cdn/JS/bankuploader.js" 
-            finbox-redirect-url="<CLIENT-REDIRECT-URL>" 
-            finbox-api-key="<FINBOX-API-KEY>"
-            finbox-uploadType="<UPLOAD-TYPE>" >
+    src="https://s3.ap-south-1.amazonaws.com/finbox-cdn/JS/bankuploader.js" >
 </script>
 ```
 `src` attribute specifies the URL to the client library js file
 
-`finbox-api-key` attribute should hold the unique API Key provided
+`data-finbox-api-key` attribute should hold the unique API Key provided.
+
+`data-finbox-user-id` attribute should hold the linkId that will be used to identify user.
+
+`data-finbox-from` & `data-finbox-to` attributes will be used to fetch statement for the given time period.
 
 ::: danger Additional layer of security
 FinBox Bank Connect supports an additional layer of security (timestamp and access token based) on request. But is as of now available only for REST APIs. If it is enabled for your organization, this library won't be able to authenticate as it currently supports only the API Key based authentication method.
 :::
 
-`finbox-uploadType` attribute specifies the upload type mode, it can have following three values
-- `netbanking`: Net Banking input only
-- `manual`: Manual PDF upload only
-- `both`: Ask user to choose from Net Banking or Manual PDF upload
-
-`finbox-redirect-url` attribute specifies the redirect url once either the statment upload is successful or has failed for some reason. The status of the statement upload is updated to client via a webhook which contains reason of failure or success payload
+`data-finbox-redirect-url` attribute specifies the redirect url once either the statment upload is successful or has failed for some reason. The status of the statement upload is updated to client via a webhook which contains reason of failure or success payload
 
 ::: warning Period Values
 Please make sure from date is always less than to date. 
 :::
 
-## Showing Upload Screen
-Add the `<div>` tag below with the `id` as `finbox-bsm-root` to show the upload screen.
-```html
-<!-- This div will be replaced by the bank connect sdk -->
-<div id="finbox-bsm-root"></div> 
-```
 
 ## Setting Period in Runtime
 
