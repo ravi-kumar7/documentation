@@ -711,10 +711,12 @@ On fetching information successfully, the response would be of the following for
             {
                 "account_id": "uuid4_for_account",
                 "end_date": "2019-01-11 00:00:00",
+                "clean_transaction_note": "A SHORT AND CLEAN TRANSACTION NOTE",
                 "transactions": [
                     {
                         "transaction_channel": "net_banking_transfer",
                         "transaction_note": "SOME LONG TRANSACTION NOTE",
+                        "clean_transaction_note": "A SHORT AND CLEAN TRANSACTION NOTE",
                         "hash": "unique_transaction_identifier_1",
                         "account_id": "uuid4_for_account",
                         "transaction_type": "credit",
@@ -726,6 +728,7 @@ On fetching information successfully, the response would be of the following for
                     {
                         "transaction_channel": "net_banking_transfer",
                         "transaction_note": "SOME LONG TRANSACTION NOTE",
+                        "clean_transaction_note": "A SHORT AND CLEAN TRANSACTION NOTE",
                         "hash": "unique_transaction_identifier_2",
                         "account_id": "uuid4_for_account",
                         "transaction_type": "credit",
@@ -744,10 +747,12 @@ On fetching information successfully, the response would be of the following for
             {
                 "account_id": "uuid4_for_account",
                 "end_date": "2019-01-18 00:00:00",
+                "clean_transaction_note": "A SHORT AND CLEAN TRANSACTION NOTE",
                 "transactions": [
                     {
                         "transaction_channel": "debit_card",
                         "transaction_note": "SOME LONG TRANSACTION NOTE",
+                        "clean_transaction_note": "A SHORT AND CLEAN TRANSACTION NOTE",
                         "hash": "unique_transaction_identifier_3",
                         "account_id": "uuid4_for_account",
                         "transaction_type": "debit",
@@ -759,6 +764,7 @@ On fetching information successfully, the response would be of the following for
                     {
                         "transaction_channel": "debit_card",
                         "transaction_note": "SOME LONG TRANSACTION NOTE",
+                        "clean_transaction_note": "A SHORT AND CLEAN TRANSACTION NOTE",
                         "hash": "unique_transaction_identifier_4",
                         "account_id": "uuid4_for_account",
                         "transaction_type": "debit",
@@ -770,6 +776,7 @@ On fetching information successfully, the response would be of the following for
                     {
                         "transaction_channel": "debit_card",
                         "transaction_note": "SOME LONG TRANSACTION NOTE",
+                        "clean_transaction_note": "A SHORT AND CLEAN TRANSACTION NOTE",
                         "hash": "unique_transaction_identifier_5",
                         "account_id": "uuid4_for_account",
                         "transaction_type": "debit",
@@ -794,6 +801,7 @@ Each of the recurring transaction set object has following fields:
 - `end_date`: end date for the recurring transaction set
 - `transaction_channel`: transaction channel in upper case. Refer to [this](/bank-connect/appendix.html#transaction-channel) list for possible values.
 - `median`: median of the transaction amounts under the given recurring transaction set
+- `clean_transaction_note`: contains a clean and small transaction note, it can be used as an identifier for source/destination for the recurring transaction set
 - `transactions`: list of transaction objects under the recurring transaction set. Each transaction object here has same fields as the transaction object in transactions API (Refer the response section [here](/bank-connect/rest-api.html/#transactions) to know about the fields).
 
 ## Lender Transactions
