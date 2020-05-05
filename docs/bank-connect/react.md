@@ -1,4 +1,4 @@
-# Bank Connect: React JS Sdk
+# Bank Connect: React JS SDK
 This **SDK** helps users to upload bank statements.
 <p style="text-align:center">
 <img src="/bc_js.gif" alt="Animated Demo" />
