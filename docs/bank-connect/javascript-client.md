@@ -1,13 +1,12 @@
-# Bank Connect: JavaScript Client
+# Bank Connect: JavaScript Client SDK
 This **SDK** helps users to upload bank statements.
 <p style="text-align:center">
 <img src="/bc_js.gif" alt="Animated Demo" />
 </p>
 It includes two methods to upload the file:
+
 - **Using Net Banking:** In this method user only need to enter the credentials of Net Banking to upload their bank statement. The server will automatically download and then upload the pdf.
-::: warning NOTE
-Currently only five banks: **HDFC, Axis, SBI, Kotak** and **ICICI** are supported in this method.  
-:::
+
 - **Uploading Manually:** In this method users are required to manually upload the pdf of the bank statement.
 
 :::tip Fetching Transactions
@@ -53,7 +52,7 @@ Add the `<div>` tag below with the `id` as `finbox-bsm-root` to show the upload 
 
 ## Setting Period in Runtime
 
-For netbanking statement upload a date range is needed to fetch the statemens. By default the SDK fetches data for last 6 months. In order to define custom date range a function called ``getFinboxDatePeriod()`` needs to be defined. The SDK will look for a function with this name, and expect a function as follows (in this example it sets period for last 5 months):
+For net banking statement upload a date range is needed to fetch the statements. By default the SDK fetches data for last 6 months. In order to define custom date range a function called ``getFinboxDatePeriod()`` needs to be defined. The SDK will look for a function with this name, and expect a function as follows (in this example it sets period for last 5 months):
 
 ```js 
 function getFinboxDatePeriod() {
@@ -88,4 +87,4 @@ Please make sure from date is always less than to date.
 
 
 ## Callback
-All callbacks are given to the client via a webhook which specifies the reason for failure or success.
+All callbacks are given to the client via a web hook which specifies the reason for failure or success.

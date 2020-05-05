@@ -4,10 +4,9 @@ This **SDK** helps users to upload bank statements.
 <img src="/bc_js.gif" alt="Animated Demo" />
 </p>
 It includes two methods to upload the file:
+
 - **Using Net Banking:** In this method user only need to enter the credentials of Net Banking to upload their bank statement. The server will automatically download and then upload the pdf.
-::: warning NOTE
-Currently only five banks: **HDFC, Axis, SBI, Kotak** and **ICICI** are supported in this method.  
-:::
+
 - **Uploading Manually:** In this method users are required to manually upload the pdf of the bank statement.
 
 :::tip Fetching Transactions

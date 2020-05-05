@@ -1,9 +1,10 @@
-# Bank Connect: Android Client
+# Bank Connect: Android Client SDK
 This **SDK** helps users to upload bank statements.
 <p style="text-align:center">
 <img src="/bc_android.gif" alt="Animated Demo" />
 </p>
 It includes two methods to upload the file:
+
 - **Using Net Banking:** In this method user only need to enter the credentials of Net Banking to upload their bank statement. The server will automatically download and then upload the pdf.
 
 - **Uploading Manually:** In this method users are required to manually upload the pdf of the bank statement.
@@ -218,7 +219,7 @@ On upload will have a payload structure as follows:
 
 `progress` field gives the month and year for which the statement was uploaded.
 
-# Customization
+## Customization
 Since FinBox BankConnect is a view embedded in your application in order to make it look compatible there are certain view level customization that can be done.
 
 1. Button color. View uses `accentColor` for all button colors

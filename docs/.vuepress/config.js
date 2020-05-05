@@ -88,12 +88,16 @@ module.exports = {
           collapsable: false,
           children: [
             {
-              title: 'Android Client',
+              title: 'Android',
               path: '/bank-connect/android-client.html'
             },
             {
-              title: 'JavaScript Client',
+              title: 'JavaScript',
               path: '/bank-connect/javascript-client.html'
+            },
+            {
+              title: 'React',
+              path: '/bank-connect/react.html'
             },
           ]
         },
