@@ -1,6 +1,6 @@
 # FinBox Documentation
 
-[![Build Status](https://travis-ci.org/finbox-in/documentation.svg?branch=master)](https://travis-ci.org/finbox-in/documentation)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/a3f328ec-6b46-4314-a1d9-104eaf52305e/deploy-status)](https://app.netlify.com/sites/finbox-docs/deploys)
 
 Holds the documentation for FinBox SDK
 
