@@ -1,7 +1,5 @@
 # FinBox Documentation
 
-[![Build Status](https://travis-ci.org/finbox-in/documentation.svg?branch=master)](https://travis-ci.org/finbox-in/documentation)
-
 Holds the documentation for FinBox SDK
 
 ## Setting up locally
