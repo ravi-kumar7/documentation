@@ -34,7 +34,7 @@ There are some frauds which are detected at the first level when the statement f
 
 There is usually a field `fraud_type` that indicates the fraud type. The list of possible `fraud_type` values can be acquired on request from the FinBox team.
 
-A general rule of thumb would be that the fraud_type is usually in a string format with all lower case and words separated by underscore (\_). So a fraud type term can be formed by simple string manipulation of replacing underscore with spaces and capitalising each word then. Example: `some_fraud_type` can become `Some Fraud Type`.
+A general rule of thumb would be that the fraud_type is usually in a string format with all lower case and words separated by underscore (\_). So a fraud type term can be formed by simple string manipulation of replacing underscore with spaces and making the first character capital in each word then. Example: `some_fraud_type` can become `Some Fraud Type`.
 
 In case of transaction level fraud, `transaction_hash` (unique identifier for a transaction) is usually present along with `fraud_type` to know the transaction that has fraud.
 

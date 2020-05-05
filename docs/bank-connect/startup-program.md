@@ -29,7 +29,7 @@ _* can vary based on affiliated accelerator and VC partners._
 
 
 ## Frequently Asked Questions
-**How are the FB credits applied?** Credits are applied to your monthly bill as per usage bases, covering up to $500 in total usage upto 3 months. Any additional usage costs are not covered by the program.
+**How are the FB credits applied?** Credits are applied to your monthly bill as per usage bases, covering up to $500 in total usage up to 3 months. Any additional usage costs are not covered by the program.
 
 **How do I redeem the FinBox credits?** Eligible startups can apply directly to the FinBox Startup Program.
 

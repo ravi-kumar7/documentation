@@ -67,7 +67,7 @@ FinBoxBankConnect.Builder(applicationContext, bankConnect)
 Once this is added a series of checks are done to make sure the SDK is implemented correctly. A `RunTimeException` will be thrown while trying to build the project in case any of the checks are not completed.
 ::: warning NOTE
 Following are the minimal requirement for the SDK to get integrated.
-1. LinkId is mandatory. And should be atleast 8 character long
+1. LinkId is mandatory. And should be at least 8 character long
 2. API Key should be present in the manifest
 3. In case fromDate/toDate is provided. Make sure they are of correct date format. FinBox requires date to be passed as `dd/MM/yyyy`
 :::

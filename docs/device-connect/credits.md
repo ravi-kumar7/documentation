@@ -108,7 +108,7 @@ below:
     - `Credit Card Payment`
     - `Refund`
     - `Regular`
-- **acount_hash**: it is a unique identifier for the account in which the credit transaction was made.
+- **account_hash**: it is a unique identifier for the account in which the credit transaction was made.
 - **channel**: this indicates the channel through which the credit transaction was made. It can be one of the following:
     - `netbanking`
     - `card`

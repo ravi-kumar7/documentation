@@ -113,7 +113,7 @@ below:
     - `Auto Pay`
     - `Refund`
     - `Regular`
-- **acount_hash**: it is a unique identifier for the account in which the transaction was made.
+- **account_hash**: it is a unique identifier for the account in which the transaction was made.
 - **category**: All debit transactions are categorized into one of the following categories to gain a deeper insight into the user’s spending behavior:
     - `Cash`
     - `Transfers`

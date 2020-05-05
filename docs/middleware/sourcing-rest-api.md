@@ -639,7 +639,7 @@ Requires `token` in header.
 
 ## Signing the Agreement
 ### Fetch Unsigned Agreement
-This API retrives an unsigned agreement in HTML format.
+This API retrieves an unsigned agreement in HTML format.
 
 ::: tip Endpoint
 GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/services/getAgreement**

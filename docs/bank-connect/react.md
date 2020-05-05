@@ -19,7 +19,7 @@ The library is available as a npm package. To install the dependency
 ```sh
 npm install finbox-bank-connect-js
 ```
-Once the dependency is added. You can use bank connect view anywhere in your component. Since the SDK opens a modal it is recommemnded to add it to top heirarchy of you View.
+Once the dependency is added. You can use bank connect view anywhere in your component. Since the SDK opens a modal it is recommended to add it to top hierarchy of you View.
 
 ```js
 <FinBoxBankConnect

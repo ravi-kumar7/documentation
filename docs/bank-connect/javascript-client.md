@@ -37,7 +37,7 @@ FinBox Bank Connect supports an additional layer of security (timestamp and acce
 - `manual`: Manual PDF upload only
 - `both`: Ask user to choose from Net Banking or Manual PDF upload
 
-`finbox-redirect-url` attribute specifies the redirect url once either the statment upload is successful or has failed for some reason. The status of the statement upload is updated to client via a webhook which contains reason of failure or success payload
+`finbox-redirect-url` attribute specifies the redirect url once either the statement upload is successful or has failed for some reason. The status of the statement upload is updated to client via a web hook which contains reason of failure or success payload
 
 ::: warning Period Values
 Please make sure from date is always less than to date. 

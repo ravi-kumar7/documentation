@@ -444,7 +444,7 @@ Each of the salary dictionary in the transaction list has following keys:
 
 
 ## Recurring Transactions
-To fetch recurring transactions use the `get_credit_recurring` and `get_debit_rucurring` methods for credit and debit respectively. Both of these return an **iterator** to the recurring dictionary list, after fetching.
+To fetch recurring transactions use the `get_credit_recurring` and `get_debit_recurring` methods for credit and debit respectively. Both of these return an **iterator** to the recurring dictionary list, after fetching.
 
 ```python
 credit_recurring = entity.get_credit_recurring()
