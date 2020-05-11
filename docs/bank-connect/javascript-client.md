@@ -18,7 +18,7 @@ The client SDK will give you an `entity_id` after successful statement upload. T
 In order start with bankconnect call following api to create a session.
 
 ::: tip Endpoint
-POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/v1/session/**
+POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/session/**
 :::
 
 ### Parameters
