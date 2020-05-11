@@ -27,8 +27,8 @@ POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/session/**
 | link_id | string  | link_id value | Yes | - |
 | api_key | string | API key provided by FinBox | Yes | - |
 | redirect_url | string | URL to redirect to incase of success or failure | Yes | null |
-| from_date | string | Start date range to fetch statemnts. Should be of format `dd/MM/YYYY` | No | Last 6 month start date |
-| to_date | string | End date range to fetch statemnts. Should be of format `dd/MM/YYYY` | No | Yesterday |
+| from_date | string | Start date range to fetch statements. Should be of format `dd/MM/YYYY` | No | Last 6 month start date |
+| to_date | string | End date range to fetch statements. Should be of format `dd/MM/YYYY` | No | Yesterday |
 | bank_name | string | Name of the bank to open upload page directly | No | null |
 
 ::: warning Date Values
