@@ -8,6 +8,19 @@
 	"item": [
 		{
 			"name": "Upload Statement",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "201db1c3-d2fa-4852-a6db-00a1a3a4de64",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"entity_id\", jsonData.entity_id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [
@@ -73,6 +86,19 @@
 		},
 		{
 			"name": "Upload Statement (File URL)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "71f6f369-c932-49d5-9422-8a35134982a8",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"entity_id\", jsonData.entity_id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [
@@ -138,6 +164,19 @@
 		},
 		{
 			"name": "Upload Statement (Base 64)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4c68c3aa-0e7a-4be6-bced-0957af280a64",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"entity_id\", jsonData.entity_id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [
@@ -203,6 +242,19 @@
 		},
 		{
 			"name": "Bankless upload",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2f4b7011-d4c9-4a3f-8970-ae3a8972d59d",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"entity_id\", jsonData.entity_id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [
@@ -262,6 +314,19 @@
 		},
 		{
 			"name": "Bankless upload (File URL)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f3de855b-40ee-4137-8a68-ef6276599558",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"entity_id\", jsonData.entity_id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [
@@ -321,6 +386,19 @@
 		},
 		{
 			"name": "Bankless upload (Base 64)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "51180f05-7557-4f63-9151-83e9502f3586",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"entity_id\", jsonData.entity_id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [
@@ -442,7 +520,36 @@
 			"response": []
 		},
 		{
-			"name": "Transactions Excel Workbook",
+			"name": "Monthly Analysis",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"type": "text",
+						"value": "{{x-api-key}}"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/bank-connect/v1/entity/{{entity_id}}/monthly_analysis/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"bank-connect",
+						"v1",
+						"entity",
+						"{{entity_id}}",
+						"monthly_analysis",
+						""
+					]
+				},
+				"description": "Fetch monthly analysis (combined for all accounts) for a given `entity_id`"
+			},
+			"response": []
+		},
+		{
+			"name": "Raw Excel Report",
 			"request": {
 				"method": "GET",
 				"header": [
@@ -466,7 +573,36 @@
 						""
 					]
 				},
-				"description": "Fetch transactions (combined for all accounts) in excel workbook format for a given `entity_id`"
+				"description": "Fetch account wise transactions and monthly analysis in excel workbook format for a given `entity_id`"
+			},
+			"response": []
+		},
+		{
+			"name": "Detailed Excel Report",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"type": "text",
+						"value": "{{x-api-key}}"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/bank-connect/v1/entity/{{entity_id}}/get_excel_report/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"bank-connect",
+						"v1",
+						"entity",
+						"{{entity_id}}",
+						"get_excel_report",
+						""
+					]
+				},
+				"description": "Fetch a detailed report (combined for all accounts) in excel workbook format for a given `entity_id`"
 			},
 			"response": []
 		},
@@ -647,7 +783,7 @@
 						""
 					]
 				},
-				"description": "List of entities created"
+				"description": "List of entities created (paginated)"
 			},
 			"response": []
 		},
@@ -678,6 +814,65 @@
 				"description": "Fetch `entity_id`(s) from `link_id`."
 			},
 			"response": []
+		},
+		{
+			"name": "Update Webhook",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-api-key",
+						"type": "text",
+						"value": "{{x-api-key}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"webhook_url\": \"https://postman-echo.com/post\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/bank-connect/v1/entity/update_webhook/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"bank-connect",
+						"v1",
+						"entity",
+						"update_webhook",
+						""
+					]
+				},
+				"description": "API to update webhook URL"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "bddbf70a-ad86-4672-b5e1-ccf6a40accc7",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "5102e0d2-5928-446b-8d90-711d22b71cd1",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
 		}
 	]
 }

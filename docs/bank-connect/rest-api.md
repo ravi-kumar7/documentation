@@ -17,7 +17,7 @@ The APIs will also require an **environment** file that can be found <a href="/f
 
 Please replace `x-api-key` in the Postman environment with the **API Key** provided by FinBox Team.
 
-After using the upload statement APIs, replace the Postman variable `entity_id` in transactions, identity, and other APIs to fetch the corresponding details.
+First call any of the upload statement APIs, and then call APIs to fetch details like transactions, identity, etc.
 
 ## Authentication
 FinBox Bank Connect REST API uses API keys to authenticate requests. Please keep the API keys secure! Do not share your secret API keys in publicly accessible areas such as GitHub, client-side code, and so forth. All API requests must be made over HTTPS. Calls made over plain HTTP will fail. API requests without authentication will also fail.
@@ -532,40 +532,6 @@ The response fields are same as in [List Accounts](/bank-connect/rest-api.html#l
 - `balance`: account balance just after this transaction
 - `transaction_channel`: refer to [this](/bank-connect/appendix.html#transaction-channel) list for possible values.
 
-## Transactions in Excel Workbook <Badge text="New" />
-Get extracted and enriched transactions for a given entity in .xlsx (Excel workbook) format.
-
-::: tip Endpoint
-GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/`<entity_id>`/raw_excel_report/**
-:::
-
-### Response
-On fetching information successfully, the response would be of the following format with **200 HTTP code**:
-```json
-{
-    "entity_id": "327bc6eb-f6b0-4a6b-9695-27a9a5822c00",
-    "progress": [
-        {
-            "status": "completed",
-            "message": null,
-            "statement_id": "uuid4_for_statement"
-        }
-    ],
-    "reports": [
-        {
-            "link": "long_url_for_the_excel_report",
-            "account_id": "uuid4_for_account"
-        }
-    ]
-}
-```
-
-The list value of `reports` key will be empty if any one of the statements have a **non** `completed` `status` in `progress`. When the transactions are successfully processed for all statements, within the entity, a list of report links will be available account wise.
-
-In case of multiple accounts within the same entity, you can have multiple reports within the `reports` key. The `account_id` will represent the account for which the report is, while `link` key holds url for the ***.xlsx file**. The link will be be active only for **1 hour**, post which the API has to re-hit to obtain the new link.
-
-The Excel workbook will contain two worksheets, first containing the extracted information like Account Holder's Name, Bank, Account Number, Missing Periods, Available Periods, etc., while the second sheet contains the enriched extracted transactions for the account.
-
 ## Salary
 Get extracted salary transactions for a given entity.
 
@@ -890,6 +856,169 @@ The response fields are same as in [List Accounts](/bank-connect/rest-api.html#l
 - `merchant_category`: the category of the merchant in case a transaction is with a merchant. Refer to [this](/bank-connect/appendix.html#merchant-category) list of possible values.
 - `balance`: account balance just after this transaction
 - `transaction_channel`: refer to [this](/bank-connect/appendix.html#transaction-channel) list for possible values.
+
+## Monthly Analysis <Badge text="New" />
+Get monthly analysis for a given entity.
+
+::: tip Endpoint
+GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/`<entity_id>`/monthly_analysis/**
+:::
+
+### Response
+On fetching information successfully, the response would be of the following format with **200 HTTP code**:
+```json
+{
+    "entity_id": "uuid4_for_entity",
+    "progress": [
+        {
+            "status": "completed",
+            "message": null,
+            "statement_id": "uuid4_for_statement"
+        }
+    ],
+    "monthly_analysis": {
+        "amt_bill_payment_debit": {
+            "Feb-2020": 1107,
+            "Jan-2020": 0,
+            "Dec-2019": 0,
+            "Mar-2020": 574
+        },
+        "avg_credit_transaction_size": {
+            "Feb-2020": 4432,
+            "Jan-2020": 3134,
+            "Dec-2019": 141,
+            "Mar-2020": 3465
+        },
+        ...
+    }
+}
+```
+Here, `progress` field holds an array of statement wise progress status, while the `monthly_analysis` field holds an object of fields, each having an object of month wise keys having numerical values.
+
+Months are represented in `Mmm-YYYY` format in key.
+
+Different fields that hold this monthly analysis are as follows:
+
+- `amt_auto_debit_payment_bounce_credit`: Total Amount of Auto debit bounce
+- `amt_auto_debit_payment_debit`: Total Amount of Auto-Debit Payments
+- `amt_bank_charge_debit`: Total Amount of Bank Charges
+- `amt_bank_interest_credit`: Total Amount of Bank Interest
+- `amt_bill_payment_debit`: Total Amount of Bill Payments
+- `amt_cash_deposit_credit`: Total Amount of Cash Deposited
+- `amt_cash_withdrawl_debit`: Total Amount of Cash Withdrawal
+- `amt_chq_credit`: Total Amount Credited through Cheque
+- `amt_chq_debit`: Total Amount Debited through Cheque
+- `amt_credit`: Total Amount Credited
+- `amt_debit`: Total Amount Debited
+- `amt_debit_card_debit`: Total Amount Spend through Debit card
+- `amt_international_transaction_arbitrage_credit`: Total Amount of International Credit
+- `amt_international_transaction_arbitrage_debit`: Total Amount of International Debit
+- `amt_investment_cashin_credit`: Total Amount of Investment Cash-ins
+- `amt_net_banking_transfer_credit`: Total Amount Credited through transfers
+- `amt_net_banking_transfer_debit`: Total Amount Debited through transfers
+- `amt_outward_cheque_bounce_debit`: Total Amount Debited through Outward Cheque Bounce
+- `amt_payment_gateway_purchase_debit`: Total Amount of Payment Gateway Purchase
+- `amt_refund_credit`: Total Amount of Refund
+- `amt_upi_credit`: Total Amount Credited through UPI
+- `amt_upi_debit`: Total Amount Debited through UPI
+- `avg_bal`: Average Balance* ( = Average of EOD Balances after filling in missing daily Balances) 
+- `avg_credit_transaction_size`: Average Credit Transaction Size
+- `avg_debit_transaction_size`: Average Debit Transaction Size
+- `closing_balance`: Closing balance
+- `cnt_auto_debit_payment_bounce_credit`: Number of Auto-Debit Bounces
+- `cnt_auto_debit_payment_debit`: Number of Auto-debited payments
+- `cnt_bank_charge_debit`: Number of Bank Charge payments
+- `cnt_bank_interest_credit`: Number of Bank Interest Credits
+- `cnt_bill_payment_debit`: Number of Bill Payments
+- `cnt_cash_deposit_credit`: Number of Cash Deposit Transactions
+- `cnt_cash_withdrawl_debit`: Number of Cash Withdrawal Transactions
+- `cnt_chq_credit`: Number of Credit Transactions through cheque
+- `cnt_chq_debit`: Number of Debit Transactions through cheque
+- `cnt_credit`: Number of Credit Transactions
+- `cnt_debit`: Number of Debit Transactions
+- `cnt_debit_card_debit`: Number of Debit Card Transactions
+- `cnt_international_transaction_arbitrage_credit`: Number of International Credit transactions
+- `cnt_international_transaction_arbitrage_debit`: Number of International Debit transactions
+- `cnt_investment_cashin_credit`: Number of Investment Cash-ins
+- `cnt_net_banking_transfer_credit`: Number of Net Banking Credit Transactions
+- `cnt_net_banking_transfer_debit`: Number of Net Banking Debit Transactions
+- `cnt_outward_cheque_bounce_debit`: Number of Debit Transactions through Outward Cheque Bounce
+- `cnt_payment_gateway_purchase_debit`: Number of Payment Gateway Purchase
+- `cnt_refund_credit`: Number of Refund Transactions
+- `cnt_transactions`: Number of Transactions
+- `cnt_upi_credit`: Number of Credit Transactions through UPI
+- `cnt_upi_debit`: Number of Debit Transactions through UPI
+- `max_bal`: Maximum Balance
+- `max_eod_balance`: Maximum EOD Balance
+- `median_balance`: Median Balance* ( = Median of EOD Balances after filling in missing daily Balances) 
+- `min_bal`: Minimum Balance
+- `min_eod_balance`: Minimum EOD Balance
+- `mode_balance`: Mode Balance* ( = Mode of EOD Balances after filling in missing daily Balances) 
+- `net_cash_inflow`: Net Cashflow
+- `opening_balance`: Opening Balance
+- `number_of_salary_transactions`: Number of Salary Transactions
+- `total_amount_of_salary`: Total Amount of Salary
+- `perc_salary_spend_bill_payment`: % Salary Spent on Bill Payment (7 days)
+- `perc_salary_spend_cash_withdrawl`: % Salary Spent Through Cash Withdrawal (7 days)
+- `perc_salary_spend_debit_card`: % Salary Spent through Debit Card (7 days)
+- `perc_salary_spend_net_banking_transfer`: % Salary Spent through Net Banking (7 days)
+- `perc_salary_spend_upi`: % Salary Spent through UPI (7 days)
+
+> \* We extrapolate previous available EOD balance as a proxy for EOD balances for dates missing in the statement. In case when no previous EOD balance is available, EOD balance of the closest available dates are used.
+
+
+## Transactions in Excel Workbook <Badge text="New" />
+Get **enriched transactions** and **monthly analysis** for a given entity **account wise** in .xlsx (Excel workbook) format.
+
+::: tip Endpoint
+GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/`<entity_id>`/raw_excel_report/**
+:::
+
+### Response
+On fetching information successfully, the response would be of the following format with **200 HTTP code**:
+```json
+{
+    "entity_id": "uuid4_for_entity",
+    "progress": [
+        {
+            "status": "completed",
+            "message": null,
+            "statement_id": "uuid4_for_statement"
+        }
+    ],
+    "reports": [
+        {
+            "link": "long_url_for_the_excel_report",
+            "account_id": "uuid4_for_account"
+        }
+    ]
+}
+```
+
+The list value of `reports` key will be empty if any one of the statements have a **non** `completed` `status` in `progress`. When the transactions are successfully processed for all statements, within the entity, a list of report links will be available account wise.
+
+In case of multiple accounts within the same entity, you can have multiple reports within the `reports` key. The `account_id` will represent the account for which the report is, while `link` key holds url for the **.xlsx file**. The link will be be active only for **1 hour**, post which the API has to be re-hit to obtain the new link.
+
+The Excel workbook will contain three worksheets, first containing the extracted information like Account Holder's Name, Bank, Account Number, Missing Periods, Available Periods, etc., the second sheet contains the enriched extracted transactions for the account, and the third sheet contains the monthly analysis for account.
+
+## Detailed Excel Report <Badge text="New" />
+Get a detailed excel report for a given entity in .xlsx (Excel workbook) format.
+
+::: tip Endpoint
+GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/`<entity_id>`/get_excel_report/**
+:::
+
+### Response
+On fetching information successfully, the response would be of the following format with **200 HTTP code**:
+```json
+{
+    "entity_id": "uuid4_for_entity",
+    "progress": "completed",
+    "report": "long_url_for_the_excel_report"
+}
+```
+
+Possible value for `progress` are listed here [Progress Field](/bank-connect/rest-api.html#progress-field). The value of `report` key will be empty if the progress is not `completed`. The Excel workbook contains detailed analysis on different parameters in form of separate sheets.
 
 ## Web hook <Badge text="New" />
 You can also configure a custom web hook to be invoked whenever extraction process is completed or failed (because of extraction failure in manual mode or user entering a wrong credentials for example in net banking mode).
