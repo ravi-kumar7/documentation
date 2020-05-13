@@ -968,7 +968,7 @@ Different fields that hold this monthly analysis are as follows:
 
 
 ## Transactions in Excel Workbook <Badge text="New" />
-Get enriched transactions and monthly analysis for a given entity **account wise** in .xlsx (Excel workbook) format.
+Get **enriched transactions** and **monthly analysis** for a given entity **account wise** in .xlsx (Excel workbook) format.
 
 ::: tip Endpoint
 GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/`<entity_id>`/raw_excel_report/**
@@ -978,7 +978,7 @@ GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/`<enti
 On fetching information successfully, the response would be of the following format with **200 HTTP code**:
 ```json
 {
-    "entity_id": "327bc6eb-f6b0-4a6b-9695-27a9a5822c00",
+    "entity_id": "uuid4_for_entity",
     "progress": [
         {
             "status": "completed",
@@ -997,9 +997,28 @@ On fetching information successfully, the response would be of the following for
 
 The list value of `reports` key will be empty if any one of the statements have a **non** `completed` `status` in `progress`. When the transactions are successfully processed for all statements, within the entity, a list of report links will be available account wise.
 
-In case of multiple accounts within the same entity, you can have multiple reports within the `reports` key. The `account_id` will represent the account for which the report is, while `link` key holds url for the ***.xlsx file**. The link will be be active only for **1 hour**, post which the API has to re-hit to obtain the new link.
+In case of multiple accounts within the same entity, you can have multiple reports within the `reports` key. The `account_id` will represent the account for which the report is, while `link` key holds url for the ***.xlsx file**. The link will be be active only for **1 hour**, post which the API has to be re-hit to obtain the new link.
 
-The Excel workbook will contain two worksheets, first containing the extracted information like Account Holder's Name, Bank, Account Number, Missing Periods, Available Periods, etc., while the second sheet contains the enriched extracted transactions for the account.
+The Excel workbook will contain three worksheets, first containing the extracted information like Account Holder's Name, Bank, Account Number, Missing Periods, Available Periods, etc., the second sheet contains the enriched extracted transactions for the account, and the third sheet contains the monthly analysis for account.
+
+## Detailed Excel Report <Badge text="New" />
+Get a detailed excel report for a given entity in .xlsx (Excel workbook) format.
+
+::: tip Endpoint
+GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/`<entity_id>`/get_excel_report/**
+:::
+
+### Response
+On fetching information successfully, the response would be of the following format with **200 HTTP code**:
+```json
+{
+    "entity_id": "uuid4_for_entity",
+    "progress": "completed",
+    "report": "long_url_for_the_excel_report"
+}
+```
+
+Possible value for `progress` are listed here [Progress Field](/bank-connect/rest-api.html#progress-field). The value of `report` key will be empty if the progress is not `completed`. The Excel workbook contains detailed analysis on different parameters in form of separate sheets.
 
 ## Web hook <Badge text="New" />
 You can also configure a custom web hook to be invoked whenever extraction process is completed or failed (because of extraction failure in manual mode or user entering a wrong credentials for example in net banking mode).
