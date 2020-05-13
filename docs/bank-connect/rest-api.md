@@ -17,7 +17,7 @@ The APIs will also require an **environment** file that can be found <a href="/f
 
 Please replace `x-api-key` in the Postman environment with the **API Key** provided by FinBox Team.
 
-After using the upload statement APIs, replace the Postman variable `entity_id` in transactions, identity, and other APIs to fetch the corresponding details.
+First call any of the upload statement APIs, and then call APIs to fetch details like transactions, identity, etc.
 
 ## Authentication
 FinBox Bank Connect REST API uses API keys to authenticate requests. Please keep the API keys secure! Do not share your secret API keys in publicly accessible areas such as GitHub, client-side code, and so forth. All API requests must be made over HTTPS. Calls made over plain HTTP will fail. API requests without authentication will also fail.
