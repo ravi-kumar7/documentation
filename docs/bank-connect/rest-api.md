@@ -997,7 +997,7 @@ On fetching information successfully, the response would be of the following for
 
 The list value of `reports` key will be empty if any one of the statements have a **non** `completed` `status` in `progress`. When the transactions are successfully processed for all statements, within the entity, a list of report links will be available account wise.
 
-In case of multiple accounts within the same entity, you can have multiple reports within the `reports` key. The `account_id` will represent the account for which the report is, while `link` key holds url for the ***.xlsx file**. The link will be be active only for **1 hour**, post which the API has to be re-hit to obtain the new link.
+In case of multiple accounts within the same entity, you can have multiple reports within the `reports` key. The `account_id` will represent the account for which the report is, while `link` key holds url for the **.xlsx file**. The link will be be active only for **1 hour**, post which the API has to be re-hit to obtain the new link.
 
 The Excel workbook will contain three worksheets, first containing the extracted information like Account Holder's Name, Bank, Account Number, Missing Periods, Available Periods, etc., the second sheet contains the enriched extracted transactions for the account, and the third sheet contains the monthly analysis for account.
 
