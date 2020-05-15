@@ -917,6 +917,7 @@ Different fields that hold this monthly analysis are as follows:
 - `amt_net_banking_transfer_credit`: Total Amount Credited through transfers
 - `amt_net_banking_transfer_debit`: Total Amount Debited through transfers
 - `amt_outward_cheque_bounce_debit`: Total Amount Debited through Outward Cheque Bounce
+- `amt_inward_cheque_bounce_credit`: Total Amount Credited through Inward Cheque Bounce
 - `amt_payment_gateway_purchase_debit`: Total Amount of Payment Gateway Purchase
 - `amt_refund_credit`: Total Amount of Refund
 - `amt_upi_credit`: Total Amount Credited through UPI
@@ -943,6 +944,7 @@ Different fields that hold this monthly analysis are as follows:
 - `cnt_net_banking_transfer_credit`: Number of Net Banking Credit Transactions
 - `cnt_net_banking_transfer_debit`: Number of Net Banking Debit Transactions
 - `cnt_outward_cheque_bounce_debit`: Number of Debit Transactions through Outward Cheque Bounce
+- `cnt_inward_cheque_bounce_credit`: Number of Credit Transactions through Inward Cheque Bounce
 - `cnt_payment_gateway_purchase_debit`: Number of Payment Gateway Purchase
 - `cnt_refund_credit`: Number of Refund Transactions
 - `cnt_transactions`: Number of Transactions
