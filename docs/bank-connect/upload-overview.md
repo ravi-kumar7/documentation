@@ -1,4 +1,4 @@
-# Uploading Bank Statements
+# Bank Connect: Uploading Bank Statements
 
 Uploading bank statements is the first step involved in Bank Connect Integration flow.
 

@@ -1,4 +1,4 @@
-# Fetching Enriched Data
+# Bank Connect: Fetching Enriched Data
 
 Fetching enriched data is the second step involved in Bank Connect Integration flow. To fetch enriched data you need to have `entity_id` with you.
 
