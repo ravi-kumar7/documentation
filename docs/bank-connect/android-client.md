@@ -139,7 +139,6 @@ bankConnect.getPayloadLiveData().observe(this, new Observer < FinboxResult > () 
 
 ## Events
 This section list the events in detail:
-
 ### `FinboxResult.OnExit`
 `FinboxResult.OnExit` will be called when user exits the flow by selecting the cross icon and accepting to close the flow.
 
