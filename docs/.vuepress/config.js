@@ -82,15 +82,15 @@ module.exports = {
               path: '/bank-connect/upload-python.html'
             },
             {
-              title: 'Android',
+              title: 'Android Client SDK',
               path: '/bank-connect/android-client.html'
             },
             {
-              title: 'JavaScript',
+              title: 'JavaScript Client SDK',
               path: '/bank-connect/javascript-client.html'
             },
             {
-              title: 'React',
+              title: 'React Client SDK',
               path: '/bank-connect/react.html'
             }
           ]
