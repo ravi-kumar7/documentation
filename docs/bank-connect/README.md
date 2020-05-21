@@ -1,34 +1,52 @@
-# Bank Connect: Introduction
-The FinBox Bank Connect parses bank account statements (PDFs) and provides:
+<style>
+.button_holder{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.download_button{
+    background-color: white;
+    color: rgb(36, 202, 122);
+    width: 300px;
+    text-align: center;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    font-size: 16px;
+    cursor: pointer;
+    border-width: 0.07em;
+    border-style: solid;
+    border-color: rgb(36, 202, 122);
+    border-image: initial;
+    padding: 10px 0px;
+    text-decoration: none;
+    border-radius: 2px;
+    margin: 4px 2px;
+    text-decoration:none;
+}
+.download_button:hover{
+    background-color: rgb(36, 202, 122);
+    color: white;
+    text-decoration: none !important;
+}
+</style>
 
-- User Identity data
-- Enriched Transaction data
-- Fraud Detection
-- Credit Assessment metrics (Asset Report)
+# Bank Connect: Overview
+The FinBox Bank Connect allows users to submit their bank account statements in your app, then processes them and shares the enriched data with you.
 
-Developers can use this to build loan application journeys, wealth management apps and personal finance management apps.
+This guide will help you integrate bank connect in your application flow.
 
-Other than parsing bank account statements it also provides client libraries to accept the statement PDFs manually or via net banking credentials.
+Head towards the [Basics](/bank-connect/basics.html) section to understand the basic terms associated with Bank Connect.
 
-::: tip Try Bank Connect
-Click [here](https://finbox.in/contact-us) to contact us and request for an API key
-:::
+## Postman Collection
+Postman **collection** and **environment** for Bank Connect REST APIs can be downloaded using the buttons below:
 
-## Getting started
-Head towards [Basics](/bank-connect/basics.html) to understand the standard terms, then proceed to your preferred language for SDK. The SDK is available in two modes:
+<div class="button_holder">
+<a class="download_button" download href="/finbox_bankconnect.postman_collection.json">Download Collection</a>
+<a class="download_button" download href="/finbox_bankconnect.postman_environment.json">Download Environment</a>
+</div>
 
-### Direct PDF Mode
-Here the statement PDF is directly provided to the SDK
-- [REST API](/bank-connect/rest-api.html)
-- [Python](/bank-connect/python.html)
+Please replace `x-api-key` in the Postman environment with the **API Key** provided by FinBox Team.
 
-### Net Banking Mode <Badge text="New" type="tip"/>
-In the **Net Banking mode**, users just have to enter net banking credentials, and the statements will be directly/automatically fetched from their net banking accounts, saving them a lot of time and effort to download/obtain the PDF File.
-
-You can look at your preferred client library for this:
-- [Android Client](/bank-connect/android-client.html)
-- [JavaScript Client](/bank-connect/javascript-client.html)
-
-:::warning NOTE
-**Net Banking Mode** will only help in fetching the statement for the user and uploading it to the FinBox server for processing. However, to get extracted and enriched identity / transactions, the use of **REST API** will be required.
-:::
+First call any of the upload statement APIs, and then call APIs to fetch details like transactions, identity, etc.
