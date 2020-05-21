@@ -34,9 +34,23 @@ The unique [API Key](/bank-connect/#getting-api-keys) provided needs to be added
 ## Initialize the SDK  
   
 In your application class initialize FinBox Bank Connect SDK as follows:
+
+<CodeSwitcher :languages="{kotlin:'Kotlin',java:'Java'}">
+<template v-slot:kotlin>
+
 ```kotlin
 FinboxBankConnect.init(this);
 ```
+
+</template>
+<template v-slot:java>
+
+```java
+FinboxBankConnect.init(this);
+```
+
+</template>
+</CodeSwitcher>
 
 ## Showing SDK Screen 
 
@@ -50,6 +64,10 @@ In order to show SDK Screen, all you have to do is add the `FinboxBankConnectVie
  ```  
  
 In order to initialize the view, following statement is mandatory:
+
+<CodeSwitcher :languages="{kotlin:'Kotlin',java:'Java'}">
+<template v-slot:kotlin>
+
 ```kotlin
 bankConnect = findViewById(R.id.bankConnect)
 FinBoxBankConnect.Builder(applicationContext, bankConnect)  
@@ -59,6 +77,22 @@ FinBoxBankConnect.Builder(applicationContext, bankConnect)
     .bank("sbi") // Optional
     .build()
 ```
+
+</template>
+<template v-slot:java>
+
+```java
+FinboxBankConnectView bankConnect = findViewById(R.id.bankConnect);
+new FinBoxBankConnect.Builder(getApplicationContext(), bankConnect)
+        .linkId("link_id")
+        .fromDate("01/01/2020") // Optional: Default 3 months old date
+        .toDate("01/04/2020") // Optional: Default value 1 day less than current date
+        .bank("sbi") // Optional
+        .build();
+```
+
+</template>
+</CodeSwitcher>
 
 | Builder Property | Description | Required |
 | - | - | - |
