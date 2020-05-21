@@ -1,51 +1,79 @@
-# Bank Connect: React JS SDK
-This **SDK** helps users to upload bank statements.
+# Bank Connect: React Client SDK
+The React Client SDK helps user submit their bank statements via upload or net banking credentials in your React application.
+
+## See in action
+The demo video below shows how a user submit bank statement using net banking credentials:
 <p style="text-align:center">
-<img src="/bc_js.gif" alt="Animated Demo" />
+<iframe width="560" height="315" src="https://www.youtube.com/embed/lynnwojp0vA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </p>
-It includes two methods to upload the file:
 
-- **Using Net Banking:** In this method user only need to enter the credentials of Net Banking to upload their bank statement. The server will automatically download and then upload the pdf.
-
-- **Uploading Manually:** In this method users are required to manually upload the pdf of the bank statement.
-
-:::tip Fetching Transactions
-The client SDK will give you an `entityId` after successful statement upload. This can be used with any of the libraries or REST API to fetch extracted and enriched data like identity, salary, lender, recurring transactions, etc.
-:::
+The video below shows a user submit bank statement by uploading the PDF file:
+<p style="text-align:center">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ZUGDZqico2o" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</p>
 
 ## Including the library
 The library is available as a npm package. To install the dependency 
 
+<CodeSwitcher :languages="{npm:'npm',yarn:'yarn'}">
+<template v-slot:npm>
+
 ```sh
 npm install finbox-bank-connect-js
 ```
+
+</template>
+<template v-slot:yarn>
+
+```sh
+yarn add finbox-bank-connect-js
+```
+
+</template>
+</CodeSwitcher>
+
+After installing this, you have to install an additional dependency, you can skip this if its already part of your project:
+
+<CodeSwitcher :languages="{npm:'npm',yarn:'yarn'}">
+<template v-slot:npm>
+
+```sh
+npm install styled-components
+```
+
+</template>
+<template v-slot:yarn>
+
+```sh
+yarn add styled-components
+```
+
+</template>
+</CodeSwitcher>
+
+## Adding the Bank Connect Component
+
 Once the dependency is added. You can use bank connect view anywhere in your component. Since the SDK opens a modal it is recommended to add it to top hierarchy of you View.
 
 ```js
 <FinBoxBankConnect
-    linkId="<Enter random linkid>"
+    linkId="<LINK_ID>"
     apiKey="<FINBOX_API_KEY>"
     onExit="<EXIT_CALLBACK>"
-    onSuccess="<UPLOAD_SUCCESS_CALLBACK>" />}
+    onSuccess="<UPLOAD_SUCCESS_CALLBACK>" />
 ```
 
-
-`linkId` attribute is a unique identifier for the user. This is mandatory and the view will not work if linkId is not specified
-
-`apiKey` attribute should hold the unique API Key provided.
-
-`onExit` attribute gives callback when user exits the SDK
-
-`onSuccess` attribute gives callback when document has been successfully uploaded.
-
-`fromDate` & `toDate`(OPTIONAL) attributes will be used to fetch statement for the given time period. If not provided default date range is 3 months from current date.
-
-::: danger Additional layer of security
-FinBox Bank Connect supports an additional layer of security (timestamp and access token based) on request. But is as of now available only for REST APIs. If it is enabled for your organization, this library won't be able to authenticate as it currently supports only the API Key based authentication method.
-:::
+| Attribute | Description | Required |
+| - | - | - |
+| `linkId` | unique identifier for the user. The view will not work if `linkId` is not specified | Yes |
+| `apiKey` | holds the unique [API Key](/bank-connect/#getting-api-keys) provided. | Yes |
+| `onExit` | specifies the callback when user exits the SDK | No, but recommended |
+| `onSuccess`| specifies the callback when document has been successfully uploaded. | No, but recommended |
+| `fromDate` and `toDate` | specifies the time period for which the statements will be fetched. If not provided default date range is 3 months from current date. Its format should be in `dd/MM/yyyy`. | No |
+| `bankName` | enforces a specific bank for the user and stops user from selecting the bank in SDK flow | No |
 
 ::: warning Period Values
-Please make sure from date is always less than to date. 
+Please make sure `fromDate` is always less than `toDate`.
 :::
 
 ## Callback
@@ -57,13 +85,20 @@ const onSuccess = (payload) => {
     console.log("Payload", payload)
 }
 ```
-`payload` will have following structure.
+`payload` object will have following structure.
 
 ```json
 {
-    "entityId": "1d1f-sfdrf-17hf-asda", //Unique ID that will used to fetch statement data
-    "linkId": "<USER_ID_PASSED>" //Link ID is the identifier that was passed while initializing the SDK
+    "entityId": "1d1f-sfdrf-17hf-asda",
+    "linkId": "link_id"
 }
 ```
+| Key | Description |
+| - | - |
+| `entityId` | Unique identifier used for fetching statement data |
+| `linkId` | Identifier passed while initializing the SDK |
 
-Additional callbacks are provided via web hooks. Success and error payload will be available in these callbacks.
+
+:::warning Webhook
+To track additional errors, and transaction process completion at server side, it is recommended to also integrate [Webhook](/bank-connect/webhook.html).
+:::
