@@ -42,7 +42,9 @@ Watch the video below then ead towards the [Basics](/bank-connect/basics.html) s
 ## Understanding the Integration Flow
 The video below gives a brief overview of the Bank Connect Integration flow:
 
+<p style="text-align:center">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/OC2eBqeCKrs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</p>
 
 ## Getting API Keys
 Bank Connect require API Keys to initialize the SDK and/or access the REST APIs. There will be separate keys for **DEV** and **PROD** environments.
