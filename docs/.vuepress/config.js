@@ -5,6 +5,8 @@ module.exports = {
     test: ["^((?!device-connect\/transactions).)*$"]
   }]],
   themeConfig: {
+    logo: '/logo.svg',
+    heroText: ' ',
     smoothScroll: true,
     lastUpdated: 'Last Updated',
     nav: [
