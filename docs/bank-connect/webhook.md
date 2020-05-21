@@ -1,9 +1,14 @@
-# Webhook
+---
+base_url: https://portal.finbox.in #base URL in python library
+version: v1 # version of API
+---
+
+# Bank Connect: Webhook
 You can also configure a custom web hook to be invoked whenever extraction process is completed or failed (because of extraction failure in manual mode or user entering a wrong credentials for example in net banking mode).
 
 To configure this, you have to share with us a **valid endpoint**.
 
-:::danger A Valid Endpoint:
+:::tip A Valid Endpoint:
 - receives a POST request
 - receives a request body with content type `application/json`
 - returns a 200 status code on successful reception.
@@ -14,7 +19,7 @@ All the APIs listed below use the same authentication method as listed [here](/b
 ## Updating web hook endpoint
 To update your valid endpoint use the API below:
 
-::: tip Endpoint
+:::tip Endpoint
 POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/update_webhook/**
 :::
 
