@@ -39,6 +39,11 @@ This guide will help you integrate bank connect in your application flow.
 
 Head towards the [Basics](/bank-connect/basics.html) section to understand the basic terms associated with Bank Connect.
 
+## Getting API Keys
+Bank Connect require API Keys to initialize the SDK and/or access the REST APIs. There will be separate keys for **DEV** and **PROD** environments.
+
+You can get your keys on [FinBox Dashboard](https://dashboard.finbox.in)
+
 ## Postman Collection
 Postman **collection** and **environment** for Bank Connect REST APIs can be downloaded using the buttons below:
 
