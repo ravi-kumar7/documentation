@@ -78,14 +78,6 @@ module.exports = {
               path: '/bank-connect/upload-overview.html'
             },
             {
-              title: 'REST API',
-              path: '/bank-connect/upload-rest-api.html'
-            },
-            {
-              title: 'Python',
-              path: '/bank-connect/upload-python.html'
-            },
-            {
               title: 'Android Client SDK',
               path: '/bank-connect/android-client.html'
             },
@@ -96,6 +88,14 @@ module.exports = {
             {
               title: 'React Client SDK',
               path: '/bank-connect/react.html'
+            },
+            {
+              title: 'REST API',
+              path: '/bank-connect/upload-rest-api.html'
+            },
+            {
+              title: 'Python',
+              path: '/bank-connect/upload-python.html'
             }
           ]
         },
