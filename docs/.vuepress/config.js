@@ -57,36 +57,30 @@ module.exports = {
       '/bank-connect/': [
         {
           title: 'Overview',
-          collapsable: false,
-          children: [
-            {
-              title: 'Introduction',
-              path: '/bank-connect/'
-            },
-            {
-              title: 'Basics',
-              path: '/bank-connect/basics.html'
-            }
-          ]
+          path: '/bank-connect/',
+          collapsable: false
         },
         {
-          title: 'Direct PDF Mode & Fetching',
-          collapsable: false,
+          title: 'Basics',
+          path: '/bank-connect/basics.html',
+          collapsable: false
+        },
+        {
+          title: 'Uploading Bank Statements',
+          collapsable: true,
           children: [
+            {
+              title: 'Overview',
+              path: '/bank-connect/upload-overview.html'
+            },
             {
               title: 'REST API',
-              path: '/bank-connect/rest-api.html'
+              path: '/bank-connect/upload-rest-api.html'
             },
             {
-              title: 'Python Package',
-              path: '/bank-connect/python.html'
-            }
-          ]
-        },
-        {
-          title: 'Net Banking Mode',
-          collapsable: false,
-          children: [
+              title: 'Python',
+              path: '/bank-connect/upload-python.html'
+            },
             {
               title: 'Android',
               path: '/bank-connect/android-client.html'
@@ -98,8 +92,35 @@ module.exports = {
             {
               title: 'React',
               path: '/bank-connect/react.html'
+            }
+          ]
+        },
+        {
+          title: 'Fetching Enriched Data',
+          collapsable: true,
+          children: [
+            {
+              title: 'Overview',
+              path: '/bank-connect/fetch-overview.html'
+            },
+            {
+              title: 'Webhook',
+              path: '/bank-connect/webhook.html'
+            },
+            {
+              title: 'REST API',
+              path: '/bank-connect/rest-api.html'
+            },
+            {
+              title: 'Python',
+              path: '/bank-connect/python.html'
             },
           ]
+        },
+        {
+          title: 'Fraud',
+          path: '/bank-connect/fraud.html',
+          collapsable: false
         },
         {
           title: 'Appendix',
