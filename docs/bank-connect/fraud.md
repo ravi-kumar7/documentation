@@ -1,4 +1,4 @@
-# Fraud
+# Bank Connect: Fraud
 
 There are some frauds which are detected at the first step when the statement file is successfully uploaded, while there are some which are detected at a later stage when transactions are extracted and analysed.
 

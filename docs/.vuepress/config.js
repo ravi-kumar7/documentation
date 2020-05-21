@@ -120,6 +120,11 @@ module.exports = {
           ]
         },
         {
+          title: 'Management',
+          path: '/bank-connect/management.html',
+          collapsable: false
+        },
+        {
           title: 'Fraud',
           path: '/bank-connect/fraud.html',
           collapsable: false
