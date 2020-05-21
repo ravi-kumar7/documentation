@@ -106,10 +106,6 @@ module.exports = {
               path: '/bank-connect/fetch-overview.html'
             },
             {
-              title: 'Webhook',
-              path: '/bank-connect/webhook.html'
-            },
-            {
               title: 'REST API',
               path: '/bank-connect/rest-api.html'
             },
@@ -117,6 +113,10 @@ module.exports = {
               title: 'Python',
               path: '/bank-connect/python.html'
             },
+            {
+              title: 'Webhook',
+              path: '/bank-connect/webhook.html'
+            }
           ]
         },
         {
