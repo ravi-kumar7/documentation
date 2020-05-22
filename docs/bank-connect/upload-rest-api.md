@@ -18,15 +18,19 @@ FinBox Bank Connect REST API uses API keys to authenticate requests. Please keep
 To provide API key while making a request, `X-API-KEY` must be present in the request header with API key value.
 
 ## Specifying the Entity
-For all the upload APIs, the `entity_id` is an optional parameter for the below APIs, if specified, the statement gets uploaded against that entity. If not specified, a new entity is created and the statement is uploaded against it.
+In Upload API, `link_id` needs to be specified as a parameter. If an entity was already created with the given `link_id`, the upload will happen under the same entity, if not it will create a new entity with the `link_id` and return the `entity_id` in response.
 
-You can optionally specify `link_id` instead of `entity_id` in the APIs as well. If an entity was already created with the given `link_id`, the upload will happen under the same entity, if not it will create a new entity with the `link_id` and return the `entity_id` in response.
+If you already have an `entity_id`, you can mention it directly as well instead of `link_id`.
 
 :::danger IMPORTANT
 In case both `link_id` and `entity_id` are present in request, `link_id` will be ignored and `entity_id` will be used.
 :::
 
+## Password Protected PDFs
+If the bank statements are password protected it is required to pass the password in `pdf_password` parameter in upload APIs. The next section lists the upload APIs.
+
 ## Uploading statements in files
+This section lists the endpoint and request format for upload APIs that accepts file in request. Response Format is [present here](/bank-connect/upload-rest-api.html#response-format).
 
 ### Bank name is known
 
@@ -38,14 +42,10 @@ POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/statement/up
 | Name | Type | Description | Required  | Default |
 | - | - | - | - | - |
 | file | file  | the statement pdf file | Yes | - |
-| bank_name | string | a valid bank identifier | Yes | - |
+| bank_name | string | a valid [bank identifier](/bank-connect/appendix.html#bank-identifiers) | Yes | - |
+| link_id | string | a `link_id` against which you want to upload the statement | Yes | - |
 | entity_id | string | an `entity_id` against which you want to upload the statement | No | - |
-| link_id | string | a `link_id` against which you want to upload the statement | No | - |
 | pdf_password | string | password for the pdf in case it is password protected | No | - |
-
-::: warning Bank Name Identifiers
-Refer to [this](/bank-connect/appendix.html#bank-identifiers) to get list of valid bank name identifiers
-:::
 
 ### Bank name not known <Badge text="beta" type="warn"/>
 
@@ -59,11 +59,12 @@ POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/statement/ba
 | Name | Type | Description | Required  | Default |
 | - | - | - | - | - |
 | file | file  | the statement pdf file | Yes | - |
+| link_id | string | a `link_id` against which you want to upload the statement | Yes | - |
 | entity_id | string | an `entity_id` against which you want to upload the statement | No | - |
-| link_id | string | a `link_id` against which you want to upload the statement | No | - |
 | pdf_password | string | password for the pdf in case it is password protected | No | - |
 
 ## Uploading base 64 encoded statements
+This section lists the endpoint and request format for upload APIs that accepts base 64 encoded files. Response Format is [present here](/bank-connect/upload-rest-api.html#response-format).
 
 ### Bank name known
 
@@ -75,14 +76,10 @@ POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/statement/up
 | Name | Type | Description | Required  | Default |
 | - | - | - | - | - |
 | file | string  | the statement pdf file in base 64 encoded string | Yes | - |
-| bank_name | string | a valid bank identifier | Yes | - |
+| bank_name | string | a valid [bank identifier](/bank-connect/appendix.html#bank-identifiers) | Yes | - |
+| link_id | string | a `link_id` against which you want to upload the statement | Yes | - |
 | entity_id | string | an `entity_id` against which you want to upload the statement | No | - |
-| link_id | string | a `link_id` against which you want to upload the statement | No | - |
 | pdf_password | string | password for the pdf in case it is password protected | No | - |
-
-::: warning Bank Name Identifiers
-Refer to [this](/bank-connect/appendix.html#bank-identifiers) to get list of valid bank name identifiers
-:::
 
 ### Bank name not known <Badge text="beta" type="warn"/>
 
@@ -96,11 +93,12 @@ POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/statement/ba
 | Name | Type | Description | Required  | Default |
 | - | - | - | - | - |
 | file | string  | the statement pdf file in base 64 encoded format | Yes | - |
+| link_id | string | a `link_id` against which you want to upload the statement | Yes | - |
 | entity_id | string | an `entity_id` against which you want to upload the statement | No | - |
-| link_id | string | a `link_id` against which you want to upload the statement | No | - |
 | pdf_password | string | password for the pdf in case it is password protected | No | - |
 
 ## Uploading statement file URL
+This section lists the endpoint and request format for upload APIs that accepts file URLs. Response Format is [present here](/bank-connect/upload-rest-api.html#response-format).
 
 ### Bank name known
 
@@ -111,9 +109,10 @@ POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/statement/up
 ### Parameters
 | Name | Type | Description | Required  | Default |
 | - | - | - | - | - |
-| file_url | string  | publicly accessible full file URL with protocol (HTTP / HTTPS) | Yes | - |
+| file_url | string  | publicly accessible full file URL with protocol (HTTPS) | Yes | - |
+| bank_name | string | a valid [bank identifier](/bank-connect/appendix.html#bank-identifiers) | Yes | - |
+| link_id | string | a `link_id` against which you want to upload the statement | Yes | - |
 | entity_id | string | an `entity_id` against which you want to upload the statement | No | - |
-| link_id | string | a `link_id` against which you want to upload the statement | No | - |
 | pdf_password | string | password for the pdf in case it is password protected | No | - |
 
 ### Bank name not known <Badge text="beta" type="warn"/>
@@ -128,8 +127,8 @@ POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/statement/ba
 | Name | Type | Description | Required  | Default |
 | - | - | - | - | - |
 | file_url | string  | publicly accessible full file URL with protocol (HTTP / HTTPS) | Yes | - |
+| link_id | string | a `link_id` against which you want to upload the statement | Yes | - |
 | entity_id | string | an `entity_id` against which you want to upload the statement | No | - |
-| link_id | string | a `link_id` against which you want to upload the statement | No | - |
 | pdf_password | string | password for the pdf in case it is password protected | No | - |
 
 ## Response Format
@@ -192,10 +191,10 @@ The identity information returned in the response can be used to verify the cust
     {"file": ["This field must be present as a form field. Send request with content type x-www-form-urlencoded or form-data"]}
     ```
 3. In other error cases, the APIs will throw a **400 (Bad Request)** with appropriate message in `message` field:
-    - **Not able to identify the bank name** (In bank less upload only)
-    - **Incorrect bank name specified** (When bank is provided with request, and we detected it to be of different bank)
-    - **Incorrect Password**
-    - **Non Parsable PDF** (PDF file has only images or is corrupted)
+    - **Not able to identify the bank name**: This happens only for **Bank name not known case APIs**, when we are not able to identify the bank of the statement. If the statement was valid, our quality team will add this template within 24 hours. As a fallback if you know the bank, you can explicitly specify the `bank_name` field and retry the request.
+    - **Incorrect bank name specified**: When bank is provided with request, and we detected it to be of different bank.
+    - **Incorrect Password**: When the password provided for the PDF file was incorrect or missing.
+    - **Non Parsable PDF**: PDF file is corrupted or has no selectable text (only scanned images)
     ```json
     {
         "entity_id": "some_entity_id_created",
@@ -203,6 +202,8 @@ The identity information returned in the response can be used to verify the cust
     }
     ```
 
-::: danger 402 HTTP Status Code
-In case you are in **DEV** environment and your **trial period has expired**, then upload APIs will give you a response with 402 HTTP Code. To fix this please request FinBox to upgrade your plan.
+::: danger IMPORTANT
+- We do not support scanned PDF images, if uploaded we throw a **400 HTTP Code** with the `message` as **Non Parsable PDF**
+- In case a valid PDF comes as an input, and we are not able to extract information from it, API will give a **200 HTTP Code** but will have **identity** information in response as `null`. Our quality team takes care of such cases, and new templates are added within 24 hours.
+- In case you are in **DEV** environment and your **trial period has expired**, then upload APIs will give you a response with **402 HTTP Code**. To fix this please request FinBox to upgrade your plan.
 :::
