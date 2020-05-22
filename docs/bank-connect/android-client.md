@@ -3,14 +3,14 @@ The Android Client SDK helps user submit their bank statements via upload or net
 
 ## See in action
 The demo video below shows how a user submit bank statement using net banking credentials:
-<p style="text-align:center">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/SvRV5BX1gSo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</p>
+<div class="embed-container">
+<iframe src="https://www.youtube.com/embed/SvRV5BX1gSo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
 
 The video below shows a user submit bank statement by uploading the PDF file:
-<p style="text-align:center">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/hxG9H9_iX8E" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</p>
+<div class="embed-container">
+<iframe src="https://www.youtube.com/embed/hxG9H9_iX8E" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
 
 ## Adding Dependency
 First add the maven dependency to your project level `gradle` file:
@@ -30,27 +30,6 @@ The unique [API Key](/bank-connect/#getting-api-keys) provided needs to be added
     android:name="in.finbox.KEY_BANK_CONNECT"
     android:value="<YOUR API KEY>" />
 ```
-  
-## Initialize the SDK  
-  
-In your application class initialize FinBox Bank Connect SDK as follows:
-
-<CodeSwitcher :languages="{kotlin:'Kotlin',java:'Java'}">
-<template v-slot:kotlin>
-
-```kotlin
-FinboxBankConnect.init(this);
-```
-
-</template>
-<template v-slot:java>
-
-```java
-FinboxBankConnect.init(this);
-```
-
-</template>
-</CodeSwitcher>
 
 ## Showing SDK Screen 
 
@@ -97,8 +76,10 @@ new FinBoxBankConnect.Builder(getApplicationContext(), bankConnect)
 | Builder Property | Description | Required |
 | - | - | - |
 | `linkId` | specifies the `link_id` | Yes |
-| `fromDate` and `toDate` | specifies the time period for which the statements will be fetched. If not provided default date range is 3 months from current date. Its format should be in `dd/MM/yyyy` | No |
-| `bank` | enforces a specific bank for the user and stops user from selecting the bank in SDK flow | No |
+| `fromDate` and `toDate` | specifies the time period for which the statements will be fetched in `dd/MM/yyyy` format | No |
+| `bank` | pass the [bank identifier](/bank-connect/appendix.html#bank-identifiers) to skip the bank selection screen and directly open a that bank's screen instead | No |
+
+`fromDate` and `toDate` specify the time period for which the statements will be fetched. If not provided default date range is 3 months from current date. For example, if you need last 6 months of statements, `fromDate` will be today's date - 6months and `toDate` will be today's date. If not provided default date range is 3 months from current date. It should be in `dd/MM/yyyy` format.
 
 Once the above statement is added, a series of checks are done to make sure the SDK is implemented correctly. A `RunTimeException` will be thrown while trying to build the project in case any of the checks are not completed.
 
@@ -124,17 +105,11 @@ bankConnect.getPayloadLiveData().observe(this, Observer {
         is FinboxResult.OnExit -> {
             Log.i("BankConnect", "On Exit -> ${it.exitPayload}")
         }
-        is FinboxResult.OnEntityDestroyed -> {
-            Log.i("BankConnect", "On Entity destroyed -> ${it.entityDestroyed}")
-        }
-        is FinboxResult.OnFinished -> {
-            Log.i("BankConnect", "On Finished -> ${it.onFinished}")
+        is FinboxResult.OnSuccess -> {
+            Log.i("BankConnect", "On Success -> ${it.onSuccess}")
         }
         is FinboxResult.OnError -> {
             Log.i("BankConnect", "On Error -> ${it.onError}")
-        }
-        is FinboxResult.OnUpload -> {
-            Log.i("BankConnect", "On Upload -> ${it.uploadPayload}")
         }
     }
 }) 
@@ -150,18 +125,12 @@ bankConnect.getPayloadLiveData().observe(this, new Observer < FinboxResult > () 
             if (finboxResult instanceof FinboxResult.OnExit) {
                 FinboxOnExitPayload payload = ((FinboxResult.OnExit) finboxResult).getExitPayload();
                 Log.i(TAG, "Exit payload " + payload);
-            } else if (finboxResult instanceof FinboxResult.OnEntityDestroyed) {
-                FinboxOnEntityDestroyed payload = ((FinboxResult.OnEntityDestroyed) finboxResult).getEntityDestroyed();
-                Log.i(TAG, "On Entity Destroyed payload " + payload);
-            } else if (finboxResult instanceof FinboxResult.OnFinished) {
-                FinboxOnFinishedPayload payload = ((FinboxResult.OnFinished) finboxResult).getFinishPayload();
-                Log.i(TAG, "On Finished payload " + payload);
+            } else if (finboxResult instanceof FinboxResult.OnSuccess) {
+                FinboxSuccessPayload payload = ((FinboxResult.OnSuccess) finboxResult).getSuccessPayload();
+                Log.i(TAG, "Success payload " + payload);
             } else if (finboxResult instanceof FinboxResult.OnError) {
                 FinboxOnErrorPayload payload = ((FinboxResult.OnError) finboxResult).getErrorPayload();
                 Log.i(TAG, "Error payload " + payload);
-            } else if (finboxResult instanceof FinboxResult.OnUpload) {
-                FinboxOnUploadPayload payload = ((FinboxResult.OnUpload) finboxResult).getUploadPayload();
-                Log.i(TAG, "Upload payload " + payload);
             }
         }
     }
@@ -173,93 +142,43 @@ bankConnect.getPayloadLiveData().observe(this, new Observer < FinboxResult > () 
 
 ## Events
 This section list the events in detail:
-### `FinboxResult.OnExit`
-`FinboxResult.OnExit` will be called when user exits the flow by selecting the cross icon and accepting to close the flow.
 
-The exit payload structure is as follows:
+### Success
+`FinboxResult.OnSuccess` will be called when user completes the upload process. It will have a payload structure is as follows:  
+
 ```json  
 {
-    "entityId" : "uuid4_for_entity",
-    "linkId" : "your_link_id",
-    "screenName" : "1"
+    "entityId": "uuid4_for_entity",
+    "linkId": "your_link_id",
+    "statementId": "uuid4_for_statement"
 }  
 ```
 
-The `screenName` field helps in understanding that at what step the user exited the flow.
+### Exit
+`FinboxResult.OnExit` will be called when user exits the flow by selecting the cross icon and accepting to close the flow. It will have a payload structure is as follows:  
 
-In case of **manual upload mode**, the `screenName` holds the following meanings:
-| `screenName` | Exited on the screen |
-| - | - |
-| 1 | Bank list screen |
-| 2 | PDF upload screen |
-| 3 | Upload in process screen |
-
-In case of **internet banking mode**, the `screenName` holds the following meanings:
-| `screenName` | Exited on the screen |
-| - | - |
-| 1 | Bank list screen |
-| 2 | Enter credentials screen |
-| 3 | Authentication or Upload in process screen |
-| 4 | Additional security check screen (captcha / question / OTP) |
-
-### `FinboxResult.OnEntityDestroyed`
-`FinboxResult.OnEntityDestroyed` will be called when a user navigates back and selects a different bank.
-On entity destroyed will have a payload structure as follows:
+Its payload structure is as follows:
 ```json  
-{  
-    "entityId" : "uuid4_for_entity",
+{
     "linkId" : "your_link_id"
 }  
 ```
 
-### `FinboxResult.OnError`
-`FinboxResult.OnError` will be called whenever any error occurs in the user flow.  
-On error will have a payload structure as follows:
+### Error
+`FinboxResult.OnError` will be called whenever any error occurs in the user flow. It will have a payload structure is as follows:  
 ```json  
 {
-    "entityId" : "uuid4_for_entity",
     "linkId" : "your_link_id",
     "message" : "Error message."
 }  
 ```
 
-### `FinboxResult.OnFinished`
-`FinboxResult.OnFinished` will be called when user completes the upload process.  
-On finished will have a payload structure as follows:  
-
-```json  
-{
-    "entityId": "uuid4_for_entity",
-    "linkId": "your_link_id",
-    "statementId": "uuid4_for_statement",
-    "progress": ["2019-04, 2019-05"]
-}  
-```
-`progress` field gives the month and year for which the statement was uploaded.
-
-### `FinboxResult.OnUpload`
-`FinboxResult.OnUpload` will be called when user uploads a document.  
-On upload will have a payload structure as follows:
-
-```json  
-{
-    "entityId": "uuid4_for_entity",
-    "linkId": "your_link_id",
-    "statementId": "uuid4_for_statement",
-    "isFraudDetected": false,
-    "bank": "axis",
-    "progress": ["2019-04, 2019-05"]
-}  
-```
-
-`isFraudDetected` is a boolean field indicating whether a fraud was detected in the statement uploaded (this will be helpful in case of manual upload mode).
-
-`bank` field contains the bank name identifier (click [here](/bank-connect/appendix.html#bank-identifiers) to see the full list).
-
-`progress` field gives the month and year for which the statement was uploaded.
+:::warning Two Events
+In case an error occurs, you'll receive `OnError` event payload, and then if the user exits the SDK, you'll receive another event payload, this time for `OnExit`.
+:::
 
 ## Customization
-Since FinBox BankConnect is a view embedded in your application in order to make it look compatible there are certain view level customization that can be done.
+Since FinBox BankConnect is a view embedded in your application, in order to make it look compatible there are certain view level customization that can be done in `styles.xml` file.
 
 1. Button color. View uses `accentColor` for all button colors
 	```xml

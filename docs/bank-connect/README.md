@@ -4,6 +4,7 @@
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
+    flex-wrap: wrap;
 }
 .download_button{
     background-color: white;
@@ -42,9 +43,9 @@ Watch the video below then ead towards the [Basics](/bank-connect/basics.html) s
 ## Understanding the Integration Flow
 The video below gives a brief overview of the Bank Connect Integration flow:
 
-<p style="text-align:center">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/OC2eBqeCKrs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</p>
+<div class="embed-container">
+<iframe src="https://www.youtube.com/embed/OC2eBqeCKrs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
 
 ## Getting API Keys
 Bank Connect require API Keys to initialize the SDK and/or access the REST APIs. There will be separate keys for **DEV** and **PROD** environments.
