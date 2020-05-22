@@ -9,14 +9,14 @@ The JavaScript Client SDK helps user submit their bank statements via upload or 
 
 ## See in action
 The demo video below shows how a user submit bank statement using net banking credentials:
-<p style="text-align:center">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/lynnwojp0vA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</p>
+<div class="embed-container">
+<iframe src="https://www.youtube.com/embed/lynnwojp0vA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
 
 The video below shows a user submit bank statement by uploading the PDF file:
-<p style="text-align:center">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/ZUGDZqico2o" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</p>
+<div class="embed-container">
+<iframe src="https://www.youtube.com/embed/ZUGDZqico2o" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
 
 ## Embedding in an inline frame
 The flow for this involves following steps:
@@ -48,10 +48,12 @@ POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/session/**
 | - | - | - | - | - |
 | link_id | string  | link_id value | Yes | - |
 | api_key | string | API key provided by FinBox | Yes | - |
-| redirect_url | string | URL to redirect to incase of success or failure | Yes | null |
+| redirect_url | string | URL to redirect to incase of success or failure | Yes | - |
 | from_date | string | Start date range to fetch statements. Should be of format `dd/MM/YYYY` | No | Last 6 month start date |
 | to_date | string | End date range to fetch statements. Should be of format `dd/MM/YYYY` | No | Yesterday |
-| bank_name | string | Name of the bank to open upload page directly | No | null |
+| bank_name | string | pass the [bank identifier](/bank-connect/appendix.html#bank-identifiers) to skip the bank selection screen and directly open a that bank's screen instead | No | - |
+
+`from_date` and `to_date` specify the time period for which the statements will be fetched. If not provided default date range is 3 months from current date. For example, if you need last 6 months of statements, `from_date` will be today's date - 6months and `to_date` will be today's date. If not provided default date range is 3 months from current date. It should be in `dd/MM/yyyy` format.
 
 ::: warning NOTE
 Please make sure `from_date` is always less than `to_date`. 
@@ -85,31 +87,43 @@ To receive callbacks in `<iframe>` workflow, you need to implement an event list
 
 ### Event Object
 The `event` object received by the listener can be one of the following:
-#### Success Event
+#### Success
+This is received when user completes the upload process.
 ```js
 {
   type: "finbox-bankconnect",
-  status: "fb-success",
+  status: "success",
   payload: {
       "entityId": "1d1f-sfdrf-17hf-asda", //Unique ID that will used to fetch statement data
       "linkId": "<USER_ID_PASSED>" //Link ID is the identifier that was passed while initializing the SDK
   }
 }
 ```
-#### Exit Event
-This is called on an exit or failure.
-
-:::warning NOTE
-In case a failure happens and then the user exits the SDK, you'll receive two events in that case, first because of failure, and then because of user exiting
-:::
-
+#### Exit
+This is received when user exits the SDK.
 ```js
 {
   type: "finbox-bankconnect",
-  status: "fb-exit",
+  status: "exit",
   payload: {
-      "reason": "Reason for exit. This also hold net banking failure", //Reason for exit
       "linkId": "<USER_ID_PASSED>" //Link ID is the identifier that was passed while initializing the SDK
   }
 }
 ```
+#### Error
+This is received whenever any error occurs in the user flow.
+
+```js
+{
+  type: "finbox-bankconnect",
+  status: "exit",
+  payload: {
+      "reason": "Reason for failure",
+      "linkId": "<USER_ID_PASSED>" //Link ID is the identifier that was passed while initializing the SDK
+  }
+}
+```
+
+:::warning Two Events
+In case an error occurs, you'll receive `OnError` event payload, and then if the user exits the SDK, you'll receive another event payload, this time for `OnExit`.
+:::
