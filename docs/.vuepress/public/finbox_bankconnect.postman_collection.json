@@ -46,11 +46,10 @@
 							"type": "text"
 						},
 						{
-							"key": "entity_id",
-							"value": "\n",
-							"description": "Entity ID for an already created entity (optional)",
-							"type": "text",
-							"disabled": true
+							"key": "link_id",
+							"value": "your_link_id_here",
+							"description": "Link ID for the Entity",
+							"type": "text"
 						},
 						{
 							"key": "pdf_password",
@@ -124,11 +123,10 @@
 							"type": "text"
 						},
 						{
-							"key": "entity_id",
-							"value": "\n",
-							"description": "Entity ID for an already created entity (optional)",
-							"type": "text",
-							"disabled": true
+							"key": "link_id",
+							"value": "your_link_id_here",
+							"description": "Link ID for the Entity",
+							"type": "text"
 						},
 						{
 							"key": "pdf_password",
@@ -202,11 +200,10 @@
 							"type": "text"
 						},
 						{
-							"key": "entity_id",
-							"value": "",
-							"description": "Entity ID for an already created entity (optional)",
-							"type": "text",
-							"disabled": true
+							"key": "link_id",
+							"value": "your_link_id_here",
+							"description": "Link ID for the Entity",
+							"type": "text"
 						},
 						{
 							"key": "pdf_password",
@@ -274,11 +271,10 @@
 							"src": []
 						},
 						{
-							"key": "entity_id",
-							"value": "",
-							"description": "Entity ID for an already created entity (optional)",
-							"type": "text",
-							"disabled": true
+							"key": "link_id",
+							"value": "your_link_id_here",
+							"description": "Link ID for the Entity",
+							"type": "text"
 						},
 						{
 							"key": "pdf_password",
@@ -346,11 +342,10 @@
 							"type": "text"
 						},
 						{
-							"key": "entity_id",
-							"value": "",
-							"description": "Entity ID for an already created entity (optional)",
-							"type": "text",
-							"disabled": true
+							"key": "link_id",
+							"value": "your_link_id_here",
+							"description": "Link ID for the Entity",
+							"type": "text"
 						},
 						{
 							"key": "pdf_password",
@@ -418,11 +413,10 @@
 							"type": "text"
 						},
 						{
-							"key": "entity_id",
-							"value": "03f3e192-c20e-4346-ba7f-18b2437a94d8",
-							"description": "Entity ID for an already created entity (optional)",
-							"type": "text",
-							"disabled": true
+							"key": "link_id",
+							"value": "your_link_id_here",
+							"description": "Link ID for the Entity",
+							"type": "text"
 						},
 						{
 							"key": "pdf_password",
