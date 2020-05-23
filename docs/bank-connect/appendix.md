@@ -79,9 +79,11 @@ The list below indicates the possible values for `description` field of the tran
 | - | - |
 | penalty_charge | penalty charged by bank. Transaction channel is `bank_charge` |
 | ach_bounce_charge | ACH bounce charge. Transaction channel is `bank_charge` |
+| chq_bounce_charge | Cheque bounce charge. Transaction channel is `bank_charge` |
 | lender_transaction | lender transaction |
 | credit_card_bill | credit card bill transaction. Transaction channel is `bill_payment` |
 | telco_bill | telecommunications bill transaction. Transaction channel is `bill_payment` |
+| electric_bill | electric bill transaction. Transaction channel is `bill_payment` |
 | chq_bounce_insuff_funds | check bounced due to insufficient funds. Transaction channel is `inward_cheque_bounce` or `outward_cheque_bounce` |
 | neft_return | NEFT return. Transaction channel is `refund` |
 
