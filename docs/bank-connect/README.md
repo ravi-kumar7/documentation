@@ -1,38 +1,3 @@
-<style>
-.button_holder{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-items: center;
-    flex-wrap: wrap;
-}
-.download_button{
-    background-color: white;
-    color: rgb(36, 202, 122);
-    width: 300px;
-    text-align: center;
-    display: flex;
-    -webkit-box-pack: center;
-    justify-content: center;
-    font-size: 16px;
-    cursor: pointer;
-    border-width: 0.07em;
-    border-style: solid;
-    border-color: rgb(36, 202, 122);
-    border-image: initial;
-    padding: 10px 0px;
-    text-decoration: none;
-    border-radius: 2px;
-    margin: 4px 2px;
-    text-decoration:none;
-}
-.download_button:hover{
-    background-color: rgb(36, 202, 122);
-    color: white;
-    text-decoration: none !important;
-}
-</style>
-
 # Bank Connect: Overview
 The FinBox Bank Connect allows users to submit their bank account statements in your app, then processes them and shares the enriched data with you.
 
@@ -51,6 +16,11 @@ The video below gives a brief overview of the Bank Connect Integration flow:
 Bank Connect require API Keys to initialize the SDK and/or access the REST APIs. There will be separate keys for **DEV** and **PROD** environments.
 
 You can get your keys on [FinBox Dashboard](https://dashboard.finbox.in)
+
+## Sample Projects
+We have hosted some sample projects on GitHub. You can find them on the links below:
+- [Android Client SDK](https://github.com/finbox-in/bankconnect-android)
+- [React Client SDK](https://github.com/finbox-in/bankconnect-react)
 
 ## Postman Collection
 Postman **collection** and **environment** for Bank Connect REST APIs can be downloaded using the buttons below:
