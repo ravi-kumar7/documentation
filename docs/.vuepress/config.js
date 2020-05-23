@@ -82,12 +82,12 @@ module.exports = {
               path: '/bank-connect/android-client.html'
             },
             {
-              title: 'JavaScript Client SDK',
-              path: '/bank-connect/javascript-client.html'
-            },
-            {
               title: 'React Client SDK',
               path: '/bank-connect/react.html'
+            },
+            {
+              title: 'JavaScript Client SDK',
+              path: '/bank-connect/javascript-client.html'
             },
             {
               title: 'REST API',

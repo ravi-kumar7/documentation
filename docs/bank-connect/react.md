@@ -12,6 +12,16 @@ The video below shows a user submit bank statement by uploading the PDF file:
 <iframe src="https://www.youtube.com/embed/ZUGDZqico2o" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 
+## Integration Workflow
+The diagram below illustrates the integration workflow in a nutshell:
+<img src="/client_sdk.jpg" alt="Client SDK Workflow" />
+
+## Sample Project
+We have hosted a sample project on GitHub, you can check it out here:
+<div class="button_holder">
+<a class="download_button" target="_blank" href="https://github.com/finbox-in/bankconnect-react">Open GitHub Repository</a>
+</div>
+
 ## Including the library
 The library is available as a npm package. To install the dependency 
 

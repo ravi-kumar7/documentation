@@ -23,6 +23,16 @@ Then add the following dependency to your `gradle` file:
 implementation 'in.finbox.bankconnect:bankconnect:1.0.8'  
 ```
 
+## Integration Workflow
+The diagram below illustrates the integration workflow in a nutshell:
+<img src="/client_sdk.jpg" alt="Client SDK Workflow" />
+
+## Sample Project
+We have hosted a sample project on GitHub, you can check it out here:
+<div class="button_holder">
+<a class="download_button" target="_blank" href="https://github.com/finbox-in/bankconnect-android">Open GitHub Repository</a>
+</div>
+
 ## Authentication
 The unique [API Key](/bank-connect/#getting-api-keys) provided needs to be added to the `AndroidManifest.xml` using a `meta-data` tag:
 ```xml
@@ -175,6 +185,10 @@ Its payload structure is as follows:
 
 :::warning Two Events
 In case an error occurs, you'll receive `OnError` event payload, and then if the user exits the SDK, you'll receive another event payload, this time for `OnExit`.
+:::
+
+:::warning Webhook
+To track additional errors, and transaction process completion at server side, it is recommended to also integrate [Webhook](/bank-connect/webhook.html).
 :::
 
 ## Customization
