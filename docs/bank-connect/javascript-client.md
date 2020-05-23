@@ -3,9 +3,12 @@ base_url: https://portal.finbox.in/bank-connect #base URL for the API
 version: v1 # version of API
 ---
 # Bank Connect: JavaScript Client SDK
-The JavaScript Client SDK helps user submit their bank statements via upload or net banking credentials in your Web applications. The SDK will be opened via a web URL. It can be used in one of the following ways:
-- Embedding inside an Inline Frame (`<iframe>`)
-- Load in a new page with redirect URL
+The JavaScript Client SDK helps user submit their bank statements via upload or net banking credentials in your Web applications. The SDK will be opened via a web URL.
+
+The first step in integration involves calling the [Session API](/bank-connect/javascript-client.html#session-api)
+Then the workflow can be implemented in one of the following ways:
+- [Load in a new page with redirect URL](/bank-connect/javascript-client.html#redirect-workflow)
+- [Embedding inside an Inline Frame (`<iframe>`)](/bank-connect/javascript-client.html#inline-frame-workflow)
 
 ## See in action
 The demo video below shows how a user submit bank statement using net banking credentials:
@@ -17,24 +20,6 @@ The video below shows a user submit bank statement by uploading the PDF file:
 <div class="embed-container">
 <iframe src="https://www.youtube.com/embed/ZUGDZqico2o" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
-
-## Embedding in an inline frame
-The flow for this involves following steps:
-- Create a session using [Session API](/bank-connect/javascript-client.html#session-api)
-- Get the URL received from above API and embed it in an `<iframe>`
-- You'll [receive callbacks](/bank-connect/javascript-client.html#receive-callbacks) by implementing an event listener. Based on the event you can close / hide the inline frame.
-
-## Load in a new page with redirect URL
-The flow for this involves following steps:
-- Create a session using [Session API](/bank-connect/javascript-client.html#session-api)
-- Get the URL received from above API and open it in a new tab
-- On success / failure, Client SDK will redirect to the specified redirect URL with parameters as follows:
-  - Exit: `{url}?success=false`
-  - Success: `{url}?success=true&entity_id=<some-entity-id>`
-
-:::warning NOTE
-Since there is no callback received on this flow, it is recommended to configure [Webhook](/bank-connect/webhook.html)
-:::
 
 ## Session API
 In order start with the integration, first call following API to create a session.
@@ -48,7 +33,7 @@ POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/session/**
 | - | - | - | - | - |
 | link_id | string  | link_id value | Yes | - |
 | api_key | string | API key provided by FinBox | Yes | - |
-| redirect_url | string | URL to redirect to incase of success or failure | Yes | - |
+| redirect_url | string | URL to redirect to incase of success or failure | Yes for **Redirect Workflow** | - |
 | from_date | string | Start date range to fetch statements. Should be of format `dd/MM/YYYY` | No | Last 6 month start date |
 | to_date | string | End date range to fetch statements. Should be of format `dd/MM/YYYY` | No | Yesterday |
 | bank_name | string | pass the [bank identifier](/bank-connect/appendix.html#bank-identifiers) to skip the bank selection screen and directly open a that bank's screen instead | No | - |
@@ -56,7 +41,8 @@ POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/session/**
 `from_date` and `to_date` specify the time period for which the statements will be fetched. If not provided default date range is 3 months from current date. For example, if you need last 6 months of statements, `from_date` will be today's date - 6months and `to_date` will be today's date. If not provided default date range is 3 months from current date. It should be in `dd/MM/yyyy` format.
 
 ::: warning NOTE
-Please make sure `from_date` is always less than `to_date`. 
+- `redirect_url` in request is a compulsory field in [Redirect Workflow](/bank-connect/javascript-client.html#redirect-workflow) but is not required with the [Inline Frame workflow](/bank-connect/javascript-client.html#inline-frame-workflow).
+- Please make sure `from_date` is always less than `to_date`. 
 :::
 
 ### Response
@@ -67,6 +53,30 @@ On successful API call, it gives a **200 HTTP code** with a response in followin
 }
 ```
 Use `redirect_url` to open up the bank connect SDK. This URL can be used embedded inside an `<iframe>` or can be opened in a new tab or current window.
+
+## Redirect Workflow
+
+<img src="/javascript_redirect.jpg" alt="JavaScript Client SDK Redirect Workflow" />
+
+The flow for this involves following steps:
+- Create a session using [Session API](/bank-connect/javascript-client.html#session-api)
+- Get the URL received from above API and open it in a new tab
+- On success / failure, Client SDK will redirect to the specified redirect URL with parameters as follows:
+  - Exit: `{url}?success=false`
+  - Success: `{url}?success=true&entity_id=<some-entity-id>`
+
+:::warning NOTE
+Since there is no callback received on this flow, it is recommended to configure [Webhook](/bank-connect/webhook.html)
+:::
+
+## Inline Frame Workflow
+
+<img src="/javascript_iframe.jpg" alt="JavaScript Client SDK iframe Workflow" />
+
+The flow for this involves following steps:
+- Create a session using [Session API](/bank-connect/javascript-client.html#session-api)
+- Get the URL received from above API and embed it in an `<iframe>`
+- You'll [receive callbacks](/bank-connect/javascript-client.html#receive-callbacks) by implementing an event listener. Based on the event you can close / hide the inline frame.
 
 ## Receive callbacks
 To receive callbacks in `<iframe>` workflow, you need to implement an event listener. It can be implemented as follows:
