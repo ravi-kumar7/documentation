@@ -24,14 +24,14 @@ If the value was not previously retrieved, it will poll and check for progress, 
 :::
 
 ### Arguments
-This method also has following **optional** arguments:
+This method also has the following **optional** arguments:
 | Argument | Type | Description | Default |
 | - | - | - | - |
 | reload | Boolean | If provided as `True`, it will ignore the cached value, and again make an API call and re-fetch the values | `False` |
 
 
 ### Exceptions
-- In case `create` method was used while creating the entity instance and the entity object was not created on server yet, it throws `ValueError`.
+- In case the `create` method was used while creating the entity instance and the entity object was not created on the server yet, it throws `ValueError`.
 
 - In case server could not be reached, it throws `ServiceTimeOutError`
 (`finbox_bankconnect.custom_exceptions.ServiceTimeOutError`).
@@ -61,10 +61,10 @@ Sample account dictionary:
     "bank": "axis"
 }
 ```
-Each of the account dictionary in the account list has following keys:
+Each of the account dictionary in the account list has the following keys:
 - `months`: month and year for which data is available. Each of string in this list is of format `"YYYY-MM"`
 - `statements`: list of statement unique identifiers under the account
-- `account_id`: unique identifier for account
+- `account_id`: unique identifier for an account
 - `bank`: name of the bank to which the account belongs
 
 It also has some account level extracted fields like `ifsc`, `micr`, `account_number` (which can be `None` or could hold a `string` value)
@@ -85,14 +85,14 @@ If the value was not previously retrieved, it will poll and check for progress, 
 :::
 
 ### Arguments
-This method also has following **optional** arguments:
+This method also has the following **optional** arguments:
 | Argument | Type | Description | Default |
 | - | - | - | - |
 | reload | Boolean | If provided as `True`, it will ignore the cached value, and again make an API call and re-fetch the values | `False` |
 
 
 ### Exceptions
-- In case `create` method was used while creating the entity instance and the entity object was not created on server yet, it throws `ValueError`.
+- In case the `create` method was used while creating the entity instance and the entity object was not created on the server yet, it throws `ValueError`.
 
 - In case server could not be reached, it throws `ServiceTimeOutError`
 (`finbox_bankconnect.custom_exceptions.ServiceTimeOutError`).
@@ -111,9 +111,9 @@ Sample fraud dictionary:
     "fraud_type": "some_fraud_type"
 }
 ```
-Each of the fraud dictionary includes the keys `statement_id` and `fraud_type` indicating fraud of which type was found in which statement. 
+Each of the fraud dictionaries includes the keys `statement_id` and `fraud_type` indicating a fraud of which type was found in which statement. 
 
-Optionally a key `transaction_hash` may be present in some cases in this dictionary for transaction level frauds indicating the transaction in which the fraud was found.
+Optionally a key `transaction_hash` may be present in some cases in this dictionary for transaction-level frauds indicating the transaction in which the fraud was found.
 
 To know more about `fraud_type`, refer to [Fraud](/bank-connect/fraud.html) section in Basics.
 
@@ -133,13 +133,13 @@ If the value was not previously retrieved, it will poll and check for progress, 
 :::
 
 ### Arguments
-This method also has following **optional** arguments:
+This method also has the following **optional** arguments:
 | Argument | Type | Description | Default |
 | - | - | - | - |
 | reload | Boolean | If provided as `True`, it will ignore the cached value, and again make an API call and re-fetch the values | `False` |
 | account_id | String | If provided, only the transactions of specific `account_id` will be retrieved | - |
-| from_date | `datetime.date` object | If provided, only the transactions with date greater than or equal to `from_date` will be retrieved. | - |
-| to_date | `datetime.date` object | If provided, only the transactions with date less than or equal to `to_date` will be retrieved.  | - |
+| from_date | `datetime.date` object | If provided, only the transactions with a date greater than or equal to `from_date` will be retrieved. | - |
+| to_date | `datetime.date` object | If provided, only the transactions with a date less than or equal to `to_date` will be retrieved.  | - |
 
 An example for fetching transactions from last 10 days till today:
 ```python
@@ -159,7 +159,7 @@ for transaction in transactions:
 ```
 
 ### Exceptions
-- In case there is any problem with arguments passed or if `create` method was used while creating the entity instance and the entity object was not created on server yet, it throws `ValueError`.
+- In case there is any problem with arguments passed or if `create` method was used while creating the entity instance and the entity object was not created on the server yet, it throws `ValueError`.
 
 - In case server could not be reached, it throws `ServiceTimeOutError`
 (`finbox_bankconnect.custom_exceptions.ServiceTimeOutError`).
@@ -187,7 +187,7 @@ Sample transaction dictionary:
 }
 ```
 
-Each of the transaction dictionary in the transaction list has following keys:
+Each of the transaction dictionary in the transaction list has the following keys:
 - `transaction_note`: exact transaction note / description present in the statement PDF
 - `hash`: a unique identifying hash for each transaction
 - `description`: describes more information about the `transaction_channel` field. Refer to [this](/bank-connect/appendix.html#description) list for possible values.
@@ -216,16 +216,16 @@ If the value was not previously retrieved, it will poll and check for progress, 
 :::
 
 ### Arguments
-This method also has following **optional** arguments:
+This method also has the following **optional** arguments:
 | Argument | Type | Description | Default |
 | - | - | - | - |
 | reload | Boolean | If provided as `True`, it will ignore the cached value, and again make an API call and re-fetch the values | `False` |
 | account_id | String | If provided, only the salary of specific `account_id` will be retrieved | - |
-| from_date | `datetime.date` object | If provided, only the salary with date greater than or equal to `from_date` will be retrieved. | - |
-| to_date | `datetime.date` object | If provided, only the salary with date less than or equal to `to_date` will be retrieved.  | - |
+| from_date | `datetime.date` object | If provided, only the salary with a date greater than or equal to `from_date` will be retrieved. | - |
+| to_date | `datetime.date` object | If provided, only the salary with a date less than or equal to `to_date` will be retrieved.  | - |
 
 ### Exceptions
-- In case there is any problem with arguments passed or if `create` method was used while creating the entity instance and the entity object was not created on server yet, it throws `ValueError`.
+- In case there is any problem with arguments passed or if `create` method was used while creating the entity instance and the entity object was not created on the server yet, it throws `ValueError`.
 
 - In case server could not be reached, it throws `ServiceTimeOutError`
 (`finbox_bankconnect.custom_exceptions.ServiceTimeOutError`).
@@ -255,11 +255,11 @@ Sample salary dictionary:
 }
 ```
 
-Each of the salary dictionary in the transaction list has following keys:
+Each of the salary dictionary in the transaction list has the following keys:
 - `balance`: account balance just after this transaction
 - `hash`: a unique identifying hash for each transaction
 - `description`: describes more information about the `transaction_channel` field. Refer to [this](/bank-connect/appendix.html#description) list for possible values.
-- `clean_transaction_note`: Transaction in note in clean english words
+- `clean_transaction_note`: Transaction note in clean English words
 - `account_id`: unique UUID4 identifier for the account to which the transaction belongs to
 - `transaction_type`: can be `debit` or `credit`
 - `date`: date of transaction
@@ -295,14 +295,14 @@ If the value was not previously retrieved, it will poll and check for progress, 
 :::
 
 ### Arguments
-Both of these methods have following **optional** arguments:
+Both of these methods have the following **optional** arguments:
 | Argument | Type | Description | Default |
 | - | - | - | - |
 | reload | Boolean | If provided as `True`, it will ignore the cached value, and again make an API call and re-fetch the values | `False` |
 | account_id | String | If provided, only the recurring transactions of specific `account_id` will be retrieved | - |
 
 ### Exceptions
-- In case there is any problem with arguments passed or if `create` method was used while creating the entity instance and the entity object was not created on server yet, it throws `ValueError`.
+- In case there is any problem with arguments passed or if `create` method was used while creating the entity instance and the entity object was not created on the server yet, it throws `ValueError`.
 
 - In case server could not be reached, it throws `ServiceTimeOutError`
 (`finbox_bankconnect.custom_exceptions.ServiceTimeOutError`).
@@ -349,13 +349,13 @@ Sample recurring transaction dictionary:
 }
 ```
 
-Each of the recurring transaction dictionary (both credit and debit) has following keys:
+Each of the recurring transaction dictionary (both credit and debit) has the following keys:
 - `account_id`: unique UUID4 identifier for the account to which transaction set belongs to
-- `start_date`: start date for the recurring transaction set
+- `start_date`: the start date for the recurring transaction set
 - `end_date`: end date for the recurring transaction set
 - `transaction_channel`: transaction channel in upper case. Refer to [this](/bank-connect/appendix.html#transaction-channel) list for possible values.
 - `median`: median of the transaction amounts under the given recurring transaction set
-- `transactions`: list of transaction dictionary under the recurring transaction set. Each transaction dictionary here has same keys as transaction dictionary in `get_transactions` (Refer [here](/bank-connect/python.html#transaction-dictionary) to know about the keys).
+- `transactions`: list of transaction dictionary under the recurring transaction set. Each transaction dictionary here has the same keys as a transaction dictionary in `get_transactions` (Refer [here](/bank-connect/python.html#transaction-dictionary) to know about the keys).
 
 
 
@@ -376,16 +376,16 @@ If the value was not previously retrieved, it will poll and check for progress, 
 :::
 
 ### Arguments
-This method also has following **optional** arguments:
+This method also has the following **optional** arguments:
 | Argument | Type | Description | Default |
 | - | - | - | - |
 | reload | Boolean | If provided as `True`, it will ignore the cached value, and again make an API call and re-fetch the values | `False` |
 | account_id | String | If provided, only the lender transactions of specific `account_id` will be retrieved | - |
-| from_date | `datetime.date` object | If provided, only the lender transactions with date greater than or equal to `from_date` will be retrieved. | - |
-| to_date | `datetime.date` object | If provided, only the lender transactions with date less than or equal to `to_date` will be retrieved.  | - |
+| from_date | `datetime.date` object | If provided, only the lender transactions with a date greater than or equal to `from_date` will be retrieved. | - |
+| to_date | `datetime.date` object | If provided, only the lender transactions with a date less than or equal to `to_date` will be retrieved.  | - |
 
 ### Exceptions
-- In case there is any problem with arguments passed or if `create` method was used while creating the entity instance and the entity object was not created on server yet, it throws `ValueError`.
+- In case there is any problem with arguments passed or if `create` method was used while creating the entity instance and the entity object was not created on the server yet, it throws `ValueError`.
 
 - In case server could not be reached, it throws `ServiceTimeOutError`
 (`finbox_bankconnect.custom_exceptions.ServiceTimeOutError`).
@@ -413,7 +413,7 @@ Sample lender transaction dictionary:
 }
 ```
 
-Each of the lender transaction dictionary in the transaction list has following keys:
+Each of the lender transaction dictionary in the transaction list has the following keys:
 - `transaction_note`: exact transaction note / description present in the statement PDF
 - `hash`: a unique identifying hash for each transaction
 - `description`: describes more information about the `transaction_channel` field. Refer to [this](/bank-connect/appendix.html#description) list for possible values.

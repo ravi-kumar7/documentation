@@ -3,7 +3,7 @@ The FinBox Bank Connect allows users to submit their bank account statements in 
 
 This guide will help you integrate bank connect in your application flow.
 
-Watch the video below then ead towards the [Basics](/bank-connect/basics.html) section to understand the basic terms associated with Bank Connect.
+Watch the video below then head towards the [Basics](/bank-connect/basics.html) section to understand the basic terms associated with Bank Connect.
 
 ## Understanding the Integration Flow
 The video below gives a brief overview of the Bank Connect Integration flow:

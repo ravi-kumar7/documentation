@@ -22,7 +22,7 @@ The video below shows a user submit bank statement by uploading the PDF file:
 </div>
 
 ## Session API
-In order start with the integration, first call following API to create a session.
+To start with the integration, call the following API to create a session:
 
 ::: tip Endpoint
 POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/session/**
@@ -38,7 +38,7 @@ POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/session/**
 | to_date | string | End date range to fetch statements. Should be of format `dd/MM/YYYY` | No | Yesterday |
 | bank_name | string | pass the [bank identifier](/bank-connect/appendix.html#bank-identifiers) to skip the bank selection screen and directly open a that bank's screen instead | No | - |
 
-`from_date` and `to_date` specify the time period for which the statements will be fetched. If not provided default date range is 3 months from current date. For example, if you need last 6 months of statements, `from_date` will be today's date - 6months and `to_date` will be today's date. If not provided default date range is 3 months from current date. It should be in `dd/MM/yyyy` format.
+`from_date` and `to_date` specify the period for which the statements will be fetched. For example, if you need the last 6 months of statements, `from_date` will be today's date - 6months and `to_date` will be today's date. If not provided the default date range is 3 months from the current date. It should be in `dd/MM/yyyy` format.
 
 ::: warning NOTE
 - `redirect_url` in request is a compulsory field in [Redirect Workflow](/bank-connect/javascript-client.html#redirect-workflow) but is not required with the [Inline Frame workflow](/bank-connect/javascript-client.html#inline-frame-workflow).
@@ -73,7 +73,7 @@ Since there is no callback received on this flow, it is recommended to configure
 
 <img src="/javascript_iframe.jpg" alt="JavaScript Client SDK iframe Workflow" />
 
-The flow for this involves following steps:
+The flow for this involves the following steps:
 - Create a session using [Session API](/bank-connect/javascript-client.html#session-api)
 - Get the URL received from above API and embed it in an `<iframe>`
 - You'll [receive callbacks](/bank-connect/javascript-client.html#receive-callbacks) by implementing an event listener. Based on the event you can close / hide the inline frame.

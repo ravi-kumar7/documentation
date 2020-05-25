@@ -54,12 +54,12 @@ The list below indicates the possible value for `transaction_channel` field:
 | - | - |
 | upi	| Credit or Debit done through UPI
 | salary | Credits which are marked as salary in the bank statement
-| refund | Credits which are refund of an earlier debit
+| refund | Credits which are a refund of an earlier debit
 | payment_gateway_purchase | Debits done on a payment gateway
 | outward_cheque_bounce | Debit when a deposited cheque bounce and money is reverted
 | net_banking_transfer | Credit or Debit done through net banking
 | investment | Debit in account when doing an investment like FD or RD
-| inward_cheque_bounce | Credit when the cheque bounces and money is credit back to account
+| inward_cheque_bounce | Credit when the cheque bounces and money is credit back to the account
 | investment_cashin | Credit to account, when you redeem your investment like an FD
 | international_transaction_arbitrage | Arbitrage because of the rate difference in currencies. Can be credit or debit
 | debit_card | Debit when a debit card is swiped at a Point of sale
@@ -67,10 +67,10 @@ The list below indicates the possible value for `transaction_channel` field:
 | cash_withdrawl | Debit done when cash is withdrawn either through ATM or at Bank
 | cash_deposit | Credit when cash is deposited in an account
 | bill_payment | Debit marked as payment of any bill like Credit card bill payment or BillDesk
-| bank_interest | Credit in account for interest received on deposit
-| bank_charge | Debit done by bank for some service or tax like GST or SMS service
-| auto_debit_payment_bounce | Debit bank charge because of auto debit payment bounce
-| auto_debit_payment | Debit like NACH or ECS
+| bank_interest | Credit in the account for interest received on deposit
+| bank_charge | Debit done by the bank for some service or tax like GST or SMS service
+| auto_debit_payment_bounce | Debit bank charge because of auto-debit payment bounce
+| auto_debit_payment | Debits like NACH or ECS
 
 ## Description
 The list below indicates the possible values for `description` field of the transaction object:
@@ -140,13 +140,13 @@ _* can vary based on affiliated accelerator and VC partners._
 
 **How do I redeem the FinBox credits?** Eligible startups can apply directly to the FinBox Startup Program.
 
-**How do I find out if I’ve been accepted to the FinBox Startup Program?** If you’ve been accepted to the program, you’ll receive the status of the application via email with a welcome message and next steps. If you haven’t received an email, you can also check in your FinBox Dashboard portal and look for a Startup Program icon in the top right corner.
+**How do I find out if I’ve been accepted to the FinBox Startup Program?** If you’ve been accepted to the program, you’ll receive the status of the application via email with a welcome message and the next steps. If you haven’t received an email, you can also check in your FinBox Dashboard portal and look for a Startup Program icon in the top right corner.
 
 **Where can I view the credits applied to my FinBox account?** The Startup Program credits are reflected in the Dashboard usage and billing page.
 
 **Do I have to be a “new” customer to receive a coupon?** New and current FinBox users who have not previously received any other coupon are eligible to apply. Only current customers with usage less than 500$ till now are eligible.
 
-**What happens if I go over my total credit applied?** When you reach 80% of credits, you will get a reminder to upgrade it, failing which you will lose access once you exhaust your total credit received as part of Startup Program offer. 
+**What happens if I go over my total credit applied?** When you reach 80% of credits, you will get a reminder to upgrade it, failing which you will lose access once you exhaust your total credit received as part of the Startup Program offer. 
 
 **What happens when my credits expire?** Once you’ve used your total credits, you might be eligible to renew your contract at a discounted rate. Further commercials will include a monthly minimum commitment on monthly billing based on usage needs. Any existing balance will be adjusted in consequent billings.
 

@@ -7,7 +7,7 @@ One must be familiar with following terms before starting with Bank Connect Inte
 A User is referred to as an **Entity** in Bank Connect. It could be an individual or a company. FinBox refers to an entity with a unique identifier called `entity_id`.
 
 ## Account
-Every entity can have multiple bank accounts in same or different banks. These bank accounts are referred to as simply **Accounts** in Bank Connect. FinBox refers to each account of an entity using a unique identifier, `account_id`.
+Every entity can have multiple bank accounts in the same or different banks. These bank accounts are referred to as simply **Accounts** in Bank Connect. FinBox refers to each account of an entity using a unique identifier, `account_id`.
 
 ## Statement
 Now, every account can have multiple bank statements. These statements can belong to different time periods and can submitted directly or using net banking mode, over a period for a given entity. Each statement is referred using a unique identifier called `statement_id`.

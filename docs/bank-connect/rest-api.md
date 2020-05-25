@@ -11,18 +11,18 @@ You can also try these APIs on Postman. Check out [this](/bank-connect/#postman-
 To know how to upload statements using REST API, check out [this](/bank-connect/#upload-rest-api.html) article.
 
 :::warning Request Format
-Bank connect accepts all requests with form fields, so please make sure that all requests must be made with content type `application/x-www-form-urlencoded` or `multipart/form-data; boundary={boundary string}`
+Bank connect accepts all requests with form fields, so please make sure that all requests must be made with content-type `application/x-www-form-urlencoded` or `multipart/form-data; boundary={boundary string}`
 :::
 
 ## Authentication
 FinBox Bank Connect REST API uses API keys to authenticate requests. Please keep the API keys secure! Do not share your secret API keys in publicly accessible areas such as GitHub, client-side code, and so forth. All API requests must be made over HTTPS. Calls made over plain HTTP will fail. API requests without authentication will also fail.
 
-To provide API key while making a request, `X-API-KEY` must be present in the request header with API key value.
+To provide an API key while making a request, `X-API-KEY` must be present in the request header with API key value.
 
 ## Progress Field
-When a statement is uploaded, identity information and basic fraud checks happen at the same time. However other statement analysis, like transaction extraction, salary, recurring transactions, advanced fraud checks, enrichment happen asynchronously. Hence all the GET APIs for these **analysis fields** have a `progress` field. You can track the progress of a statement uploaded using this.
+When a statement is uploaded, identity information and basic fraud checks happen at the same time. However other statement analyses, like transaction extraction, salary, recurring transactions, advanced fraud checks, enrichment happen in parallel. Hence all the GET APIs for these **analysis fields** have a `progress` field. You can track the progress of a statement uploaded using this.
 
-`progress` is an array of objects. Each object represents a statement, it has `status` field that can be `processing`, `completed` or `failed` and `statement_id` field which identifies a statement uniquely.
+`progress` is an array of objects. Each object represents a statement and has a `status` field that can be `processing`, `completed` or `failed` and `statement_id` field which identifies a statement uniquely.
 
 Sample `progress` value:
 ```json
@@ -41,14 +41,14 @@ Sample `progress` value:
 ```
 
 ::: warning TIP
-A general rule of thumb would be to make sure all objects in the `progress` field have their `status` as `completed`, by polling the required analysis field API in intervals. As soon as all status are `completed`, the same API will give the correct required values.
+A general rule of thumb would be to make sure all objects in the `progress` field have their `status` as `completed`, by polling the required analysis field API in intervals. As soon as all statuses are `completed`, the same API will give the correct required values.
 
-It is to be noted that `status` for all different analysis APIs are separate, that is identity and progress might have different status for the document, depending on whichever is taking less or more time. So make sure to check the status for each of the analysis API before trying to use the extracted values.
+It is to be noted that `status` for all different analysis APIs are separate, that is identity and progress might have different statuses for the document, depending on whichever is taking less or more time. So make sure to check the status for each of the analysis API before trying to use the extracted values.
 :::
 
 ## Fraud Field
-In all of the analysis field APIs (transaction, accounts, etc.), there is always a field `fraud`, that holds two fields `fraudulent_statements` (array of `statement_id`s which have some sort detected after analysis or in first basic check) and `fraud_type` (array of objects having `statement_id` and `fraud_type` (string) indicating fraud of which type was found for which statement).
-Optionally a key `transaction_hash` may be present in some cases in `fraud_type` (array) for transaction level frauds indicating the transaction in which the fraud was found.
+In all of the analysis field APIs (transaction, accounts, etc.), there is always a field `fraud`, that holds two fields `fraudulent_statements` (array of `statement_id`s which have some sort detected after analysis or in first basic check) and `fraud_type` (array of objects having `statement_id` and `fraud_type` (string) indicating a fraud of which type was found for which statement).
+Optionally a key `transaction_hash` may be present in some cases in `fraud_type` (array) for transaction-level frauds indicating the transaction in which the fraud was found.
 
 
 To know more about `fraud_type`, refer to [Fraud](/bank-connect/fraud.html) section in Basics.
@@ -117,7 +117,7 @@ On fetching information successfully, the response would be of the following for
     }
 }
 ```
-The response has following fields:
+The response has the following fields:
 - `accounts` holds the array of account objects, each having `months` (month and year for which data is available), `statements` (list of statement unique identifiers under the account), `account_id` (unique identifier for account), `bank` (name of the bank to which the account belongs) and some account level extracted fields like `ifsc`, `micr`, `account_number` (which can be `null` or could hold a `string` value)
 - `progress` (read more in [Progress Field](/bank-connect/rest-api.html#progress-field) section)
 - `fraud` (read more in [Fraud Field](/bank-connect/rest-api.html#fraud-field) section)
@@ -179,7 +179,7 @@ On fetching information successfully, the response would be of the following for
     ]
 }
 ```
-The response fields are same as in [List Accounts](/bank-connect/rest-api.html#list-accounts), but there is an additional `identity` field that holds an array of identity objects. Each object has `account_id` (a unique identifier for the account for which the identity information is referred to in the object) and extracted identity fields like `name`, `address`, `account_number`.
+The response fields are the same as in [List Accounts](/bank-connect/rest-api.html#list-accounts), but there is an additional `identity` field that holds an array of identity objects. Each object has `account_id` (a unique identifier for the account for which the identity information is referred to in the object) and extracted identity fields like `name`, `address`, `account_number`.
 
 ## Transactions
 Get extracted and enriched transactions for a given entity.
@@ -245,7 +245,7 @@ On fetching information successfully, the response would be of the following for
     ]
 }
 ```
-The response fields are same as in [List Accounts](/bank-connect/rest-api.html#list-accounts), but there is an additional `transactions` field that holds an array of transaction objects. Each object has following fields:
+The response fields are the same as in [List Accounts](/bank-connect/rest-api.html#list-accounts), but there is an additional `transactions` field that holds an array of transaction objects. Each object has the following fields:
 - `transaction_note`: exact transaction note / description present in the statement PDF
 - `hash`: a unique identifying hash for each transaction
 - `description`: describes more information about the `transaction_channel` field. Refer to [this](/bank-connect/appendix.html#description) list for possible values.
@@ -336,11 +336,11 @@ On fetching information successfully, the response would be of the following for
     ]
 }
 ```
-The response fields are same as in [List Accounts](/bank-connect/rest-api.html#list-accounts), but there is an additional `transactions` field that holds an array of salary transaction objects. Each object has following fields:
+The response fields are the same as in [List Accounts](/bank-connect/rest-api.html#list-accounts), but there is an additional `transactions` field that holds an array of salary transaction objects. Each object has the following fields:
 - `balance`: account balance just after this transaction
 - `hash`: a unique identifying hash for each transaction
 - `description`: describes more information about the `transaction_channel` field. Refer to [this](/bank-connect/appendix.html#description) list for possible values.
-- `clean_transaction_note`: Transaction in note in clean english words
+- `clean_transaction_note`: Transaction note in clean English words
 - `account_id`: unique UUID4 identifier for the account to which the transaction belongs to
 - `transaction_type`: can be `debit` or `credit`
 - `date`: date of transaction
@@ -485,15 +485,15 @@ On fetching information successfully, the response would be of the following for
     }
 }
 ```
-The response fields are same as in [List Accounts](/bank-connect/rest-api.html#list-accounts), but there are two additional fields `credit_transactions` and `debit_transactions` that holds array of **recurring transaction set** objects for credit and debit transaction type respectively.
-Each of the recurring transaction set object has following fields:
+The response fields are the same as in [List Accounts](/bank-connect/rest-api.html#list-accounts), but there are two additional fields `credit_transactions` and `debit_transactions` that holds an array of **recurring transaction set** objects for credit and debit transaction type respectively.
+Each of the recurring transaction set object has the following fields:
 - `account_id`: unique UUID4 identifier for the account to which transaction set belongs to
-- `start_date`: start date for the recurring transaction set
+- `start_date`: the start date for the recurring transaction set
 - `end_date`: end date for the recurring transaction set
 - `transaction_channel`: transaction channel in upper case. Refer to [this](/bank-connect/appendix.html#transaction-channel) list for possible values.
 - `median`: median of the transaction amounts under the given recurring transaction set
 - `clean_transaction_note`: contains a clean and small transaction note, it can be used as an identifier for source/destination for the recurring transaction set
-- `transactions`: list of transaction objects under the recurring transaction set. Each transaction object here has same fields as the transaction object in transactions API (Refer the response section [here](/bank-connect/rest-api.html/#transactions) to know about the fields).
+- `transactions`: list of transaction objects under the recurring transaction set. Each transaction object here has the same fields as the transaction object in transactions API (Refer the response section [here](/bank-connect/rest-api.html/#transactions) to know about the fields).
 
 ## Lender Transactions
 Get extracted lender transactions for a given entity.
@@ -570,7 +570,7 @@ On fetching information successfully, the response would be of the following for
     ]
 }
 ```
-The response fields are same as in [List Accounts](/bank-connect/rest-api.html#list-accounts), but there is an additional `transactions` field that holds an array of lender transaction objects. Each object has following fields:
+The response fields are the same as in [List Accounts](/bank-connect/rest-api.html#list-accounts), but there is an additional `transactions` field that holds an array of lender transaction objects. Each object has the following fields:
 - `transaction_note`: exact transaction note / description present in the statement PDF
 - `hash`: a unique identifying hash for each transaction
 - `description`: describes more information about the `transaction_channel` field. Refer to [this](/bank-connect/appendix.html#description) list for possible values.
@@ -618,7 +618,7 @@ On fetching information successfully, the response would be of the following for
     }
 }
 ```
-Here, `progress` field holds an array of statement wise progress status, while the `monthly_analysis` field holds an object of fields, each having an object of month wise keys having numerical values.
+Here, the `progress` field holds an array of statement wise progress status, while the `monthly_analysis` field holds an object of fields, each having an object of month-wise keys having numerical values.
 
 Months are represented in `Mmm-YYYY` format in key.
 
@@ -722,11 +722,11 @@ On fetching information successfully, the response would be of the following for
 }
 ```
 
-The list value of `reports` key will be empty if any one of the statements have a **non** `completed` `status` in `progress`. When the transactions are successfully processed for all statements, within the entity, a list of report links will be available account wise.
+The list value of `reports` key will be empty if any one of the statements have the `status` value other than `completed` in `progress`. When the transactions are successfully processed for all statements, within the entity, a list of report links will be available account wise.
 
-In case of multiple accounts within the same entity, you can have multiple reports within the `reports` key. The `account_id` will represent the account for which the report is, while `link` key holds url for the **.xlsx file**. The link will be be active only for **1 hour**, post which the API has to be re-hit to obtain the new link.
+In the case of multiple accounts within the same entity, you can have multiple reports within the `reports` key. The `account_id` will represent the account for which the report is, while the `link` key holds URL for the **.xlsx file**. The link will be active only for **1-hour**, post which the API has to be re-hit to obtain the new link.
 
-The Excel workbook will contain three worksheets, first containing the extracted information like Account Holder's Name, Bank, Account Number, Missing Periods, Available Periods, etc., the second sheet contains the enriched extracted transactions for the account, and the third sheet contains the monthly analysis for account.
+The Excel workbook will contain three worksheets, first containing the extracted information like Account Holder's Name, Bank, Account Number, Missing Periods, Available Periods, etc., the second sheet contains the enriched extracted transactions for the account, and the third sheet contains the monthly analysis for the account.
 
 ## Detailed Excel Report <Badge text="New" />
 Get a detailed excel report for a given entity in .xlsx (Excel workbook) format.
@@ -745,4 +745,4 @@ On fetching information successfully, the response would be of the following for
 }
 ```
 
-Possible value for `progress` are listed here [Progress Field](/bank-connect/rest-api.html#progress-field). The value of `report` key will be empty if the progress is not `completed`. The Excel workbook contains detailed analysis on different parameters in form of separate sheets.
+Possible value for `progress` are listed here [Progress Field](/bank-connect/rest-api.html#progress-field). The value of the `report` key will be empty if the progress is not `completed`. The Excel workbook contains a detailed analysis of different parameters in the form of separate sheets.

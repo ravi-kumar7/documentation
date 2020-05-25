@@ -6,7 +6,7 @@ version: v1 # version of API
 
 # Bank Connect: Management
 
-Bank Connect REST APIs also provide additional APIs for management purpose. This article lists them.
+Bank Connect REST APIs also provide additional APIs for management purposes. This article lists them.
 
 All the APIs listed below use the same authentication method as listed [here](/bank-connect/rest-api.html#authentication).
 
@@ -70,5 +70,5 @@ On successful fetching, the API gives a **200 HTTP code** with following respons
 In case no `link_id` exists for the given entity, the value of `link_id` comes as `null` in response.
 
 ::: danger Not Found
-In case not entity with the provided `entity_id` exists, the API will return a response with **404 (Not Found) error code**.
+In case no entity with the provided `entity_id` exists, the API will return a response with **404 (Not Found) error code**.
 :::

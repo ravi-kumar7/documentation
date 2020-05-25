@@ -4,7 +4,7 @@ version: v1 # version of API
 ---
 
 # Bank Connect: Uploading using Python Package
-FinBox provides an official python package for Bank Connect product. This package has functions to upload statement PDF Files and get enriched data.
+FinBox provides an official python package for the Bank Connect product. This package has functions to upload statement PDF Files and get enriched data.
 
 ## Requirements
 The package currently supports Python 3.4+
@@ -38,7 +38,7 @@ To create a new entity, use the `create` method as follows:
 ```python
 entity = fbc.Entity.create()
 ```
-Here `entity` is instance of `Entity` class.
+Here `entity` is an instance of the `Entity` class.
 
 In case you want to create an entity instance with a `link_id`, you can also provide an optional `link_id` string in create method as follows:
 
@@ -47,7 +47,7 @@ entity = fbc.Entity.create(link_id="YOUR_LINK_ID")
 ```
 
 ::: warning Lazy operations
-This python package uses lazy approach for actions, hence an actual Entity on server will not get created until or unless some action is taken, for example uploading statement. This is also true for fetching as well, until data is requested, no request over the network will be made even though you defined an entity instance.
+This python package uses a lazy approach for actions, hence an actual Entity on the server will not get created until or unless some action is taken, for example uploading statement. This is also true for fetching as well until data is requested, no request over the network will be made even though you defined an entity instance.
 :::
 
 ### Fetching already created Entity (`create` method)
@@ -57,7 +57,7 @@ entity = fbc.Entity.get(entity_id="uuid4_for_entity")
 ```
 
 ## Entity Properties
-Each entity instance has two **read only properties** that can be accessed at any time:
+Each entity instance has two **read-only properties** that can be accessed at any time:
 
 ### **`entity_id`**
 This gives a unique identifier for an entity. The table below indicates the results of fetching `entity_id` in different cases:
@@ -88,7 +88,7 @@ This gives the `link_id` string value. The table below indicates the results of 
 (`finbox_bankconnect.custom_exceptions.EntityNotFoundError`).
 
 ### Using Properties
-To use properties, you can simply treat them as read only members of `Entity` instance as follows:
+To use properties, you can simply treat them as read-only members of `Entity` instance as follows:
 ```python
 # printing link_id and entity_id, where entity is instance of Entity class
 print(entity.link_id)
@@ -102,9 +102,9 @@ is_authentic = entity.upload_statement("path/to/file", bank_name="axis")
 ```
 `bank_name` in the input should be a valid bank name identifier (See [this](/bank-connect/appendix.html#bank-identifiers) for list of valid bank name identifiers).
 
-The function returns a boolean value `is_authentic` that is `True` if no fraud were detected in the initial check (pre transaction level checks) otherwise `False`. 
+The function returns a boolean value `is_authentic` that is `True` if no fraud were detected in the initial check (pre-transaction-level checks) otherwise `False`. 
 
-The function also sets `entity_id` property in the instance in case the instance was created via `create` method.
+The function also sets `entity_id` property in the instance in case the instance was created via the `create` method.
 
 In case **PDF is password protected** then you can specify the optional `pdf_password` field:
 ```python
@@ -119,7 +119,7 @@ is_authentic = entity.upload_statement("path/to/file", pdf_password="PDF_PASSWOR
 ```
 
 ### Exceptions
-- In case there is any problem with arguments passed, it throws `ValueError` and if in reading file, it throws standard python file exceptions.
+- In case there is any problem with arguments passed, it throws `ValueError` and if a problem occurs in reading the file, it throws standard python file exceptions.
 
 - In case server could not be reached, it throws `ServiceTimeOutError`
 (`finbox_bankconnect.custom_exceptions.ServiceTimeOutError`).
@@ -130,13 +130,13 @@ is_authentic = entity.upload_statement("path/to/file", pdf_password="PDF_PASSWOR
 - In case password provided was incorrect and the PDF was password protected, it throws `PasswordIncorrectError`
 (`finbox_bankconnect.custom_exceptions.PasswordIncorrectError`).
 
-- In case PDF was non parsable, i.e. was corrupted or had only images or too few text, it throws `UnparsablePDFError`
+- In case PDF was not parsable, i.e. was corrupted or had only images or very less text, it throws `UnparsablePDFError`
 (`finbox_bankconnect.custom_exceptions.UnparsablePDFError`)
 
 - In case `bank_name` was not specified, and our server could not detect the bank, it will throw `CannotIdentityBankError`
 (`finbox_bankconnect.custom_exceptions.CannotIdentityBankError`)
 
-- In due to any other reason, file could not be processed by us, it will throw `FileProcessFailedError`
+- If due to any other reason, the file could not be processed by us, it will throw `FileProcessFailedError`
 (`finbox_bankconnect.custom_exceptions.FileProcessFailedError`)
 
 ## Identity
@@ -165,7 +165,7 @@ This method also has following **optional** arguments:
 | reload | Boolean | If provided as `True`, it will ignore the cached value, and again make an API call and re-fetch the values | `False` |
 
 ### Exceptions
-- In case `create` method was used while creating the entity instance and the entity object was not created on server yet, it throws `ValueError`.
+- In case the `create` method was used while creating the entity instance and the entity object was not created on the server yet, it throws `ValueError`.
 
 - In case server could not be reached, it throws `ServiceTimeOutError`
 (`finbox_bankconnect.custom_exceptions.ServiceTimeOutError`).
@@ -188,7 +188,7 @@ Other than `api_key`, following values can also be modified globally as per requ
 | `base_url` | In case you are using a proxy and want to change the base url for REST API calls that python library makes | {{$page.frontmatter.base_url}} |
 
 ::: danger Changing base_url property
-In case you are using a proxy, and changed the `base_url` property, just keep in mind that the library will internally make an API call in following format:
+In case you are using a proxy, and changed the `base_url` property, just keep in mind that the library will internally make an API call in the following format:
 
 `base_url`/bank-connect/`api_version`/`<endpoints>`
 :::

@@ -1,8 +1,8 @@
 # Bank Connect: Android Client SDK
-The Android Client SDK helps user submit their bank statements via upload or net banking credentials in your Android application.
+The Android Client SDK helps user submits their bank statements via upload or net banking credentials in your Android application.
 
 ## See in action
-The demo video below shows how a user submit bank statement using net banking credentials:
+The demo video below shows how a user submit a bank statement using net banking credentials:
 <div class="embed-container">
 <iframe src="https://www.youtube.com/embed/SvRV5BX1gSo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
@@ -13,12 +13,12 @@ The video below shows a user submit bank statement by uploading the PDF file:
 </div>
 
 ## Adding Dependency
-First add the maven dependency to your project level `gradle` file:
+First, add the maven dependency to your project-level Gradle file:
 ```groovy  
 maven { url  "https://dl.bintray.com/finbox/BankConnect" }  
 ```
 
-Then add the following dependency to your `gradle` file:  
+Then add the following dependency to your Gradle file:  
 ```groovy  
 implementation 'in.finbox.bankconnect:bankconnect:1.0.8'  
 ```
@@ -86,15 +86,15 @@ new FinBoxBankConnect.Builder(getApplicationContext(), bankConnect)
 | Builder Property | Description | Required |
 | - | - | - |
 | `linkId` | specifies the `link_id` | Yes |
-| `fromDate` and `toDate` | specifies the time period for which the statements will be fetched in `dd/MM/yyyy` format | No |
+| `fromDate` and `toDate` | specifies the period for which the statements will be fetched in `dd/MM/yyyy` format | No |
 | `bank` | pass the [bank identifier](/bank-connect/appendix.html#bank-identifiers) to skip the bank selection screen and directly open a that bank's screen instead | No |
 
-`fromDate` and `toDate` specify the time period for which the statements will be fetched. If not provided default date range is 3 months from current date. For example, if you need last 6 months of statements, `fromDate` will be today's date - 6months and `toDate` will be today's date. If not provided default date range is 3 months from current date. It should be in `dd/MM/yyyy` format.
+`fromDate` and `toDate` specify the period for which the statements will be fetched. For example, if you need the last 6 months of statements, `fromDate` will be today's date - 6months and `toDate` will be today's date. If not provided the default date range is 3 months from the current date. It should be in `dd/MM/yyyy` format.
 
 Once the above statement is added, a series of checks are done to make sure the SDK is implemented correctly. A `RunTimeException` will be thrown while trying to build the project in case any of the checks are not completed.
 
 ::: warning Minimal Requirements for SDK to work:
-1. `linkId` is mandatory, and should be at least 8 character long
+1. `linkId` is mandatory, and should be at least 8 characters long
 2. API Key should be present in the manifest
 3. In case `fromDate` / `toDate` is provided, make sure they are of correct date format: `dd/MM/yyyy`.
 4. Make sure `fromDate` is always less than `toDate`
@@ -102,7 +102,7 @@ Once all these conditions are met, the bank connect view will be visible to the 
 :::
 
 ## Live Data and Callbacks
-As the user interacts, callbacks can be received in real time using `getPayloadLiveData()`.  
+As the user interacts, callbacks can be received in real-time using `getPayloadLiveData()`.  
 
 FinBox Bank Connect uses life cycle aware live data to provide real time callbacks. You need to do the following steps to listen for events: 
 
@@ -154,7 +154,7 @@ bankConnect.getPayloadLiveData().observe(this, new Observer < FinboxResult > () 
 This section list the events in detail:
 
 ### Success
-`FinboxResult.OnSuccess` will be called when user completes the upload process. It will have a payload structure is as follows:  
+`FinboxResult.OnSuccess` will be called when the user completes the upload process. It will have a payload structure is as follows:  
 
 ```json  
 {
@@ -165,7 +165,7 @@ This section list the events in detail:
 ```
 
 ### Exit
-`FinboxResult.OnExit` will be called when user exits the flow by selecting the cross icon and accepting to close the flow. It will have a payload structure is as follows:  
+`FinboxResult.OnExit` will be called when the user exits the flow by selecting the cross icon and accepting to close the flow. It will have a payload structure is as follows:  
 
 Its payload structure is as follows:
 ```json  
@@ -188,11 +188,11 @@ In case an error occurs, you'll receive `OnError` event payload, and then if the
 :::
 
 :::warning Webhook
-To track additional errors, and transaction process completion at server side, it is recommended to also integrate [Webhook](/bank-connect/webhook.html).
+To track additional errors, and transaction process completion at the server-side, it is recommended to also integrate [Webhook](/bank-connect/webhook.html).
 :::
 
 ## Customization
-Since FinBox BankConnect is a view embedded in your application, in order to make it look compatible there are certain view level customization that can be done in `styles.xml` file.
+Since FinBox BankConnect is a view embedded in your application, in order to make it look compatible there are certain view level customization that can be done in the `styles.xml` file.
 
 1. Button color. View uses `accentColor` for all button colors
 	```xml
