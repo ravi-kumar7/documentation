@@ -4,13 +4,13 @@ version: v1 # version of API
 ---
 
 # Bank Connect: Webhook
-You can also configure a custom web hook to be invoked whenever extraction process is completed or failed (because of extraction failure in manual mode or user entering a wrong credentials for example in net banking mode).
+You can also configure a custom web hook to be invoked whenever the extraction process is completed or failed (because of extraction failure in manual mode or user entering the wrong credentials for example in net banking mode).
 
 To configure this, you have to share with us a **valid endpoint**.
 
 :::tip A Valid Endpoint:
 - receives a POST request
-- receives a request body with content type `application/json`
+- receives a request body with content-type `application/json`
 - returns a 200 status code on successful reception.
 :::
 
@@ -41,12 +41,12 @@ By default web hook is enabled only for net banking mode, in case you want it to
     "webhook_mode": 1
 }
 ```
-Make sure to specify webhook mode every time you update webhook in case you want web hook to be invoked for both manual as well as net banking mode, if not specified `webhook_mode` will reset to default value `0` (Net Banking Mode only)  
+Make sure to specify webhook mode every time you update webhook in case you want web hook to be invoked for both manual as well as net banking mode, if not specified `webhook_mode` will reset to the default value `0` (Net Banking Mode only)  
 :::
 
 
 ## Receiving payload
-We'll be sending json encoded body in following payload format:
+We'll be sending JSON encoded body in the following payload format:
 ```json
 {
     "entity_id": "unique_entity_id",
@@ -57,11 +57,11 @@ We'll be sending json encoded body in following payload format:
 }
 ```
 
-Here, `progress` field can be `completed` or `failed`. In case of `failed`, `reason` field will specify the reason for failure.
+Here, the `progress` field can be `completed` or `failed`. In case the value is `failed`, `reason` field will specify the reason for failure.
 
-In case of failure in Net Banking mode, actual upload might not have happened as in case of wrong credentials entered by user, hence `statement_id` will be unavailable, and will be blank string `""`. Similarly in case of manual upload if `link_id` doesn't exists, its value will be `null`.
+In case of failure in Net Banking Mode, an actual upload might not have happened, as in case of wrong credentials entered by the user, hence `statement_id` will be unavailable, and will be a blank string `""`. Similarly in the case of manual upload if `link_id` doesn't exist, its value will be `null`.
 
-## Handling cases when webhook endpoint is down
+## Handling cases when the webhook endpoint is down
 In case the webhook endpoint is down or a webhook call was failed, you can have the polling mechanism as a backup. However, the polling mechanism requires you to have the `entity_id`. 
 
 In case you just have the `link_id` you can also request for all the webhook payloads for a given `link_id` using the following API:
@@ -88,4 +88,4 @@ Response format will be as follows:
 
 This API returns the data in decreasing order of time, i.e. the latest payloads will be on top and the oldest on the bottom. In each of the payload there is an additional field `date_time` which indicates the date and time at which the webhook payload was supposed to be sent. `date_time` is in `YYYY-MM-DD HH:MM:SS` format.
 
-In case you have `entity_id` you can also poll the transactions API and check for `progress` field.
+In case you have `entity_id` you can also poll the transactions API and check for the `progress` field.

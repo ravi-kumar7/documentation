@@ -9,13 +9,13 @@ Bank Connect REST APIs can be used to submit bank statement PDFs for an entity.
 You can also try these APIs on Postman. Check out [this](/bank-connect/#postman-collection) article for more details.
 
 :::warning Request Format
-Bank connect accepts all requests with form fields, so please make sure that all requests must be made with content type `application/x-www-form-urlencoded` or `multipart/form-data; boundary={boundary string}`
+Bank connect accepts all requests with form fields, so please make sure that all requests must be made with content-type `application/x-www-form-urlencoded` or `multipart/form-data; boundary={boundary string}`
 :::
 
 ## Authentication
 FinBox Bank Connect REST API uses API keys to authenticate requests. Please keep the API keys secure! Do not share your secret API keys in publicly accessible areas such as GitHub, client-side code, and so forth. All API requests must be made over HTTPS. Calls made over plain HTTP will fail. API requests without authentication will also fail.
 
-To provide API key while making a request, `X-API-KEY` must be present in the request header with API key value.
+To provide an API key while making a request, `X-API-KEY` must be present in the request header with API key value.
 
 ## Specifying the Entity
 In Upload API, `link_id` needs to be specified as a parameter. If an entity was already created with the given `link_id`, the upload will happen under the same entity, if not it will create a new entity with the `link_id` and return the `entity_id` in response.
@@ -27,7 +27,7 @@ In case both `link_id` and `entity_id` are present in request, `link_id` will be
 :::
 
 ## Password Protected PDFs
-If the bank statements are password protected it is required to pass the password in `pdf_password` parameter in upload APIs. The next section lists the upload APIs.
+If the bank statements are password protected it is required to pass the password in the `pdf_password` parameter in upload APIs. The next section lists the upload APIs.
 
 ## Uploading statements in files
 This section lists the endpoint and request format for upload APIs that accepts file in request. Response Format is [present here](/bank-connect/upload-rest-api.html#response-format).
@@ -173,7 +173,7 @@ The identity information returned in the response can be used to verify the cust
 
 ::: warning NOTE
 - `fraud_type` field is `null` in case `is_fraud` field is false, otherwise it is a string. Please refer to [Fraud](/bank-connect/fraud.html) section in Basics to know more about it.
-- Some of the fields within the identity dictionary, or the `from_date` and `to_date` maybe `null` for few statements depending on the bank statement format and what all information is present on the top of the statement. The `from_date` and `to_date` in case was null, are updated for the statement at a later stage when transaction are extracted.
+- Some of the fields within the identity dictionary, or the `from_date` and `to_date` maybe `null` for few statements depending on the bank statement format and what all information is present on the top of the statement. The `from_date` and the `to_date` in case are returned as `null`, are updated for the statement at a later stage when transactions are extracted.
 - The query parameter `?identity=true` is optional for both the APIs above, if not specified the response will only include `entity_id`, `statement_id` and `bank_name` fields in case of successful upload.
 :::
 

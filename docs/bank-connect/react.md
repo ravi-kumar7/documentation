@@ -23,7 +23,7 @@ We have hosted a sample project on GitHub, you can check it out here:
 </div>
 
 ## Including the library
-The library is available as a npm package. To install the dependency 
+The library is available as an npm package. To install the dependency 
 
 <CodeSwitcher :languages="{npm:'npm',yarn:'yarn'}">
 <template v-slot:npm>
@@ -63,7 +63,7 @@ yarn add styled-components
 
 ## Adding the Bank Connect Component
 
-Once the dependency is added. You can use bank connect view anywhere in your component. Since the SDK opens a modal it is recommended to add it to top hierarchy of you View.
+Once the dependency is added. You can use a bank connect view anywhere in your component. Since the SDK opens a modal it is recommended to add it to the top hierarchy of you View.
 
 ```js
 <FinBoxBankConnect
@@ -77,13 +77,13 @@ Once the dependency is added. You can use bank connect view anywhere in your com
 | - | - | - |
 | `linkId` | unique identifier for the user. The view will not work if `linkId` is not specified | Yes |
 | `apiKey` | holds the unique [API Key](/bank-connect/#getting-api-keys) provided. | Yes |
-| `onExit` | specifies the callback when user exits the SDK | No, but recommended |
-| `onSuccess`| specifies the callback when document has been successfully uploaded. | No, but recommended |
+| `onExit` | specifies the callback when the user exits the SDK | No, but recommended |
+| `onSuccess`| specifies the callback when the document has been successfully uploaded. | No, but recommended |
 | `onError`| specifies the callback when an error occurred | No, but recommended |
-| `fromDate` and `toDate` | specifies the time period for which the statements will be fetched. If not provided default date range is 3 months from current date. Its format should be in `dd/MM/yyyy`. | No |
+| `fromDate` and `toDate` | specifies the time period for which the statements will be fetched. If not provided the default date range is 3 months from the current date. Its format should be in `dd/MM/yyyy`. | No |
 | `bankName` | pass the [bank identifier](/bank-connect/appendix.html#bank-identifiers) to skip the bank selection screen and directly open a that bank's screen instead | No |
 
-`fromDate` and `toDate` specify the time period for which the statements will be fetched. If not provided default date range is 3 months from current date. For example, if you need last 6 months of statements, `fromDate` will be today's date - 6months and `toDate` will be today's date. If not provided default date range is 3 months from current date. It should be in `dd/MM/yyyy` format.
+`fromDate` and `toDate` specify the period for which the statements will be fetched. For example, if you need the last 6 months of statements, `fromDate` will be today's date - 6months and `toDate` will be today's date. If not provided the default date range is 3 months from the current date. It should be in `dd/MM/yyyy` format.
 
 ::: warning Period Values
 Please make sure `fromDate` is always less than `toDate`.
@@ -93,7 +93,7 @@ Please make sure `fromDate` is always less than `toDate`.
 This section lists the different callbacks:
 
 ### Success
-`onSuccess` function will be called when document has been successfully uploaded.
+`onSuccess` function will be called when the document has been successfully uploaded.
 
 ```js
 const onSuccess = (payload) => {
@@ -114,7 +114,7 @@ const onSuccess = (payload) => {
 | `linkId` | Identifier passed while initializing the SDK |
 
 ### Exit
-`OnExit` function will be called when user exits the SDK.
+`OnExit` function will be called when the user exits the SDK.
 
 ```js
 const onExit = (payload) => {
@@ -155,5 +155,5 @@ const onError = (payload) => {
 
 
 :::warning Webhook
-To track additional errors, and transaction process completion at server side, it is recommended to also integrate [Webhook](/bank-connect/webhook.html).
+To track additional errors, and transaction process completion at the server-side, it is recommended to also integrate [Webhook](/bank-connect/webhook.html).
 :::
