@@ -19,7 +19,7 @@ This page is an **extension** to the documentation [here](/device-connect/rest-a
 ## `data` Key
 
 ### List Devices API
-List Devices API lists the devices that a customer has logged into. We use the keyword `device_id` to denote a unique pair of customer and device. **It is important to note that two customers using the same device will generate two different device names.**
+List Devices API lists the devices that a customer has logged into. We use the keyword `device_id` to denote a unique pair of customers and devices. **It is important to note that two customers using the same device will generate two different device names.**
 
 A sample response for the API is listed below:
 ```json
@@ -51,11 +51,11 @@ A sample response for the API is listed below:
 }
 ```
 
-Each of the object in `data` key has following keys:
+Each of the objects in the `data` key has the following keys:
 - **device_id**: A unique identifier for each device a user has logged into.
-- **last_opened**: Last time user opened the app on this device.
+- **last_opened**: Last time the user opened the app on this device.
 - **created**: UTC time of when the device_id was created.
-- **mobile_model**: A clean human readable name of the model of the device from which the data is collected. Can be displayed to the user. Not suitable to be used in a program.
+- **mobile_model**: A clean human-readable name of the model of the device from which the data is collected. Can be displayed to the user. Not suitable to be used in a program.
 - **app_open_count**: The count of invocation of the `createUser` method in the Device Connect Android SDK (Refer [here](/device-connect/android.html#create-user-method)). It is a directional indicator of the number of times the customer has opened the app, though not necessarily the exact number (depends on your Android integration).
 - **given_permissions**: The permissions granted by the user on the device. It can have following values in the list:
     - `sms_permission`
@@ -74,7 +74,7 @@ Each of the object in `data` key has following keys:
 :::
 
 ### Credits API
-In case of Credits API, the `data` key in response holds an array of credit transaction objects.
+In the case of Credits API, the `data` key in response holds an array of credit transaction objects.
 ​
 
 It is to be noted that **Credits captured over only the last 6 months are given in
@@ -97,7 +97,7 @@ A sample credit object is listed below:
 }
 ```
 
-Each of the credit transaction object has following keys:
+Each of the credit transaction objects have the following keys:
 - **transaction_hash**: it is a unique identifier for each credit transaction made by the user. This
 doesn’t change for any credit transaction over time.
 - **tag**: We identify certain credits as special credits. They can be used to gain a
@@ -117,11 +117,11 @@ below:
     - `upi`
     - `auto-debit`
 - **merchant**: the Sending Party of a credit transaction
-- **servicename**: The service whose message was captured to extract the given credit transaction. For example, if HDFC Bank sent an sms to notify a debit, the **servicename** would be HDFC. This
-won’t always be the the bank that is associated with the credit transaction in question.
+- **servicename**: The service whose message was captured to extract the given credit transaction. For example, if HDFC Bank sent an SMS to notify a debit, the **servicename** would be HDFC. This
+won’t always be the bank that is associated with the credit transaction in question.
 - **time**: The UTC time at which the transaction message was received by the user's device. It is of the format YYYY-MM-DD HH:MM:SS.
 - **timeinmilis**: Time in milliseconds at which the transaction message was received since
 epoch
-- **amount**: this indicates monetary amount that the transaction was made for.
-- **account_number**: a human readable account number of the format: `<account company> <last 4 digits of account number>`
+- **amount**: this indicates the monetary amount that the transaction was made for.
+- **account_number**: a human-readable account number of the format: `<account company> <last 4 digits of account number>`
 
