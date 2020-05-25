@@ -1,5 +1,5 @@
 # Bank Connect: Overview
-The FinBox Bank Connect allows users to submit their bank account statements in your app, then processes them and shares the enriched data with you.
+FinBox Bank Connect allows users to submit their bank account statements in your app, then processes them and shares the enriched data with you.
 
 This guide will help you integrate bank connect in your application flow.
 
@@ -13,7 +13,7 @@ The video below gives a brief overview of the Bank Connect Integration flow:
 </div>
 
 ## Getting API Keys
-Bank Connect require API Keys to initialize the SDK and/or access the REST APIs. There will be separate keys for **DEV** and **PROD** environments.
+Bank Connect requires API Keys to initialize the SDK and/or access the REST APIs. There will be separate keys for **DEV** and **PROD** environments.
 
 You can get your keys on [FinBox Dashboard](https://dashboard.finbox.in)
 

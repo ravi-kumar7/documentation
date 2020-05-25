@@ -1,6 +1,6 @@
 # Device Connect: REST API
 
-The FinBox Device Connect REST API enables **"server to server data"** fetching of customers' Android device data. The customer's data can be fetched using the `CUSTOMER_ID`. API accepts JSON-encoded request bodies, returns JSON-encoded responses.
+FinBox Device Connect REST API enables **"server to server data"** fetching of customers' Android device data. The customer's data can be fetched using the `CUSTOMER_ID`. API accepts JSON-encoded request bodies, returns JSON-encoded responses.
 
 ::: warning NOTE
 Following will be shared by FinBox team at the time of integration:
