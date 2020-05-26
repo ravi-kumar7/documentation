@@ -1,5 +1,5 @@
-# Device Connect: React Native
-The React Native package can be used to integrate mobile apps with Device Connect so that users can share their data.
+# DeviceConnect: React Native
+The React Native package can be used to integrate mobile apps with DeviceConnect so that users can share their data.
 
 ::: warning NOTE
 Following will be shared by FinBox team at the time of integration:
@@ -10,7 +10,7 @@ Following will be shared by FinBox team at the time of integration:
 :::
 
 ## Integration Flow
-Assuming the bridge has been setup between your project and device connect as per [this](/device-connect/react-native.html#setting-up-the-bridge) section, the following would be the flow in your app:
+Assuming the bridge has been setup between your project and DeviceConnect as per [this](/device-connect/react-native.html#setting-up-the-bridge) section, the following would be the flow in your app:
 
 <img src="/client_workflow.png" alt="Client Workflow" style="width:80%;height:80%" />
 

@@ -3,7 +3,7 @@ base_url: https://portal.finbox.in #base URL in python library
 version: v1 # version of API
 ---
 
-# Bank Connect: Webhook
+# BankConnect: Webhook
 You can also configure a custom web hook to be invoked whenever the extraction process is completed or failed (because of extraction failure in manual mode or user entering the wrong credentials for example in net banking mode).
 
 To configure this, you have to share with us a **valid endpoint**.

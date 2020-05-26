@@ -9,7 +9,7 @@ The SDK is broken down into multiple modules which can be customizable as per re
 4. Loan offer and agreement
 
 ### Onboarding module
-Onboarding user is the first and the most critical of the SDK. FinBox does onboarding based on OTP phone verification and the Device Connect is initialized while onboarding to get an eligibility criteria of the user. This criteria will play an important role when user applies for loan.
+Onboarding user is the first and the most critical of the SDK. FinBox does onboarding based on OTP phone verification and the DeviceConnect is initialized while onboarding to get an eligibility criteria of the user. This criteria will play an important role when user applies for loan.
 
 ### Loan dashboard
 Loan dashboard screen will have details of the active/ongoing loan for that user. This screen gives an overview about the loan journey. 

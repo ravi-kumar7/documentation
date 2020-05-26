@@ -1,4 +1,4 @@
-# Device Connect: Credits
+# DeviceConnect: Credits
 
 This page is an **extension** to the documentation [here](/device-connect/rest-api.html) and lists additional **Insights API Endpoints** for fetching captured **Credit Transactions**  of customers.
 ​
@@ -56,7 +56,7 @@ Each of the objects in the `data` key has the following keys:
 - **last_opened**: Last time the user opened the app on this device.
 - **created**: UTC time of when the device_id was created.
 - **mobile_model**: A clean human-readable name of the model of the device from which the data is collected. Can be displayed to the user. Not suitable to be used in a program.
-- **app_open_count**: The count of invocation of the `createUser` method in the Device Connect Android SDK (Refer [here](/device-connect/android.html#create-user-method)). It is a directional indicator of the number of times the customer has opened the app, though not necessarily the exact number (depends on your Android integration).
+- **app_open_count**: The count of invocation of the `createUser` method in the DeviceConnect Android SDK (Refer [here](/device-connect/android.html#create-user-method)). It is a directional indicator of the number of times the customer has opened the app, though not necessarily the exact number (depends on your Android integration).
 - **given_permissions**: The permissions granted by the user on the device. It can have following values in the list:
     - `sms_permission`
     - `calls_permission`

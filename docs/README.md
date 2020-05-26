@@ -24,7 +24,7 @@ footer: Copyright © 2020 Moshpit Technologies Pvt. Ltd.
 </style>
 <div class="features">
   <div class="feature">
-    <h2>Device Connect</h2>
+    <h2>DeviceConnect</h2>
     <p>
       Lets businesses get access to enriched Android mobile device data of customers to build lending and wealth management apps.
     </p>
@@ -33,7 +33,7 @@ footer: Copyright © 2020 Moshpit Technologies Pvt. Ltd.
     </p>
   </div>
   <div class="feature">
-    <h2>Bank Connect</h2>
+    <h2>BankConnect</h2>
     <p>
       Lets businesses get access to enriched transaction data of customers using bank statements uploaded manually or via Net Banking.
     </p>

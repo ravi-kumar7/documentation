@@ -3,19 +3,19 @@ base_url: https://portal.finbox.in/bank-connect #base URL for the API
 version: v1 # version of API
 ---
 
-# Bank Connect: Uploading using REST API
-Bank Connect REST APIs can be used to fetch enriched data for an entity. This guide first lists some basic fields like [Progress](/bank-connect/rest-api.html#progress-field) and [Fraud](/bank-connect/rest-api.html#fraud-field), and then explores different enriched data APIs.
+# BankConnect: Uploading using REST API
+BankConnect REST APIs can be used to fetch enriched data for an entity. This guide first lists some basic fields like [Progress](/bank-connect/rest-api.html#progress-field) and [Fraud](/bank-connect/rest-api.html#fraud-field), and then explores different enriched data APIs.
 
 You can also try these APIs on Postman. Check out [this](/bank-connect/#postman-collection) article for more details.
 
 To know how to upload statements using REST API, check out [this](/bank-connect/#upload-rest-api.html) article.
 
 :::warning Request Format
-Bank connect accepts all requests with form fields, so please make sure that all requests must be made with content-type `application/x-www-form-urlencoded` or `multipart/form-data; boundary={boundary string}`
+BankConnect accepts all requests with form fields, so please make sure that all requests must be made with content-type `application/x-www-form-urlencoded` or `multipart/form-data; boundary={boundary string}`
 :::
 
 ## Authentication
-FinBox Bank Connect REST API uses API keys to authenticate requests. Please keep the API keys secure! Do not share your secret API keys in publicly accessible areas such as GitHub, client-side code, and so forth. All API requests must be made over HTTPS. Calls made over plain HTTP will fail. API requests without authentication will also fail.
+FinBox BankConnect REST API uses API keys to authenticate requests. Please keep the API keys secure! Do not share your secret API keys in publicly accessible areas such as GitHub, client-side code, and so forth. All API requests must be made over HTTPS. Calls made over plain HTTP will fail. API requests without authentication will also fail.
 
 To provide an API key while making a request, `X-API-KEY` must be present in the request header with API key value.
 

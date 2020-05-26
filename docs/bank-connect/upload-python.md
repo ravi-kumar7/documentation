@@ -3,8 +3,8 @@ base_url: https://portal.finbox.in #base URL in python library
 version: v1 # version of API
 ---
 
-# Bank Connect: Uploading using Python Package
-FinBox provides an official python package for the Bank Connect product. This package has functions to upload statement PDF Files and get enriched data.
+# BankConnect: Uploading using Python Package
+FinBox provides an official python package for the BankConnect product. This package has functions to upload statement PDF Files and get enriched data.
 
 ## Requirements
 The package currently supports Python 3.4+

@@ -2,7 +2,7 @@
 base_url: https://portal.finbox.in/bank-connect #base URL for the API
 version: v1 # version of API
 ---
-# Bank Connect: JavaScript Client SDK
+# BankConnect: JavaScript Client SDK
 The JavaScript Client SDK helps user submit their bank statements via upload or net banking credentials in your Web applications. The SDK will be opened via a web URL.
 
 The first step in integration involves calling the [Session API](/bank-connect/javascript-client.html#session-api)
@@ -52,7 +52,7 @@ On successful API call, it gives a **200 HTTP code** with a response in followin
   "redirect_url": "https://bankconnectclient.finbox.in/?session_id=127d12db1d71bd182b"
 }
 ```
-Use `redirect_url` to open up the bank connect SDK. This URL can be used embedded inside an `<iframe>` or can be opened in a new tab or current window.
+Use `redirect_url` to open up the BankConnect SDK. This URL can be used embedded inside an `<iframe>` or can be opened in a new tab or current window.
 
 ## Redirect Workflow
 

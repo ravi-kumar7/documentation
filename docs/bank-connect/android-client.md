@@ -1,4 +1,4 @@
-# Bank Connect: Android Client SDK
+# BankConnect: Android Client SDK
 The Android Client SDK helps user submits their bank statements via upload or net banking credentials in your Android application.
 
 ## See in action
@@ -98,13 +98,13 @@ Once the above statement is added, a series of checks are done to make sure the 
 2. API Key should be present in the manifest
 3. In case `fromDate` / `toDate` is provided, make sure they are of correct date format: `dd/MM/yyyy`.
 4. Make sure `fromDate` is always less than `toDate`
-Once all these conditions are met, the bank connect view will be visible to the user.
+Once all these conditions are met, the BankConnect view will be visible to the user.
 :::
 
 ## Live Data and Callbacks
 As the user interacts, callbacks can be received in real-time using `getPayloadLiveData()`.  
 
-FinBox Bank Connect uses life cycle aware live data to provide real time callbacks. You need to do the following steps to listen for events: 
+FinBox BankConnect uses life cycle aware live data to provide real time callbacks. You need to do the following steps to listen for events: 
 
 <CodeSwitcher :languages="{kotlin:'Kotlin',java:'Java'}">
 <template v-slot:kotlin>

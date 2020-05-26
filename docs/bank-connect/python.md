@@ -3,7 +3,7 @@ base_url: https://portal.finbox.in #base URL in python library
 version: v1 # version of API
 ---
 
-# Bank Connect: Fetching Enriched data using Python Package
+# BankConnect: Fetching Enriched data using Python Package
 You can use the python package to fetch enriched data for an entity.
 
 **Part 1** of this article with details on installing the package, authentication, advanced settings, identity and uploading statements are listed [on this page](/bank-connect/upload-python.html).

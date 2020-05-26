@@ -1,4 +1,4 @@
-# Bank Connect: React Client SDK
+# BankConnect: React Client SDK
 The React Client SDK helps user submit their bank statements via upload or net banking credentials in your React application.
 
 ## See in action
@@ -61,9 +61,9 @@ yarn add styled-components
 </template>
 </CodeSwitcher>
 
-## Adding the Bank Connect Component
+## Adding the BankConnect Component
 
-Once the dependency is added. You can use a bank connect view anywhere in your component. Since the SDK opens a modal it is recommended to add it to the top hierarchy of you View.
+Once the dependency is added. You can use a BankConnect view anywhere in your component. Since the SDK opens a modal it is recommended to add it to the top hierarchy of you View.
 
 ```js
 <FinBoxBankConnect

@@ -3,17 +3,17 @@ base_url: https://portal.finbox.in/bank-connect #base URL for the API
 version: v1 # version of API
 ---
 
-# Bank Connect: Uploading using REST API
-Bank Connect REST APIs can be used to submit bank statement PDFs for an entity.
+# BankConnect: Uploading using REST API
+BankConnect REST APIs can be used to submit bank statement PDFs for an entity.
 
 You can also try these APIs on Postman. Check out [this](/bank-connect/#postman-collection) article for more details.
 
 :::warning Request Format
-Bank connect accepts all requests with form fields, so please make sure that all requests must be made with content-type `application/x-www-form-urlencoded` or `multipart/form-data; boundary={boundary string}`
+BankConnect accepts all requests with form fields, so please make sure that all requests must be made with content-type `application/x-www-form-urlencoded` or `multipart/form-data; boundary={boundary string}`
 :::
 
 ## Authentication
-FinBox Bank Connect REST API uses API keys to authenticate requests. Please keep the API keys secure! Do not share your secret API keys in publicly accessible areas such as GitHub, client-side code, and so forth. All API requests must be made over HTTPS. Calls made over plain HTTP will fail. API requests without authentication will also fail.
+FinBox BankConnect REST API uses API keys to authenticate requests. Please keep the API keys secure! Do not share your secret API keys in publicly accessible areas such as GitHub, client-side code, and so forth. All API requests must be made over HTTPS. Calls made over plain HTTP will fail. API requests without authentication will also fail.
 
 To provide an API key while making a request, `X-API-KEY` must be present in the request header with API key value.
 
@@ -49,7 +49,7 @@ POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/statement/up
 
 ### Bank name not known <Badge text="beta" type="warn"/>
 
-In case you don't know bank name, and want Bank Connect to automatically identify the bank name:
+In case you don't know bank name, and want BankConnect to automatically identify the bank name:
 
 ::: tip Endpoint
 POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/statement/bankless_upload/?identity=true**
@@ -83,7 +83,7 @@ POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/statement/up
 
 ### Bank name not known <Badge text="beta" type="warn"/>
 
-In case you don't know bank name, and want Bank Connect to automatically identify the bank name:
+In case you don't know bank name, and want BankConnect to automatically identify the bank name:
 
 ::: tip Endpoint
 POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/statement/bankless_upload_base64/?identity=true**
@@ -117,7 +117,7 @@ POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/statement/up
 
 ### Bank name not known <Badge text="beta" type="warn"/>
 
-In case you don't know bank name, and want Bank Connect to automatically identify the bank name:
+In case you don't know bank name, and want BankConnect to automatically identify the bank name:
 
 ::: tip Endpoint
 POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/statement/bankless_upload/?identity=true**

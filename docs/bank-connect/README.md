@@ -1,19 +1,19 @@
-# Bank Connect: Overview
-FinBox Bank Connect allows users to submit their bank account statements in your app, then processes them and shares the enriched data with you.
+# BankConnect: Overview
+FinBox BankConnect allows users to submit their bank account statements in your app, then processes them and shares the enriched data with you.
 
-This guide will help you integrate bank connect in your application flow.
+This guide will help you integrate BankConnect in your application flow.
 
-Watch the video below then head towards the [Basics](/bank-connect/basics.html) section to understand the basic terms associated with Bank Connect.
+Watch the video below then head towards the [Basics](/bank-connect/basics.html) section to understand the basic terms associated with BankConnect.
 
 ## Understanding the Integration Flow
-The video below gives a brief overview of the Bank Connect Integration flow:
+The video below gives a brief overview of the BankConnect Integration flow:
 
 <div class="embed-container">
 <iframe src="https://www.youtube.com/embed/OC2eBqeCKrs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 
 ## Getting API Keys
-Bank Connect requires API Keys to initialize the SDK and/or access the REST APIs. There will be separate keys for **DEV** and **PROD** environments.
+BankConnect requires API Keys to initialize the SDK and/or access the REST APIs. There will be separate keys for **DEV** and **PROD** environments.
 
 You can get your keys on [FinBox Dashboard](https://dashboard.finbox.in)
 
@@ -23,7 +23,7 @@ We have hosted some sample projects on GitHub. You can find them on the links be
 - [React Client SDK](https://github.com/finbox-in/bankconnect-react)
 
 ## Postman Collection
-Postman **collection** and **environment** for Bank Connect REST APIs can be downloaded using the buttons below:
+Postman **collection** and **environment** for BankConnect REST APIs can be downloaded using the buttons below:
 
 <div class="button_holder">
 <a class="download_button" download href="/finbox_bankconnect.postman_collection.json">Download Collection</a>

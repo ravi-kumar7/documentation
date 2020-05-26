@@ -1,5 +1,5 @@
-# Device Connect: Android SDK
-The Android SDK can be used to integrate mobile apps with Device Connect so that users can share their data.
+# DeviceConnect: Android SDK
+The Android SDK can be used to integrate mobile apps with DeviceConnect so that users can share their data.
 
 ::: warning NOTE
 Following will be shared by FinBox team at the time of integration:
@@ -144,7 +144,7 @@ if(MessagingService.forwardToFinBoxSDK(remoteMessage.getData())) {
 
 ## Multi-Process Support
 
-Device Connect uses a content provider to auto initialize the SDK. The limitation with the OS is that content providers are only initialized once in a **multi-process application** and from the main process. For this reason, any calls to the SDK from other processes will lead to unstable behavior.
+DeviceConnect uses a content provider to auto initialize the SDK. The limitation with the OS is that content providers are only initialized once in a **multi-process application** and from the main process. For this reason, any calls to the SDK from other processes will lead to unstable behavior.
 
 In case, you want to use the SDK from a process other than the main process, follow the two steps mentioned below to initialize the SDK.
 

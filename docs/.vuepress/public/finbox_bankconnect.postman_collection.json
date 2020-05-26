@@ -1,8 +1,8 @@
 {
 	"info": {
 		"_postman_id": "282a4ece-fb73-4bf3-85c9-f9cf97a71e91",
-		"name": "FinBox - Bank Connect",
-		"description": "Set of REST APIs for FinBox Bank Connect Integration",
+		"name": "FinBox - BankConnect",
+		"description": "Set of REST APIs for FinBox BankConnect Integration",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [

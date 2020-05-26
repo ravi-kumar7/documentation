@@ -1,7 +1,7 @@
-# Bank Connect: Appendix
+# BankConnect: Appendix
 
 ## Bank Identifiers
-The table below lists the supported banks with their corresponding identifier. These identifiers will be used throughout the Bank Connect product, whenever a `bank` or `bank_name` field are involved.
+The table below lists the supported banks with their corresponding identifier. These identifiers will be used throughout the BankConnect product, whenever a `bank` or `bank_name` field are involved.
 
 | Identifier | Bank Name |
 | - | - |
