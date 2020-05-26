@@ -13,12 +13,12 @@ Then the workflow can be implemented in one of the following ways:
 ## See in action
 The demo video below shows how a user submit bank statement using net banking credentials:
 <div class="embed-container">
-<iframe src="https://www.youtube.com/embed/lynnwojp0vA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe src="https://www.youtube.com/embed/lynnwojp0vA?rel=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 
 The video below shows a user submit bank statement by uploading the PDF file:
 <div class="embed-container">
-<iframe src="https://www.youtube.com/embed/ZUGDZqico2o" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe src="https://www.youtube.com/embed/ZUGDZqico2o?rel=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 
 ## Session API

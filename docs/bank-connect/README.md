@@ -9,7 +9,7 @@ Watch the video below then head towards the [Basics](/bank-connect/basics.html) 
 The video below gives a brief overview of the BankConnect Integration flow:
 
 <div class="embed-container">
-<iframe src="https://www.youtube.com/embed/OC2eBqeCKrs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe src="https://www.youtube.com/embed/OC2eBqeCKrs?rel=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 
 ## Getting API Keys
