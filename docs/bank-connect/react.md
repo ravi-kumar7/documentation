@@ -83,10 +83,11 @@ Once the dependency is added. You can use a BankConnect view anywhere in your co
 | `fromDate` and `toDate` | specifies the time period for which the statements will be fetched. If not provided the default date range is 3 months from the current date. Its format should be in `dd/MM/yyyy`. | No |
 | `bankName` | pass the [bank identifier](/bank-connect/appendix.html#bank-identifiers) to skip the bank selection screen and directly open a that bank's screen instead | No |
 
-`fromDate` and `toDate` specify the period for which the statements will be fetched. For example, if you need the last 6 months of statements, `fromDate` will be today's date - 6months and `toDate` will be today's date. If not provided the default date range is 3 months from the current date. It should be in `dd/MM/yyyy` format.
+`fromDate` and `toDate` specify the period for which the statements will be fetched. For example, if you need the last 6 months of statements, `fromDate` will be today's date - 6 months and `toDate` will be today's date - 1 day. If not provided the default date range is 3 months from the current date. It should be in `dd/MM/yyyy` format.
 
 ::: warning Period Values
-Please make sure `fromDate` is always less than `toDate`.
+- Please make sure `fromDate` is always less than `toDate`
+- Make sure `toDate` is never today's date, the maximum possible value for it is today's date - 1 day
 :::
 
 ## Callback

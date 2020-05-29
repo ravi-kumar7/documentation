@@ -38,11 +38,12 @@ POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/session/**
 | to_date | string | End date range to fetch statements. Should be of format `dd/MM/YYYY` | No | Yesterday |
 | bank_name | string | pass the [bank identifier](/bank-connect/appendix.html#bank-identifiers) to skip the bank selection screen and directly open a that bank's screen instead | No | - |
 
-`from_date` and `to_date` specify the period for which the statements will be fetched. For example, if you need the last 6 months of statements, `from_date` will be today's date - 6months and `to_date` will be today's date. If not provided the default date range is 3 months from the current date. It should be in `dd/MM/yyyy` format.
+`from_date` and `to_date` specify the period for which the statements will be fetched. For example, if you need the last 6 months of statements, `from_date` will be today's date - 6 months and `to_date` will be today's date - 1 day. If not provided the default date range is 3 months from the current date. It should be in `dd/MM/yyyy` format.
 
 ::: warning NOTE
-- `redirect_url` in request is a compulsory field in [Redirect Workflow](/bank-connect/javascript-client.html#redirect-workflow) but is not required with the [Inline Frame workflow](/bank-connect/javascript-client.html#inline-frame-workflow).
-- Please make sure `from_date` is always less than `to_date`. 
+- `redirect_url` in request is a compulsory field in [Redirect Workflow](/bank-connect/javascript-client.html#redirect-workflow) but is not required with the [Inline Frame workflow](/bank-connect/javascript-client.html#inline-frame-workflow)
+- Please make sure `from_date` is always less than `to_date`
+- Make sure `to_date` is never today's date, the maximum possible value for it is today's date - 1 day
 :::
 
 ### Response

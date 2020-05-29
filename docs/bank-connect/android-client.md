@@ -89,7 +89,7 @@ new FinBoxBankConnect.Builder(getApplicationContext(), bankConnect)
 | `fromDate` and `toDate` | specifies the period for which the statements will be fetched in `dd/MM/yyyy` format | No |
 | `bank` | pass the [bank identifier](/bank-connect/appendix.html#bank-identifiers) to skip the bank selection screen and directly open a that bank's screen instead | No |
 
-`fromDate` and `toDate` specify the period for which the statements will be fetched. For example, if you need the last 6 months of statements, `fromDate` will be today's date - 6months and `toDate` will be today's date. If not provided the default date range is 3 months from the current date. It should be in `dd/MM/yyyy` format.
+`fromDate` and `toDate` specify the period for which the statements will be fetched. For example, if you need the last 6 months of statements, `fromDate` will be today's date - 6 months and `toDate` will be today's date - 1 day. If not provided the default date range is 3 months from the current date. It should be in `dd/MM/yyyy` format.
 
 Once the above statement is added, a series of checks are done to make sure the SDK is implemented correctly. A `RunTimeException` will be thrown while trying to build the project in case any of the checks are not completed.
 
@@ -98,6 +98,7 @@ Once the above statement is added, a series of checks are done to make sure the 
 2. API Key should be present in the manifest
 3. In case `fromDate` / `toDate` is provided, make sure they are of correct date format: `dd/MM/yyyy`.
 4. Make sure `fromDate` is always less than `toDate`
+5. Make sure `toDate` is never today's date, the maximum possible value for it is today's date - 1 day
 Once all these conditions are met, the BankConnect view will be visible to the user.
 :::
 
