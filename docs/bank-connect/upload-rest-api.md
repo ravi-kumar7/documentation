@@ -151,7 +151,8 @@ All the above APIs give the response in the format below in case of successful f
         "address": "Address extracted",
         "name": "Name Extracted"
     },
-    "fraud_type": null
+    "fraud_type": null,
+    "status": 1
 }
 ```
 
@@ -159,17 +160,18 @@ The identity information returned in the response can be used to verify the cust
 
 | Key | Type | Description |
 | - | - | - | - | - |
-| `bank_name` | string  | indicates the bank, refer [here](/bank-connect/appendix.html#bank-identifiers) for complete list |
-| `statement_id` | string | Unique identifier for Statement |
-| `entity_id` | string | unique identifier for entity |
-| `date_range` | object | contains `from_date` and `to_date` strings indicating the time period in `YYYY-MM-DD` format |
-| `is_fraud` | boolean | indicates if a file level fraud was detected |
-| `fraud_type` | string | indicates the fraud type, if no fraud its value is `null` |
-| `identity` | object | contains multiple identity information keys extracted from the statement |
-| `account_id` | string | unique identifier for account |
-| `account_number` | string | bank account number |
-| `address` | string | address of the bank account holder |
-| `name` | string | name of the bank account holder |
+| bank_name | string  | indicates the bank, refer [here](/bank-connect/appendix.html#bank-identifiers) for complete list |
+| statement_id | string | Unique identifier for Statement |
+| entity_id | string | unique identifier for entity |
+| date_range | object | contains `from_date` and `to_date` strings indicating the time period in `YYYY-MM-DD` format |
+| is_fraud | boolean | indicates if a file level fraud was detected |
+| fraud_type | string | indicates the fraud type, if no fraud its value is `null` |
+| identity | object | contains multiple identity information keys extracted from the statement |
+| account_id | string | unique identifier for account |
+| account_number | string | bank account number |
+| address | string | address of the bank account holder |
+| name | string | name of the bank account holder |
+| status | integer | contains the status code for API, should be 1 for success. Other possible values are listed in Bad Requests(/bank-connect/upload-rest-api.html#bad-request-cases) section |
 
 ::: warning NOTE
 - `fraud_type` field is `null` in case `is_fraud` field is false, otherwise it is a string. Please refer to [Fraud](/bank-connect/fraud.html) section in Basics to know more about it.
@@ -178,32 +180,21 @@ The identity information returned in the response can be used to verify the cust
 :::
 
 ## Bad Request Cases
-1. In case a compulsory field is missing the APIs will throw a **400 (Bad Request)** as follows:
-    ```json
-    {"file": ["This field is required."]}
-    ```
-    This error is also thrown in case of base64 encoded files, if base64 to file decoding fails. Error in that case is as follows:
-    ```json
-    {"file": ["Invalid Base 64 string"]}
-    ```
-2. In case the request content type is not `application/x-www-form-urlencoded` or `multipart/form-data; boundary={boundary string}`, APIs will throw **400 (Bad Request)** as follows:
-    ```json
-    {"file": ["This field must be present as a form field. Send request with content type x-www-form-urlencoded or form-data"]}
-    ```
-3. In other error cases, the APIs will throw a **400 (Bad Request)** with appropriate message in `message` field:
-    - **Not able to identify the bank name**: This happens only for **Bank name not known case APIs**, when we are not able to identify the bank of the statement. If the statement was valid, our quality team will add this template within 24 hours. As a fallback if you know the bank, you can explicitly specify the `bank_name` field and retry the request.
-    - **Incorrect bank name specified**: When bank is provided with request, and we detected it to be of different bank.
-    - **Incorrect Password**: When the password provided for the PDF file was incorrect or missing.
-    - **Non Parsable PDF**: PDF file is corrupted or has no selectable text (only scanned images)
-    ```json
-    {
-        "entity_id": "some_entity_id_created",
-        "message": "error message here"
-    }
-    ```
+
+In case of successful upload, you'll get the `status` field value as `1`. Following are bad request cases with status codes:
+| Case | HTTP status code | status field value | Sample response |
+| - | - | - | - |
+| Compulsory field is missing |  400 | 0 | `{"file": ["This field is required."], "status": 0}` |
+| Invalid field value | 400 | 0 | `{"file": ["Invalid Base 64 string"], "status": 0}` |
+| Incorrect Content Type | 400 | 0 | `{"file": ["This field must be present as a form field. Send request with content type x-www-form-urlencoded or form-data"], "status": 0}` |
+| Trial Expired for Dev Credentials | 402 | 2 | `{"message": "Your trial period has expired. Please request FinBox to upgrade your plan", "status": 2}` |
+| Password Incorrect | 400 | 3 | `{"entity_id": "some_long_uuid4", "message": "Password incorrect", "status": 3}` |
+| Specified bank doesn't match with detected bank | 400 | 4 | `{"entity_id": "some_long_uuid4", "message": "Not axis statement", "status": 4}` |
+| Cannot Detect Bank (Bank less APIs only) | 400 | 5 | `{"entity_id": "some_long_uuid4", "message": "Unable to detect bank. Please provide BANK NAME.", "status": 5}` |
+| Non Parsable PDF - PDF file is corrupted or has no selectable text (only scanned images) | 400 | 6 | `{"entity_id": "some_long_uuid4", "message": "PDF is not parsable", "status": 6}` |
 
 ::: danger IMPORTANT
-- We do not support scanned PDF images, if uploaded we throw a **400 HTTP Code** with the `message` as **Non Parsable PDF**
+- We do not support scanned PDF images, if uploaded we throw a **400 HTTP Code** with the `status` as `6`
 - In case a valid PDF comes as an input, and we are not able to extract information from it, API will give a **200 HTTP Code** but will have **identity** information in response as `null`. Our quality team takes care of such cases, and new templates are added within 24 hours.
 - In case you are in **DEV** environment and your **trial period has expired**, then upload APIs will give you a response with **402 HTTP Code**. To fix this please request FinBox to upgrade your plan.
 :::
