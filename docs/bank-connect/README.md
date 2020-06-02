@@ -30,6 +30,6 @@ Postman **collection** and **environment** for BankConnect REST APIs can be down
 <a class="download_button" download href="/finbox_bankconnect.postman_environment.json">Download Environment</a>
 </div>
 
-Please replace `x-api-key` in the Postman environment with the **API Key** provided by FinBox Team.
+Please replace `x-api-key` and `server-hash` in the Postman environment with the **API Key** and **Server Hash** provided by FinBox Team.
 
 First call any of the upload statement APIs, and then call APIs to fetch details like transactions, identity, etc.

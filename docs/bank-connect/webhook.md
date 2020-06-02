@@ -14,6 +14,8 @@ To configure this, you have to share with us a **valid endpoint**.
 - returns a 200 status code on successful reception.
 :::
 
+## Authentication
+
 All the APIs listed below use the same authentication method as listed [here](/bank-connect/rest-api.html#authentication).
 
 ## Updating web hook endpoint

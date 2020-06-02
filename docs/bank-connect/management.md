@@ -8,7 +8,9 @@ version: v1 # version of API
 
 BankConnect REST APIs also provide additional APIs for management purposes. This article lists them.
 
-All the APIs listed below use the same **authentication** method as listed [here](/bank-connect/rest-api.html#authentication).
+## Authentication
+
+All the APIs listed below use the same authentication method as listed [here](/bank-connect/rest-api.html#authentication).
 
 
 ## List Entities

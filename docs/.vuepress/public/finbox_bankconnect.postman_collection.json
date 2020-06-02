@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "282a4ece-fb73-4bf3-85c9-f9cf97a71e91",
+		"_postman_id": "f9c2d550-09e6-4727-ad0e-31d8f91eab6a",
 		"name": "FinBox - BankConnect",
 		"description": "Set of REST APIs for FinBox BankConnect Integration",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -12,7 +12,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "5ff77997-f1a8-4425-9fad-fc4d8279132a",
+						"id": "27d8b92e-5394-41a0-a0bf-b2df4f56e010",
 						"exec": [
 							"var jsonData = JSON.parse(responseBody);",
 							"postman.setEnvironmentVariable(\"entity_id\", jsonData.entity_id);"
@@ -89,7 +89,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "8f1890fd-28c4-4351-904d-59bffc97ee3a",
+						"id": "06fb84b4-f82d-49f8-8d0b-05432cc8f1e7",
 						"exec": [
 							"var jsonData = JSON.parse(responseBody);",
 							"postman.setEnvironmentVariable(\"entity_id\", jsonData.entity_id);"
@@ -166,7 +166,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "91ed36e5-d710-4963-b23f-19ca28916382",
+						"id": "8361e936-969f-44ad-9d34-875c21a348fc",
 						"exec": [
 							"var jsonData = JSON.parse(responseBody);",
 							"postman.setEnvironmentVariable(\"entity_id\", jsonData.entity_id);"
@@ -243,7 +243,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "28b71774-7f38-4ffa-a120-99e22852a8c6",
+						"id": "ef8b4027-a621-4d31-97d0-8442688b30a9",
 						"exec": [
 							"var jsonData = JSON.parse(responseBody);",
 							"postman.setEnvironmentVariable(\"entity_id\", jsonData.entity_id);"
@@ -314,7 +314,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "cd7af641-0114-4650-a037-81c6e48a09cc",
+						"id": "2f66439f-dd87-49d1-a6fb-f47d6fbd6067",
 						"exec": [
 							"var jsonData = JSON.parse(responseBody);",
 							"postman.setEnvironmentVariable(\"entity_id\", jsonData.entity_id);"
@@ -385,7 +385,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "544619e4-810c-4c86-8afc-eb97efd3ee04",
+						"id": "8f024692-f76b-47d2-a8c8-69c8b3446217",
 						"exec": [
 							"var jsonData = JSON.parse(responseBody);",
 							"postman.setEnvironmentVariable(\"entity_id\", jsonData.entity_id);"
@@ -464,6 +464,11 @@
 						"key": "x-api-key",
 						"value": "{{x-api-key}}",
 						"type": "text"
+					},
+					{
+						"key": "server-hash",
+						"value": "{{server-hash}}",
+						"type": "text"
 					}
 				],
 				"url": {
@@ -493,6 +498,11 @@
 						"key": "x-api-key",
 						"type": "text",
 						"value": "{{x-api-key}}"
+					},
+					{
+						"key": "server-hash",
+						"value": "{{server-hash}}",
+						"type": "text"
 					}
 				],
 				"url": {
@@ -522,6 +532,11 @@
 						"key": "x-api-key",
 						"type": "text",
 						"value": "{{x-api-key}}"
+					},
+					{
+						"key": "server-hash",
+						"value": "{{server-hash}}",
+						"type": "text"
 					}
 				],
 				"url": {
@@ -551,6 +566,11 @@
 						"key": "x-api-key",
 						"type": "text",
 						"value": "{{x-api-key}}"
+					},
+					{
+						"key": "server-hash",
+						"value": "{{server-hash}}",
+						"type": "text"
 					}
 				],
 				"url": {
@@ -580,6 +600,11 @@
 						"key": "x-api-key",
 						"type": "text",
 						"value": "{{x-api-key}}"
+					},
+					{
+						"key": "server-hash",
+						"value": "{{server-hash}}",
+						"type": "text"
 					}
 				],
 				"url": {
@@ -609,6 +634,11 @@
 						"key": "x-api-key",
 						"type": "text",
 						"value": "{{x-api-key}}"
+					},
+					{
+						"key": "server-hash",
+						"value": "{{server-hash}}",
+						"type": "text"
 					}
 				],
 				"url": {
@@ -638,6 +668,11 @@
 						"key": "x-api-key",
 						"type": "text",
 						"value": "{{x-api-key}}"
+					},
+					{
+						"key": "server-hash",
+						"value": "{{server-hash}}",
+						"type": "text"
 					}
 				],
 				"url": {
@@ -666,6 +701,11 @@
 					{
 						"key": "x-api-key",
 						"value": "{{x-api-key}}",
+						"type": "text"
+					},
+					{
+						"key": "server-hash",
+						"value": "{{server-hash}}",
 						"type": "text"
 					}
 				],
@@ -696,6 +736,11 @@
 						"key": "x-api-key",
 						"value": "{{x-api-key}}",
 						"type": "text"
+					},
+					{
+						"key": "server-hash",
+						"value": "{{server-hash}}",
+						"type": "text"
 					}
 				],
 				"url": {
@@ -725,6 +770,11 @@
 						"key": "x-api-key",
 						"type": "text",
 						"value": "{{x-api-key}}"
+					},
+					{
+						"key": "server-hash",
+						"value": "{{server-hash}}",
+						"type": "text"
 					}
 				],
 				"url": {
@@ -752,6 +802,11 @@
 						"key": "x-api-key",
 						"type": "text",
 						"value": "{{x-api-key}}"
+					},
+					{
+						"key": "server-hash",
+						"value": "{{server-hash}}",
+						"type": "text"
 					}
 				],
 				"url": {
@@ -780,6 +835,11 @@
 						"key": "x-api-key",
 						"type": "text",
 						"value": "{{x-api-key}}"
+					},
+					{
+						"key": "server-hash",
+						"value": "{{server-hash}}",
+						"type": "text"
 					}
 				],
 				"body": {
@@ -813,7 +873,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "708f5a43-d18c-4a78-b563-3d972d2ec6fb",
+				"id": "7dd5bfa6-4ee5-4110-91d6-dfc87a6a875b",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -823,7 +883,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "6239c3f6-5410-44e4-a9a1-a48f3df70b70",
+				"id": "0b464c26-8b46-4526-914a-d2582d73d5d9",
 				"type": "text/javascript",
 				"exec": [
 					""
