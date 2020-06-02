@@ -13,9 +13,9 @@ The video below gives a brief overview of the BankConnect Integration flow:
 </div>
 
 ## Getting API Keys
-BankConnect requires API Keys to initialize the SDK and/or access the REST APIs. There will be separate keys for **DEV** and **PROD** environments.
+BankConnect requires API Keys to initialize the SDK and/or access the REST APIs. There will be separate keys for **DEV** and **PROD** environments. APIs for fetching enriched data also require an additional **Server Hash**.
 
-You can get your keys on [FinBox Dashboard](https://dashboard.finbox.in)
+You can get your keys on [FinBox Dashboard](https://dashboard.finbox.in/)
 
 ## Sample Projects
 We have hosted some sample projects on GitHub. You can find them on the links below:
@@ -30,6 +30,6 @@ Postman **collection** and **environment** for BankConnect REST APIs can be down
 <a class="download_button" download href="/finbox_bankconnect.postman_environment.json">Download Environment</a>
 </div>
 
-Please replace `x-api-key` in the Postman environment with the **API Key** provided by FinBox Team.
+Please replace `x-api-key` and `server-hash` in the Postman environment with the **API Key** and **Server Hash** provided by FinBox Team.
 
 First call any of the upload statement APIs, and then call APIs to fetch details like transactions, identity, etc.
