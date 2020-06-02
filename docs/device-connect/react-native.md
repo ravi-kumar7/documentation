@@ -94,9 +94,9 @@ Below are the list of Runtime permissions the sdk adds to the application Manife
     tools:ignore="ProtectedPermissions" />
 ```
 
-::: warning WARNING
+<!-- ::: warning WARNING
 For Xiaomi Devices, Service SMS need to be enabled to retrieve SMS from Device. In the Sample App a `NativeModule` is created named as `XiaomiPermissionModule` where a native bridge is created to show user settings page where they can provide permission.
-:::
+::: -->
 
 To remove the unused permissions, add a `remove` rule to that permission as shown below:
 ```xml
