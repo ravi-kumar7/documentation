@@ -827,6 +827,33 @@
 			"response": []
 		},
 		{
+			"name": "Net Banking Health",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"type": "text",
+						"value": "{{x-api-key}}"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/bank-connect/v1/net_banking_health/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"bank-connect",
+						"v1",
+						"net_banking_health",
+						""
+					]
+				},
+				"description": "Get bank wise net banking status"
+			},
+			"response": []
+		},
+		{
 			"name": "Update Webhook",
 			"request": {
 				"method": "POST",

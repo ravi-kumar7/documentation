@@ -17,7 +17,7 @@ BankConnect accepts all requests with form fields, so please make sure that all 
 ## Authentication
 FinBox BankConnect REST API uses API keys to authenticate requests. All API requests must be made over HTTPS. Calls made over plain HTTP will fail. API requests without authentication will also fail.
 
-To make a successful request, `X-API-KEY` and `SERVER-HASH` must be present in the request header with API key and Server Hash values respectively.
+To make a successful request, `x-api-key` and `server-hash` must be present in the request header with API key and Server Hash values respectively.
 
 Please keep the Server Hash secure! Do not share your Server Hash in publicly accessible areas such as GitHub, client-side code, and so forth.
 
