@@ -13,9 +13,20 @@ BankConnect accepts all requests with form fields, so please make sure that all 
 :::
 
 ## Authentication
-FinBox BankConnect REST API uses API keys to authenticate requests. Please keep the API keys secure! Do not share your secret API keys in publicly accessible areas such as GitHub, client-side code, and so forth. All API requests must be made over HTTPS. Calls made over plain HTTP will fail. API requests without authentication will also fail.
+FinBox BankConnect REST API uses API keys to authenticate requests. All API requests must be made over HTTPS. Calls made over plain HTTP will fail. API requests without authentication will also fail.
 
-To provide an API key while making a request, `X-API-KEY` must be present in the request header with API key value.
+To provide an API key while making a request, `X-API-KEY` must be present in the request header with **API key** value.
+
+In case wrong/incomplete/no keys were passed, response will have **401** HTTP Code and payload as follows:
+```json
+{
+    "detail": "Authentication credentials were not provided."
+}
+```
+
+:::danger IMPORTANT
+Upload APIs do not require use of **Server Hash**
+:::
 
 ## Specifying the Entity
 In Upload API, `link_id` needs to be specified as a parameter. If an entity was already created with the given `link_id`, the upload will happen under the same entity, if not it will create a new entity with the `link_id` and return the `entity_id` in response.

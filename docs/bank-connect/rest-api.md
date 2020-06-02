@@ -15,9 +15,18 @@ BankConnect accepts all requests with form fields, so please make sure that all 
 :::
 
 ## Authentication
-FinBox BankConnect REST API uses API keys to authenticate requests. Please keep the API keys secure! Do not share your secret API keys in publicly accessible areas such as GitHub, client-side code, and so forth. All API requests must be made over HTTPS. Calls made over plain HTTP will fail. API requests without authentication will also fail.
+FinBox BankConnect REST API uses API keys to authenticate requests. All API requests must be made over HTTPS. Calls made over plain HTTP will fail. API requests without authentication will also fail.
 
-To provide an API key while making a request, `X-API-KEY` must be present in the request header with API key value.
+To make a successful request, `X-API-KEY` and `SERVER-HASH` must be present in the request header with API key and Server Hash values respectively.
+
+Please keep the Server Hash secure! Do not share your Server Hash in publicly accessible areas such as GitHub, client-side code, and so forth.
+
+In case wrong/incomplete/no keys were passed, response will have **401** HTTP Code and payload as follows:
+```json
+{
+    "detail": "Authentication credentials were not provided."
+}
+```
 
 ## Progress Field
 When a statement is uploaded, identity information and basic fraud checks happen at the same time. However other statement analyses, like transaction extraction, salary, recurring transactions, advanced fraud checks, enrichment happen in parallel. Hence all the GET APIs for these **analysis fields** have a `progress` field. You can track the progress of a statement uploaded using this.
