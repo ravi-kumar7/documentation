@@ -1,0 +1,922 @@
+{
+	"info": {
+		"_postman_id": "f9c2d550-09e6-4727-ad0e-31d8f91eab6a",
+		"name": "FinBox - BankConnect",
+		"description": "Set of REST APIs for FinBox BankConnect Integration",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Upload Statement",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "27d8b92e-5394-41a0-a0bf-b2df4f56e010",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"entity_id\", jsonData.entity_id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{x-api-key}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"description": "Statement PDF",
+							"type": "file",
+							"src": []
+						},
+						{
+							"key": "bank_name",
+							"value": "axis",
+							"description": "Bank Name Identifier",
+							"type": "text"
+						},
+						{
+							"key": "link_id",
+							"value": "your_link_id_here",
+							"description": "Link ID for the Entity",
+							"type": "text"
+						},
+						{
+							"key": "pdf_password",
+							"value": "",
+							"description": "PDF Password if any (optional)",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/bank-connect/v1/statement/upload/?identity=true",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"bank-connect",
+						"v1",
+						"statement",
+						"upload",
+						""
+					],
+					"query": [
+						{
+							"key": "identity",
+							"value": "true"
+						}
+					]
+				},
+				"description": "Upload a bank statement (with bank name), and get basic identity information in response"
+			},
+			"response": []
+		},
+		{
+			"name": "Upload Statement (File URL)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "06fb84b4-f82d-49f8-8d0b-05432cc8f1e7",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"entity_id\", jsonData.entity_id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-api-key",
+						"type": "text",
+						"value": "{{x-api-key}}"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file_url",
+							"value": "https://someurl.com/somedir/somefile.pdf",
+							"description": "Statement PDF URL",
+							"type": "text"
+						},
+						{
+							"key": "bank_name",
+							"value": "axis",
+							"description": "Bank Name Identifier",
+							"type": "text"
+						},
+						{
+							"key": "link_id",
+							"value": "your_link_id_here",
+							"description": "Link ID for the Entity",
+							"type": "text"
+						},
+						{
+							"key": "pdf_password",
+							"value": "",
+							"description": "PDF Password if any (optional)",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/bank-connect/v1/statement/upload/?identity=true",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"bank-connect",
+						"v1",
+						"statement",
+						"upload",
+						""
+					],
+					"query": [
+						{
+							"key": "identity",
+							"value": "true"
+						}
+					]
+				},
+				"description": "Upload a bank statement (with bank name) by specifying a URL, and get basic identity information in response"
+			},
+			"response": []
+		},
+		{
+			"name": "Upload Statement (Base 64)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8361e936-969f-44ad-9d34-875c21a348fc",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"entity_id\", jsonData.entity_id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-api-key",
+						"type": "text",
+						"value": "{{x-api-key}}"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"value": "base64_encoded_file_string\n\n",
+							"description": "Statement PDF in Base 64 encoded format",
+							"type": "text"
+						},
+						{
+							"key": "bank_name",
+							"value": "axis",
+							"description": "Bank Name Identifier",
+							"type": "text"
+						},
+						{
+							"key": "link_id",
+							"value": "your_link_id_here",
+							"description": "Link ID for the Entity",
+							"type": "text"
+						},
+						{
+							"key": "pdf_password",
+							"value": "",
+							"description": "PDF Password if any (optional)",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/bank-connect/v1/statement/upload_base64/?identity=true",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"bank-connect",
+						"v1",
+						"statement",
+						"upload_base64",
+						""
+					],
+					"query": [
+						{
+							"key": "identity",
+							"value": "true"
+						}
+					]
+				},
+				"description": "Upload a bank statement (with bank name) in Base 64 Encoded format, and get basic identity information in response"
+			},
+			"response": []
+		},
+		{
+			"name": "Bankless upload",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ef8b4027-a621-4d31-97d0-8442688b30a9",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"entity_id\", jsonData.entity_id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-api-key",
+						"type": "text",
+						"value": "{{x-api-key}}"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"description": "Statement PDF",
+							"type": "file",
+							"src": []
+						},
+						{
+							"key": "link_id",
+							"value": "your_link_id_here",
+							"description": "Link ID for the Entity",
+							"type": "text"
+						},
+						{
+							"key": "pdf_password",
+							"value": "",
+							"description": "PDF Password if any (optional)",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/bank-connect/v1/statement/bankless_upload/?identity=true",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"bank-connect",
+						"v1",
+						"statement",
+						"bankless_upload",
+						""
+					],
+					"query": [
+						{
+							"key": "identity",
+							"value": "true"
+						}
+					]
+				},
+				"description": "Upload a bank statement (without bank name), and get basic identity information in response"
+			},
+			"response": []
+		},
+		{
+			"name": "Bankless upload (File URL)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2f66439f-dd87-49d1-a6fb-f47d6fbd6067",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"entity_id\", jsonData.entity_id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-api-key",
+						"type": "text",
+						"value": "{{x-api-key}}"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file_url",
+							"value": "https://someurl.com/somedir/somefile.pdf",
+							"description": "Statement PDF URL",
+							"type": "text"
+						},
+						{
+							"key": "link_id",
+							"value": "your_link_id_here",
+							"description": "Link ID for the Entity",
+							"type": "text"
+						},
+						{
+							"key": "pdf_password",
+							"value": "",
+							"description": "PDF Password if any (optional)",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/bank-connect/v1/statement/bankless_upload/?identity=true",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"bank-connect",
+						"v1",
+						"statement",
+						"bankless_upload",
+						""
+					],
+					"query": [
+						{
+							"key": "identity",
+							"value": "true"
+						}
+					]
+				},
+				"description": "Upload a bank statement (without bank name) by specifying a URL, and get basic identity information in response"
+			},
+			"response": []
+		},
+		{
+			"name": "Bankless upload (Base 64)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8f024692-f76b-47d2-a8c8-69c8b3446217",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"entity_id\", jsonData.entity_id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-api-key",
+						"type": "text",
+						"value": "{{x-api-key}}"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"value": "base64_encoded_file_string",
+							"description": "Statement PDF in Base 64 encoded format",
+							"type": "text"
+						},
+						{
+							"key": "link_id",
+							"value": "your_link_id_here",
+							"description": "Link ID for the Entity",
+							"type": "text"
+						},
+						{
+							"key": "pdf_password",
+							"value": "",
+							"description": "PDF Password if any (optional)",
+							"type": "text",
+							"disabled": true
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/bank-connect/v1/statement/bankless_upload_base64/?identity=true",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"bank-connect",
+						"v1",
+						"statement",
+						"bankless_upload_base64",
+						""
+					],
+					"query": [
+						{
+							"key": "identity",
+							"value": "true"
+						}
+					]
+				},
+				"description": "Upload a bank statement (without bank name) in Base 64 Encoded format, and get basic identity information in response"
+			},
+			"response": []
+		},
+		{
+			"name": "Identity",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{x-api-key}}",
+						"type": "text"
+					},
+					{
+						"key": "server-hash",
+						"value": "{{server-hash}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/bank-connect/v1/entity/{{entity_id}}/identity/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"bank-connect",
+						"v1",
+						"entity",
+						"{{entity_id}}",
+						"identity",
+						""
+					]
+				},
+				"description": "Fetch identity information for a given `entity_id`"
+			},
+			"response": []
+		},
+		{
+			"name": "Transactions",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"type": "text",
+						"value": "{{x-api-key}}"
+					},
+					{
+						"key": "server-hash",
+						"value": "{{server-hash}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/bank-connect/v1/entity/{{entity_id}}/transactions/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"bank-connect",
+						"v1",
+						"entity",
+						"{{entity_id}}",
+						"transactions",
+						""
+					]
+				},
+				"description": "Fetch transactions (combined for all accounts) for a given `entity_id`"
+			},
+			"response": []
+		},
+		{
+			"name": "Monthly Analysis",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"type": "text",
+						"value": "{{x-api-key}}"
+					},
+					{
+						"key": "server-hash",
+						"value": "{{server-hash}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/bank-connect/v1/entity/{{entity_id}}/monthly_analysis/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"bank-connect",
+						"v1",
+						"entity",
+						"{{entity_id}}",
+						"monthly_analysis",
+						""
+					]
+				},
+				"description": "Fetch monthly analysis (combined for all accounts) for a given `entity_id`"
+			},
+			"response": []
+		},
+		{
+			"name": "Raw Excel Report",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"type": "text",
+						"value": "{{x-api-key}}"
+					},
+					{
+						"key": "server-hash",
+						"value": "{{server-hash}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/bank-connect/v1/entity/{{entity_id}}/raw_excel_report/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"bank-connect",
+						"v1",
+						"entity",
+						"{{entity_id}}",
+						"raw_excel_report",
+						""
+					]
+				},
+				"description": "Fetch account wise transactions and monthly analysis in excel workbook format for a given `entity_id`"
+			},
+			"response": []
+		},
+		{
+			"name": "Detailed Excel Report",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"type": "text",
+						"value": "{{x-api-key}}"
+					},
+					{
+						"key": "server-hash",
+						"value": "{{server-hash}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/bank-connect/v1/entity/{{entity_id}}/xlsx_report/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"bank-connect",
+						"v1",
+						"entity",
+						"{{entity_id}}",
+						"xlsx_report",
+						""
+					]
+				},
+				"description": "Fetch a detailed report (account wise) in excel workbook format for a given `entity_id`"
+			},
+			"response": []
+		},
+		{
+			"name": "List Accounts",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"type": "text",
+						"value": "{{x-api-key}}"
+					},
+					{
+						"key": "server-hash",
+						"value": "{{server-hash}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/bank-connect/v1/entity/{{entity_id}}/accounts/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"bank-connect",
+						"v1",
+						"entity",
+						"{{entity_id}}",
+						"accounts",
+						""
+					]
+				},
+				"description": "Fetch accounts associated with a given `entity_id`"
+			},
+			"response": []
+		},
+		{
+			"name": "Salary",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"type": "text",
+						"value": "{{x-api-key}}"
+					},
+					{
+						"key": "server-hash",
+						"value": "{{server-hash}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/bank-connect/v1/entity/{{entity_id}}/salary/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"bank-connect",
+						"v1",
+						"entity",
+						"{{entity_id}}",
+						"salary",
+						""
+					]
+				},
+				"description": "Fetch salary transactions for a given `entity_id`"
+			},
+			"response": []
+		},
+		{
+			"name": "Lender Transactions",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{x-api-key}}",
+						"type": "text"
+					},
+					{
+						"key": "server-hash",
+						"value": "{{server-hash}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/bank-connect/v1/entity/{{entity_id}}/lender_transactions/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"bank-connect",
+						"v1",
+						"entity",
+						"{{entity_id}}",
+						"lender_transactions",
+						""
+					]
+				},
+				"description": "Fetch Lender Transactions for a given `entity_id`"
+			},
+			"response": []
+		},
+		{
+			"name": "Recurring transactions",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{x-api-key}}",
+						"type": "text"
+					},
+					{
+						"key": "server-hash",
+						"value": "{{server-hash}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/bank-connect/v1/entity/{{entity_id}}/recurring_transactions/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"bank-connect",
+						"v1",
+						"entity",
+						"{{entity_id}}",
+						"recurring_transactions",
+						""
+					]
+				},
+				"description": "Fetch recurring transactions for a given `entity_id`"
+			},
+			"response": []
+		},
+		{
+			"name": "List Entities",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"type": "text",
+						"value": "{{x-api-key}}"
+					},
+					{
+						"key": "server-hash",
+						"value": "{{server-hash}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/bank-connect/v1/entity/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"bank-connect",
+						"v1",
+						"entity",
+						""
+					]
+				},
+				"description": "List of entities created (paginated)"
+			},
+			"response": []
+		},
+		{
+			"name": "link_id from entity_id",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"type": "text",
+						"value": "{{x-api-key}}"
+					},
+					{
+						"key": "server-hash",
+						"value": "{{server-hash}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/bank-connect/v1/entity/6002ea67-4b51-4349-b3b0-598801e2b9a1/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"bank-connect",
+						"v1",
+						"entity",
+						"6002ea67-4b51-4349-b3b0-598801e2b9a1",
+						""
+					]
+				},
+				"description": "Fetch `entity_id`(s) from `link_id`."
+			},
+			"response": []
+		},
+		{
+			"name": "Net Banking Health",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"type": "text",
+						"value": "{{x-api-key}}"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/bank-connect/v1/net_banking_health/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"bank-connect",
+						"v1",
+						"net_banking_health",
+						""
+					]
+				},
+				"description": "Get bank wise net banking status"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Webhook",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-api-key",
+						"type": "text",
+						"value": "{{x-api-key}}"
+					},
+					{
+						"key": "server-hash",
+						"value": "{{server-hash}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"webhook_url\": \"https://postman-echo.com/post\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/bank-connect/v1/entity/update_webhook/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"bank-connect",
+						"v1",
+						"entity",
+						"update_webhook",
+						""
+					]
+				},
+				"description": "API to update webhook URL"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "7dd5bfa6-4ee5-4110-91d6-dfc87a6a875b",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "0b464c26-8b46-4526-914a-d2582d73d5d9",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

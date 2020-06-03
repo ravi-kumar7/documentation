@@ -738,10 +738,10 @@ In the case of multiple accounts within the same entity, you can have multiple r
 The Excel workbook will contain three worksheets, first containing the extracted information like Account Holder's Name, Bank, Account Number, Missing Periods, Available Periods, etc., the second sheet contains the enriched extracted transactions for the account, and the third sheet contains the monthly analysis for the account.
 
 ## Detailed Excel Report <Badge text="New" />
-Get a detailed excel report for a given entity in .xlsx (Excel workbook) format.
+Get detailed report for a given entity **account wise** in .xlsx (Excel workbook) format.
 
 ::: tip Endpoint
-GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/`<entity_id>`/get_excel_report/**
+GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/`<entity_id>`/xlsx_report/**
 :::
 
 ### Response
@@ -749,9 +749,24 @@ On fetching information successfully, the response would be of the following for
 ```json
 {
     "entity_id": "uuid4_for_entity",
-    "progress": "completed",
-    "report": "long_url_for_the_excel_report"
+    "progress": [
+        {
+            "status": "completed",
+            "message": null,
+            "statement_id": "uuid4_for_statement"
+        }
+    ],
+    "reports": [
+        {
+            "link": "long_url_for_the_excel_report",
+            "account_id": "uuid4_for_account"
+        }
+    ]
 }
 ```
 
-Possible value for `progress` are listed here [Progress Field](/bank-connect/rest-api.html#progress-field). The value of the `report` key will be empty if the progress is not `completed`. The Excel workbook contains a detailed analysis of different parameters in the form of separate sheets.
+The list value of `reports` key will be empty if any one of the statements have the `status` value other than `completed` in `progress`. When the transactions are successfully processed for all statements, within the entity, a list of report links will be available account wise.
+
+In the case of multiple accounts within the same entity, you can have multiple reports within the `reports` key. The `account_id` will represent the account for which the report is, while the `link` key holds URL for the **.xlsx file**. The link will be active only for **1-hour**, post which the API has to be re-hit to obtain the new link.
+
+The Excel workbook contains a detailed analysis of different parameters in the form of separate sheets.
