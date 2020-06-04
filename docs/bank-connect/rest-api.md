@@ -656,9 +656,11 @@ Different fields that hold this monthly analysis are as follows:
 - `amt_refund_credit`: Total Amount of Refund
 - `amt_upi_credit`: Total Amount Credited through UPI
 - `amt_upi_debit`: Total Amount Debited through UPI
+- `amt_emi_debit`: Total Amount Debited as Loan EMI
 - `avg_bal`: Average Balance* ( = Average of EOD Balances after filling in missing daily Balances) 
 - `avg_credit_transaction_size`: Average Credit Transaction Size
 - `avg_debit_transaction_size`: Average Debit Transaction Size
+- `avg_emi`: Average Loan EMI Amount
 - `closing_balance`: Closing balance
 - `cnt_auto_debit_payment_bounce_credit`: Number of Auto-Debit Bounces
 - `cnt_auto_debit_payment_debit`: Number of Auto-debited payments
@@ -680,6 +682,7 @@ Different fields that hold this monthly analysis are as follows:
 - `cnt_outward_cheque_bounce_debit`: Number of Debit Transactions through Outward Cheque Bounce
 - `cnt_inward_cheque_bounce_credit`: Number of Credit Transactions through Inward Cheque Bounce
 - `cnt_payment_gateway_purchase_debit`: Number of Payment Gateway Purchase
+- `cnt_emi_debit`: Number of Loan EMI Debit Transactions
 - `cnt_refund_credit`: Number of Refund Transactions
 - `cnt_transactions`: Number of Transactions
 - `cnt_upi_credit`: Number of Credit Transactions through UPI
