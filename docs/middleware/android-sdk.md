@@ -1,38 +1,36 @@
 # FinBox Lending: Android
 
-FinBox Lending SDK is a drop-in module which can add a digital lending journey to any mobile application
-The SDK has following modules:
+FinBox Lending SDK is a drop-in module which can add a digital lending journey to any mobile application.
+The SDK has the following modules:
 
 1. OnBoarding
 2. Loan Dashboard
 3. KYC
 4. Loan offer and Agreement
 
-## OnBoarding module
+## Modules
 
-Onboarding the user is the first and the most critical step of the SDK. FinBox does the onboarding based on OTP verification of user's mobile number.
+### OnBoarding module
 
-## Loan Dashboard
+Onboarding the user is the first and the most critical step of the SDK. FinBox does the onboarding based on OTP verification of the user's mobile number.
 
-The loan dashboard screen will have details of the active/ongoing loan for that user. This screen gives an overview about the loan journey.
-In case the user has a disbursed loan he can view his EMI details in the Repay section.
+### Loan Dashboard
 
-## KYC
+The loan dashboard screen will have details of the active/ongoing loan for that user. This screen gives an overview of the loan journey. In case the user has a disbursed loan he can view his EMI details in the Repay section.
 
-KYC is critical to a loan application. There are rules set in place to ensure a smooth journey for the user while applying for KYC and giving a continuous update on the status of KYC and approval.
-KYC rules are based on 3 main tiers.
+### KYC
+
+KYC is critical to a loan application. There are rules set in place to ensure a smooth journey for the user while applying for KYC. KYC rules are based on 3 main tiers.
 
 1. Address proof
 2. PAN Card
 3. Photo
 
-E-kyc is available for Address proof for a hazel free journey.
+E-KYC is available for Address proof for a hazel free journey.
 
-## Loan offer and Agreement
+### Loan offer and Agreement
 
-Once KYC and loan approval is done, user will see list of loans available based on the credit score determined by FIS (FinBox Inclusion Score).
-The user can select any one of the offers and attach a bank for the loan. Once the bank verification is done and the user is taken to the legality screen where the full agreement is shown and user consent is requested.
-A final OTP verification is done and loan request is placed for disbursal.
+Once KYC and loan approval is done, the user will see a list of loans available based on the credit score determined by FIS (FinBox Inclusion Score). The user can select any one of the offers and attach a bank for the loan. A final OTP verification is done and loan request is placed for disbursal.
 
 ## Setting up the SDK
 
@@ -102,8 +100,8 @@ FinBoxLending.Builder(context, REQUEST_CODE_ONBOARDING)
     .start()
 ```
 
-This will start the FinBox SDK onboarding screen. The callback will be provided when user exits the SDK.
-You can track the status of user exit actions in the `onActivityResult` callback function
+
+This will start the FinBox SDK onboarding screen. The callback will be provided when the user exits the SDK. You can track the status of user exit actions in the `onActivityResult` callback function
 
 ```kotlin
 override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
