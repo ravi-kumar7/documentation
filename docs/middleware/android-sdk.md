@@ -12,7 +12,7 @@ The SDK has the following modules:
 
 ### OnBoarding module
 
-Onboarding the user is the first and the most critical step of the SDK. FinBox does the onboarding based on OTP verification of the user's mobile number.
+Onboarding the user is the first and critical step of the SDK. FinBox does the onboarding based on OTP verification of the user's mobile number.
 
 ### Loan Dashboard
 
@@ -26,7 +26,7 @@ KYC is critical to a loan application. There are rules set in place to ensure a 
 2. PAN Card
 3. Photo
 
-E-KYC is available for Address proof for a hazel free journey.
+E-KYC is available for Address proof for a hassle-free journey.
 
 ### Loan offer and Agreement
 
@@ -86,12 +86,15 @@ To remove the unused permissions, add a `remove` rule to that permission as show
     tools:node="remove" />
 ```
 
+:::tip NOTE
 In case the Manifest merger is not enabled add the above-specified permissions manually.
+:::
 
-## Add lending flow
+## Start SDK flow
 
 Once all dependencies are added you can start the lending journey from the onboarding screen.
-
+<CodeSwitcher :languages="{kotlin:'Kotlin',java:'Java'}">
+<template v-slot:kotlin>
 ```kotlin
 val REQUEST_CODE_ONBOARDING = 101
 FinBoxLending.Builder(context, REQUEST_CODE_ONBOARDING)
@@ -99,10 +102,23 @@ FinBoxLending.Builder(context, REQUEST_CODE_ONBOARDING)
     .setFinBoxApiKey(<api_key_provided>)
     .start()
 ```
+</template>
+<template v-slot:java>
+```java
+private String REQUEST_CODE_ONBOARDING = 101;
+FinBoxLending.Builder(context, REQUEST_CODE_ONBOARDING)
+    .setCustomerId(<customer_id>)
+    .setFinBoxApiKey(<api_key_provided>)
+    .start();
+```
+</template>
+</CodeSwitcher>
 
+## Callback
+The callback will be provided when the user exits the SDK. You can track the status of user exit actions in the `onActivityResult` callback function
 
-This will start the FinBox SDK onboarding screen. The callback will be provided when the user exits the SDK. You can track the status of user exit actions in the `onActivityResult` callback function
-
+<CodeSwitcher :languages="{kotlin:'Kotlin',java:'Java'}">
+<template v-slot:kotlin>
 ```kotlin
 override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
@@ -114,8 +130,24 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) 
     }
 }
 ```
+</template>
+<template v-slot:java>
+```java
+@Override
+private void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    if (requestCode == REQUEST_CODE_ONBOARDING) {
+        if (resultCode != FinBoxLendingConstants.RESULT_EXIT) {
+            //Callback when user exits the flow, intent data has information holding users state
+            data.getExtras().getInt(FinBoxLendingConstants.JOURNEY_RESULT_KEY); //Contains status of the journey
+        }
+    }
+}
+```
+</template>
+</CodeSwitcher>
 
-Journey result is passed to the intent and can have following values:
+Journey result is passed to the intent and can have the following values:
 
 ```
 FinBoxLendingConstants.JOURNEY_COMPLETE - When user completes entire journey
