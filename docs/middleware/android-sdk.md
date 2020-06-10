@@ -1,22 +1,22 @@
 # FinBox Lending: Android
 
-FinBox Lending SDK is a drop-in module which can add a digital lending journey to any mobile application.
+FinBox Lending SDK is a drop-in module that can add a digital lending journey to any mobile application.
 The SDK has the following modules:
 
-1. OnBoarding
-2. Loan Dashboard
+1. Onboarding
+2. Loan dashboard
 3. KYC
-4. Loan offer and Agreement
+4. Loan offer and agreement
 
 ## Modules
 
-### OnBoarding module
+### Onboarding module
 
 Onboarding the user is the first and critical step of the SDK. FinBox does the onboarding based on OTP verification of the user's mobile number.
 
-### Loan Dashboard
+### Loan dashboard
 
-The loan dashboard screen will have details of the active/ongoing loan for that user. This screen gives an overview of the loan journey. In case the user has a disbursed loan he can view his EMI details in the Repay section.
+The loan dashboard screen will have details of the active/ongoing loan for that user. This screen gives an overview of the loan journey. In case the user has a disbursed loan, EMI details can be viewed in the Repay section.
 
 ### KYC
 
@@ -28,7 +28,7 @@ KYC is critical to a loan application. There are rules set in place to ensure a 
 
 E-KYC is available for Address proof for a hassle-free journey.
 
-### Loan offer and Agreement
+### Loan offer and agreement
 
 Once KYC and loan approval is done, the user will see a list of loans available based on the credit score determined by FIS (FinBox Inclusion Score). The user can select any one of the offers and attach a bank for the loan. A final OTP verification is done and loan request is placed for disbursal.
 
@@ -160,6 +160,6 @@ Journey result is passed to the intent and can have the following values:
 
 | Result Code | Description |
 | - | - |
-| `FinBoxLendingConstants.JOURNEY_COMPLETE` | When user completes entire journey |
-| `FinBoxLendingConstants.JOURNEY_ABANDON` | When user exits the SDK without completing |
+| `FinBoxLendingConstants.JOURNEY_COMPLETE` | When the user completes the entire journey |
+| `FinBoxLendingConstants.JOURNEY_ABANDON` | When the user exits the SDK without completing |
 | `FinBoxLendingConstants.JOURNEY_FAILURE` | When some error occurs in the SDK |
