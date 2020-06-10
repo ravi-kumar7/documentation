@@ -160,7 +160,8 @@ All the above APIs give the response in the format below in case of successful f
         "account_id": "uuid4_for_account",
         "account_number": "Account Number Extracted",
         "address": "Address extracted",
-        "name": "Name Extracted"
+        "name": "Name Extracted",
+        "account_category": "individual"
     },
     "fraud_type": null,
     "status": 1
@@ -180,6 +181,7 @@ The identity information returned in the response can be used to verify the cust
 | identity | object | contains multiple identity information keys extracted from the statement |
 | account_id | string | unique identifier for account |
 | account_number | string | bank account number |
+| account_category | string | account category, can be `individual` or `corporate` |
 | address | string | address of the bank account holder |
 | name | string | name of the bank account holder |
 | status | integer | contains the status code for API, should be 1 for success. Other possible values are listed in Bad Requests(/bank-connect/upload-rest-api.html#bad-request-cases) section |

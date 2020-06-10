@@ -110,6 +110,7 @@ On fetching information successfully, the response would be of the following for
             "ifsc": null,
             "micr": null,
             "account_number": "Account Number Extracted",
+            "account_category": "individual",
             "bank": "axis"
         }
     ],
@@ -127,7 +128,19 @@ On fetching information successfully, the response would be of the following for
 }
 ```
 The response has the following fields:
-- `accounts` holds the array of account objects, each having `months` (month and year for which data is available), `statements` (list of statement unique identifiers under the account), `account_id` (unique identifier for account), `bank` (name of the bank to which the account belongs) and some account level extracted fields like `ifsc`, `micr`, `account_number` (which can be `null` or could hold a `string` value)
+- `accounts` holds the array of account objects, each having:
+
+    | Field | Type | Description |
+    | - | - | - |
+    | months | array of strings | month and year for which data is available|
+    | statements | array of strings | list of statement unique identifiers under the account |
+    | account_id | string | unique identifier for account |
+    | bank | string | [bank identifier](/bank-connect/appendix.html#bank-identifiers) to which the account belongs  |
+    | ifsc | string | IFSC code of bank account |
+    | micr | string | MICR code of bank account |
+    | account_category | string | account category, can be `individual` or `corporate` |
+    | account_number | string | account number |
+
 - `progress` (read more in [Progress Field](/bank-connect/rest-api.html#progress-field) section)
 - `fraud` (read more in [Fraud Field](/bank-connect/rest-api.html#fraud-field) section)
 
@@ -163,6 +176,7 @@ On fetching information successfully, the response would be of the following for
             "account_id": "uuid4_for_account",
             "ifsc": null,
             "micr": null,
+            "account_category": "individual",
             "account_number": "Account Number Extracted",
             "bank": "axis"
         }
@@ -188,7 +202,15 @@ On fetching information successfully, the response would be of the following for
     ]
 }
 ```
-The response fields are the same as in [List Accounts](/bank-connect/rest-api.html#list-accounts), but there is an additional `identity` field that holds an array of identity objects. Each object has `account_id` (a unique identifier for the account for which the identity information is referred to in the object) and extracted identity fields like `name`, `address`, `account_number`.
+The response fields are the same as in [List Accounts](/bank-connect/rest-api.html#list-accounts), but there is an additional `identity` field that holds an array of identity objects. Each object has:
+
+| Field | Type | Description |
+| - | - | - |
+| account_id | string | a unique identifier for the account for which the identity information is referred to in the object |
+| name | string | extracted account holder name |
+| address | string | extracted account holder address |
+| account_number | string | account number |
+| account_category | string | account category, can be `individual` or `corporate` |
 
 ## Transactions
 Get extracted and enriched transactions for a given entity.
@@ -222,6 +244,7 @@ On fetching information successfully, the response would be of the following for
             "account_id": "uuid4_for_account",
             "ifsc": null,
             "micr": null,
+            "account_category": "individual",
             "account_number": "Account Number Extracted",
             "bank": "axis"
         }
@@ -298,6 +321,7 @@ On fetching information successfully, the response would be of the following for
             "account_id": "uuid4_for_account",
             "ifsc": null,
             "micr": null,
+            "account_category": "individual",
             "account_number": "Account Number Extracted",
             "bank": "axis"
         }
@@ -391,6 +415,7 @@ On fetching information successfully, the response would be of the following for
             "account_id": "uuid4_for_account",
             "ifsc": null,
             "micr": null,
+            "account_category": "individual",
             "account_number": "Account Number Extracted",
             "bank": "axis"
         }
@@ -536,6 +561,7 @@ On fetching information successfully, the response would be of the following for
             "account_id": "uuid4_for_account",
             "ifsc": null,
             "micr": null,
+            "account_category": "individual",
             "account_number": "Account Number Extracted",
             "bank": "axis"
         }
