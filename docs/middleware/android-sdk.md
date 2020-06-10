@@ -93,8 +93,10 @@ In case the Manifest merger is not enabled add the above-specified permissions m
 ## Start SDK flow
 
 Once all dependencies are added you can start the lending journey from the onboarding screen.
+
 <CodeSwitcher :languages="{kotlin:'Kotlin',java:'Java'}">
 <template v-slot:kotlin>
+
 ```kotlin
 val REQUEST_CODE_ONBOARDING = 101
 FinBoxLending.Builder(context, REQUEST_CODE_ONBOARDING)
@@ -102,8 +104,10 @@ FinBoxLending.Builder(context, REQUEST_CODE_ONBOARDING)
     .setFinBoxApiKey(<api_key_provided>)
     .start()
 ```
+
 </template>
 <template v-slot:java>
+
 ```java
 private String REQUEST_CODE_ONBOARDING = 101;
 FinBoxLending.Builder(context, REQUEST_CODE_ONBOARDING)
@@ -111,6 +115,7 @@ FinBoxLending.Builder(context, REQUEST_CODE_ONBOARDING)
     .setFinBoxApiKey(<api_key_provided>)
     .start();
 ```
+
 </template>
 </CodeSwitcher>
 
@@ -119,6 +124,7 @@ The callback will be provided when the user exits the SDK. You can track the sta
 
 <CodeSwitcher :languages="{kotlin:'Kotlin',java:'Java'}">
 <template v-slot:kotlin>
+
 ```kotlin
 override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
@@ -130,8 +136,10 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) 
     }
 }
 ```
+
 </template>
 <template v-slot:java>
+
 ```java
 @Override
 private void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -144,13 +152,14 @@ private void onActivityResult(int requestCode, int resultCode, Intent data) {
     }
 }
 ```
+
 </template>
 </CodeSwitcher>
 
 Journey result is passed to the intent and can have the following values:
 
-```
-FinBoxLendingConstants.JOURNEY_COMPLETE - When user completes entire journey
-FinBoxLendingConstants.JOURNEY_ABANDON - When user exits the SDK without completing
-FinBoxLendingConstants.JOURNEY_FAILURE - When some error occurs in the SDK
-```
+| Result Code | Description |
+| - | - |
+| `FinBoxLendingConstants.JOURNEY_COMPLETE` | When user completes entire journey |
+| `FinBoxLendingConstants.JOURNEY_ABANDON` | When user exits the SDK without completing |
+| `FinBoxLendingConstants.JOURNEY_FAILURE` | When some error occurs in the SDK |
