@@ -13,7 +13,7 @@ The table below lists the supported banks with their corresponding identifier. T
 | canara | Canara Bank |
 | central | Central Bank of India |
 | citi | Citibank |
-| citi_union | City Union Bank |
+| city_union | City Union Bank |
 | corporation | Corporation Bank |
 | dena | Dena Bank |
 | deutsche | Deutsche Bank |
