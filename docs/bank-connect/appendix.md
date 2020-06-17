@@ -52,25 +52,26 @@ The list below indicates the possible value for `transaction_channel` field:
 
 | `transaction_channel` | Description |
 | - | - |
-| upi	| Credit or Debit done through UPI
-| salary | Credits which are marked as salary in the bank statement
-| refund | Credits which are a refund of an earlier debit
-| payment_gateway_purchase | Debits done on a payment gateway
-| outward_cheque_bounce | Debit when a deposited cheque bounce and money is reverted
-| net_banking_transfer | Credit or Debit done through net banking
-| investment | Debit in account when doing an investment like FD or RD
-| inward_cheque_bounce | Credit when the cheque bounces and money is credit back to the account
-| investment_cashin | Credit to account, when you redeem your investment like an FD
-| international_transaction_arbitrage | Arbitrage because of the rate difference in currencies. Can be credit or debit
-| debit_card | Debit when a debit card is swiped at a Point of sale
-| chq | Credit or a Debit done through cheque
-| cash_withdrawl | Debit done when cash is withdrawn either through ATM or at Bank
-| cash_deposit | Credit when cash is deposited in an account
-| bill_payment | Debit marked as payment of any bill like Credit card bill payment or BillDesk
-| bank_interest | Credit in the account for interest received on deposit
-| bank_charge | Debit done by the bank for some service or tax like GST or SMS service
-| auto_debit_payment_bounce | Debit bank charge because of auto-debit payment bounce
-| auto_debit_payment | Debits like NACH or ECS
+| upi	| Credit or Debit done through UPI |
+| salary | Credits which are marked as salary in the bank statement |
+| refund | Credits which are a refund of an earlier debit |
+| payment_gateway_purchase | Debits done on a payment gateway |
+| outward_cheque_bounce | Debit when a deposited cheque bounce and money is reverted |
+| net_banking_transfer | Credit or Debit done through net banking |
+| investment | Debit in account when doing an investment like FD or RD |
+| inward_cheque_bounce | Credit when the cheque bounces and money is credit back to the account |
+| investment_cashin | Credit to account, when you redeem your investment like an FD |
+| international_transaction_arbitrage | Arbitrage because of the rate difference in currencies. Can be credit or debit |
+| debit_card | Debit when a debit card is swiped at a Point of sale |
+| chq | Credit or a Debit done through cheque |
+| cash_withdrawl | Debit done when cash is withdrawn either through ATM or at Bank |
+| cash_deposit | Credit when cash is deposited in an account |
+| bill_payment | Debit marked as payment of any bill like Credit card bill payment or BillDesk |
+| bank_interest | Credit in the account for interest received on deposit |
+| bank_charge | Debit done by the bank for some service or tax like GST or SMS service |
+| auto_debit_payment_bounce | Debit bank charge because of auto-debit payment bounce |
+| auto_debit_payment | Debits like NACH or ECS |
+| Others | Others |
 
 ## Description
 The list below indicates the possible values for `description` field of the transaction object:
