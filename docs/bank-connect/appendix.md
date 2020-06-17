@@ -42,6 +42,11 @@ The table below lists the supported banks with their corresponding identifier. T
 | united | United Bank of India |
 | vijaya | Vijaya Bank |
 | yesbnk | Yes Bank |
+| shinhan | Shinhan Bank India |
+| newindia | New India Co-Operative Bank |
+| bharatbnk | Bharat Co-Operative Bank |
+| svcbnk | SVC Co-Operative Bank |
+| dnsbnk | Dombivli Nagari Sahakari Bank |
 
 <!-- | vilas | Lakshmi Vilas Bank | -->
 <!-- | dcbbnk | DCB Bank | -->
