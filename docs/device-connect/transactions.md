@@ -206,15 +206,15 @@ FinBox fires a webhook when a user's data is featurized. You have to register yo
 The webhook payload has the following keys:
 - **service**: It indicates the service whose results have been updated. It can either be `accounts` or `transactions`.
 - **device_id**: device_id is the unique identifier of the device and customer_id whose results have been updated.
+- **customer_id**: customer_id for which result was updated.
 
-:::warning IMPORTANT
-Since webhooks have device_id in the payload, you must integrate List Devices API.
-(Refer [here](/device-connect/transactions.html#list-devices-api))
-:::
+
+
 
 ```json
 {
     "service": "transactions",
-    "device_id": "f34ee388c56eaf1a0f7915c5ad058b29"
+    "device_id": "f34ee388c56eaf1a0f7915c5ad058b29",
+    "customer_id": "89561ea2190946a9"
 }
 ```
