@@ -200,7 +200,7 @@ Each of the account objects have the following keys:
 ## Webhook Integration
 
 
-FinBox fires a webhook when a user's data is featurized. You have to register your webhook address with FinBox. Upon receipt of the webhook, you can query the insights API to update the results in your back-end.
+FinBox fires a webhook when a user's results are updated. Upon receipt of the webhook, you can query the insights API to fetch these results.
 
 
 The webhook payload has the following keys:
@@ -209,6 +209,9 @@ The webhook payload has the following keys:
 - **customer_id**: customer_id for which result was updated.
 
 
+:::danger IMPORTANT
+You have to register your webhook address with FinBox. Please get in touch with us for the same.
+:::
 
 
 ```json
