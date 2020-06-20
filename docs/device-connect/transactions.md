@@ -193,4 +193,28 @@ Each of the account objects have the following keys:
 - **active_months_list**: A list of months in which any activity was done with the account
 - **account_hash**: it is a unique identifier for the account that the transaction was made from.
 - **latest_balance**: indicates the latest balance in case of `bank`, `ewallet` and `debit-card`, and available limit in case of `credit-card`.
-- **latest_balance_date**: The UTC date-time at which the latest balance was captured. It is of the format YYYY-MM-DD HH:MM:SS.
+- **latest_balance_date**: The UTC date time at which the latest balance was captured. It is of the format YYYY-MM-DD HH:MM:SS.
+
+
+
+## Webhook Integration
+
+
+FinBox fires a webhook when a user's data is featurized. You have to register your webhook address with FinBox. Upon receipt of the webhook, you can query the insights API to update the results in your back-end.
+
+
+The webhook payload has the following keys:
+- **service**: It indicates the service whose results have been updated. It can either be `accounts` or `transactions`.
+- **device_id**: device_id is the unique identifier of the device and customer_id whose results have been updated.
+- **customer_id**: customer_id for which result was updated.
+
+
+
+
+```json
+{
+    "service": "transactions",
+    "device_id": "f34ee388c56eaf1a0f7915c5ad058b29",
+    "customer_id": "89561ea2190946a9"
+}
+```
