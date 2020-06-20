@@ -208,7 +208,7 @@ The webhook payload has the following keys:
 - **device_id**: device_id is the unique identifier of the device and customer_id whose results have been updated.
 
 :::warning IMPORTANT
-Since webhooks return device_id in its payload, you must integrate List Devices API.
+Since webhooks have device_id in the payload, you must integrate List Devices API.
 (Refer [here](/device-connect/transactions.html#list-devices-api))
 :::
 
