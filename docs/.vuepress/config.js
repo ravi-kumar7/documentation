@@ -1,16 +1,20 @@
 module.exports = {
   title: 'FinBox Documentation',
   description: 'Documentation for FinBox SDK',
-  plugins: ['code-switcher', ['@vuepress/search', {
+  plugins: ['code-switcher', ['vuepress-plugin-code-copy',{
+    color: "#3eaf7c"
+  }], ['@vuepress/search', {
     test: ["^((?!device-connect\/transactions).)*$"]
   }]],
   themeConfig: {
+    logo: '/logo.svg',
+    heroText: ' ',
     smoothScroll: true,
     lastUpdated: 'Last Updated',
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Device Connect', link: '/device-connect/' },
-      { text: 'Bank Connect', link: '/bank-connect/' },
+      { text: 'DeviceConnect', link: '/device-connect/' },
+      { text: 'BankConnect', link: '/bank-connect/' },
       { text: 'About', link: 'https://finbox.in' },
     ],
     sidebar: {
@@ -57,45 +61,75 @@ module.exports = {
       '/bank-connect/': [
         {
           title: 'Overview',
-          collapsable: false,
+          path: '/bank-connect/',
+          collapsable: false
+        },
+        {
+          title: 'Basics',
+          path: '/bank-connect/basics.html',
+          collapsable: false
+        },
+        {
+          title: 'Uploading Bank Statements',
+          collapsable: true,
           children: [
             {
-              title: 'Introduction',
-              path: '/bank-connect/'
+              title: 'Overview',
+              path: '/bank-connect/upload-overview.html'
             },
             {
-              title: 'Basics',
-              path: '/bank-connect/basics.html'
+              title: 'Android Client SDK',
+              path: '/bank-connect/android-client.html'
+            },
+            {
+              title: 'React Client SDK',
+              path: '/bank-connect/react.html'
+            },
+            {
+              title: 'JavaScript Client SDK',
+              path: '/bank-connect/javascript-client.html'
+            },
+            {
+              title: 'REST API',
+              path: '/bank-connect/upload-rest-api.html'
+            },
+            {
+              title: 'Python',
+              path: '/bank-connect/upload-python.html'
             }
           ]
         },
         {
-          title: 'Direct PDF Mode & Fetching',
-          collapsable: false,
+          title: 'Fetching Enriched Data',
+          collapsable: true,
           children: [
+            {
+              title: 'Overview',
+              path: '/bank-connect/fetch-overview.html'
+            },
             {
               title: 'REST API',
               path: '/bank-connect/rest-api.html'
             },
             {
-              title: 'Python Package',
+              title: 'Python',
               path: '/bank-connect/python.html'
+            },
+            {
+              title: 'Webhook',
+              path: '/bank-connect/webhook.html'
             }
           ]
         },
         {
-          title: 'Net Banking Mode',
-          collapsable: false,
-          children: [
-            {
-              title: 'Android Client',
-              path: '/bank-connect/android-client.html'
-            },
-            {
-              title: 'JavaScript Client',
-              path: '/bank-connect/javascript-client.html'
-            },
-          ]
+          title: 'Management',
+          path: '/bank-connect/management.html',
+          collapsable: false
+        },
+        {
+          title: 'Fraud',
+          path: '/bank-connect/fraud.html',
+          collapsable: false
         },
         {
           title: 'Appendix',

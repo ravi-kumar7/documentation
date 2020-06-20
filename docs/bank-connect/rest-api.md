@@ -3,300 +3,35 @@ base_url: https://portal.finbox.in/bank-connect #base URL for the API
 version: v1 # version of API
 ---
 
-# Bank Connect: REST API
-The REST APIs have predictable resource-oriented URLs, accepts request with form fields, return JSON responses, and uses standard HTTP response codes, authentication, and verbs.
+# BankConnect: Uploading using REST API
+BankConnect REST APIs can be used to fetch enriched data for an entity. This guide first lists some basic fields like [Progress](/bank-connect/rest-api.html#progress-field) and [Fraud](/bank-connect/rest-api.html#fraud-field), and then explores different enriched data APIs.
+
+You can also try these APIs on Postman. Check out [this](/bank-connect/#postman-collection) article for more details.
+
+To know how to upload statements using REST API, check out [this](/bank-connect/#upload-rest-api.html) article.
 
 :::warning Request Format
-Bank connect accepts all requests with form fields, so please make sure that all requests must be made with content type `application/x-www-form-urlencoded` or `multipart/form-data; boundary={boundary string}`
+BankConnect accepts all requests with form fields, so please make sure that all requests must be made with content-type `application/x-www-form-urlencoded` or `multipart/form-data; boundary={boundary string}`
 :::
-
-## Postman Collection
-[Postman](https://www.getpostman.com/) **Collection** for Bank Connect can be found <a href="/finbox_bankconnect.postman_collection.json" download>here</a>.
-
-The APIs will also require an **environment** file that can be found <a href="/finbox_bankconnect.postman_environment.json" download>here</a>.
-
-Please replace `x-api-key` in the Postman environment with the **API Key** provided by FinBox Team.
-
-After using the upload statement APIs, replace the Postman variable `entity_id` in transactions, identity, and other APIs to fetch the corresponding details.
 
 ## Authentication
-FinBox Bank Connect REST API uses API keys to authenticate requests. Please keep the API keys secure! Do not share your secret API keys in publicly accessible areas such as GitHub, client-side code, and so forth. All API requests must be made over HTTPS. Calls made over plain HTTP will fail. API requests without authentication will also fail.
+FinBox BankConnect REST API uses API keys to authenticate requests. All API requests must be made over HTTPS. Calls made over plain HTTP will fail. API requests without authentication will also fail.
 
-To provide API key while making a request, `X-API-KEY` must be present in the request header with API key value.
+To make a successful request, `x-api-key` and `server-hash` must be present in the request header with API key and Server Hash values respectively.
 
-::: tip Additional layer of security
-FinBox also provides an additional layer of authentication on request. If enabled, then other than usual API key check, Bank Connect expects `ACCESS_TOKEN` and `TIMESTAMP` in header, where `ACCESS_TOKEN` is generated using a _function_ that takes `TIMESTAMP` and a _secret key_ as input. The _function_ and _secret key_ is shared on request.
-:::
+Please keep the Server Hash secure! Do not share your Server Hash in publicly accessible areas such as GitHub, client-side code, and so forth.
 
-## Creating Entity
-::: warning TIP
-This is required only if you want to generate an `entity_id` against a `link_id`, if you use upload statement APIs directly, it will generate `entity_id` automatically, but the option for `link_id` linking id will not be present in that case.
-:::
-Creates an entity for the given `link_id`. You can also specify if you want to enforce single account for the given entity. By enforcing single account, the upload statement API against the entity id will throw an error if statement uploaded is of different account, but will accept if different statements of same bank accounts are uploaded. By default, every entity supports multiple accounts.
-
-::: warning TIP
-Same `link_id` can be used to generate multiple entities.
-:::
-
-::: tip Endpoint
-POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/**
-:::
-
-### Parameters
-| Name | Type | Description | Required  | Default |
-| - | - | - | - | - |
-| link_id | string  | link_id value | No | null |
-| is_single_account | boolean | enforce single account for the entity | No | false |
-| meta_data | string | any additional information that you want to store along with link_id | No | null |
-
-::: warning meta_data field
-`meta_data` field is to be used if you want to store any additional information along with `link_id`. It expects the value to be a string.
-
-So suppose if you want to store a JSON object, then it has to _stringified_ and then stored. For example, the following json:
+In case wrong/incomplete/no keys were passed, response will have **401** HTTP Code and payload as follows:
 ```json
 {
-    "id":123,
-    "value":"Hello World"
+    "detail": "Authentication credentials were not provided."
 }
 ```
-will be stored as `"{\"id\":123,\"value\":\"Hello World\"}"`.
-:::
-
-### Response
-On successful creation, the API gives a **201 HTTP code** with a response in following format:
-```json
-{
-    "entity_id": "a_uuid4_string",
-    "link_id": "link_id_you_sent",
-    "meta_data": "meta_data_value"
-}
-```
-
-## List Entities
-Lists all entities (paginated) created under your account.
-
-::: tip Endpoint
-GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/**
-:::
-
-### Parameters
-| Name | Type | Description | Required  | Default |
-| - | - | - | - | - |
-| page | integer  | page number | No | 1 |
-| link_id | string | to filter based on link_id | No | - |
-
-### Response
-On successful fetching, the API gives a **200 HTTP code** with following response:
-```json
-{
-    "count": 123,
-    "next": "some_url",
-    "previous": null,
-    "results": [
-        {
-            "entity_id": "some_uuid4_1",
-            "link_id": null,
-            "meta_data": null
-        },
-        {
-            "entity_id": "some_uuid4_2",
-            "link_id": null,
-            "meta_data": null
-        }
-    ]
-}
-```
-`count` here indicates the total number of entities, `next` and `previous` have URLs for next and previous pages respectively. If no page exists, they store `null` as value.
-
-::: warning NOTE
-There are **10 records** per page at max.
-:::
-
-## `link_id` from `entity_id`
-If required you can fetch `link_id` from an `entity_id` using the API below:
-
-::: tip Endpoint
-GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/`<entity_id>`/**
-:::
-
-### Response
-On successful fetching, the API gives a **200 HTTP code** with following response:
-```json
-{
-    "entity_id": "uuid4_you_sent",
-    "link_id": "the_link_id",
-    "meta_data": "meta_data_value"
-}
-```
-In case no `link_id` exists for the given entity, the value of `link_id` comes as `null` in response.
-
-::: danger Not Found
-In case not entity with the provided `entity_id` exists, the API will return a response with **404 (Not Found) error code**.
-:::
-
-## Uploading Statement
-
-::: warning entity_id field
-`entity_id`, is an optional parameter for the below APIs, if specified, the statement gets uploaded against that entity. If not specified, a new entity is created and the statement is uploaded against it.
-:::
-
-### CASE 1: Bank Name known
-
-::: tip Endpoint
-POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/statement/upload/?identity=true**
-:::
-
-### Parameters
-| Name | Type | Description | Required  | Default |
-| - | - | - | - | - |
-| file | file  | the statement pdf file | Yes | - |
-| bank_name | string | a valid bank identifier | Yes | - |
-| entity_id | string | an `entity_id` against which you want to upload the statement | No | - |
-| pdf_password | string | password for the pdf in case it is password protected | No | - |
-
-::: warning Bank Name Identifiers
-Refer to [this](/bank-connect/appendix.html#bank-identifiers) to get list of valid bank name identifiers
-:::
-
-### CASE 2: Bank name not known <Badge text="beta" type="warn"/>
-
-In case you don't know bank name, and want Bank Connect to automatically identify the bank name:
-
-::: tip Endpoint
-POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/statement/bankless_upload/?identity=true**
-:::
-
-### Parameters
-| Name | Type | Description | Required  | Default |
-| - | - | - | - | - |
-| file | file  | the statement pdf file | Yes | - |
-| entity_id | string | an `entity_id` against which you want to upload the statement | No | - |
-| pdf_password | string | password for the pdf in case it is password protected | No | - |
-
-### CASE 3: Bank name known and file is base 64 encoded 
-
-::: tip Endpoint
-POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/statement/upload_base64/?identity=true**
-:::
-
-### Parameters
-| Name | Type | Description | Required  | Default |
-| - | - | - | - | - |
-| file | string  | the statement pdf file in base 64 encoded string | Yes | - |
-| bank_name | string | a valid bank identifier | Yes | - |
-| entity_id | string | an `entity_id` against which you want to upload the statement | No | - |
-| pdf_password | string | password for the pdf in case it is password protected | No | - |
-
-::: warning Bank Name Identifiers
-Refer to [this](/bank-connect/appendix.html#bank-identifiers) to get list of valid bank name identifiers
-:::
-
-### CASE 4: Bank name not known <Badge text="beta" type="warn"/> and file is base 64 encoded
-
-In case you don't know bank name, and want Bank Connect to automatically identify the bank name:
-
-::: tip Endpoint
-POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/statement/bankless_upload_base64/?identity=true**
-:::
-
-### Parameters
-| Name | Type | Description | Required  | Default |
-| - | - | - | - | - |
-| file | string  | the statement pdf file in base 64 encoded format | Yes | - |
-| entity_id | string | an `entity_id` against which you want to upload the statement | No | - |
-| pdf_password | string | password for the pdf in case it is password protected | No | - |
-
-### CASE 5: Bank name known and file is to be fetched using a URL
-
-::: tip Endpoint
-POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/statement/upload/?identity=true**
-:::
-
-### Parameters
-| Name | Type | Description | Required  | Default |
-| - | - | - | - | - |
-| file_url | string  | publicly accessible full file URL with protocol (HTTP / HTTPS) | Yes | - |
-| entity_id | string | an `entity_id` against which you want to upload the statement | No | - |
-| pdf_password | string | password for the pdf in case it is password protected | No | - |
-
-### CASE 6: Bank name not known <Badge text="beta" type="warn"/> and file is to be fetched using a URL
-
-In case you don't know bank name, and want Bank Connect to automatically identify the bank name:
-
-::: tip Endpoint
-POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/statement/bankless_upload/?identity=true**
-:::
-
-### Parameters
-| Name | Type | Description | Required  | Default |
-| - | - | - | - | - |
-| file_url | string  | publicly accessible full file URL with protocol (HTTP / HTTPS) | Yes | - |
-| entity_id | string | an `entity_id` against which you want to upload the statement | No | - |
-| pdf_password | string | password for the pdf in case it is password protected | No | - |
-
-### Response for all Cases
-
-All the above APIs give the response in the format below in case of successful file upload with a **200 HTTP Code**:
-
-```json
-{
-    "bank_name": "axis",
-    "statement_id": "uuid4_for_statement",
-    "entity_id": "uuid4_for_entity",
-    "date_range": {
-        "from_date": "2018-11-18",
-        "to_date": "2019-01-18"
-    },
-    "is_fraud": false,
-    "identity": {
-        "account_id": "uuid4_for_account",
-        "account_number": "Account Number Extracted",
-        "address": "Address extracted",
-        "name": "Name Extracted"
-    },
-    "fraud_type": null
-}
-```
-::: warning NOTE
-- `fraud_type` field is `null` in case `is_fraud` field is false, otherwise it is a string. Please refer to [Fraud](/bank-connect/basics.html#fraud) section in Basics to know more about it.
-- Some of the fields within the identity dictionary, or the `from_date` and `to_date` maybe `null` for few statements depending on the bank statement format and what all information is present on the top of the statement. The `from_date` and `to_date` in case was null, are updated for the statement at a later stage when transaction are extracted.
-- The query parameter `?identity=true` is optional for both the APIs above, if not specified the response will only include `entity_id`, `statement_id` and `bank_name` fields in case of successful upload.
-:::
-
-::: danger 402 HTTP Status Code
-In case you are in **dev** environment and your **trial period has expired**, then upload APIs will give you a response with 402 HTTP Code. To fix this please request FinBox to upgrade your plan.
-:::
-
-::: danger Bad Request Cases
-1. In case a compulsory field is missing the APIs will throw a **400 (Bad Request)** as follows:
-    ```json
-    {"file": ["This field is required."]}
-    ```
-    This error is also thrown in case of base64 encoded files, if base64 to file decoding fails. Error in that case is as follows:
-    ```json
-    {"file": ["Invalid Base 64 string"]}
-    ```
-2. In case the request content type is not `application/x-www-form-urlencoded` or `multipart/form-data; boundary={boundary string}`, APIs will throw **400 (Bad Request)** as follows:
-    ```json
-    {"file": ["This field must be present as a form field. Send request with content type x-www-form-urlencoded or form-data"]}
-    ```
-3. In other error cases, the APIs will throw a **400 (Bad Request)** with appropriate message in `message` field:
-    - **Not able to identify the bank name** (In bank less upload only)
-    - **Incorrect bank name specified** (When bank is provided with request, and we detected it to be of different bank)
-    - **Incorrect Password**
-    - **Non Parsable PDF** (PDF file has only images or is corrupted)
-    ```json
-    {
-        "entity_id": "some_entity_id_created",
-        "message": "error message here"
-    }
-    ```
-:::
 
 ## Progress Field
-When a statement is uploaded, identity information and basic fraud checks happen at the same time. However other statement analysis, like transaction extraction, salary, recurring transactions, advanced fraud checks, enrichment happen asynchronously. Hence all the GET APIs for these **analysis fields** have a `progress` field. You can track the progress of a statement uploaded using this.
+When a statement is uploaded, identity information and basic fraud checks happen at the same time. However other statement analyses, like transaction extraction, salary, recurring transactions, advanced fraud checks, enrichment happen in parallel. Hence all the GET APIs for these **analysis fields** have a `progress` field. You can track the progress of a statement uploaded using this.
 
-`progress` is an array of objects. Each object represents a statement, it has `status` field that can be `processing`, `completed` or `failed` and `statement_id` field which identifies a statement uniquely.
+`progress` is an array of objects. Each object represents a statement and has a `status` field that can be `processing`, `completed` or `failed` and `statement_id` field which identifies a statement uniquely.
 
 Sample `progress` value:
 ```json
@@ -315,17 +50,17 @@ Sample `progress` value:
 ```
 
 ::: warning TIP
-A general rule of thumb would be to make sure all objects in the `progress` field have their `status` as `completed`, by polling the required analysis field API in intervals. As soon as all status are `completed`, the same API will give the correct required values.
+A general rule of thumb would be to make sure all objects in the `progress` field have their `status` as `completed`, by polling the required analysis field API in intervals. As soon as all statuses are `completed`, the same API will give the correct required values.
 
-It is to be noted that `status` for all different analysis APIs are separate, that is identity and progress might have different status for the document, depending on whichever is taking less or more time. So make sure to check the status for each of the analysis API before trying to use the extracted values.
+It is to be noted that `status` for all different analysis APIs are separate, that is identity and progress might have different statuses for the document, depending on whichever is taking less or more time. So make sure to check the status for each of the analysis API before trying to use the extracted values.
 :::
 
 ## Fraud Field
-In all of the analysis field APIs (transaction, accounts, etc.), there is always a field `fraud`, that holds two fields `fraudulent_statements` (array of `statement_id`s which have some sort detected after analysis or in first basic check) and `fraud_type` (array of objects having `statement_id` and `fraud_type` (string) indicating fraud of which type was found for which statement).
-Optionally a key `transaction_hash` may be present in some cases in `fraud_type` (array) for transaction level frauds indicating the transaction in which the fraud was found.
+In all of the analysis field APIs (transaction, accounts, etc.), there is always a field `fraud`, that holds two fields `fraudulent_statements` (array of `statement_id`s which have some sort detected after analysis or in first basic check) and `fraud_type` (array of objects having `statement_id` and `fraud_type` (string) indicating a fraud of which type was found for which statement).
+Optionally a key `transaction_hash` may be present in some cases in `fraud_type` (array) for transaction-level frauds indicating the transaction in which the fraud was found.
 
 
-To know more about `fraud_type`, refer to [Fraud](/bank-connect/basics.html#fraud) section in Basics.
+To know more about `fraud_type`, refer to [Fraud](/bank-connect/fraud.html) section in Basics.
 
 Sample `fraud` field value:
 ```json
@@ -341,7 +76,6 @@ Sample `fraud` field value:
     ]
 }
 ```
-
 
 ## List Accounts
 Lists accounts under a given entity.
@@ -376,6 +110,7 @@ On fetching information successfully, the response would be of the following for
             "ifsc": null,
             "micr": null,
             "account_number": "Account Number Extracted",
+            "account_category": "individual",
             "bank": "axis"
         }
     ],
@@ -392,8 +127,20 @@ On fetching information successfully, the response would be of the following for
     }
 }
 ```
-The response has following fields:
-- `accounts` holds the array of account objects, each having `months` (month and year for which data is available), `statements` (list of statement unique identifiers under the account), `account_id` (unique identifier for account), `bank` (name of the bank to which the account belongs) and some account level extracted fields like `ifsc`, `micr`, `account_number` (which can be `null` or could hold a `string` value)
+The response has the following fields:
+- `accounts` holds the array of account objects, each having:
+
+    | Field | Type | Description |
+    | - | - | - |
+    | months | array of strings | month and year for which data is available|
+    | statements | array of strings | list of statement unique identifiers under the account |
+    | account_id | string | unique identifier for account |
+    | bank | string | [bank identifier](/bank-connect/appendix.html#bank-identifiers) to which the account belongs  |
+    | ifsc | string | IFSC code of bank account |
+    | micr | string | MICR code of bank account |
+    | account_category | string | account category, can be `individual` or `corporate` |
+    | account_number | string | account number |
+
 - `progress` (read more in [Progress Field](/bank-connect/rest-api.html#progress-field) section)
 - `fraud` (read more in [Fraud Field](/bank-connect/rest-api.html#fraud-field) section)
 
@@ -429,6 +176,7 @@ On fetching information successfully, the response would be of the following for
             "account_id": "uuid4_for_account",
             "ifsc": null,
             "micr": null,
+            "account_category": "individual",
             "account_number": "Account Number Extracted",
             "bank": "axis"
         }
@@ -454,7 +202,15 @@ On fetching information successfully, the response would be of the following for
     ]
 }
 ```
-The response fields are same as in [List Accounts](/bank-connect/rest-api.html#list-accounts), but there is an additional `identity` field that holds an array of identity objects. Each object has `account_id` (a unique identifier for the account for which the identity information is referred to in the object) and extracted identity fields like `name`, `address`, `account_number`.
+The response fields are the same as in [List Accounts](/bank-connect/rest-api.html#list-accounts), but there is an additional `identity` field that holds an array of identity objects. Each object has:
+
+| Field | Type | Description |
+| - | - | - |
+| account_id | string | a unique identifier for the account for which the identity information is referred to in the object |
+| name | string | extracted account holder name |
+| address | string | extracted account holder address |
+| account_number | string | account number |
+| account_category | string | account category, can be `individual` or `corporate` |
 
 ## Transactions
 Get extracted and enriched transactions for a given entity.
@@ -488,6 +244,7 @@ On fetching information successfully, the response would be of the following for
             "account_id": "uuid4_for_account",
             "ifsc": null,
             "micr": null,
+            "account_category": "individual",
             "account_number": "Account Number Extracted",
             "bank": "axis"
         }
@@ -520,7 +277,7 @@ On fetching information successfully, the response would be of the following for
     ]
 }
 ```
-The response fields are same as in [List Accounts](/bank-connect/rest-api.html#list-accounts), but there is an additional `transactions` field that holds an array of transaction objects. Each object has following fields:
+The response fields are the same as in [List Accounts](/bank-connect/rest-api.html#list-accounts), but there is an additional `transactions` field that holds an array of transaction objects. Each object has the following fields:
 - `transaction_note`: exact transaction note / description present in the statement PDF
 - `hash`: a unique identifying hash for each transaction
 - `description`: describes more information about the `transaction_channel` field. Refer to [this](/bank-connect/appendix.html#description) list for possible values.
@@ -531,40 +288,6 @@ The response fields are same as in [List Accounts](/bank-connect/rest-api.html#l
 - `merchant_category`: the category of the merchant in case a transaction is with a merchant. Refer to [this](/bank-connect/appendix.html#merchant-category) list of possible values.
 - `balance`: account balance just after this transaction
 - `transaction_channel`: refer to [this](/bank-connect/appendix.html#transaction-channel) list for possible values.
-
-## Transactions in Excel Workbook <Badge text="New" />
-Get extracted and enriched transactions for a given entity in .xlsx (Excel workbook) format.
-
-::: tip Endpoint
-GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/`<entity_id>`/raw_excel_report/**
-:::
-
-### Response
-On fetching information successfully, the response would be of the following format with **200 HTTP code**:
-```json
-{
-    "entity_id": "327bc6eb-f6b0-4a6b-9695-27a9a5822c00",
-    "progress": [
-        {
-            "status": "completed",
-            "message": null,
-            "statement_id": "uuid4_for_statement"
-        }
-    ],
-    "reports": [
-        {
-            "link": "long_url_for_the_excel_report",
-            "account_id": "uuid4_for_account"
-        }
-    ]
-}
-```
-
-The list value of `reports` key will be empty if any one of the statements have a **non** `completed` `status` in `progress`. When the transactions are successfully processed for all statements, within the entity, a list of report links will be available account wise.
-
-In case of multiple accounts within the same entity, you can have multiple reports within the `reports` key. The `account_id` will represent the account for which the report is, while `link` key holds url for the ***.xlsx file**. The link will be be active only for **1 hour**, post which the API has to re-hit to obtain the new link.
-
-The Excel workbook will contain two worksheets, first containing the extracted information like Account Holder's Name, Bank, Account Number, Missing Periods, Available Periods, etc., while the second sheet contains the enriched extracted transactions for the account.
 
 ## Salary
 Get extracted salary transactions for a given entity.
@@ -598,6 +321,7 @@ On fetching information successfully, the response would be of the following for
             "account_id": "uuid4_for_account",
             "ifsc": null,
             "micr": null,
+            "account_category": "individual",
             "account_number": "Account Number Extracted",
             "bank": "axis"
         }
@@ -645,11 +369,11 @@ On fetching information successfully, the response would be of the following for
     ]
 }
 ```
-The response fields are same as in [List Accounts](/bank-connect/rest-api.html#list-accounts), but there is an additional `transactions` field that holds an array of salary transaction objects. Each object has following fields:
+The response fields are the same as in [List Accounts](/bank-connect/rest-api.html#list-accounts), but there is an additional `transactions` field that holds an array of salary transaction objects. Each object has the following fields:
 - `balance`: account balance just after this transaction
 - `hash`: a unique identifying hash for each transaction
 - `description`: describes more information about the `transaction_channel` field. Refer to [this](/bank-connect/appendix.html#description) list for possible values.
-- `clean_transaction_note`: Transaction in note in clean english words
+- `clean_transaction_note`: Transaction note in clean English words
 - `account_id`: unique UUID4 identifier for the account to which the transaction belongs to
 - `transaction_type`: can be `debit` or `credit`
 - `date`: date of transaction
@@ -691,6 +415,7 @@ On fetching information successfully, the response would be of the following for
             "account_id": "uuid4_for_account",
             "ifsc": null,
             "micr": null,
+            "account_category": "individual",
             "account_number": "Account Number Extracted",
             "bank": "axis"
         }
@@ -711,10 +436,12 @@ On fetching information successfully, the response would be of the following for
             {
                 "account_id": "uuid4_for_account",
                 "end_date": "2019-01-11 00:00:00",
+                "clean_transaction_note": "A SHORT AND CLEAN TRANSACTION NOTE",
                 "transactions": [
                     {
                         "transaction_channel": "net_banking_transfer",
                         "transaction_note": "SOME LONG TRANSACTION NOTE",
+                        "clean_transaction_note": "A SHORT AND CLEAN TRANSACTION NOTE",
                         "hash": "unique_transaction_identifier_1",
                         "account_id": "uuid4_for_account",
                         "transaction_type": "credit",
@@ -726,6 +453,7 @@ On fetching information successfully, the response would be of the following for
                     {
                         "transaction_channel": "net_banking_transfer",
                         "transaction_note": "SOME LONG TRANSACTION NOTE",
+                        "clean_transaction_note": "A SHORT AND CLEAN TRANSACTION NOTE",
                         "hash": "unique_transaction_identifier_2",
                         "account_id": "uuid4_for_account",
                         "transaction_type": "credit",
@@ -744,10 +472,12 @@ On fetching information successfully, the response would be of the following for
             {
                 "account_id": "uuid4_for_account",
                 "end_date": "2019-01-18 00:00:00",
+                "clean_transaction_note": "A SHORT AND CLEAN TRANSACTION NOTE",
                 "transactions": [
                     {
                         "transaction_channel": "debit_card",
                         "transaction_note": "SOME LONG TRANSACTION NOTE",
+                        "clean_transaction_note": "A SHORT AND CLEAN TRANSACTION NOTE",
                         "hash": "unique_transaction_identifier_3",
                         "account_id": "uuid4_for_account",
                         "transaction_type": "debit",
@@ -759,6 +489,7 @@ On fetching information successfully, the response would be of the following for
                     {
                         "transaction_channel": "debit_card",
                         "transaction_note": "SOME LONG TRANSACTION NOTE",
+                        "clean_transaction_note": "A SHORT AND CLEAN TRANSACTION NOTE",
                         "hash": "unique_transaction_identifier_4",
                         "account_id": "uuid4_for_account",
                         "transaction_type": "debit",
@@ -770,6 +501,7 @@ On fetching information successfully, the response would be of the following for
                     {
                         "transaction_channel": "debit_card",
                         "transaction_note": "SOME LONG TRANSACTION NOTE",
+                        "clean_transaction_note": "A SHORT AND CLEAN TRANSACTION NOTE",
                         "hash": "unique_transaction_identifier_5",
                         "account_id": "uuid4_for_account",
                         "transaction_type": "debit",
@@ -787,14 +519,15 @@ On fetching information successfully, the response would be of the following for
     }
 }
 ```
-The response fields are same as in [List Accounts](/bank-connect/rest-api.html#list-accounts), but there are two additional fields `credit_transactions` and `debit_transactions` that holds array of **recurring transaction set** objects for credit and debit transaction type respectively.
-Each of the recurring transaction set object has following fields:
+The response fields are the same as in [List Accounts](/bank-connect/rest-api.html#list-accounts), but there are two additional fields `credit_transactions` and `debit_transactions` that holds an array of **recurring transaction set** objects for credit and debit transaction type respectively.
+Each of the recurring transaction set object has the following fields:
 - `account_id`: unique UUID4 identifier for the account to which transaction set belongs to
-- `start_date`: start date for the recurring transaction set
+- `start_date`: the start date for the recurring transaction set
 - `end_date`: end date for the recurring transaction set
 - `transaction_channel`: transaction channel in upper case. Refer to [this](/bank-connect/appendix.html#transaction-channel) list for possible values.
 - `median`: median of the transaction amounts under the given recurring transaction set
-- `transactions`: list of transaction objects under the recurring transaction set. Each transaction object here has same fields as the transaction object in transactions API (Refer the response section [here](/bank-connect/rest-api.html/#transactions) to know about the fields).
+- `clean_transaction_note`: contains a clean and small transaction note, it can be used as an identifier for source/destination for the recurring transaction set
+- `transactions`: list of transaction objects under the recurring transaction set. Each transaction object here has the same fields as the transaction object in transactions API (Refer the response section [here](/bank-connect/rest-api.html/#transactions) to know about the fields).
 
 ## Lender Transactions
 Get extracted lender transactions for a given entity.
@@ -828,6 +561,7 @@ On fetching information successfully, the response would be of the following for
             "account_id": "uuid4_for_account",
             "ifsc": null,
             "micr": null,
+            "account_category": "individual",
             "account_number": "Account Number Extracted",
             "bank": "axis"
         }
@@ -871,7 +605,7 @@ On fetching information successfully, the response would be of the following for
     ]
 }
 ```
-The response fields are same as in [List Accounts](/bank-connect/rest-api.html#list-accounts), but there is an additional `transactions` field that holds an array of lender transaction objects. Each object has following fields:
+The response fields are the same as in [List Accounts](/bank-connect/rest-api.html#list-accounts), but there is an additional `transactions` field that holds an array of lender transaction objects. Each object has the following fields:
 - `transaction_note`: exact transaction note / description present in the statement PDF
 - `hash`: a unique identifying hash for each transaction
 - `description`: describes more information about the `transaction_channel` field. Refer to [this](/bank-connect/appendix.html#description) list for possible values.
@@ -883,87 +617,185 @@ The response fields are same as in [List Accounts](/bank-connect/rest-api.html#l
 - `balance`: account balance just after this transaction
 - `transaction_channel`: refer to [this](/bank-connect/appendix.html#transaction-channel) list for possible values.
 
-## Web hook <Badge text="New" />
-You can also configure a custom web hook to be invoked whenever extraction process is completed or failed (because of extraction failure in manual mode or user entering a wrong credentials for example in net banking mode).
-
-To configure this, you have to share with us a **valid endpoint**.
-
-:::danger A Valid Endpoint:
-- receives a POST request
-- receives a request body with content type `application/json`
-- returns a 200 status code on successful reception.
-:::
-
-### Updating web hook endpoint
-To update your valid endpoint use the API below:
+## Monthly Analysis <Badge text="New" />
+Get monthly analysis for a given entity.
 
 ::: tip Endpoint
-POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/update_webhook/**
-:::
-This API uses the same authentication method with API key as listed [here](/bank-connect/rest-api.html#authentication).
-It receives following **request body** in `application/json` content type:
-```json
-{
-    "webhook_url": "https://postman-echo.com/post"
-}
-```
-Here, `https://postman-echo.com/post` is an example for valid endpoint.
-
-On updating the web hook endpoint successfully, the `update_webhook` API will give **200 Status Code**.
-
-:::danger IMPORTANT
-By default web hook is enabled only for net banking mode, in case you want it to be enabled for manual mode as well, then you need to pass an additional field `webhook_mode` with a value `1`. Hence the payload will look like this:
-```json
-{
-    "webhook_url": "https://postman-echo.com/post",
-    "webhook_mode": 1
-}
-```
-Make sure to specify webhook mode every time you update webhook in case you want web hook to be invoked for both manual as well as net banking mode, if not specified `webhook_mode` will reset to default value `0` (Net Banking Mode only)  
+GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/`<entity_id>`/monthly_analysis/**
 :::
 
-
-### Receiving payload
-We'll be sending json encoded body in following payload format:
+### Response
+On fetching information successfully, the response would be of the following format with **200 HTTP code**:
 ```json
 {
-    "entity_id": "unique_entity_id",
-    "statement_id": "unique_statement_id",
-    "link_id": "link_id",
-    "progress": "completed",
-    "reason": ""
-}
-```
-
-Here, `progress` field can be `completed` or `failed`. In case of `failed`, `reason` field will specify the reason for failure.
-
-In case of failure in Net Banking mode, actual upload might not have happened as in case of wrong credentials entered by user, hence `statement_id` will be unavailable, and will be blank string `""`. Similarly in case of manual upload if `link_id` doesn't exists, its value will be `null`.
-
-### Handling cases when webhook server is down
-In case the webhook server is down or a webhook call was failed, you can request for all the webhook payloads for a given `link_id` using the following API:
-
-::: tip Endpoint
-GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/webhook_payloads/?link_id=`link_id`**
-:::
-Response format will be as follows:
-```json
-{
-    "payloads": [
+    "entity_id": "uuid4_for_entity",
+    "progress": [
         {
-            "statement_id": "STATEMENT_UUID4",
-            "entity_id": "ENTITY_UUID4",
-            "link_id": "LINK ID HERE",
-            "progress": "completed",
-            "reason": "",
-            "date_time": "2020-03-06 12:46:33"
+            "status": "completed",
+            "message": null,
+            "statement_id": "uuid4_for_statement"
+        }
+    ],
+    "monthly_analysis": {
+        "amt_bill_payment_debit": {
+            "Feb-2020": 1107,
+            "Jan-2020": 0,
+            "Dec-2019": 0,
+            "Mar-2020": 574
         },
-        ....
+        "avg_credit_transaction_size": {
+            "Feb-2020": 4432,
+            "Jan-2020": 3134,
+            "Dec-2019": 141,
+            "Mar-2020": 3465
+        },
+        ...
+    }
+}
+```
+Here, the `progress` field holds an array of statement wise progress status, while the `monthly_analysis` field holds an object of fields, each having an object of month-wise keys having numerical values.
+
+Months are represented in `Mmm-YYYY` format in key.
+
+Different fields that hold this monthly analysis are as follows:
+
+- `amt_auto_debit_payment_bounce_credit`: Total Amount of Auto debit bounce
+- `amt_auto_debit_payment_debit`: Total Amount of Auto-Debit Payments
+- `amt_bank_charge_debit`: Total Amount of Bank Charges
+- `amt_bank_interest_credit`: Total Amount of Bank Interest
+- `amt_bill_payment_debit`: Total Amount of Bill Payments
+- `amt_cash_deposit_credit`: Total Amount of Cash Deposited
+- `amt_cash_withdrawl_debit`: Total Amount of Cash Withdrawal
+- `amt_chq_credit`: Total Amount Credited through Cheque
+- `amt_chq_debit`: Total Amount Debited through Cheque
+- `amt_credit`: Total Amount Credited
+- `amt_debit`: Total Amount Debited
+- `amt_debit_card_debit`: Total Amount Spend through Debit card
+- `amt_international_transaction_arbitrage_credit`: Total Amount of International Credit
+- `amt_international_transaction_arbitrage_debit`: Total Amount of International Debit
+- `amt_investment_cashin_credit`: Total Amount of Investment Cash-ins
+- `amt_net_banking_transfer_credit`: Total Amount Credited through transfers
+- `amt_net_banking_transfer_debit`: Total Amount Debited through transfers
+- `amt_outward_cheque_bounce_debit`: Total Amount Debited through Outward Cheque Bounce
+- `amt_inward_cheque_bounce_credit`: Total Amount Credited through Inward Cheque Bounce
+- `amt_payment_gateway_purchase_debit`: Total Amount of Payment Gateway Purchase
+- `amt_refund_credit`: Total Amount of Refund
+- `amt_upi_credit`: Total Amount Credited through UPI
+- `amt_upi_debit`: Total Amount Debited through UPI
+- `amt_emi_debit`: Total Amount Debited as Loan EMI
+- `avg_bal`: Average Balance* ( = Average of EOD Balances after filling in missing daily Balances) 
+- `avg_credit_transaction_size`: Average Credit Transaction Size
+- `avg_debit_transaction_size`: Average Debit Transaction Size
+- `avg_emi`: Average Loan EMI Amount
+- `closing_balance`: Closing balance
+- `cnt_auto_debit_payment_bounce_credit`: Number of Auto-Debit Bounces
+- `cnt_auto_debit_payment_debit`: Number of Auto-debited payments
+- `cnt_bank_charge_debit`: Number of Bank Charge payments
+- `cnt_bank_interest_credit`: Number of Bank Interest Credits
+- `cnt_bill_payment_debit`: Number of Bill Payments
+- `cnt_cash_deposit_credit`: Number of Cash Deposit Transactions
+- `cnt_cash_withdrawl_debit`: Number of Cash Withdrawal Transactions
+- `cnt_chq_credit`: Number of Credit Transactions through cheque
+- `cnt_chq_debit`: Number of Debit Transactions through cheque
+- `cnt_credit`: Number of Credit Transactions
+- `cnt_debit`: Number of Debit Transactions
+- `cnt_debit_card_debit`: Number of Debit Card Transactions
+- `cnt_international_transaction_arbitrage_credit`: Number of International Credit transactions
+- `cnt_international_transaction_arbitrage_debit`: Number of International Debit transactions
+- `cnt_investment_cashin_credit`: Number of Investment Cash-ins
+- `cnt_net_banking_transfer_credit`: Number of Net Banking Credit Transactions
+- `cnt_net_banking_transfer_debit`: Number of Net Banking Debit Transactions
+- `cnt_outward_cheque_bounce_debit`: Number of Debit Transactions through Outward Cheque Bounce
+- `cnt_inward_cheque_bounce_credit`: Number of Credit Transactions through Inward Cheque Bounce
+- `cnt_payment_gateway_purchase_debit`: Number of Payment Gateway Purchase
+- `cnt_emi_debit`: Number of Loan EMI Debit Transactions
+- `cnt_refund_credit`: Number of Refund Transactions
+- `cnt_transactions`: Number of Transactions
+- `cnt_upi_credit`: Number of Credit Transactions through UPI
+- `cnt_upi_debit`: Number of Debit Transactions through UPI
+- `max_bal`: Maximum Balance
+- `max_eod_balance`: Maximum EOD Balance
+- `median_balance`: Median Balance* ( = Median of EOD Balances after filling in missing daily Balances) 
+- `min_bal`: Minimum Balance
+- `min_eod_balance`: Minimum EOD Balance
+- `mode_balance`: Mode Balance* ( = Mode of EOD Balances after filling in missing daily Balances) 
+- `net_cash_inflow`: Net Cashflow
+- `opening_balance`: Opening Balance
+- `number_of_salary_transactions`: Number of Salary Transactions
+- `total_amount_of_salary`: Total Amount of Salary
+- `perc_salary_spend_bill_payment`: % Salary Spent on Bill Payment (7 days)
+- `perc_salary_spend_cash_withdrawl`: % Salary Spent Through Cash Withdrawal (7 days)
+- `perc_salary_spend_debit_card`: % Salary Spent through Debit Card (7 days)
+- `perc_salary_spend_net_banking_transfer`: % Salary Spent through Net Banking (7 days)
+- `perc_salary_spend_upi`: % Salary Spent through UPI (7 days)
+
+> \* We extrapolate previous available EOD balance as a proxy for EOD balances for dates missing in the statement. In case when no previous EOD balance is available, EOD balance of the closest available dates are used.
+
+
+## Transactions in Excel Workbook <Badge text="New" />
+Get **enriched transactions** and **monthly analysis** for a given entity **account wise** in .xlsx (Excel workbook) format.
+
+::: tip Endpoint
+GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/`<entity_id>`/raw_excel_report/**
+:::
+
+### Response
+On fetching information successfully, the response would be of the following format with **200 HTTP code**:
+```json
+{
+    "entity_id": "uuid4_for_entity",
+    "progress": [
+        {
+            "status": "completed",
+            "message": null,
+            "statement_id": "uuid4_for_statement"
+        }
+    ],
+    "reports": [
+        {
+            "link": "long_url_for_the_excel_report",
+            "account_id": "uuid4_for_account"
+        }
     ]
 }
 ```
 
-This API returns the data in decreasing order of time, i.e. the latest payloads will be on top and the oldest on the bottom. In each of the payload there is an additional field `date_time` which indicates the date and time at which the webhook payload was supposed to be sent. `date_time` is in `YYYY-MM-DD HH:MM:SS` format.
+The list value of `reports` key will be empty if any one of the statements have the `status` value other than `completed` in `progress`. When the transactions are successfully processed for all statements, within the entity, a list of report links will be available account wise.
 
-:::warning Manual PDF Mode
-Unlike Net Banking mode where you might only have `link_id`, in case of manual mode since you already have `entity_id`, you can make use of `progress` fields in the Transactions API directly.
+In the case of multiple accounts within the same entity, you can have multiple reports within the `reports` key. The `account_id` will represent the account for which the report is, while the `link` key holds URL for the **.xlsx file**. The link will be active only for **1-hour**, post which the API has to be re-hit to obtain the new link.
+
+The Excel workbook will contain three worksheets, first containing the extracted information like Account Holder's Name, Bank, Account Number, Missing Periods, Available Periods, etc., the second sheet contains the enriched extracted transactions for the account, and the third sheet contains the monthly analysis for the account.
+
+## Detailed Excel Report <Badge text="New" />
+Get detailed report for a given entity **account wise** in .xlsx (Excel workbook) format.
+
+::: tip Endpoint
+GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/`<entity_id>`/xlsx_report/**
 :::
+
+### Response
+On fetching information successfully, the response would be of the following format with **200 HTTP code**:
+```json
+{
+    "entity_id": "uuid4_for_entity",
+    "progress": [
+        {
+            "status": "completed",
+            "message": null,
+            "statement_id": "uuid4_for_statement"
+        }
+    ],
+    "reports": [
+        {
+            "link": "long_url_for_the_excel_report",
+            "account_id": "uuid4_for_account"
+        }
+    ]
+}
+```
+
+The list value of `reports` key will be empty if any one of the statements have the `status` value other than `completed` in `progress`. When the transactions are successfully processed for all statements, within the entity, a list of report links will be available account wise.
+
+In the case of multiple accounts within the same entity, you can have multiple reports within the `reports` key. The `account_id` will represent the account for which the report is, while the `link` key holds URL for the **.xlsx file**. The link will be active only for **1-hour**, post which the API has to be re-hit to obtain the new link.
+
+The Excel workbook contains a detailed analysis of different parameters in the form of separate sheets.

@@ -608,7 +608,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{base_url}}/bank-connect/v1/entity/{{entity_id}}/get_excel_report/",
+					"raw": "{{base_url}}/bank-connect/v1/entity/{{entity_id}}/xlsx_report/",
 					"host": [
 						"{{base_url}}"
 					],
@@ -617,11 +617,11 @@
 						"v1",
 						"entity",
 						"{{entity_id}}",
-						"get_excel_report",
+						"xlsx_report",
 						""
 					]
 				},
-				"description": "Fetch a detailed report (combined for all accounts) in excel workbook format for a given `entity_id`"
+				"description": "Fetch a detailed report (account wise) in excel workbook format for a given `entity_id`"
 			},
 			"response": []
 		},

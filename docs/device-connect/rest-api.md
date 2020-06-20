@@ -1,6 +1,6 @@
-# Device Connect: REST API
+# DeviceConnect: REST API
 
-The FinBox Device Connect REST API enables **"server to server data"** fetching of customers' Android device data. The customer's data can be fetched using the `CUSTOMER_ID`. API accepts JSON-encoded request bodies, returns JSON-encoded responses.
+FinBox DeviceConnect REST API enables **"server to server data"** fetching of customers' Android device data. The customer's data can be fetched using the `CUSTOMER_ID`. API accepts JSON-encoded request bodies, returns JSON-encoded responses.
 
 ::: warning NOTE
 Following will be shared by FinBox team at the time of integration:
@@ -19,9 +19,9 @@ Authentication for the APIs are based on **SERVER_API_KEY** provided by the FinB
 
 ### Insights API
 
-Once FinBox DeviceConnect SDK is initialized, data from device is sent to FinBox processing engine against an anonymous `CUSTOMER_ID` which will be the primary key from retrieving any information from the server.
+Once FinBox DeviceConnect SDK is initialized, data from the device is sent to the FinBox processing engine against an anonymous `CUSTOMER_ID` which will be the primary key from retrieving any information from the server.
 
-Clients need to call the **Insights API** with `CUSTOMER_ID` to get the predictors for a given customer. A sample workflow is shown in section [below](/device-connect/rest-api.html#sample-workflow). In case Insights API returns with status `"in_progress"` (meaning data is currently being processed), client should poll the Insights API with a delay of at least **10 seconds**
+Clients need to call the **Insights API** with `CUSTOMER_ID` to get the predictors for a given customer. A sample workflow is shown in section [below](/device-connect/rest-api.html#sample-workflow). In case Insights API returns with status `"in_progress"` (meaning data is currently being processed), the client should poll the Insights API with a delay of at least **10 seconds**
 
 ### Workflow
 
@@ -46,20 +46,20 @@ For all the endpoints, the base URL for different environments are as follows:
 | General Predictors | **/risk/predictors** | POST | General features extracted from customer's data |
 
 ::: tip Predictors
-Other than general predictors, there are also more predictor endpoints which will be shared based on the  requirement by FinBox team.
+Other than general predictors, there are also more predictor endpoints which will be shared based on the  requirement by the FinBox team.
 :::
 
 ## Insights API Request
 
 ### Request Header and Body
-For all the Insights API request structure is same, all requests must have `x-api-key` field in **header** having the value as the `SERVER_API_KEY` shared by FinBox team. The following **keys** must be passed in every request body as keys to a json document:
+For all the Insights API request structure is the same, all requests must have `x-api-key` field in **header** having the value as the `SERVER_API_KEY` shared by FinBox team. The following **keys** must be passed in every request body as keys to a JSON document:
 
 **Request Body**
 | Key | Type | Description |
 | --- | --- | --- |
 | customer_id | String | `CUSTOMER_ID` for which feature vector is required |
 | version | Integer | Version of the feature set shared by FinBox team as `DC_PREDICTORS_VERSION` |
-| salt | String | A salt which is computed basis logic mentioned in section below |
+| salt | String | A salt which is computed basis logic mentioned in the section below |
 
 :::danger IMPORTANT
 Please not that this `CUSTOMER_ID` is the same used as the unique identifier used in Android SDK while syncing the data.
@@ -70,7 +70,7 @@ Please not that this `CUSTOMER_ID` is the same used as the unique identifier use
 Salt is calculated as follows:
 1. A = Create MD5 hash of `CUSTOMER_ID`
 2. B = Concatenate string of A and `SERVER_HASH` shared by FinBox.
-3. C = Create SHA-256 hash of B
+3. C = Create an SHA-256 hash of B
 4. Salt = base64 encoded version of C
 
 Sample code for salt generation in different languages:
@@ -208,7 +208,7 @@ x-api-key: XXXX-XXXX-XXXX
 ```
 
 ## Insights API Response
-API will give a JSON Response with following keys:
+API will give a JSON Response with the following keys:
 
 ### Response Keys
 
@@ -223,11 +223,11 @@ API will give a JSON Response with following keys:
 | data | An array of objects, each object representing the predictors, having keys `name` indicating the predictor name and `value` indicating the values | JSON | Yes |
 
 ::: danger data key
-The list of predictors in `data` key will be different based on the result API endpoint, feature set version and requester. This **list will hence be shared separately** by FinBox team during the integration.
+The list of predictors in the `data` key will be different based on the result API endpoint, feature set version and requester. This **list will hence be shared separately** by the FinBox team during the integration.
 :::
 
 ::: warning NOTE
-Some of the keys in response may be missing based on availability of data and HTTP Status code. Please refer to examples for each of the cases listed [here](/device-connect/rest-api.html#status-values).
+Some of the keys in response may be missing based on the availability of data and HTTP Status code. Please refer to examples for each of the cases listed [here](/device-connect/rest-api.html#status-values).
 :::
 
 ### `status` values
@@ -245,7 +245,7 @@ Depending on the availability of data, there can be different cases with differe
 | [Rate Limit Exceeded](/device-connect/rest-api.html#case-8-rate-limit-exceeded) | `"error"` | 429 | This happens in case the maximum allowed rate limit on API exceeds. In this case, please retry twice with an exponential backoff i.e. retry after 2 seconds, then retry after 5 seconds. Contact FinBox to know your rate limits.|
 
 ::: danger IMPORTANT
-In case your are running a daily cron that fetches data using insights API, ensure you are not breaching the rate limit. Please contact FinBox to know your rate limits.
+In case your are running a daily CRON that fetches data using insights API, ensure you are not breaching the rate limit. Please contact FinBox to know your rate limits.
 :::
 
 ### Case 1 - Calculation in Progress
