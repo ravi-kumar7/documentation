@@ -6,6 +6,14 @@ module.exports = {
   }], ['@vuepress/search', {
     test: ["^((?!device-connect\/transactions).)*$"]
   }]],
+  mounted() {
+    const hash = document.location.hash;
+    if (hash.length > 1) {
+      const id = hash.substring(1)
+      const element = document.getElementById(id)
+      if (element) element.scrollIntoView()
+    }
+  },
   themeConfig: {
     logo: '/logo.svg',
     heroText: ' ',
