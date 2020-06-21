@@ -12,6 +12,78 @@ BankConnect REST APIs also provide additional APIs for management purposes. This
 
 All the APIs listed below use the same authentication method as listed [here](/bank-connect/rest-api.html#authentication).
 
+## Net Banking Health
+This API can be used to check Health status for banks in Net Banking mode.
+
+::: tip Endpoint
+GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/net_banking_health/**
+:::
+
+### Response
+On successful fetching, the API gives a **200 HTTP code** with following response:
+```json
+[
+    {
+        "bank": "AXIS",
+        "updated_at": "2020-06-02 13:28:59",
+        "health_up": true,
+        "issue_details": null
+    },
+    {
+        "bank": "HDFC",
+        "updated_at": "2020-06-02 13:28:59",
+        "health_up": false,
+        "issue_details": "Some cases are failing, when users are entering wrong captcha"
+    },
+    ...
+]
+```
+
+| Key | Type | Description |
+| - | - | - | - | - |
+| bank | string  | indicates the bank identifier in upper case, refer [here](/bank-connect/appendix.html#bank-identifiers) for complete list |
+| updated_at | string | last check date time (in UTC) for bank in `YYYY-MM-DD HH:MM:SS` format |
+| health_up | boolean | indicates whether the bank status is up, `true` indicates bank status is up |
+| issue_details | string | present if `health_up` is `false`, otherwise `null` |
+
+:::danger IMPORTANT
+This API works with only `x-api-key` and do not require **Server Hash**
+:::
+
+## Get PDFs
+This API can be used to fetch statement PDF files for a given entity.
+
+::: tip Endpoint
+GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/`<entity_id>`/get_pdfs/**
+:::
+
+### Response
+On fetching information successfully, the response would be of the following format with **200 HTTP code**:
+
+```json
+{
+    "statements": [
+        {
+            "statement_id": "statement_uuid4_here",
+            "bank_name": "axis",
+            "pdf_password": null,
+            "pdf_url": "https://long_url_here"
+        }
+    ]
+}
+```
+
+Here, `statements` key will contain a list of statements for the given entity. Each of this list item is an object with following keys:
+
+- `statement_id`: a unique identifier for this statement
+- `bank_name`: a valid bank identifier
+- `pdf_password`: Password for the PDF file. Will be `null` if no password.
+- `pdf_url`: Contains a URL for the PDF file.
+
+:::danger IMPORTANT
+- Statement PDFs on our system get deleted after 30 days since their upload has crossed. In case a PDF is deleted and the API is requested, post 30 days of upload, the pdf_url key will be a blank string `""`.
+- In case the `entity_id` doesn't exists the API will return a **404 HTTP Code**.
+:::
 
 ## List Entities
 Lists all entities (paginated) created under your account.
@@ -74,65 +146,4 @@ In case no `link_id` exists for the given entity, the value of `link_id` comes a
 
 ::: danger Not Found
 In case no entity with the provided `entity_id` exists, the API will return a response with **404 (Not Found) error code**.
-:::
-
-## Net Banking Health
-This API can be used to check Health status for banks in Net Banking mode.
-
-::: tip Endpoint
-GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/net_banking_health/**
-:::
-
-### Response
-On successful fetching, the API gives a **200 HTTP code** with following response:
-```json
-[
-    {
-        "bank": "AXIS",
-        "updated_at": "2020-06-02 13:28:59",
-        "health_up": true,
-        "issue_details": null
-    },
-    {
-        "bank": "ICICI",
-        "updated_at": "2020-06-02 13:28:59",
-        "health_up": true,
-        "issue_details": null
-    },
-    {
-        "bank": "KOTAK",
-        "updated_at": "2020-06-02 13:28:59",
-        "health_up": true,
-        "issue_details": null
-    },
-    {
-        "bank": "PNBBNK",
-        "updated_at": "2020-06-02 13:28:59",
-        "health_up": true,
-        "issue_details": null
-    },
-    {
-        "bank": "SBI",
-        "updated_at": "2020-06-02 13:28:59",
-        "health_up": true,
-        "issue_details": null
-    },
-    {
-        "bank": "HDFC",
-        "updated_at": "2020-06-02 13:28:59",
-        "health_up": false,
-        "issue_details": "Some cases are failing, when users are entering wrong captcha"
-    }
-]
-```
-
-| Key | Type | Description |
-| - | - | - | - | - |
-| bank | string  | indicates the bank identifier in upper case, refer [here](/bank-connect/appendix.html#bank-identifiers) for complete list |
-| updated_at | string | last check date time (in UTC) for bank in `YYYY-MM-DD HH:MM:SS` format |
-| health_up | boolean | indicates whether the bank status is up, `true` indicates bank status is up |
-| issue_details | string | present if `health_up` is `false`, otherwise `null` |
-
-:::danger IMPORTANT
-This API works with only `x-api-key` and do not require **Server Hash**
 :::
