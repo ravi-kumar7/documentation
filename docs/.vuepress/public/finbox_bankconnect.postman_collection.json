@@ -574,40 +574,6 @@
 			"response": []
 		},
 		{
-			"name": "Raw Excel Report",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "x-api-key",
-						"type": "text",
-						"value": "{{x-api-key}}"
-					},
-					{
-						"key": "server-hash",
-						"value": "{{server-hash}}",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "{{base_url}}/bank-connect/v1/entity/{{entity_id}}/raw_excel_report/",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"bank-connect",
-						"v1",
-						"entity",
-						"{{entity_id}}",
-						"raw_excel_report",
-						""
-					]
-				},
-				"description": "Fetch account wise transactions and monthly analysis in excel workbook format for a given `entity_id`"
-			},
-			"response": []
-		},
-		{
 			"name": "Detailed Excel Report",
 			"request": {
 				"method": "GET",

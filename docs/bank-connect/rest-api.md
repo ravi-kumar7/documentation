@@ -17,11 +17,9 @@ BankConnect accepts all requests with form fields, so please make sure that all 
 ## Authentication
 FinBox BankConnect REST API uses API keys to authenticate requests. All API requests must be made over HTTPS. Calls made over plain HTTP will fail. API requests without authentication will also fail.
 
-To make a successful request, `x-api-key` and `server-hash` must be present in the request header with API key and Server Hash values respectively.
+To make a successful request, required **headers mentioned with each API** must be present in the request.
 
-Please keep the Server Hash secure! Do not share your Server Hash in publicly accessible areas such as GitHub, client-side code, and so forth.
-
-In case wrong/incomplete/no keys were passed, response will have **401** HTTP Code and payload as follows:
+In case wrong/incomplete/no keys were passed in headers, response will have **401** HTTP Code and payload as follows:
 ```json
 {
     "detail": "Authentication credentials were not provided."
@@ -83,6 +81,9 @@ Lists accounts under a given entity.
 ::: tip Endpoint
 GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/`<entity_id>`/accounts/**
 :::
+
+### Authentication
+Request headers `x-api-key` with API Key as value and `server-hash` with Server Hash as value must be present in request.
 
 ### Response
 On fetching information successfully, the response would be of the following format with **200 HTTP code**:
@@ -151,6 +152,9 @@ Lists extracted identities for a given entity.
 GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/`<entity_id>`/identity/**
 :::
 
+### Authentication
+Request headers `x-api-key` with API Key as value and `server-hash` with Server Hash as value must be present in request.
+
 ### Response
 On fetching information successfully, the response would be of the following format with **200 HTTP code**:
 ```json
@@ -218,6 +222,9 @@ Get extracted and enriched transactions for a given entity.
 ::: tip Endpoint
 GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/`<entity_id>`/transactions/**
 :::
+
+### Authentication
+Request headers `x-api-key` with API Key as value and `server-hash` with Server Hash as value must be present in request.
 
 ### Response
 On fetching information successfully, the response would be of the following format with **200 HTTP code**:
@@ -295,6 +302,9 @@ Get extracted salary transactions for a given entity.
 ::: tip Endpoint
 GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/`<entity_id>`/salary/**
 :::
+
+### Authentication
+Request headers `x-api-key` with API Key as value and `server-hash` with Server Hash as value must be present in request.
 
 ### Response
 On fetching information successfully, the response would be of the following format with **200 HTTP code**:
@@ -389,6 +399,9 @@ Get extracted recurring transactions for a given entity.
 ::: tip Endpoint
 GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/`<entity_id>`/recurring_transactions/**
 :::
+
+### Authentication
+Request headers `x-api-key` with API Key as value and `server-hash` with Server Hash as value must be present in request.
 
 ### Response
 On fetching information successfully, the response would be of the following format with **200 HTTP code**:
@@ -536,6 +549,9 @@ Get extracted lender transactions for a given entity.
 GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/`<entity_id>`/lender_transactions/**
 :::
 
+### Authentication
+Request headers `x-api-key` with API Key as value and `server-hash` with Server Hash as value must be present in request.
+
 ### Response
 On fetching information successfully, the response would be of the following format with **200 HTTP code**:
 ```json
@@ -624,6 +640,9 @@ Get monthly analysis for a given entity.
 GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/`<entity_id>`/monthly_analysis/**
 :::
 
+### Authentication
+Request headers `x-api-key` with API Key as value and `server-hash` with Server Hash as value must be present in request.
+
 ### Response
 On fetching information successfully, the response would be of the following format with **200 HTTP code**:
 ```json
@@ -683,6 +702,9 @@ Different fields that hold this monthly analysis are as follows:
 - `amt_upi_credit`: Total Amount Credited through UPI
 - `amt_upi_debit`: Total Amount Debited through UPI
 - `amt_emi_debit`: Total Amount Debited as Loan EMI
+- `amt_credit_card_bill_debit` : Total Amount Debited for Credit Card Bill
+- `amt_investment` : Total Amount of Investments
+- `amt_loan_credits`: Total Amount of Loan Credits
 - `avg_bal`: Average Balance* ( = Average of EOD Balances after filling in missing daily Balances) 
 - `avg_credit_transaction_size`: Average Credit Transaction Size
 - `avg_debit_transaction_size`: Average Debit Transaction Size
@@ -713,12 +735,15 @@ Different fields that hold this monthly analysis are as follows:
 - `cnt_transactions`: Number of Transactions
 - `cnt_upi_credit`: Number of Credit Transactions through UPI
 - `cnt_upi_debit`: Number of Debit Transactions through UPI
+- `cnt_investment` : Number of Investment
+- `cnt_credit_card_bill_debit` : Number of Credit Card Bill Transactions
+- `cnt_loan_credis`: Number of Loan Credit Transactions
 - `max_bal`: Maximum Balance
 - `max_eod_balance`: Maximum EOD Balance
 - `median_balance`: Median Balance* ( = Median of EOD Balances after filling in missing daily Balances) 
 - `min_bal`: Minimum Balance
 - `min_eod_balance`: Minimum EOD Balance
-- `mode_balance`: Mode Balance* ( = Mode of EOD Balances after filling in missing daily Balances) 
+- `mode_balance`: Mode Balance* ( = Mode of EOD Balances after filling in missing daily Balances)
 - `net_cash_inflow`: Net Cashflow
 - `opening_balance`: Opening Balance
 - `number_of_salary_transactions`: Number of Salary Transactions
@@ -732,12 +757,15 @@ Different fields that hold this monthly analysis are as follows:
 > \* We extrapolate previous available EOD balance as a proxy for EOD balances for dates missing in the statement. In case when no previous EOD balance is available, EOD balance of the closest available dates are used.
 
 
-## Transactions in Excel Workbook <Badge text="New" />
+<!-- ## Transactions in Excel Workbook <Badge text="New" />
 Get **enriched transactions** and **monthly analysis** for a given entity **account wise** in .xlsx (Excel workbook) format.
 
 ::: tip Endpoint
 GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/`<entity_id>`/raw_excel_report/**
 :::
+
+### Authentication
+Request headers `x-api-key` with API Key as value and `server-hash` with Server Hash as value must be present in request.
 
 ### Response
 On fetching information successfully, the response would be of the following format with **200 HTTP code**:
@@ -764,7 +792,7 @@ The list value of `reports` key will be empty if any one of the statements have 
 
 In the case of multiple accounts within the same entity, you can have multiple reports within the `reports` key. The `account_id` will represent the account for which the report is, while the `link` key holds URL for the **.xlsx file**. The link will be active only for **1-hour**, post which the API has to be re-hit to obtain the new link.
 
-The Excel workbook will contain three worksheets, first containing the extracted information like Account Holder's Name, Bank, Account Number, Missing Periods, Available Periods, etc., the second sheet contains the enriched extracted transactions for the account, and the third sheet contains the monthly analysis for the account.
+The Excel workbook will contain three worksheets, first containing the extracted information like Account Holder's Name, Bank, Account Number, Missing Periods, Available Periods, etc., the second sheet contains the enriched extracted transactions for the account, and the third sheet contains the monthly analysis for the account. -->
 
 ## Detailed Excel Report <Badge text="New" />
 Get detailed report for a given entity **account wise** in .xlsx (Excel workbook) format.
@@ -772,6 +800,9 @@ Get detailed report for a given entity **account wise** in .xlsx (Excel workbook
 ::: tip Endpoint
 GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/`<entity_id>`/xlsx_report/**
 :::
+
+### Authentication
+Request headers `x-api-key` with API Key as value and `server-hash` with Server Hash as value must be present in request.
 
 ### Response
 On fetching information successfully, the response would be of the following format with **200 HTTP code**:
