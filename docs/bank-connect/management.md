@@ -10,7 +10,16 @@ BankConnect REST APIs also provide additional APIs for management purposes. This
 
 ## Authentication
 
-All the APIs listed below use the same authentication method as listed [here](/bank-connect/rest-api.html#authentication).
+FinBox BankConnect REST API uses API keys to authenticate requests. All API requests must be made over HTTPS. Calls made over plain HTTP will fail. API requests without authentication will also fail.
+
+To make a successful request, required **headers mentioned with each API** must be present in the request.
+
+In case wrong/incomplete/no keys were passed in headers, response will have **401** HTTP Code and payload as follows:
+```json
+{
+    "detail": "Authentication credentials were not provided."
+}
+```
 
 ## Net Banking Health
 This API can be used to check Health status for banks in Net Banking mode.
@@ -18,6 +27,9 @@ This API can be used to check Health status for banks in Net Banking mode.
 ::: tip Endpoint
 GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/net_banking_health/**
 :::
+
+### Authentication
+Request header `x-api-key` with API Key as value must be present in request.
 
 ### Response
 On successful fetching, the API gives a **200 HTTP code** with following response:
@@ -46,16 +58,15 @@ On successful fetching, the API gives a **200 HTTP code** with following respons
 | health_up | boolean | indicates whether the bank status is up, `true` indicates bank status is up |
 | issue_details | string | present if `health_up` is `false`, otherwise `null` |
 
-:::danger IMPORTANT
-This API works with only `x-api-key` and do not require **Server Hash**
-:::
-
 ## Get PDFs
 This API can be used to fetch statement PDF files for a given entity.
 
 ::: tip Endpoint
 GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/`<entity_id>`/get_pdfs/**
 :::
+
+### Authentication
+Request headers `x-api-key` with API Key as value and `server-hash` with Server Hash as value must be present in request.
 
 ### Response
 On fetching information successfully, the response would be of the following format with **200 HTTP code**:
@@ -91,6 +102,9 @@ Lists all entities (paginated) created under your account.
 ::: tip Endpoint
 GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/**
 :::
+
+### Authentication
+Request headers `x-api-key` with API Key as value and `server-hash` with Server Hash as value must be present in request.
 
 ### Parameters
 | Name | Type | Description | Required  | Default |
@@ -132,6 +146,9 @@ If required you can fetch `link_id` from an `entity_id` using the API below:
 ::: tip Endpoint
 GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/`<entity_id>`/**
 :::
+
+### Authentication
+Request headers `x-api-key` with API Key as value and `server-hash` with Server Hash as value must be present in request.
 
 ### Response
 On successful fetching, the API gives a **200 HTTP code** with following response:

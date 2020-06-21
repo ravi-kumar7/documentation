@@ -15,9 +15,9 @@ BankConnect accepts all requests with form fields, so please make sure that all 
 ## Authentication
 FinBox BankConnect REST API uses API keys to authenticate requests. All API requests must be made over HTTPS. Calls made over plain HTTP will fail. API requests without authentication will also fail.
 
-To provide an API key while making a request, `x-api-key` must be present in the request header with **API key** value.
+To make a successful request, required **headers mentioned with each API** must be present in the request.
 
-In case wrong/incomplete/no keys were passed, response will have **401** HTTP Code and payload as follows:
+In case wrong/incomplete/no keys were passed in headers, response will have **401** HTTP Code and payload as follows:
 ```json
 {
     "detail": "Authentication credentials were not provided."
@@ -49,6 +49,9 @@ This section lists the endpoint and request format for upload APIs that accepts 
 POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/statement/upload/?identity=true**
 :::
 
+### Authentication
+Request header `x-api-key` with API Key as value must be present in request.
+
 ### Parameters
 | Name | Type | Description | Required  | Default |
 | - | - | - | - | - |
@@ -65,6 +68,9 @@ In case you don't know bank name, and want BankConnect to automatically identify
 ::: tip Endpoint
 POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/statement/bankless_upload/?identity=true**
 :::
+
+### Authentication
+Request header `x-api-key` with API Key as value must be present in request.
 
 ### Parameters
 | Name | Type | Description | Required  | Default |
@@ -83,6 +89,9 @@ This section lists the endpoint and request format for upload APIs that accepts 
 POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/statement/upload_base64/?identity=true**
 :::
 
+### Authentication
+Request header `x-api-key` with API Key as value must be present in request.
+
 ### Parameters
 | Name | Type | Description | Required  | Default |
 | - | - | - | - | - |
@@ -99,6 +108,9 @@ In case you don't know bank name, and want BankConnect to automatically identify
 ::: tip Endpoint
 POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/statement/bankless_upload_base64/?identity=true**
 :::
+
+### Authentication
+Request header `x-api-key` with API Key as value must be present in request.
 
 ### Parameters
 | Name | Type | Description | Required  | Default |
@@ -117,6 +129,9 @@ This section lists the endpoint and request format for upload APIs that accepts 
 POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/statement/upload/?identity=true**
 :::
 
+### Authentication
+Request header `x-api-key` with API Key as value must be present in request.
+
 ### Parameters
 | Name | Type | Description | Required  | Default |
 | - | - | - | - | - |
@@ -133,6 +148,9 @@ In case you don't know bank name, and want BankConnect to automatically identify
 ::: tip Endpoint
 POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/statement/bankless_upload/?identity=true**
 :::
+
+### Authentication
+Request header `x-api-key` with API Key as value must be present in request.
 
 ### Parameters
 | Name | Type | Description | Required  | Default |
