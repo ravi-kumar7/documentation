@@ -130,7 +130,8 @@
 							"key": "link_id",
 							"value": "your_link_id_here",
 							"description": "Link ID for the Entity",
-							"type": "text"
+							"type": "text",
+							"disabled": true
 						},
 						{
 							"key": "pdf_password",
@@ -139,7 +140,10 @@
 							"type": "text",
 							"disabled": true
 						}
-					]
+					],
+					"options": {
+						"formdata": {}
+					}
 				},
 				"url": {
 					"raw": "{{base_url}}/bank-connect/v1/statement/upload/?identity=true",
@@ -207,7 +211,8 @@
 							"key": "link_id",
 							"value": "your_link_id_here",
 							"description": "Link ID for the Entity",
-							"type": "text"
+							"type": "text",
+							"disabled": true
 						},
 						{
 							"key": "pdf_password",
@@ -216,7 +221,10 @@
 							"type": "text",
 							"disabled": true
 						}
-					]
+					],
+					"options": {
+						"formdata": {}
+					}
 				},
 				"url": {
 					"raw": "{{base_url}}/bank-connect/v1/statement/upload_base64/?identity=true",
@@ -278,7 +286,8 @@
 							"key": "link_id",
 							"value": "your_link_id_here",
 							"description": "Link ID for the Entity",
-							"type": "text"
+							"type": "text",
+							"disabled": true
 						},
 						{
 							"key": "pdf_password",
@@ -349,7 +358,8 @@
 							"key": "link_id",
 							"value": "your_link_id_here",
 							"description": "Link ID for the Entity",
-							"type": "text"
+							"type": "text",
+							"disabled": true
 						},
 						{
 							"key": "pdf_password",
@@ -358,7 +368,10 @@
 							"type": "text",
 							"disabled": true
 						}
-					]
+					],
+					"options": {
+						"formdata": {}
+					}
 				},
 				"url": {
 					"raw": "{{base_url}}/bank-connect/v1/statement/bankless_upload/?identity=true",
@@ -420,7 +433,8 @@
 							"key": "link_id",
 							"value": "your_link_id_here",
 							"description": "Link ID for the Entity",
-							"type": "text"
+							"type": "text",
+							"disabled": true
 						},
 						{
 							"key": "pdf_password",
@@ -431,9 +445,7 @@
 						}
 					],
 					"options": {
-						"raw": {
-							"language": "json"
-						}
+						"formdata": {}
 					}
 				},
 				"url": {
