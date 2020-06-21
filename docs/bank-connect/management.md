@@ -92,7 +92,7 @@ Here, `statements` key will contain a list of statements for the given entity. E
 - `pdf_url`: Contains a URL for the PDF file.
 
 :::danger IMPORTANT
-- Statement PDFs on our system get deleted after 30 days since their upload has crossed. In case a PDF is deleted and the API is requested, post 30 days of upload, the pdf_url key will be a blank string `""`.
+- Statement files on our system get automatically deleted after 30 days of upload date has passed. Post this, the "pdf_url" key will be a blank string. `""`.
 - In case the `entity_id` doesn't exists the API will return a **404 HTTP Code**.
 :::
 
