@@ -61,7 +61,7 @@ In order to initialize the view, following statement is mandatory:
 bankConnect = findViewById(R.id.bankConnect)
 FinBoxBankConnect.Builder(applicationContext, bankConnect)  
     .linkId("link_id")
-    .fromDate("01/01/2020") // Optional: Default 3 months old date
+    .fromDate("01/01/2020") // Optional: Default 6 months old date
     .toDate("01/04/2020") // Optional: Default value 1 day less than current date
     .bank("sbi") // Optional
     .build()
@@ -74,7 +74,7 @@ FinBoxBankConnect.Builder(applicationContext, bankConnect)
 FinboxBankConnectView bankConnect = findViewById(R.id.bankConnect);
 new FinBoxBankConnect.Builder(getApplicationContext(), bankConnect)
         .linkId("link_id")
-        .fromDate("01/01/2020") // Optional: Default 3 months old date
+        .fromDate("01/01/2020") // Optional: Default 6 months old date
         .toDate("01/04/2020") // Optional: Default value 1 day less than current date
         .bank("sbi") // Optional
         .build();
@@ -89,7 +89,7 @@ new FinBoxBankConnect.Builder(getApplicationContext(), bankConnect)
 | `fromDate` and `toDate` | specifies the period for which the statements will be fetched in `dd/MM/yyyy` format | No |
 | `bank` | pass the [bank identifier](/bank-connect/appendix.html#bank-identifiers) to skip the bank selection screen and directly open a that bank's screen instead | No |
 
-`fromDate` and `toDate` specify the period for which the statements will be fetched. For example, if you need the last 6 months of statements, `fromDate` will be today's date - 6 months and `toDate` will be today's date - 1 day. If not provided the default date range is 3 months from the current date. It should be in `dd/MM/yyyy` format.
+`fromDate` and `toDate` specify the period for which the statements will be fetched. For example, if you need the last 6 months of statements, `fromDate` will be today's date - 6 months and `toDate` will be today's date - 1 day. If not provided the default date range is 6 months from the current date. It should be in `dd/MM/yyyy` format.
 
 Once the above statement is added, a series of checks are done to make sure the SDK is implemented correctly. A `RunTimeException` will be thrown while trying to build the project in case any of the checks are not completed.
 
