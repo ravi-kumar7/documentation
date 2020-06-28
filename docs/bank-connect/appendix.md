@@ -90,6 +90,7 @@ The list below indicates the possible values for `description` field of the tran
 | credit_card_bill | credit card bill transaction. Transaction channel is `bill_payment` |
 | telco_bill | telecommunications bill transaction. Transaction channel is `bill_payment` |
 | electric_bill | electric bill transaction. Transaction channel is `bill_payment` |
+| deposit_by_machine | indicates cash deposit was made on an ATM/Kiosk. Transaction channel is `cash_deposit` |
 | chq_bounce_insuff_funds | check bounced due to insufficient funds. Transaction channel is `inward_cheque_bounce` or `outward_cheque_bounce` |
 | neft_return | NEFT return. Transaction channel is `refund` |
 
