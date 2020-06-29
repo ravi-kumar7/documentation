@@ -226,7 +226,7 @@ You have to register your webhook address with FinBox. Please get in touch with 
 
 
 
-## Calculating Webhook Salt
+### Calculating Webhook Salt
 
 Salt is calculated as follows:
 1. A = Create MD5 hash of `CUSTOMER_ID`
@@ -350,3 +350,11 @@ func GetSaltForCustomer(customerId string, webhookSecret string) string {
 
 </template>
 </CodeSwitcher>
+
+## Querying by webhook
+
+Once you receive a webhook, you can directly query using the param `source` = `webhook`. This will return the updated data to you instantly. 
+
+`https://insights.finbox.in/staging/accounts?source=webhook`
+
+It is important to note that you must only use this param once you have received the webhook. Your intial request should not contain this param. Including this param bypasses the calculation of results and returns already existing result.
