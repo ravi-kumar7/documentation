@@ -200,16 +200,17 @@ Each of the account objects have the following keys:
 ## Webhook Integration
 
 
-FinBox fires a webhook when a user's results are updated. Upon receipt of the webhook, you can query the insights API to fetch these results.
+FinBox fires a webhook when a user's results are updated. Upon receipt of the webhook, you can query the insights API to fetch these results. 
 
 
 The webhook payload has the following keys:
 - **service**: It indicates the service whose results have been updated. It can either be `accounts` or `transactions`.
 - **device_id**: device_id is the unique identifier of the device and customer_id whose results have been updated.
 - **customer_id**: customer_id for which result was updated.
+- **salt**: A salt is used to authenticate webhook. It is computed basis logic mentioned in the section below
 
 
-:::danger IMPORTANT
+:::warning IMPORTANT
 You have to register your webhook address with FinBox. Please get in touch with us for the same.
 :::
 
@@ -218,6 +219,147 @@ You have to register your webhook address with FinBox. Please get in touch with 
 {
     "service": "transactions",
     "device_id": "f34ee388c56eaf1a0f7915c5ad058b29",
-    "customer_id": "89561ea2190946a9"
+    "customer_id": "89561ea2190946a9",
+    "salt": "/+Y459HYwFtWB2656bE5eTvB4NmTSoTmoAyt9SAtwek="
 }
 ```
+
+
+
+### Calculating Webhook Salt
+
+Salt is calculated as follows:
+1. A = Create MD5 hash of `CUSTOMER_ID`
+2. B = Concatenate string of A and `WEBHOOK_SECRET` shared by FinBox.
+3. C = Create an SHA-256 hash of B
+4. Salt = base64 encoded version of C
+
+Sample code for salt generation in different languages:
+
+<CodeSwitcher :languages="{java:'Java',python:'Python',go:'Go'}">
+<template v-slot:java>
+
+```java
+import java.security.*;
+import java.util.*;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.math.BigInteger;
+​
+​
+public class SaltGeneration {
+    private static final int HEX_255 = 0xFF;
+    private static final String UNICODE_TRANSFORMATIONAL_FORMAT_8_BIT = "UTF-8";
+    private static String CUSTOMER_ID = "<CUSTOMER_ID>";
+    private static String WEBHOOK_SECRET = "<WEBHOOK_SECRET>";
+    
+    private static String getSaltForBody() {
+        String hashedOutput = getMd5Hash(CUSTOMER_ID);
+        String concatString = hashedOutput + WEBHOOK_SECRET;
+        String shaOutput = get256Encoded(concatString);
+        return shaOutput;
+    }
+​
+​
+    private static String getMd5Hash(final String s) {
+        try {
+            // Create MD5 Hash
+            MessageDigest digest = MessageDigest.getInstance("MD5");
+            digest.update(s.getBytes(Charset.forName(UNICODE_TRANSFORMATIONAL_FORMAT_8_BIT)));
+            byte[] messageDigest = digest.digest();
+    
+            // Create Hex String
+            StringBuilder hexString = new StringBuilder();
+            for (byte mDigest : messageDigest) {
+                StringBuilder h = new StringBuilder(Integer.toHexString(HEX_255 & mDigest));
+                while (h.length() < 2) {
+                    h.insert(0, "0");
+                }
+                hexString.append(h);
+            }
+            return hexString.toString().toUpperCase();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+​
+    /**
+     * Method converts the string into SHA 256 and returns it
+     *
+     * @param s String to be 256 encoded
+     * @return Converted 256 hash
+     */
+    private static String get256Encoded(final String text) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(text.getBytes(StandardCharsets.UTF_8));
+            return Base64.getEncoder().encodeToString(hash);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+}
+```
+
+</template>
+<template v-slot:python>
+
+```python
+import hashlib, base64
+
+def create_salt(customer_id, webhook_secret):
+    """
+    Takes customer_id (unique identifier of customer)
+    and webhook_secret (shared with FinBox) as input
+    and returns salt in response
+    """
+    customer_hash = hashlib.md5(customer_id.encode('utf-8')).hexdigest().upper()
+    intermediate_hash = customer_hash + webhook_secret
+    salt_encoded = hashlib.sha256(intermediate_hash.encode('utf-8')).digest()
+    salt = base64.b64encode(salt_encoded).decode()
+    return salt
+```
+
+</template>
+
+<template v-slot:go>
+
+```go
+import (
+	"crypto/md5"
+	"crypto/sha256"
+	"fmt"
+	"encoding/base64"
+	"encoding/hex"
+	"strings"
+)
+func GetSaltForCustomer(customerId string, webhookSecret string) string {
+    hasher := md5.New()
+	hasher.Write([]byte(customerId))
+	hexHasher := hex.EncodeToString(hasher.Sum(nil))
+	data := strings.ToUpper(hexHasher)+ webhookSecret
+	newSha256 := sha256.New()
+	newSha256.Write([]byte(data))
+    finalData := base64.StdEncoding.EncodeToString(newSha256.Sum(nil))
+	return finalData
+}
+```
+
+</template>
+</CodeSwitcher>
+
+## Querying by webhook
+
+Once you receive a webhook, you can make a POST request of the `insights` API using the param `source` = `webhook`. This will return the updated data to you instantly. 
+
+`https://insights.finbox.in/staging/accounts?source=webhook`
+
+:::warning IMPORTANT
+- You must only use this param once you have received the webhook.
+- Including this param bypasses the calculation of results and returns already existing result.
+:::
+
+
