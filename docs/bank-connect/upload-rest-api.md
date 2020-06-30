@@ -194,8 +194,8 @@ The identity information returned in the response can be used to verify the cust
 | statement_id | string | Unique identifier for Statement |
 | entity_id | string | unique identifier for entity |
 | date_range | object | contains `from_date` and `to_date` strings indicating the time period in `YYYY-MM-DD` format |
-| is_fraud | boolean | indicates if a file level fraud was detected |
-| fraud_type | string | indicates the fraud type, if no fraud its value is `null` |
+| is_fraud | boolean | indicates if a metadata fraud was detected |
+| fraud_type | string | indicates the metadata fraud type, if no metadata fraud found, its value is `null` |
 | identity | object | contains multiple identity information keys extracted from the statement |
 | account_id | string | unique identifier for account |
 | account_number | string | bank account number |
@@ -205,7 +205,7 @@ The identity information returned in the response can be used to verify the cust
 | status | integer | contains the status code for API, should be 1 for success. Other possible values are listed in Bad Requests(/bank-connect/upload-rest-api.html#bad-request-cases) section |
 
 ::: warning NOTE
-- `fraud_type` field is `null` in case `is_fraud` field is false, otherwise it is a string. Please refer to [Fraud](/bank-connect/fraud.html) section in Basics to know more about it.
+- `fraud_type` field is `null` in case `is_fraud` field is false, otherwise it is a string. Please refer to [Fraud](/bank-connect/fraud.html) section to know more about it.
 - Some of the fields within the identity dictionary, or the `from_date` and `to_date` maybe `null` for few statements depending on the bank statement format and what all information is present on the top of the statement. The `from_date` and the `to_date` in case are returned as `null`, are updated for the statement at a later stage when transactions are extracted.
 - The query parameter `?identity=true` is optional for both the APIs above, if not specified the response will only include `entity_id`, `statement_id` and `bank_name` fields in case of successful upload.
 :::

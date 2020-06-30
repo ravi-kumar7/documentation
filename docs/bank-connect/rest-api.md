@@ -53,12 +53,21 @@ A general rule of thumb would be to make sure all objects in the `progress` fiel
 It is to be noted that `status` for all different analysis APIs are separate, that is identity and progress might have different statuses for the document, depending on whichever is taking less or more time. So make sure to check the status for each of the analysis API before trying to use the extracted values.
 :::
 
-## Fraud Field
-In all of the analysis field APIs (transaction, accounts, etc.), there is always a field `fraud`, that holds two fields `fraudulent_statements` (array of `statement_id`s which have some sort detected after analysis or in first basic check) and `fraud_type` (array of objects having `statement_id` and `fraud_type` (string) indicating a fraud of which type was found for which statement).
-Optionally a key `transaction_hash` may be present in some cases in `fraud_type` (array) for transaction-level frauds indicating the transaction in which the fraud was found.
+## Fraud Field <Badge text="beta" type="warn" />
+In all of the analysis field APIs (transaction, accounts, etc.), there is a field `fraud` present, that holds an object with two fields:
+- `fraudulent_statements`: array of `statement_id`s which have some sort detected after analysis or in first basic check)
+- `fraud_type`: array of fraud objects having following keys:
+    | Key | Type | Description |
+    | - | - | - |
+    | `statement_id` | String | Specifies the statement id for statement-level fraud. In case of account-level fraud, its value is `null` |
+    | `fraud_type` | String | It indicates the fraud type |
+    | `transaction_hash` | String | Specifies the transaction hash in case of transaction-level fraud, will be `null` otherwise |
+    | `account_id` | String | Indicates the account id |
+    | `fraud_category` | String | Indicates the fraud category |
 
-
-To know more about `fraud_type`, refer to [Fraud](/bank-connect/fraud.html) section in Basics.
+:::tip NOTE
+To know more about fraud categories and fraud type, refer to [Fraud](/bank-connect/fraud.html) section.
+:::
 
 Sample `fraud` field value:
 ```json
@@ -69,7 +78,10 @@ Sample `fraud` field value:
     "fraud_type": [
         {
             "statement_id": "uuid4_for_statement",
-            "fraud_type": "some_fraud_type"
+            "fraud_type": "some_fraud_type",
+            "account_id": "uuid4_for_account",
+            "fraud_category": "some_fraud_category",
+            "transaction_hash": null
         }
     ]
 }
@@ -122,7 +134,10 @@ On fetching information successfully, the response would be of the following for
         "fraud_type": [
             {
                 "statement_id": "uuid4_for_statement",
-                "fraud_type": "some_fraud_type"
+                "fraud_type": "some_fraud_type",
+                "account_id": "uuid4_for_account",
+                "fraud_category": "some_fraud_category",
+                "transaction_hash": null
             }
         ]
     }
@@ -192,7 +207,10 @@ On fetching information successfully, the response would be of the following for
         "fraud_type": [
             {
                 "statement_id": "uuid4_for_statement",
-                "fraud_type": "some_fraud_type"
+                "fraud_type": "some_fraud_type",
+                "account_id": "uuid4_for_account",
+                "fraud_category": "some_fraud_category",
+                "transaction_hash": null
             }
         ]
     },
@@ -263,7 +281,10 @@ On fetching information successfully, the response would be of the following for
         "fraud_type": [
             {
                 "statement_id": "uuid4_for_statement",
-                "fraud_type": "some_fraud_type"
+                "fraud_type": "some_fraud_type",
+                "account_id": "uuid4_for_account",
+                "fraud_category": "some_fraud_category",
+                "transaction_hash": null
             }
         ]
     },
@@ -343,7 +364,10 @@ On fetching information successfully, the response would be of the following for
         "fraud_type": [
             {
                 "statement_id": "uuid4_for_statement",
-                "fraud_type": "some_fraud_type"
+                "fraud_type": "some_fraud_type",
+                "account_id": "uuid4_for_account",
+                "fraud_category": "some_fraud_category",
+                "transaction_hash": null
             }
         ]
     },
@@ -440,7 +464,10 @@ On fetching information successfully, the response would be of the following for
         "fraud_type": [
             {
                 "statement_id": "uuid4_for_statement",
-                "fraud_type": "some_fraud_type"
+                "fraud_type": "some_fraud_type",
+                "account_id": "uuid4_for_account",
+                "fraud_category": "some_fraud_category",
+                "transaction_hash": null
             }
         ]
     },
@@ -589,7 +616,10 @@ On fetching information successfully, the response would be of the following for
         "fraud_type": [
             {
                 "statement_id": "uuid4_for_statement",
-                "fraud_type": "some_fraud_type"
+                "fraud_type": "some_fraud_type",
+                "account_id": "uuid4_for_account",
+                "fraud_category": "some_fraud_category",
+                "transaction_hash": null
             }
         ]
     },
