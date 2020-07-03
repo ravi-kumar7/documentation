@@ -1,5 +1,5 @@
 # DeviceConnect: Android SDK
-The Android SDK can be used to integrate mobile apps with DeviceConnect so that users can share their data.
+Device Connect Android SDK is used to collect anonymised non-PII data from the devices of the users after taking explicit user consent.
 
 ::: warning NOTE
 Following will be shared by FinBox team at the time of integration:
@@ -9,9 +9,29 @@ Following will be shared by FinBox team at the time of integration:
 - `CLIENT_API_KEY`
 :::
 
+## Adding Dependency
+In the project level `build.gradle` file, add the repository URLs to all `allprojects` block.
+
+```groovy
+maven {
+    url "s3://risk-manager-android-sdk/artifacts"
+    credentials(AwsCredentials) {
+        accessKey = <ACCESS_KEY>
+        secretKey = <SECRET_KEY>
+    }
+}
+```
+
+Now add the dependency to module level `build.gradle`:
+```groovy
+implementation('in.finbox:mobileriskmanager:<DC_SDK_VERSION>:parent-release@aar') {
+    transitive = true
+}
+```
+
 ## Integration Flow
 
-Assuming the dependency has been added for your project as per [this](/device-connect/android.html#adding-dependency) section the following would be the flow in your app:
+Assuming the dependency has been added for your project, the following would be the flow in your app:
 
 <img src="/client_workflow.png" alt="Client Workflow" style="width:80%;height:80%" />
 
@@ -36,26 +56,6 @@ If the `createUser` response is successful, you can call `startPeriodicSync` fun
 - In certain cases, the FinBox server often communicates with SDK directly, to make sure this works it is required to **forward FCM Notifications to SDK**. Refer to [this](/device-connect/android.html#forward-notifications-to-sdk) article for it.
 - In the case of a multi-process application, it is required to initialize the SDK manually before calling the `createUser` method. Refer [here](/device-connect/android.html#multi-process-support) for such cases.
 :::
-
-## Adding Dependency
-In the project level `build.gradle` file, add the repository URLs to all `allprojects` block.
-
-```groovy
-maven {
-    url "s3://risk-manager-android-sdk/artifacts"
-    credentials(AwsCredentials) {
-        accessKey = <ACCESS_KEY>
-        secretKey = <SECRET_KEY>
-    }
-}
-```
-
-Now add the dependency to module level `build.gradle`:
-```groovy
-implementation('in.finbox:mobileriskmanager:<DC_SDK_VERSION>:parent-release@aar') {
-    transitive = true
-}
-```
 
 ## Handle Permissions
 
