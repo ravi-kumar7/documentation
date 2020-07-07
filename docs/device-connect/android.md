@@ -12,6 +12,22 @@ Following will be shared by FinBox team at the time of integration:
 ## Adding Dependency
 In the project level `build.gradle` file, add the repository URLs to all `allprojects` block.
 
+<CodeSwitcher :languages="{kotlin:'Kotlin',groovy:'Groovy'}">
+<template v-slot:kotlin>
+
+```kotlin
+maven {
+    setUrl("s3://risk-manager-android-sdk/artifacts")
+    credentials(AwsCredentials::class) {
+        accessKey = <ACCESS_KEY>
+        secretKey = <SECRET_KEY>
+    }
+}
+```
+
+</template>
+<template v-slot:groovy>
+
 ```groovy
 maven {
     url "s3://risk-manager-android-sdk/artifacts"
@@ -22,12 +38,31 @@ maven {
 }
 ```
 
-Now add the dependency to module level `build.gradle`:
+</template>
+</CodeSwitcher>
+
+Now add the dependency to module level `build.gradle.kts` or `build.gradle` file:
+
+<CodeSwitcher :languages="{kotlin:'Kotlin',groovy:'Groovy'}">
+<template v-slot:kotlin>
+
+```kotlin
+implementation("in.finbox:mobileriskmanager:<DC_SDK_VERSION>:parent-release@aar") {
+    isTransitive = true
+}
+```
+
+</template>
+<template v-slot:groovy>
+
 ```groovy
 implementation('in.finbox:mobileriskmanager:<DC_SDK_VERSION>:parent-release@aar') {
     transitive = true
 }
 ```
+
+</template>
+</CodeSwitcher>
 
 ## Integration Flow
 
@@ -102,6 +137,25 @@ Please make sure `CUSTOMER_ID` is **not more than 64** characters and is **alpha
 
 The response to this method (success or failure) can be captured using the callback `FinBoxAuthCallback`.
 
+<CodeSwitcher :languages="{kotlin:'Kotlin',java:'Java'}">
+<template v-slot:kotlin>
+
+```kotlin
+FinBox.createUser("CLIENT_API_KEY", "CUSTOMER_ID",
+    object : FinBox.FinBoxAuthCallback {
+        override fun onSuccess(accessToken: String) {
+            // Authentication is success
+        }
+        
+        override fun onError(@FinBoxErrorCode errorCode: Int) {
+            // Authentication failed
+        }
+    })
+```
+
+</template>
+<template v-slot:java>
+
 ```java
 FinBox.createUser("CLIENT_API_KEY", "CUSTOMER_ID",
     new FinBox.FinBoxAuthCallback() {
@@ -117,16 +171,34 @@ FinBox.createUser("CLIENT_API_KEY", "CUSTOMER_ID",
     });
 ```
 
+</template>
+</CodeSwitcher>
+
 You can read about the error codes in [this](/device-connect/android.html#error-codes) section.
 
 ## Start Periodic Sync Method
 
 This is to be called only on a successful response to `createUser` method's callback. On calling this the syncs will start for all the data sources configured as per permissions. The method below syncs data in the background at regular intervals:
 
+<CodeSwitcher :languages="{kotlin:'Kotlin',java:'Java'}">
+<template v-slot:kotlin>
+
+```kotlin
+val finbox = FinBox()
+finbox.startPeriodicSync()
+```
+
+</template>
+
+<template v-slot:java>
+
 ```java
 FinBox finbox = new FinBox();
 finbox.startPeriodicSync();
 ```
+
+</template>
+</CodeSwitcher>
 
 ## Forward Notifications to SDK
 
@@ -171,9 +243,22 @@ FinBox.initLibrary(this);
 
 If you have already set up the sync for the user data, you can cancel it any time by the following code:
 
-```java
-finBox.stopPeriodicSync();
+<CodeSwitcher :languages="{kotlin:'Kotlin',java:'Java'}">
+<template v-slot:kotlin>
+
+```kotlin
+finbox.stopPeriodicSync();
 ```
+
+</template>
+<template v-slot:java>
+
+```java
+finbox.stopPeriodicSync();
+```
+
+</template>
+</CodeSwitcher>
 
 ## Handle Sync Frequency
 
