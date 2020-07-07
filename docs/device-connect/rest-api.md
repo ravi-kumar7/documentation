@@ -62,7 +62,7 @@ For all the Insights API request structure is the same, all requests must have `
 | salt | String | A salt which is computed basis logic mentioned in the section below |
 
 :::danger IMPORTANT
-Please not that this `CUSTOMER_ID` is the same used as the unique identifier used in Android SDK while syncing the data.
+Please note that this `CUSTOMER_ID` is the same used as the unique identifier used in Android SDK while syncing the data.
 :::
 
 ### Calculating salt
