@@ -96,7 +96,9 @@ A sample transaction object is listed below:
     "amount": 99.0,
     "servicename": "HDFC",
     "account_number": "HDFC 1234",
-    "time": "2019-10-22 13:58:01"
+    "time": "2019-10-22 13:58:01",
+    "is_qr_payment": "True",
+    "qr_service_provider": "BHARATPE"
 }
 ```
 
@@ -145,6 +147,8 @@ won’t always be the bank that is associated with the transaction.
 epoch
 - **amount**: this indicates the monetary amount that the transaction was made for.
 - **account_number**: a human-readable account number of the format: `<account company> <last 4 digits of account number>`
+- **is_qr_payment**: this indicates whether the transaction came in through a QR Code
+- **qr_service_provider**: Name of the QR Code provider
 
 ### Accounts API
 In the case of accounts API, the data key in response holds an array of account objects.
