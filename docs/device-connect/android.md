@@ -206,6 +206,20 @@ In certain cases, FinBox server often requests critical data from SDK directly (
 
 Add the following lines inside the overridden `onMessageReceived` method available in the service that extends `FirebaseMessagingService`.
 
+<CodeSwitcher :languages="{kotlin:'Kotlin',java:'Java'}">
+<template v-slot:kotlin>
+
+```kotlin
+if (MessagingService.forwardToFinBoxSDK(remoteMessage.data)) {
+    val firebaseMessagingService = MessagingService()
+    firebaseMessagingService.attachContext(this)
+    firebaseMessagingService.onMessageReceived(remoteMessage)
+}
+```
+
+</template>
+<template v-slot:java>
+
 ```java
 if(MessagingService.forwardToFinBoxSDK(remoteMessage.getData())) {
     final MessagingService firebaseMessagingService = new MessagingService();
@@ -213,6 +227,9 @@ if(MessagingService.forwardToFinBoxSDK(remoteMessage.getData())) {
     firebaseMessagingService.onMessageReceived(remoteMessage);
 }
 ```
+
+</template>
+</CodeSwitcher>
 
 ## Multi-Process Support
 
@@ -235,9 +252,22 @@ Remove the content provider that auto initializes the SDK from the Android Manif
 
 Initialize the FinBox SDK in the `onCreate` method of Application class.
 
+<CodeSwitcher :languages="{kotlin:'Kotlin',java:'Java'}">
+<template v-slot:kotlin>
+
+```kotlin
+FinBox.initLibrary(this)
+```
+
+</template>
+<template v-slot:java>
+
 ```java
 FinBox.initLibrary(this);
 ```
+
+</template>
+</CodeSwitcher>
 
 ## Cancel Periodic Syncing
 
@@ -247,7 +277,7 @@ If you have already set up the sync for the user data, you can cancel it any tim
 <template v-slot:kotlin>
 
 ```kotlin
-finbox.stopPeriodicSync();
+finbox.stopPeriodicSync()
 ```
 
 </template>
@@ -268,9 +298,22 @@ By default sync frequency is set to **8 hours**, you can modify it by passing pr
 
 In case the user data needs to be removed to re-sync the entire data, use the method `resetData`.
 
-```java
-FinBox.resetData();
+<CodeSwitcher :languages="{kotlin:'Kotlin',java:'Java'}">
+<template v-slot:kotlin>
+
+```kotlin
+finbox.resetData()
 ```
+
+</template>
+<template v-slot:java>
+
+```java
+finbox.resetData();
+```
+
+</template>
+</CodeSwitcher>
 
 ## Error Codes
 
