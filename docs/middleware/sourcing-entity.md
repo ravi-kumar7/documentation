@@ -1,5 +1,5 @@
 # Sourcing Entity
-FinBox Lending Middleware lets partners (sourcing entities) embed a fully digital loan journey within their app.
+FinBox Embedded Lending SDK lets partners (sourcing entities) embed a fully digital loan journey within their app.
 
 Partners place the lending CTA in context to their existing workflows. When user clicks the CTA, they initialize our SDK. The SDK encapsulates all necessary integrations such as eKYC, credit bureau, NBFC-AA and FinBox custom credit score.
 

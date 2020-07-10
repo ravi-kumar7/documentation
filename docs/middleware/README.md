@@ -1,6 +1,6 @@
-# FinBox Lending Middleware
+# FinBox Embedded Lending SDK
 
-FinBox Lending Middleware lets platforms integrate **Lending-as-a-service**. FinBox lending middleware is a drop-in module which can add lending to any digital platform in **few lines of code**. It provides:
+FinBox Embedded Lending SDK lets platforms integrate **Lending-as-a-service**. It is a drop-in module which can add lending to any digital platform in **few lines of code**. It provides:
 - Customizable journey
 - Rich underwriting data
 - Integrations for Credit bureaus, KYC, Payments, E-NACH, E-Mandate and E-Sign
