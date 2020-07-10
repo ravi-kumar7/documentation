@@ -9,7 +9,7 @@ FinBox Lending Middleware lets platforms integrate **Lending-as-a-service**. Fin
 
 Additionally FinBox also provides a **Dashboard** to manage loan applications.
 
-In this documentation, we refer to the **partner** as **"sourcing entity"** , the sourcing entity acquires and bring the customer to initiate the loan journey, while **"lender"** is the entity that approves and give loan.
+In this documentation, we refer the **origination partner** as **"sourcing entity"**. The sourcing entity acquires and bring the customer to initiate the loan journey, while **"lender"** is the entity that approves and give loan.
 
 Please head to respective guides for entity:
 - [Sourcing Entity](/middleware/sourcing-entity.html)
