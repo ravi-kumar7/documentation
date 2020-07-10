@@ -161,19 +161,27 @@ module.exports = {
           collapsable: false,
           children: [
             {
-              title: 'REST API',
-              path: '/middleware/sourcing-rest-api.html'
+              title: 'Introduction',
+              path: '/middleware/sourcing-entity.html'
             },
             {
               title: 'Android SDK',
               path: '/middleware/android-sdk.html'
+            },
+            {
+              title: 'REST API',
+              path: '/middleware/sourcing-rest-api.html'
             }
           ]
         },
         {
-          title: 'Lenders',
+          title: 'Lender',
           collapsable: false,
           children: [
+            {
+              title: 'Introduction',
+              path: '/middleware/lender.html'
+            },
             {
               title: 'REST API',
               path: '/middleware/lender-rest-api.html'
