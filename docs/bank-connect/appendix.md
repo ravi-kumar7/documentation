@@ -7,14 +7,18 @@ The table below lists the supported banks with their corresponding identifier. T
 | - | - |
 | allahabad | Allahabad Bank |
 | andhra | Andhra Bank |
-| axis | Axis India |
+| axis | Axis Bank |
+| bandhan | Bandhan Bank |
 | baroda | Bank of Baroda |
+| bharatbnk | Bharat Co-Operative Bank |
 | boi | Bank of India |
 | canara | Canara Bank |
 | central | Central Bank of India |
 | citi | Citibank |
 | city_union | City Union Bank |
 | corporation | Corporation Bank |
+| dbsbnk | DBS Bank |
+| dnsbnk | Dombivli Nagari Sahakari Bank |
 | dena | Dena Bank |
 | deutsche | Deutsche Bank |
 | federal | Federal Bank |
@@ -25,28 +29,29 @@ The table below lists the supported banks with their corresponding identifier. T
 | indbnk | Indian Bank |
 | indusind | IndusInd Bank |
 | iob | Indian Overseas Bank |
+| jnkbnk | Jammu and Kashmir Bank |
 | karnataka | Karnataka Bank |
 | karur | Karur Vysya Bank |
 | kotak | Kotak Mahindra Bank |
 | mahabk | Bank of Maharashtra |
 | obc | Oriental Bank of Commerce |
+| paytm | Paytm Payments Bank |
 | pnbbnk | Punjab National Bank |
 | punjab_sind | Punjab & Sind Bank |
 | rbl | RBL Bank |
 | sbi | State Bank of India |
+| shinhan | Shinhan Bank India |
 | sib | South Indian Bank |
+| svcbnk | SVC Co-Operative Bank |
 | syndicate | Syndicate Bank |
 | tamil_mercantile | Tamilnad Mercantile Bank |
 | ubi | Union Bank of India |
 | uco | UCO Bank |
+| ujjivan | Ujjivan Small Finance Bank |
 | united | United Bank of India |
 | vijaya | Vijaya Bank |
 | yesbnk | Yes Bank |
-| shinhan | Shinhan Bank India |
 | newindia | New India Co-Operative Bank |
-| bharatbnk | Bharat Co-Operative Bank |
-| svcbnk | SVC Co-Operative Bank |
-| dnsbnk | Dombivli Nagari Sahakari Bank |
 
 <!-- | vilas | Lakshmi Vilas Bank | -->
 <!-- | dcbbnk | DCB Bank | -->
