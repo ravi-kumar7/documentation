@@ -1041,13 +1041,13 @@ The list value of `predictors` key will be empty if any one of the statements ha
 | expense_5                     | Float or `null`   | total amount of debit in month 5 excluding amount of outward cheque bounce |
 | avg_monthly_expense           | Float           | average of total amount of expense to month duration         |
 | expense_to_income_ratio_5     | Float or `null`   | ratio of expense to income for month 5                       |
-| income_0                      | Float or `null`   | total amount of credit in month 0 excluding amount of inward cheque bounce, auto debit payment bounce and international transactions |
-| income_1                      | Float or `null`   | total amount of credit in month 1 excluding amount of inward cheque bounce, auto debit payment bounce and international transactions |
-| income_2                      | Float or `null`   | total amount of credit in month 2 excluding amount of inward cheque bounce, auto debit payment bounce and international transactions |
-| income_3                      | Float or `null`   | total amount of credit in month 3 excluding amount of inward cheque bounce, auto debit payment bounce and international transactions |
-| income_4                      | Float or `null`   | total amount of credit in month 4 excluding amount of inward cheque bounce, auto debit payment bounce and international transactions |
-| income_5                      | Float or `null`   | total amount of credit in month 5 excluding amount of inward cheque bounce, auto debit payment bounce and international transactions |
-| avg_monthly_income            | Float           | average of all months closing balance                        |
+| income_0                      | Float or `null`   | total amount of credit in month 0 excluding amount of inward cheque bounce, auto debit payment bounce, international transaction arbitrage credits and loan credits |
+| income_1                      | Float or `null`   | total amount of credit in month 1 excluding amount of inward cheque bounce, auto debit payment bounce, international transaction arbitrage credits and loan credits  |
+| income_2                      | Float or `null`   | total amount of credit in month 2 excluding amount of inward cheque bounce, auto debit payment bounce, international transaction arbitrage credits and loan credits  |
+| income_3                      | Float or `null`   | total amount of credit in month 3 excluding amount of inward cheque bounce, auto debit payment bounce, international transaction arbitrage credits and loan credits  |
+| income_4                      | Float or `null`   | total amount of credit in month 4 excluding amount of inward cheque bounce, auto debit payment bounce, international transaction arbitrage credits and loan credits  |
+| income_5                      | Float or `null`   | total amount of credit in month 5 excluding amount of inward cheque bounce, auto debit payment bounce, international transaction arbitrage credits and loan credits  |
+| avg_monthly_income            | Float           | average of total amount of income to month duration                        |
 | avg_expense_to_income_perc    | Float           | average total amount of expense to total income percentage   |
 | expense_to_income_ratio_0     | Float or `null`   | ratio of expense to income for month 0                       |
 | expense_to_income_ratio_1     | Float or `null`   | ratio of expense to income for month 1                       |
