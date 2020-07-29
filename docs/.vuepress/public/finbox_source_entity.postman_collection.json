@@ -1,0 +1,121 @@
+{
+	"info": {
+		"_postman_id": "7f324b0c-ce87-4050-a6ed-8a23afd4a31d",
+		"name": "Middleware Server-to-Server",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create User",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{server_api_key}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"customerID\": \"somecustomerid\",\n    \"mobile\": \"9999999999\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/v1/user/createUserServer",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"v1",
+						"user",
+						"createUserServer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Eligibility",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{server_api_key}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/v1/user/getUserEligibility?customerID=somecustomerid",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"v1",
+						"user",
+						"getUserEligibility"
+					],
+					"query": [
+						{
+							"key": "customerID",
+							"value": "somecustomerid"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Generate User Token",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{server_api_key}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"customerID\": \"somecustomerid\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/v1/user/generateUserToken",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"v1",
+						"user",
+						"generateUserToken"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

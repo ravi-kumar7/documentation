@@ -181,10 +181,6 @@ module.exports = {
             {
               title: 'Introduction',
               path: '/middleware/lender.html'
-            },
-            {
-              title: 'REST API',
-              path: '/middleware/lender-rest-api.html'
             }
           ]
         },
