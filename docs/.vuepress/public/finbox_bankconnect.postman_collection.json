@@ -41,7 +41,7 @@
 						},
 						{
 							"key": "bank_name",
-							"value": "axis",
+							"value": "sbi",
 							"description": "Bank Name Identifier",
 							"type": "text"
 						},
@@ -49,7 +49,8 @@
 							"key": "link_id",
 							"value": "your_link_id_here",
 							"description": "Link ID for the Entity",
-							"type": "text"
+							"type": "text",
+							"disabled": true
 						},
 						{
 							"key": "pdf_password",
@@ -58,7 +59,10 @@
 							"type": "text",
 							"disabled": true
 						}
-					]
+					],
+					"options": {
+						"formdata": {}
+					}
 				},
 				"url": {
 					"raw": "{{base_url}}/bank-connect/v1/statement/upload/?identity=true",
@@ -126,7 +130,8 @@
 							"key": "link_id",
 							"value": "your_link_id_here",
 							"description": "Link ID for the Entity",
-							"type": "text"
+							"type": "text",
+							"disabled": true
 						},
 						{
 							"key": "pdf_password",
@@ -135,7 +140,10 @@
 							"type": "text",
 							"disabled": true
 						}
-					]
+					],
+					"options": {
+						"formdata": {}
+					}
 				},
 				"url": {
 					"raw": "{{base_url}}/bank-connect/v1/statement/upload/?identity=true",
@@ -203,7 +211,8 @@
 							"key": "link_id",
 							"value": "your_link_id_here",
 							"description": "Link ID for the Entity",
-							"type": "text"
+							"type": "text",
+							"disabled": true
 						},
 						{
 							"key": "pdf_password",
@@ -212,7 +221,10 @@
 							"type": "text",
 							"disabled": true
 						}
-					]
+					],
+					"options": {
+						"formdata": {}
+					}
 				},
 				"url": {
 					"raw": "{{base_url}}/bank-connect/v1/statement/upload_base64/?identity=true",
@@ -274,7 +286,8 @@
 							"key": "link_id",
 							"value": "your_link_id_here",
 							"description": "Link ID for the Entity",
-							"type": "text"
+							"type": "text",
+							"disabled": true
 						},
 						{
 							"key": "pdf_password",
@@ -345,7 +358,8 @@
 							"key": "link_id",
 							"value": "your_link_id_here",
 							"description": "Link ID for the Entity",
-							"type": "text"
+							"type": "text",
+							"disabled": true
 						},
 						{
 							"key": "pdf_password",
@@ -354,7 +368,10 @@
 							"type": "text",
 							"disabled": true
 						}
-					]
+					],
+					"options": {
+						"formdata": {}
+					}
 				},
 				"url": {
 					"raw": "{{base_url}}/bank-connect/v1/statement/bankless_upload/?identity=true",
@@ -416,7 +433,8 @@
 							"key": "link_id",
 							"value": "your_link_id_here",
 							"description": "Link ID for the Entity",
-							"type": "text"
+							"type": "text",
+							"disabled": true
 						},
 						{
 							"key": "pdf_password",
@@ -427,9 +445,7 @@
 						}
 					],
 					"options": {
-						"raw": {
-							"language": "json"
-						}
+						"formdata": {}
 					}
 				},
 				"url": {
@@ -558,40 +574,6 @@
 			"response": []
 		},
 		{
-			"name": "Raw Excel Report",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "x-api-key",
-						"type": "text",
-						"value": "{{x-api-key}}"
-					},
-					{
-						"key": "server-hash",
-						"value": "{{server-hash}}",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "{{base_url}}/bank-connect/v1/entity/{{entity_id}}/raw_excel_report/",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"bank-connect",
-						"v1",
-						"entity",
-						"{{entity_id}}",
-						"raw_excel_report",
-						""
-					]
-				},
-				"description": "Fetch account wise transactions and monthly analysis in excel workbook format for a given `entity_id`"
-			},
-			"response": []
-		},
-		{
 			"name": "Detailed Excel Report",
 			"request": {
 				"method": "GET",
@@ -608,7 +590,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{base_url}}/bank-connect/v1/entity/{{entity_id}}/get_excel_report/",
+					"raw": "{{base_url}}/bank-connect/v1/entity/{{entity_id}}/xlsx_report/",
 					"host": [
 						"{{base_url}}"
 					],
@@ -617,11 +599,11 @@
 						"v1",
 						"entity",
 						"{{entity_id}}",
-						"get_excel_report",
+						"xlsx_report",
 						""
 					]
 				},
-				"description": "Fetch a detailed report (combined for all accounts) in excel workbook format for a given `entity_id`"
+				"description": "Fetch a detailed report (account wise) in excel workbook format for a given `entity_id`"
 			},
 			"response": []
 		},
@@ -892,6 +874,40 @@
 					]
 				},
 				"description": "API to update webhook URL"
+			},
+			"response": []
+		},
+		{
+			"name": "Get PDFs",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"type": "text",
+						"value": "{{x-api-key}}"
+					},
+					{
+						"key": "server-hash",
+						"value": "{{server-hash}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/bank-connect/v1/entity/{{entity_id}}/get_pdfs/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"bank-connect",
+						"v1",
+						"entity",
+						"{{entity_id}}",
+						"get_pdfs",
+						""
+					]
+				},
+				"description": "Fetch pdf urls, bank and password for all statements in a given `entity_id`"
 			},
 			"response": []
 		}

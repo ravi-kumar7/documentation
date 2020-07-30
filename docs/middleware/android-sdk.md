@@ -68,6 +68,7 @@ startActivityForResult(
 
 </template>
 <template v-slot:java>
+
 ```java
 private String REQUEST_CODE_ONBOARDING = 101;
 FinBoxLending builder = FinBoxLending.Builder(context, REQUEST_CODE_ONBOARDING)
@@ -91,6 +92,7 @@ The callback will be provided when the user exits the SDK. You can track the sta
 
 <CodeSwitcher :languages="{kotlin:'Kotlin',java:'Java'}">
 <template v-slot:kotlin>
+
 ```kotlin
 override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
@@ -105,6 +107,7 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) 
 
 </template>
 <template v-slot:java>
+
 ```java
 @Override
 private void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -117,6 +120,7 @@ private void onActivityResult(int requestCode, int resultCode, Intent data) {
     }
 }
 ```
+
 </template>
 </CodeSwitcher>
 

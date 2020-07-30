@@ -80,10 +80,10 @@ Once the dependency is added. You can use a BankConnect view anywhere in your co
 | `onExit` | specifies the callback when the user exits the SDK | No, but recommended |
 | `onSuccess`| specifies the callback when the document has been successfully uploaded. | No, but recommended |
 | `onError`| specifies the callback when an error occurred | No, but recommended |
-| `fromDate` and `toDate` | specifies the time period for which the statements will be fetched. If not provided the default date range is 3 months from the current date. Its format should be in `dd/MM/yyyy`. | No |
+| `fromDate` and `toDate` | specifies the time period for which the statements will be fetched. If not provided the default date range is 6 months from the current date. Its format should be in `dd/MM/yyyy`. | No |
 | `bankName` | pass the [bank identifier](/bank-connect/appendix.html#bank-identifiers) to skip the bank selection screen and directly open a that bank's screen instead | No |
 
-`fromDate` and `toDate` specify the period for which the statements will be fetched. For example, if you need the last 6 months of statements, `fromDate` will be today's date - 6 months and `toDate` will be today's date - 1 day. If not provided the default date range is 3 months from the current date. It should be in `dd/MM/yyyy` format.
+`fromDate` and `toDate` specify the period for which the statements will be fetched. For example, if you need the last 6 months of statements, `fromDate` will be today's date - 6 months and `toDate` will be today's date - 1 day. If not provided the default date range is 6 months from the current date. It should be in `dd/MM/yyyy` format.
 
 ::: warning Period Values
 - Please make sure `fromDate` is always less than `toDate`

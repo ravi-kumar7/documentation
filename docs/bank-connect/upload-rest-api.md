@@ -15,9 +15,9 @@ BankConnect accepts all requests with form fields, so please make sure that all 
 ## Authentication
 FinBox BankConnect REST API uses API keys to authenticate requests. All API requests must be made over HTTPS. Calls made over plain HTTP will fail. API requests without authentication will also fail.
 
-To provide an API key while making a request, `x-api-key` must be present in the request header with **API key** value.
+To make a successful request, required **headers mentioned with each API** must be present in the request.
 
-In case wrong/incomplete/no keys were passed, response will have **401** HTTP Code and payload as follows:
+In case wrong/incomplete/no keys were passed in headers, response will have **401** HTTP Code and payload as follows:
 ```json
 {
     "detail": "Authentication credentials were not provided."
@@ -49,6 +49,9 @@ This section lists the endpoint and request format for upload APIs that accepts 
 POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/statement/upload/?identity=true**
 :::
 
+### Authentication
+Request header `x-api-key` with API Key as value must be present in request.
+
 ### Parameters
 | Name | Type | Description | Required  | Default |
 | - | - | - | - | - |
@@ -65,6 +68,9 @@ In case you don't know bank name, and want BankConnect to automatically identify
 ::: tip Endpoint
 POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/statement/bankless_upload/?identity=true**
 :::
+
+### Authentication
+Request header `x-api-key` with API Key as value must be present in request.
 
 ### Parameters
 | Name | Type | Description | Required  | Default |
@@ -83,6 +89,9 @@ This section lists the endpoint and request format for upload APIs that accepts 
 POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/statement/upload_base64/?identity=true**
 :::
 
+### Authentication
+Request header `x-api-key` with API Key as value must be present in request.
+
 ### Parameters
 | Name | Type | Description | Required  | Default |
 | - | - | - | - | - |
@@ -99,6 +108,9 @@ In case you don't know bank name, and want BankConnect to automatically identify
 ::: tip Endpoint
 POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/statement/bankless_upload_base64/?identity=true**
 :::
+
+### Authentication
+Request header `x-api-key` with API Key as value must be present in request.
 
 ### Parameters
 | Name | Type | Description | Required  | Default |
@@ -117,6 +129,9 @@ This section lists the endpoint and request format for upload APIs that accepts 
 POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/statement/upload/?identity=true**
 :::
 
+### Authentication
+Request header `x-api-key` with API Key as value must be present in request.
+
 ### Parameters
 | Name | Type | Description | Required  | Default |
 | - | - | - | - | - |
@@ -133,6 +148,9 @@ In case you don't know bank name, and want BankConnect to automatically identify
 ::: tip Endpoint
 POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/statement/bankless_upload/?identity=true**
 :::
+
+### Authentication
+Request header `x-api-key` with API Key as value must be present in request.
 
 ### Parameters
 | Name | Type | Description | Required  | Default |
@@ -160,7 +178,8 @@ All the above APIs give the response in the format below in case of successful f
         "account_id": "uuid4_for_account",
         "account_number": "Account Number Extracted",
         "address": "Address extracted",
-        "name": "Name Extracted"
+        "name": "Name Extracted",
+        "account_category": "individual"
     },
     "fraud_type": null,
     "status": 1
@@ -175,17 +194,18 @@ The identity information returned in the response can be used to verify the cust
 | statement_id | string | Unique identifier for Statement |
 | entity_id | string | unique identifier for entity |
 | date_range | object | contains `from_date` and `to_date` strings indicating the time period in `YYYY-MM-DD` format |
-| is_fraud | boolean | indicates if a file level fraud was detected |
-| fraud_type | string | indicates the fraud type, if no fraud its value is `null` |
+| is_fraud | boolean | indicates if a metadata fraud was detected |
+| fraud_type | string | indicates the metadata fraud type, if no metadata fraud found, its value is `null` |
 | identity | object | contains multiple identity information keys extracted from the statement |
 | account_id | string | unique identifier for account |
 | account_number | string | bank account number |
+| account_category | string | account category, can be `individual` or `corporate` |
 | address | string | address of the bank account holder |
 | name | string | name of the bank account holder |
 | status | integer | contains the status code for API, should be 1 for success. Other possible values are listed in Bad Requests(/bank-connect/upload-rest-api.html#bad-request-cases) section |
 
 ::: warning NOTE
-- `fraud_type` field is `null` in case `is_fraud` field is false, otherwise it is a string. Please refer to [Fraud](/bank-connect/fraud.html) section in Basics to know more about it.
+- `fraud_type` field is `null` in case `is_fraud` field is false, otherwise it is a string. Please refer to [Fraud](/bank-connect/fraud.html) section to know more about it.
 - Some of the fields within the identity dictionary, or the `from_date` and `to_date` maybe `null` for few statements depending on the bank statement format and what all information is present on the top of the statement. The `from_date` and the `to_date` in case are returned as `null`, are updated for the statement at a later stage when transactions are extracted.
 - The query parameter `?identity=true` is optional for both the APIs above, if not specified the response will only include `entity_id`, `statement_id` and `bank_name` fields in case of successful upload.
 :::

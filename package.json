@@ -1,6 +1,6 @@
 {
   "devDependencies": {
-    "vuepress": "^1.5.0"
+    "vuepress": "^1.5.2"
   },
   "scripts": {
     "docs:dev": "vuepress dev docs",
@@ -9,8 +9,5 @@
   "dependencies": {
     "vuepress-plugin-code-copy": "^1.0.6",
     "vuepress-plugin-code-switcher": "^1.0.3"
-  },
-  "resolutions": {
-    "watchpack": "1.6.1"
   }
 }

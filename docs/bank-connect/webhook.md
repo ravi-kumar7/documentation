@@ -15,8 +15,16 @@ To configure this, you have to share with us a **valid endpoint**.
 :::
 
 ## Authentication
+FinBox BankConnect REST API uses API keys to authenticate requests. All API requests must be made over HTTPS. Calls made over plain HTTP will fail. API requests without authentication will also fail.
 
-All the APIs listed below use the same authentication method as listed [here](/bank-connect/rest-api.html#authentication).
+To make a successful request, required **headers mentioned with each API** must be present in the request.
+
+In case wrong/incomplete/no keys were passed in headers, response will have **401** HTTP Code and payload as follows:
+```json
+{
+    "detail": "Authentication credentials were not provided."
+}
+```
 
 ## Updating web hook endpoint
 To update your valid endpoint use the API below:
@@ -25,6 +33,10 @@ To update your valid endpoint use the API below:
 POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/update_webhook/**
 :::
 
+### Authentication
+Request headers `x-api-key` with API Key as value and `server-hash` with Server Hash as value must be present in request.
+
+### Request Body
 It receives following **request body** in `application/json` content type:
 ```json
 {
@@ -33,6 +45,7 @@ It receives following **request body** in `application/json` content type:
 ```
 Here, `https://postman-echo.com/post` is an example for valid endpoint.
 
+### Response
 On updating the web hook endpoint successfully, the `update_webhook` API will give **200 Status Code**.
 
 :::danger IMPORTANT
@@ -71,6 +84,11 @@ In case you just have the `link_id` you can also request for all the webhook pay
 ::: tip Endpoint
 GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/webhook_payloads/?link_id=`link_id`**
 :::
+
+### Authentication
+Request headers `x-api-key` with API Key as value and `server-hash` with Server Hash as value must be present in request.
+
+### Response
 Response format will be as follows:
 ```json
 {

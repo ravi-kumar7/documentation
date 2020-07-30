@@ -1,5 +1,5 @@
 # DeviceConnect: Android SDK
-The Android SDK can be used to integrate mobile apps with DeviceConnect so that users can share their data.
+Device Connect Android SDK is used to collect anonymised non-PII data from the devices of the users after taking explicit user consent.
 
 ::: warning NOTE
 Following will be shared by FinBox team at the time of integration:
@@ -9,9 +9,64 @@ Following will be shared by FinBox team at the time of integration:
 - `CLIENT_API_KEY`
 :::
 
+## Adding Dependency
+In the project level `build.gradle` file, add the repository URLs to all `allprojects` block.
+
+<CodeSwitcher :languages="{kotlin:'Kotlin',groovy:'Groovy'}">
+<template v-slot:kotlin>
+
+```kotlin
+maven {
+    setUrl("s3://risk-manager-android-sdk/artifacts")
+    credentials(AwsCredentials::class) {
+        accessKey = <ACCESS_KEY>
+        secretKey = <SECRET_KEY>
+    }
+}
+```
+
+</template>
+<template v-slot:groovy>
+
+```groovy
+maven {
+    url "s3://risk-manager-android-sdk/artifacts"
+    credentials(AwsCredentials) {
+        accessKey = <ACCESS_KEY>
+        secretKey = <SECRET_KEY>
+    }
+}
+```
+
+</template>
+</CodeSwitcher>
+
+Now add the dependency to module level `build.gradle.kts` or `build.gradle` file:
+
+<CodeSwitcher :languages="{kotlin:'Kotlin',groovy:'Groovy'}">
+<template v-slot:kotlin>
+
+```kotlin
+implementation("in.finbox:mobileriskmanager:<DC_SDK_VERSION>:parent-release@aar") {
+    isTransitive = true
+}
+```
+
+</template>
+<template v-slot:groovy>
+
+```groovy
+implementation('in.finbox:mobileriskmanager:<DC_SDK_VERSION>:parent-release@aar') {
+    transitive = true
+}
+```
+
+</template>
+</CodeSwitcher>
+
 ## Integration Flow
 
-Assuming the dependency has been added for your project as per [this](/device-connect/android.html#adding-dependency) section the following would be the flow in your app:
+Assuming the dependency has been added for your project, the following would be the flow in your app:
 
 <img src="/client_workflow.png" alt="Client Workflow" style="width:80%;height:80%" />
 
@@ -36,26 +91,6 @@ If the `createUser` response is successful, you can call `startPeriodicSync` fun
 - In certain cases, the FinBox server often communicates with SDK directly, to make sure this works it is required to **forward FCM Notifications to SDK**. Refer to [this](/device-connect/android.html#forward-notifications-to-sdk) article for it.
 - In the case of a multi-process application, it is required to initialize the SDK manually before calling the `createUser` method. Refer [here](/device-connect/android.html#multi-process-support) for such cases.
 :::
-
-## Adding Dependency
-In the project level `build.gradle` file, add the repository URLs to all `allprojects` block.
-
-```groovy
-maven {
-    url "s3://risk-manager-android-sdk/artifacts"
-    credentials(AwsCredentials) {
-        accessKey = <ACCESS_KEY>
-        secretKey = <SECRET_KEY>
-    }
-}
-```
-
-Now add the dependency to module level `build.gradle`:
-```groovy
-implementation('in.finbox:mobileriskmanager:<DC_SDK_VERSION>:parent-release@aar') {
-    transitive = true
-}
-```
 
 ## Handle Permissions
 
@@ -102,6 +137,25 @@ Please make sure `CUSTOMER_ID` is **not more than 64** characters and is **alpha
 
 The response to this method (success or failure) can be captured using the callback `FinBoxAuthCallback`.
 
+<CodeSwitcher :languages="{kotlin:'Kotlin',java:'Java'}">
+<template v-slot:kotlin>
+
+```kotlin
+FinBox.createUser("CLIENT_API_KEY", "CUSTOMER_ID",
+    object : FinBox.FinBoxAuthCallback {
+        override fun onSuccess(accessToken: String) {
+            // Authentication is success
+        }
+        
+        override fun onError(@FinBoxErrorCode errorCode: Int) {
+            // Authentication failed
+        }
+    })
+```
+
+</template>
+<template v-slot:java>
+
 ```java
 FinBox.createUser("CLIENT_API_KEY", "CUSTOMER_ID",
     new FinBox.FinBoxAuthCallback() {
@@ -117,22 +171,54 @@ FinBox.createUser("CLIENT_API_KEY", "CUSTOMER_ID",
     });
 ```
 
+</template>
+</CodeSwitcher>
+
 You can read about the error codes in [this](/device-connect/android.html#error-codes) section.
 
 ## Start Periodic Sync Method
 
 This is to be called only on a successful response to `createUser` method's callback. On calling this the syncs will start for all the data sources configured as per permissions. The method below syncs data in the background at regular intervals:
 
+<CodeSwitcher :languages="{kotlin:'Kotlin',java:'Java'}">
+<template v-slot:kotlin>
+
+```kotlin
+val finbox = FinBox()
+finbox.startPeriodicSync()
+```
+
+</template>
+
+<template v-slot:java>
+
 ```java
 FinBox finbox = new FinBox();
 finbox.startPeriodicSync();
 ```
+
+</template>
+</CodeSwitcher>
 
 ## Forward Notifications to SDK
 
 In certain cases, FinBox server often requests critical data from SDK directly (other than scheduled sync period), to make sure this works it is required to forward FCM Notifications to SDK.
 
 Add the following lines inside the overridden `onMessageReceived` method available in the service that extends `FirebaseMessagingService`.
+
+<CodeSwitcher :languages="{kotlin:'Kotlin',java:'Java'}">
+<template v-slot:kotlin>
+
+```kotlin
+if (MessagingService.forwardToFinBoxSDK(remoteMessage.data)) {
+    val firebaseMessagingService = MessagingService()
+    firebaseMessagingService.attachContext(this)
+    firebaseMessagingService.onMessageReceived(remoteMessage)
+}
+```
+
+</template>
+<template v-slot:java>
 
 ```java
 if(MessagingService.forwardToFinBoxSDK(remoteMessage.getData())) {
@@ -141,6 +227,9 @@ if(MessagingService.forwardToFinBoxSDK(remoteMessage.getData())) {
     firebaseMessagingService.onMessageReceived(remoteMessage);
 }
 ```
+
+</template>
+</CodeSwitcher>
 
 ## Multi-Process Support
 
@@ -163,17 +252,43 @@ Remove the content provider that auto initializes the SDK from the Android Manif
 
 Initialize the FinBox SDK in the `onCreate` method of Application class.
 
+<CodeSwitcher :languages="{kotlin:'Kotlin',java:'Java'}">
+<template v-slot:kotlin>
+
+```kotlin
+FinBox.initLibrary(this)
+```
+
+</template>
+<template v-slot:java>
+
 ```java
 FinBox.initLibrary(this);
 ```
+
+</template>
+</CodeSwitcher>
 
 ## Cancel Periodic Syncing
 
 If you have already set up the sync for the user data, you can cancel it any time by the following code:
 
-```java
-finBox.stopPeriodicSync();
+<CodeSwitcher :languages="{kotlin:'Kotlin',java:'Java'}">
+<template v-slot:kotlin>
+
+```kotlin
+finbox.stopPeriodicSync()
 ```
+
+</template>
+<template v-slot:java>
+
+```java
+finbox.stopPeriodicSync();
+```
+
+</template>
+</CodeSwitcher>
 
 ## Handle Sync Frequency
 
@@ -183,9 +298,22 @@ By default sync frequency is set to **8 hours**, you can modify it by passing pr
 
 In case the user data needs to be removed to re-sync the entire data, use the method `resetData`.
 
-```java
-FinBox.resetData();
+<CodeSwitcher :languages="{kotlin:'Kotlin',java:'Java'}">
+<template v-slot:kotlin>
+
+```kotlin
+finbox.resetData()
 ```
+
+</template>
+<template v-slot:java>
+
+```java
+finbox.resetData();
+```
+
+</template>
+</CodeSwitcher>
 
 ## Error Codes
 

@@ -7,14 +7,18 @@ The table below lists the supported banks with their corresponding identifier. T
 | - | - |
 | allahabad | Allahabad Bank |
 | andhra | Andhra Bank |
-| axis | Axis India |
+| axis | Axis Bank |
+| bandhan | Bandhan Bank |
 | baroda | Bank of Baroda |
+| bharatbnk | Bharat Co-Operative Bank |
 | boi | Bank of India |
 | canara | Canara Bank |
 | central | Central Bank of India |
 | citi | Citibank |
-| citi_union | City Union Bank |
+| city_union | City Union Bank |
 | corporation | Corporation Bank |
+| dbsbnk | DBS Bank |
+| dnsbnk | Dombivli Nagari Sahakari Bank |
 | dena | Dena Bank |
 | deutsche | Deutsche Bank |
 | federal | Federal Bank |
@@ -25,23 +29,29 @@ The table below lists the supported banks with their corresponding identifier. T
 | indbnk | Indian Bank |
 | indusind | IndusInd Bank |
 | iob | Indian Overseas Bank |
+| jnkbnk | Jammu and Kashmir Bank |
 | karnataka | Karnataka Bank |
 | karur | Karur Vysya Bank |
 | kotak | Kotak Mahindra Bank |
 | mahabk | Bank of Maharashtra |
 | obc | Oriental Bank of Commerce |
+| paytm | Paytm Payments Bank |
 | pnbbnk | Punjab National Bank |
 | punjab_sind | Punjab & Sind Bank |
 | rbl | RBL Bank |
 | sbi | State Bank of India |
+| shinhan | Shinhan Bank India |
 | sib | South Indian Bank |
+| svcbnk | SVC Co-Operative Bank |
 | syndicate | Syndicate Bank |
 | tamil_mercantile | Tamilnad Mercantile Bank |
 | ubi | Union Bank of India |
 | uco | UCO Bank |
+| ujjivan | Ujjivan Small Finance Bank |
 | united | United Bank of India |
 | vijaya | Vijaya Bank |
 | yesbnk | Yes Bank |
+| newindia | New India Co-Operative Bank |
 
 <!-- | vilas | Lakshmi Vilas Bank | -->
 <!-- | dcbbnk | DCB Bank | -->
@@ -52,25 +62,26 @@ The list below indicates the possible value for `transaction_channel` field:
 
 | `transaction_channel` | Description |
 | - | - |
-| upi	| Credit or Debit done through UPI
-| salary | Credits which are marked as salary in the bank statement
-| refund | Credits which are a refund of an earlier debit
-| payment_gateway_purchase | Debits done on a payment gateway
-| outward_cheque_bounce | Debit when a deposited cheque bounce and money is reverted
-| net_banking_transfer | Credit or Debit done through net banking
-| investment | Debit in account when doing an investment like FD or RD
-| inward_cheque_bounce | Credit when the cheque bounces and money is credit back to the account
-| investment_cashin | Credit to account, when you redeem your investment like an FD
-| international_transaction_arbitrage | Arbitrage because of the rate difference in currencies. Can be credit or debit
-| debit_card | Debit when a debit card is swiped at a Point of sale
-| chq | Credit or a Debit done through cheque
-| cash_withdrawl | Debit done when cash is withdrawn either through ATM or at Bank
-| cash_deposit | Credit when cash is deposited in an account
-| bill_payment | Debit marked as payment of any bill like Credit card bill payment or BillDesk
-| bank_interest | Credit in the account for interest received on deposit
-| bank_charge | Debit done by the bank for some service or tax like GST or SMS service
-| auto_debit_payment_bounce | Debit bank charge because of auto-debit payment bounce
-| auto_debit_payment | Debits like NACH or ECS
+| upi	| Credit or Debit done through UPI |
+| salary | Credits which are marked as salary in the bank statement |
+| refund | Credits which are a refund of an earlier debit |
+| payment_gateway_purchase | Debits done on a payment gateway |
+| outward_cheque_bounce | Debit when a deposited cheque bounce and money is reverted |
+| net_banking_transfer | Credit or Debit done through net banking |
+| investment | Debit in account when doing an investment like FD or RD |
+| inward_cheque_bounce | Credit when the cheque bounces and money is credit back to the account |
+| investment_cashin | Credit to account, when you redeem your investment like an FD |
+| international_transaction_arbitrage | Arbitrage because of the rate difference in currencies. Can be credit or debit |
+| debit_card | Debit when a debit card is swiped at a Point of sale |
+| chq | Credit or a Debit done through cheque |
+| cash_withdrawl | Debit done when cash is withdrawn either through ATM or at Bank |
+| cash_deposit | Credit when cash is deposited in an account |
+| bill_payment | Debit marked as payment of any bill like Credit card bill payment or BillDesk |
+| bank_interest | Credit in the account for interest received on deposit |
+| bank_charge | Debit done by the bank for some service or tax like GST or SMS service |
+| auto_debit_payment_bounce | Debit bank charge because of auto-debit payment bounce |
+| auto_debit_payment | Debits like NACH or ECS |
+| Others | Others |
 
 ## Description
 The list below indicates the possible values for `description` field of the transaction object:
@@ -84,6 +95,7 @@ The list below indicates the possible values for `description` field of the tran
 | credit_card_bill | credit card bill transaction. Transaction channel is `bill_payment` |
 | telco_bill | telecommunications bill transaction. Transaction channel is `bill_payment` |
 | electric_bill | electric bill transaction. Transaction channel is `bill_payment` |
+| deposit_by_machine | indicates cash deposit was made on an ATM/Kiosk. Transaction channel is `cash_deposit` |
 | chq_bounce_insuff_funds | check bounced due to insufficient funds. Transaction channel is `inward_cheque_bounce` or `outward_cheque_bounce` |
 | neft_return | NEFT return. Transaction channel is `refund` |
 

@@ -6,6 +6,14 @@ module.exports = {
   }], ['@vuepress/search', {
     test: ["^((?!device-connect\/transactions).)*$"]
   }]],
+  mounted() {
+    const hash = document.location.hash;
+    if (hash.length > 1) {
+      const id = hash.substring(1)
+      const element = document.getElementById(id)
+      if (element) element.scrollIntoView()
+    }
+  },
   themeConfig: {
     logo: '/logo.svg',
     heroText: ' ',
@@ -153,22 +161,26 @@ module.exports = {
           collapsable: false,
           children: [
             {
-              title: 'REST API',
-              path: '/middleware/sourcing-rest-api.html'
+              title: 'Introduction',
+              path: '/middleware/sourcing-entity.html'
             },
             {
               title: 'Android SDK',
               path: '/middleware/android-sdk.html'
+            },
+            {
+              title: 'REST API',
+              path: '/middleware/sourcing-rest-api.html'
             }
           ]
         },
         {
-          title: 'Lenders',
+          title: 'Lender',
           collapsable: false,
           children: [
             {
-              title: 'REST API',
-              path: '/middleware/lender-rest-api.html'
+              title: 'Introduction',
+              path: '/middleware/lender.html'
             }
           ]
         },
