@@ -113,9 +113,11 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) 
 private void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
     if (requestCode == REQUEST_CODE_ONBOARDING) {
-        if (resultCode != FinBoxLendingConstants.RESULT_EXIT) {
+        if (resultCode == FinBoxLendingConstants.RESULT_EXIT) {
             //Callback when user exits the flow, intent data has information holding users state
             data.getExtras().getInt(FinBoxLendingConstants.JOURNEY_RESULT_KEY); //Contains status of the journey
+            data.getExtras().getString(FinBoxLendingConstants.JOURNEY_VALUE); //Contains message for exit of the journey
+
         }
     }
 }
@@ -130,4 +132,6 @@ Journey result is passed to the intent and can have the following values:
 FinBoxLendingConstants.JOURNEY_COMPLETE - When the user completes the entire journey
 FinBoxLendingConstants.JOURNEY_ABANDON - When the user exits the SDK without completing
 FinBoxLendingConstants.JOURNEY_FAILURE - When some error occurs in the SDK
+
+FinBoxLendingConstants.JOURNEY_VALUE - Contains string result that can contain error message or screen name
 ```
