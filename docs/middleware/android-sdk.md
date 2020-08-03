@@ -28,9 +28,15 @@ The SDK has the following modules:
     }
    ```
 2. Add the Lending SDK dependency in the app `build.gradle` file
+
    ```groovy
-   implementation "in.finbox.lending:lending-sdk:1.0.1"
+    implementation 'in.finbox.lending:onboarding:1.1.2'
+    
+    implementation('in.finbox:mobileriskmanager:2.4:parent-release@aar') {
+        transitive = true
+    }
    ```
+
 3. Specify the following in `local.properties` file:
    ```
    AWS_KEY=<ACCESS_KEY>
@@ -77,12 +83,13 @@ FinBoxLending builder = FinBoxLending.Builder(context, REQUEST_CODE_ONBOARDING)
     .setUserToken(<user_token>)
     .build();
 
-startActivityForResult(  
- builder.getLendingIntent(getContext()),  
- REQUEST_CODE_ONBOARDING  
+startActivityForResult(
+ builder.getLendingIntent(getContext()),
+ REQUEST_CODE_ONBOARDING
 )
 
-````
+```
+
 </template>
 </CodeSwitcher>
 
@@ -103,7 +110,7 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) 
         }
     }
 }
-````
+```
 
 </template>
 <template v-slot:java>
