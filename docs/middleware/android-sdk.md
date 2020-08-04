@@ -37,13 +37,13 @@ FinBox Lending SDK is a drop-in module that can add a digital lending journey to
 
 ## Start SDK flow
 
-Once all dependencies are added SDK requires 3 inputs customerId, token and API Key
+Once all dependencies are added, SDK requires 3 inputs: `customer_id`, `user_token` and `client_api_key`.
 
 ::: tip Note
-CustomerId and Token need to be generated from the backend before starting the SDK. Refer [here](/middleware/sourcing-rest-api.html#get-eligibility)
+`user_token` needs to be generated against a `customer_id` on backend before starting the SDK. Refer [here](/middleware/sourcing-rest-api.html#get-eligibility)
 :::
 
-Now that all required parameters are available we can start with the integration
+Now that all required parameters are available, we can start the SDK flow as follows:
 
 <CodeSwitcher :languages="{kotlin:'Kotlin',java:'Java'}">
 <template v-slot:kotlin>
@@ -52,7 +52,7 @@ Now that all required parameters are available we can start with the integration
 val REQUEST_CODE_ONBOARDING = 101
 FinBoxLending.Builder(context, REQUEST_CODE_ONBOARDING)
     .setCustomerId(<customer_id>)
-    .setFinBoxApiKey(<api_key_provided>)
+    .setFinBoxApiKey(<client_api_key>)
     .setUserToken(<user_token>)
     .build()
 
@@ -69,7 +69,7 @@ startActivityForResult(
 private String REQUEST_CODE_ONBOARDING = 101;
 FinBoxLending builder = FinBoxLending.Builder(context, REQUEST_CODE_ONBOARDING)
     .setCustomerId(<customer_id>)
-    .setFinBoxApiKey(<api_key_provided>)
+    .setFinBoxApiKey(<client_api_key>)
     .setUserToken(<user_token>)
     .build();
 
@@ -121,13 +121,11 @@ private void onActivityResult(int requestCode, int resultCode, Intent data) {
 </CodeSwitcher>
 
 FinBoxJourneyResult has the following values:
+- `resultCode`: Status code for the journey.
+- `screen`: Name of the last screen in the journey
+- `message`: Any additional message to describe the resultCode
 
-```
-resultCode: Status code for the journey
-screen: Name of the last screen in the journey
-message: Any additional message to describe the resultCode
-```
-
+Possible values for `resultCode` are as follows:
 | Result Code | Description |
 | - | - | - |
 | `MW200` | When the journey has been completed successfully |
