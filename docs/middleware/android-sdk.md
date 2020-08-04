@@ -1,16 +1,6 @@
 # FinBox Lending: Android
 
 FinBox Lending SDK is a drop-in module that can add a digital lending journey to any mobile application.
-The SDK has the following modules:
-
-1. OnBoarding
-2. Bureau consent
-3. User profile
-4. KYC
-5. BankConnect
-6. Bank Verification
-7. Loan Agreement
-8. ENach
 
 ## Setting up the SDK
 
@@ -28,9 +18,15 @@ The SDK has the following modules:
     }
    ```
 2. Add the Lending SDK dependency in the app `build.gradle` file
+
    ```groovy
-   implementation "in.finbox.lending:lending-sdk:1.0.1"
+    implementation 'in.finbox.lending:onboarding:1.x.x'
+    
+    implementation('in.finbox:mobileriskmanager:2.x:parent-release@aar') {
+        transitive = true
+    }
    ```
+
 3. Specify the following in `local.properties` file:
    ```
    AWS_KEY=<ACCESS_KEY>
@@ -77,12 +73,13 @@ FinBoxLending builder = FinBoxLending.Builder(context, REQUEST_CODE_ONBOARDING)
     .setUserToken(<user_token>)
     .build();
 
-startActivityForResult(  
- builder.getLendingIntent(getContext()),  
- REQUEST_CODE_ONBOARDING  
+startActivityForResult(
+ builder.getLendingIntent(getContext()),
+ REQUEST_CODE_ONBOARDING
 )
 
-````
+```
+
 </template>
 </CodeSwitcher>
 
@@ -97,13 +94,12 @@ The callback will be provided when the user exits the SDK. You can track the sta
 override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
     if (requestCode == REQUEST_CODE_ONBOARDING) {
-        if (resultCode != FinBoxLendingConstants.RESULT_EXIT) {
-            //Callback when user exits the flow, intent data has information holding users state
-            data.extras.getInt(FinBoxLendingConstants.JOURNEY_RESULT_KEY) //Contains status of the journey
-        }
+        val result = data.extras.getParcelable<FinBoxJourneyResult>(FINBOX_JOURNEY_RESULT)
+        //Callback when user exits the flow, intent data has information holding users state
     }
+    
 }
-````
+```
 
 </template>
 <template v-slot:java>
@@ -115,9 +111,7 @@ private void onActivityResult(int requestCode, int resultCode, Intent data) {
     if (requestCode == REQUEST_CODE_ONBOARDING) {
         if (resultCode == FinBoxLendingConstants.RESULT_EXIT) {
             //Callback when user exits the flow, intent data has information holding users state
-            data.getExtras().getInt(FinBoxLendingConstants.JOURNEY_RESULT_KEY); //Contains status of the journey
-            data.getExtras().getString(FinBoxLendingConstants.JOURNEY_VALUE); //Contains message for exit of the journey
-
+            FinBoxJourneyResult result = data.getExtras().getParcelable(FinBoxLendingConstants.FINBOX_JOURNEY_RESULT); //Contains status of the journey
         }
     }
 }
@@ -126,12 +120,17 @@ private void onActivityResult(int requestCode, int resultCode, Intent data) {
 </template>
 </CodeSwitcher>
 
-Journey result is passed to the intent and can have the following values:
+FinBoxJourneyResult has the following values:
 
 ```
-FinBoxLendingConstants.JOURNEY_COMPLETE - When the user completes the entire journey
-FinBoxLendingConstants.JOURNEY_ABANDON - When the user exits the SDK without completing
-FinBoxLendingConstants.JOURNEY_FAILURE - When some error occurs in the SDK
-
-FinBoxLendingConstants.JOURNEY_VALUE - Contains string result that can contain error message or screen name
+resultCode: Status code for the journey
+screen: Name of the last screen in the journey
+message: Any additional message to describe the resultCode
 ```
+
+| Result Code | Description |
+| - | - | - |
+| `MW200` | When the journey has been completed successfully |
+| `MW500` | When the user exits a journey |
+| `MW500` | When there was some issue in the SDK |
+ 
