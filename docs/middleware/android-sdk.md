@@ -30,7 +30,7 @@ The SDK has the following modules:
 2. Add the Lending SDK dependency in the app `build.gradle` file
 
    ```groovy
-    implementation 'in.finbox.lending:onboarding:1.1.2'
+    implementation 'in.finbox.lending:onboarding:1.2.0'
     
     implementation('in.finbox:mobileriskmanager:2.4:parent-release@aar') {
         transitive = true
