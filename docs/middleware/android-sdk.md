@@ -127,11 +127,10 @@ resultCode: Status code for the journey
 screen: Name of the last screen in the journey
 message: Any additional message to describe the resultCode
 ```
-  
-Following are the resultCode that SDK supports:
 
-MW200: When journey has been completed successfully
-MW500: When user exits the journey
-MW400: When there was some issue in the SDK
-
+| Result Code | Description |
+| - | - | - |
+| `MW200` | When the journey has been completed successfully |
+| `MW500` | When the user exits a journey |
+| `MW500` | When there was some issue in the SDK |
  
