@@ -26,7 +26,7 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}/v1/user/createUserServer",
+					"raw": "{{base_url}}/v1/user/create",
 					"host": [
 						"{{base_url}}"
 					],
@@ -63,7 +63,7 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}/v1/user/getUserEligibility?customerID=somecustomerid",
+					"raw": "{{base_url}}/v1/user/eligibility?customerID=somecustomerid",
 					"host": [
 						"{{base_url}}"
 					],
@@ -103,7 +103,7 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}/v1/user/generateUserToken",
+					"raw": "{{base_url}}/v1/user/token",
 					"host": [
 						"{{base_url}}"
 					],

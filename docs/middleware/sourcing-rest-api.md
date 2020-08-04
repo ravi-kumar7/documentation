@@ -1,8 +1,3 @@
----
-base_url: https://middleware.finbox.in #base URL for the API
-version: v1 # version of API
----
-
 # Sourcing Entity - Rest API
 These APIs are called from the **server side**. The workflow is as follows:
 - First a user is created by calling [Create User](/middleware/sourcing-rest-api.html#create-user) API
@@ -13,14 +8,13 @@ These APIs are called from the **server side**. The workflow is as follows:
 All the APIs below require a **Server API Key** to be passed in `x-api-key` header. This API Key will be shared directly by FinBox. Make sure this key is not exposed in any of your client side applications.
 
 ## Postman Collection
-Postman **collection** and **environment** for BankConnect REST APIs can be downloaded using the buttons below:
+Postman **collection** for the REST APIs can be downloaded using the button below:
 
 <div class="button_holder">
-<a class="download_button" download href="/finbox_source_entity.postman_collection.json">Download Collection</a>
-<a class="download_button" download href="/finbox_source_entity.postman_environment.json">Download Environment</a>
+<a class="download_button" download href="/finbox_source_entity.postman_collection.json">Download Postman Collection</a>
 </div>
 
-You'll have to update the `server-api-key` value in the the postman environment with your **Server API Key**, for the APIs to work.
+Postman environment having `base_url` and `server-api-key` will be shared separately.
 
 ## Request and Response formats
 All APIs accept request body with `application/json` content type, the response body is as follows:
@@ -37,7 +31,7 @@ On failure, response will have `status` key as `false`, and `error` will hold th
 ## Create User
 This API creates a FinBox lending user for a given customer ID.
 ::: tip Endpoint
-POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/user/createUserServer**
+POST **`base_url`/v1/user/create**
 :::
 
 **Request Format**
@@ -61,7 +55,7 @@ POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/user/createU
 ## Get Eligibility
 This API checks for a user's eligibility and returns the eligible amount
 ::: tip Endpoint
-GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/user/getUserEligibility?customerID={{somecustomerid}}**
+GET **`base_url`/v1/user/eligibility?customerID=`somecustomerid`**
 :::
 
 **Response**
@@ -80,7 +74,7 @@ Here `is_eligible` is a **boolean** indicating whether the user is eligible or n
 ## Generate Token
 This API can be called multiple times for an eligible user, and is used to get a valid token that can be used by the Android App to initialize the SDK.
 ::: tip Endpoint
-POST **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/user/generateUserToken**
+POST **`base_url`/v1/user/token**
 :::
 
 **Request Format**
