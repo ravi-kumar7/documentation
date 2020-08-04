@@ -13,16 +13,17 @@ FinBox Lending SDK is a drop-in module that can add a digital lending journey to
            secretKey = properties.getProperty('AWS_SECRET_KEY')
        }
    }
-   maven {
-        url  "https://dl.bintray.com/finbox/LendingMiddleware"
-    }
    ```
 2. Add the Lending SDK dependency in the app `build.gradle` file
 
    ```groovy
-    implementation 'in.finbox.lending:onboarding:1.x.x'
-    
-    implementation('in.finbox:mobileriskmanager:2.x:parent-release@aar') {
+    implementation ("in.finbox.lending:core-uat:<LENDING_SDK_VERSION>:uat@aar") {
+        transitive = true
+    }
+    implementation ("in.finbox.lending:onboarding-uat:<LENDING_SDK_VERSION>:uat@aar") {
+        transitive = true
+    }
+    implementation('in.finbox:mobileriskmanager:<RISK_SDK_VERSION>:parent-release@aar') {
         transitive = true
     }
    ```
@@ -31,8 +32,8 @@ FinBox Lending SDK is a drop-in module that can add a digital lending journey to
    ```
    AWS_KEY=<ACCESS_KEY>
    AWS_SECRET=<SECRET_KEY>
-   FINBOX_RM_VERSION=<DC_SDK_VERSION>
-   FINBOX_RM_ARTIFACT=pfm-release
+   FINBOX_RM_VERSION=<RISK_SDK_VERSION>
+   FINBOX_RM_ARTIFACT=parent-release
    ```
 
 ## Start SDK flow
@@ -130,5 +131,15 @@ Possible values for `resultCode` are as follows:
 | - | - | - |
 | `MW200` | When the journey has been completed successfully |
 | `MW500` | When the user exits a journey |
-| `MW500` | When there was some issue in the SDK |
+| `MW400` | When there was some issue in the SDK |
+ 
+
+Possible values for `screen` are as follows:
+| Screen | Description |
+| - | - | - |
+| `Permissions` | Permission list screen |
+| `PAN Consent` | Pan consent screen |
+| `Profile` | Basic profile info screen |
+ 
+
  
