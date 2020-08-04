@@ -4,36 +4,28 @@ FinBox Lending SDK is a drop-in module that can add a digital lending journey to
 
 ## Setting up the SDK
 
-1. Add the Bintray repo url in the project `build.gradle` file
+1. Add the repository url in the project `build.gradle` file
    ```groovy
    maven {
      url "s3://risk-manager-android-sdk/artifacts"
      credentials(AwsCredentials) {
-     accessKey = properties.getProperty('AWS_ACCESS_KEY')
-           secretKey = properties.getProperty('AWS_SECRET_KEY')
+            accessKey = 'ACCESS_KEY'
+            secretKey = 'SECRET_KEY'
        }
    }
    ```
 2. Add the Lending SDK dependency in the app `build.gradle` file
 
    ```groovy
-    implementation ("in.finbox.lending:core-uat:<LENDING_SDK_VERSION>:uat@aar") {
+    implementation("in.finbox.lending:core-uat:<LENDING_SDK_VERSION>:uat@aar") {
         transitive = true
     }
-    implementation ("in.finbox.lending:onboarding-uat:<LENDING_SDK_VERSION>:uat@aar") {
+    implementation("in.finbox.lending:onboarding-uat:<LENDING_SDK_VERSION>:uat@aar") {
         transitive = true
     }
-    implementation('in.finbox:mobileriskmanager:<RISK_SDK_VERSION>:parent-release@aar') {
+    implementation("in.finbox:mobileriskmanager:<RISK_SDK_VERSION>:parent-release@aar") {
         transitive = true
     }
-   ```
-
-3. Specify the following in `local.properties` file:
-   ```
-   AWS_KEY=<ACCESS_KEY>
-   AWS_SECRET=<SECRET_KEY>
-   FINBOX_RM_VERSION=<RISK_SDK_VERSION>
-   FINBOX_RM_ARTIFACT=parent-release
    ```
 
 ## Start SDK flow
@@ -96,9 +88,8 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) 
     super.onActivityResult(requestCode, resultCode, data)
     if (requestCode == REQUEST_CODE_ONBOARDING) {
         val result = data.extras.getParcelable<FinBoxJourneyResult>(FINBOX_JOURNEY_RESULT)
-        //Callback when user exits the flow, intent data has information holding users state
+        // callback when user exits the flow, intent data has information holding users state
     }
-    
 }
 ```
 
@@ -111,8 +102,8 @@ private void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
     if (requestCode == REQUEST_CODE_ONBOARDING) {
         if (resultCode == FinBoxLendingConstants.RESULT_EXIT) {
-            //Callback when user exits the flow, intent data has information holding users state
-            FinBoxJourneyResult result = data.getExtras().getParcelable(FinBoxLendingConstants.FINBOX_JOURNEY_RESULT); //Contains status of the journey
+            // callback when user exits the flow, intent data has information holding users state
+            FinBoxJourneyResult result = data.getExtras().getParcelable(FinBoxLendingConstants.FINBOX_JOURNEY_RESULT); // contains status of the journey
         }
     }
 }
@@ -129,17 +120,17 @@ FinBoxJourneyResult has the following values:
 Possible values for `resultCode` are as follows:
 | Result Code | Description |
 | - | - | - |
-| `MW200` | When the journey has been completed successfully |
-| `MW500` | When the user exits a journey |
-| `MW400` | When there was some issue in the SDK |
+| `MW200` | Journey is completed successfully |
+| `MW500` | User exits the journey |
+| `MW400` | Some error occured in the SDK |
  
 
 Possible values for `screen` are as follows:
 | Screen | Description |
 | - | - | - |
 | `Permissions` | Permission list screen |
-| `PAN Consent` | Pan consent screen |
-| `Profile` | Basic profile info screen |
+| `PAN Consent` | PAN consent screen |
+| `Profile` | Basic profile screen |
  
 
  
