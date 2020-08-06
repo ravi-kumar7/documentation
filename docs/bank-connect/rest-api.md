@@ -1104,6 +1104,48 @@ The list value of `predictors` key will be empty if any one of the statements ha
 | total_salary_3                | Float or `null`   | total amount of salary credited in month 3                   |
 | total_salary_4                | Float or `null`   | total amount of salary credited in month 4                   |
 | total_salary_5                | Float or `null`   | total amount of salary credited in month 5                   |
+| balance_net_off_on_1st_0 | Float or `null` | eod balance on 1st of month 0 excluding loan credits |
+| balance_net_off_on_1st_1 | Float or `null` | eod balance on 1st of month 1 excluding loan credits |
+| balance_net_off_on_1st_2 | Float or `null` | eod balance on 1st of month 2 excluding loan credits |
+| balance_net_off_on_1st_3 | Float or `null` | eod balance on 1st of month 3 excluding loan credits |
+| balance_net_off_on_1st_4 | Float or `null` | eod balance on 1st of month 4 excluding loan credits |
+| balance_net_off_on_1st_5 | Float or `null` | eod balance on 1st of month 5 excluding loan credits |
+| balance_net_off_on_5th_0 | Float or `null` | eod balance on 5th of month 0 excluding loan credits |
+| balance_net_off_on_5th_1 | Float or `null` | eod balance on 5th of month 1 excluding loan credits |
+| balance_net_off_on_5th_2 | Float or `null` | eod balance on 5th of month 2 excluding loan credits |
+| balance_net_off_on_5th_3 | Float or `null` | eod balance on 5th of month 3 excluding loan credits |
+| balance_net_off_on_5th_4 | Float or `null` | eod balance on 5th of month 4 excluding loan credits |
+| balance_net_off_on_5th_5 | Float or `null` | eod balance on 5th of month 5 excluding loan credits |
+| balance_net_off_on_10th_0 | Float or `null` | eod balance on 10th of month 0 excluding loan credits |
+| balance_net_off_on_10th_1 | Float or `null` | eod balance on 10th of month 1 excluding loan credits |
+| balance_net_off_on_10th_2 | Float or `null` | eod balance on 10th of month 2 excluding loan credits |
+| balance_net_off_on_10th_3 | Float or `null` | eod balance on 10th of month 3 excluding loan credits |
+| balance_net_off_on_10th_4 | Float or `null` | eod balance on 10th of month 4 excluding loan credits |
+| balance_net_off_on_10th_5 | Float or `null` | eod balance on 10th of month 5 excluding loan credits |
+| balance_net_off_on_15th_0 | Float or `null` | eod balance on 15th of month 0 excluding loan credits |
+| balance_net_off_on_15th_1 | Float or `null` | eod balance on 15th of month 1 excluding loan credits |
+| balance_net_off_on_15th_2 | Float or `null` | eod balance on 15th of month 2 excluding loan credits |
+| balance_net_off_on_15th_3 | Float or `null` | eod balance on 15th of month 3 excluding loan credits |
+| balance_net_off_on_15th_4 | Float or `null` | eod balance on 15th of month 4 excluding loan credits |
+| balance_net_off_on_15th_5 | Float or `null` | eod balance on 15th of month 5 excluding loan credits |
+| balance_net_off_on_20th_0 | Float or `null` | eod balance on 20th of month 0 excluding loan credits |
+| balance_net_off_on_20th_1 | Float or `null` | eod balance on 20th of month 1 excluding loan credits |
+| balance_net_off_on_20th_2 | Float or `null` | eod balance on 20th of month 2 excluding loan credits |
+| balance_net_off_on_20th_3 | Float or `null` | eod balance on 20th of month 3 excluding loan credits |
+| balance_net_off_on_20th_4 | Float or `null` | eod balance on 20th of month 4 excluding loan credits |
+| balance_net_off_on_20th_5 | Float or `null` | eod balance on 20th of month 5 excluding loan credits |
+| balance_net_off_on_25th_0 | Float or `null` | eod balance on 25th of month 0 excluding loan credits |
+| balance_net_off_on_25th_1 | Float or `null` | eod balance on 25th of month 1 excluding loan credits |
+| balance_net_off_on_25th_2 | Float or `null` | eod balance on 25th of month 2 excluding loan credits |
+| balance_net_off_on_25th_3 | Float or `null` | eod balance on 25th of month 3 excluding loan credits |
+| balance_net_off_on_25th_4 | Float or `null` | eod balance on 25th of month 4 excluding loan credits |
+| balance_net_off_on_25th_5 | Float or `null` | eod balance on 25th of month 5 excluding loan credits |
+| balance_net_off_on_30th_0 | Float or `null` | eod balance on 30th of month 0 excluding loan credits |
+| balance_net_off_on_30th_1 | Float or `null` | eod balance on 30th of month 1 excluding loan credits |
+| balance_net_off_on_30th_2 | Float or `null` | eod balance on 30th of month 2 excluding loan credits |
+| balance_net_off_on_30th_3 | Float or `null` | eod balance on 30th of month 3 excluding loan credits |
+| balance_net_off_on_30th_4 | Float or `null` | eod balance on 30th of month 4 excluding loan credits |
+| balance_net_off_on_30th_5 | Float or `null` | eod balance on 30th of month 5 excluding loan credits |
 
 :::warning NOTE
 - month decreases going from 0 to 5, that is month 0 is the latest month while 5 is older
