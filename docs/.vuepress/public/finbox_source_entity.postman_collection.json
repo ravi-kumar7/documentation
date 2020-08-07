@@ -33,7 +33,7 @@
 					"path": [
 						"v1",
 						"user",
-						"createUserServer"
+						"create"
 					]
 				}
 			},
@@ -70,7 +70,7 @@
 					"path": [
 						"v1",
 						"user",
-						"getUserEligibility"
+						"eligibility"
 					],
 					"query": [
 						{
@@ -110,7 +110,7 @@
 					"path": [
 						"v1",
 						"user",
-						"generateUserToken"
+						"token"
 					]
 				}
 			},
