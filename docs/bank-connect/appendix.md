@@ -6,6 +6,7 @@ The table below lists the supported banks with their corresponding identifier. T
 | Identifier | Bank Name |
 | - | - |
 | allahabad | Allahabad Bank |
+| alrajhi | Al Rajhi Bank |
 | andhra | Andhra Bank |
 | axis | Axis Bank |
 | bandhan | Bandhan Bank |
@@ -34,6 +35,7 @@ The table below lists the supported banks with their corresponding identifier. T
 | karur | Karur Vysya Bank |
 | kotak | Kotak Mahindra Bank |
 | mahabk | Bank of Maharashtra |
+| ncb | National Commercial Bank (AlAhli Bank) |
 | obc | Oriental Bank of Commerce |
 | paytm | Paytm Payments Bank |
 | pnbbnk | Punjab National Bank |
