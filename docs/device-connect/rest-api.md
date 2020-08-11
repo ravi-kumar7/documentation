@@ -393,7 +393,7 @@ You have to register your webhook address with FinBox. Please get in touch with 
 
 ```json
 {
-    "service": "transactions",
+    "service": "PREDICTORS",
     "customer_id": "89561ea2190946a9",
     "salt": "/+Y459HYwFtWB2656bE5eTvB4NmTSoTmoAyt9SAtwek=",
     "request_id": "aad12-dabmd-ddb-1123d"
