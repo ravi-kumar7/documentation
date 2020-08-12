@@ -35,6 +35,7 @@ The table below lists the supported banks with their corresponding identifier. T
 | karur | Karur Vysya Bank |
 | kotak | Kotak Mahindra Bank |
 | mahabk | Bank of Maharashtra |
+| mahagrambnk | Maharashtra Gramin Bank |
 | ncb | National Commercial Bank (AlAhli Bank) |
 | obc | Oriental Bank of Commerce |
 | paytm | Paytm Payments Bank |
