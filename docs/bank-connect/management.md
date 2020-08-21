@@ -93,6 +93,7 @@ Here, `statements` key will contain a list of statements for the given entity. E
 
 :::danger IMPORTANT
 - Statement files on our system get automatically deleted after 30 days of upload date has passed. Post this, the "pdf_url" key will be a blank string. `""`.
+- `pdf_url` if present is valid for 1 hour since the time of link generation
 - In case the `entity_id` doesn't exists the API will return a **404 HTTP Code**.
 :::
 
