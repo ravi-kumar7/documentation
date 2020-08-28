@@ -23,6 +23,7 @@ The table below lists the supported banks with their corresponding identifier. T
 | dena | Dena Bank |
 | deutsche | Deutsche Bank |
 | federal | Federal Bank |
+| gsmahanagar | GS Mahanagar Co-Op Bank |
 | hdfc | HDFC Bank |
 | icici | ICICI India |
 | idbi | IDBI Bank |
