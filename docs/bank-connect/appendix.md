@@ -19,6 +19,7 @@ The table below lists the supported banks with their corresponding identifier. T
 | city_union | City Union Bank |
 | corporation | Corporation Bank |
 | dbsbnk | DBS Bank |
+| dcbbnk | DCB Bank |
 | dnsbnk | Dombivli Nagari Sahakari Bank |
 | dena | Dena Bank |
 | deutsche | Deutsche Bank |
@@ -58,7 +59,6 @@ The table below lists the supported banks with their corresponding identifier. T
 | newindia | New India Co-Operative Bank |
 
 <!-- | vilas | Lakshmi Vilas Bank | -->
-<!-- | dcbbnk | DCB Bank | -->
 <!-- | stanchar | Standard Chartered | -->
 
 ## Transaction Channel
