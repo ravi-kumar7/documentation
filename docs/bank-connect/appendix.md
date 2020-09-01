@@ -8,6 +8,8 @@ The table below lists the supported banks with their corresponding identifier. T
 | allahabad | Allahabad Bank |
 | alrajhi | Al Rajhi Bank |
 | andhra | Andhra Bank |
+| apgvbnk | Andhra Pradesh Grameena Vikas Bank |
+| ausfbnk | AU Small Finance Bank |
 | axis | Axis Bank |
 | bandhan | Bandhan Bank |
 | baroda | Bank of Baroda |
@@ -23,7 +25,9 @@ The table below lists the supported banks with their corresponding identifier. T
 | dnsbnk | Dombivli Nagari Sahakari Bank |
 | dena | Dena Bank |
 | deutsche | Deutsche Bank |
+| esafbnk | ESAF Small Finance Bank |
 | federal | Federal Bank |
+| fincarebnk | Fincare Small Finance Bank |
 | gsmahanagar | GS Mahanagar Co-Op Bank |
 | hdfc | HDFC Bank |
 | icici | ICICI India |
@@ -39,6 +43,7 @@ The table below lists the supported banks with their corresponding identifier. T
 | mahabk | Bank of Maharashtra |
 | mahagrambnk | Maharashtra Gramin Bank |
 | ncb | National Commercial Bank (AlAhli Bank) |
+| newindia | New India Co-Operative Bank |
 | obc | Oriental Bank of Commerce |
 | paytm | Paytm Payments Bank |
 | pnbbnk | Punjab National Bank |
@@ -47,6 +52,7 @@ The table below lists the supported banks with their corresponding identifier. T
 | sbi | State Bank of India |
 | shinhan | Shinhan Bank India |
 | sib | South Indian Bank |
+| suryodaybnk | Suryoday Small Finance Bank |
 | svcbnk | SVC Co-Operative Bank |
 | syndicate | Syndicate Bank |
 | tamil_mercantile | Tamilnad Mercantile Bank |
@@ -55,10 +61,9 @@ The table below lists the supported banks with their corresponding identifier. T
 | ujjivan | Ujjivan Small Finance Bank |
 | united | United Bank of India |
 | vijaya | Vijaya Bank |
+| vilas | Lakshmi Vilas Bank |
 | yesbnk | Yes Bank |
-| newindia | New India Co-Operative Bank |
 
-<!-- | vilas | Lakshmi Vilas Bank | -->
 <!-- | stanchar | Standard Chartered | -->
 
 ## Transaction Channel
