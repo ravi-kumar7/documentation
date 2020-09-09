@@ -296,7 +296,10 @@
 							"type": "text",
 							"disabled": true
 						}
-					]
+					],
+					"options": {
+						"formdata": {}
+					}
 				},
 				"url": {
 					"raw": "{{base_url}}/bank-connect/v1/statement/bankless_upload/?identity=true",
@@ -540,6 +543,142 @@
 			"response": []
 		},
 		{
+			"name": "Salary",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"type": "text",
+						"value": "{{x-api-key}}"
+					},
+					{
+						"key": "server-hash",
+						"value": "{{server-hash}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/bank-connect/v1/entity/{{entity_id}}/salary/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"bank-connect",
+						"v1",
+						"entity",
+						"{{entity_id}}",
+						"salary",
+						""
+					]
+				},
+				"description": "Fetch salary transactions for a given `entity_id`"
+			},
+			"response": []
+		},
+		{
+			"name": "Recurring transactions",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{x-api-key}}",
+						"type": "text"
+					},
+					{
+						"key": "server-hash",
+						"value": "{{server-hash}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/bank-connect/v1/entity/{{entity_id}}/recurring_transactions/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"bank-connect",
+						"v1",
+						"entity",
+						"{{entity_id}}",
+						"recurring_transactions",
+						""
+					]
+				},
+				"description": "Fetch recurring transactions for a given `entity_id`"
+			},
+			"response": []
+		},
+		{
+			"name": "Lender Transactions",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{x-api-key}}",
+						"type": "text"
+					},
+					{
+						"key": "server-hash",
+						"value": "{{server-hash}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/bank-connect/v1/entity/{{entity_id}}/lender_transactions/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"bank-connect",
+						"v1",
+						"entity",
+						"{{entity_id}}",
+						"lender_transactions",
+						""
+					]
+				},
+				"description": "Fetch Lender Transactions for a given `entity_id`"
+			},
+			"response": []
+		},
+		{
+			"name": "Expense Categories",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"type": "text",
+						"value": "{{x-api-key}}"
+					},
+					{
+						"key": "server-hash",
+						"type": "text",
+						"value": "{{server-hash}}"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/bank-connect/v1/entity/{{entity_id}}/get_expense_categories/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"bank-connect",
+						"v1",
+						"entity",
+						"{{entity_id}}",
+						"get_expense_categories",
+						""
+					]
+				},
+				"description": "Get expense category wise percentage distribution of transaction amounts for a given `entity_id`"
+			},
+			"response": []
+		},
+		{
 			"name": "Monthly Analysis",
 			"request": {
 				"method": "GET",
@@ -638,108 +777,6 @@
 					]
 				},
 				"description": "Fetch accounts associated with a given `entity_id`"
-			},
-			"response": []
-		},
-		{
-			"name": "Salary",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "x-api-key",
-						"type": "text",
-						"value": "{{x-api-key}}"
-					},
-					{
-						"key": "server-hash",
-						"value": "{{server-hash}}",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "{{base_url}}/bank-connect/v1/entity/{{entity_id}}/salary/",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"bank-connect",
-						"v1",
-						"entity",
-						"{{entity_id}}",
-						"salary",
-						""
-					]
-				},
-				"description": "Fetch salary transactions for a given `entity_id`"
-			},
-			"response": []
-		},
-		{
-			"name": "Lender Transactions",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "x-api-key",
-						"value": "{{x-api-key}}",
-						"type": "text"
-					},
-					{
-						"key": "server-hash",
-						"value": "{{server-hash}}",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "{{base_url}}/bank-connect/v1/entity/{{entity_id}}/lender_transactions/",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"bank-connect",
-						"v1",
-						"entity",
-						"{{entity_id}}",
-						"lender_transactions",
-						""
-					]
-				},
-				"description": "Fetch Lender Transactions for a given `entity_id`"
-			},
-			"response": []
-		},
-		{
-			"name": "Recurring transactions",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "x-api-key",
-						"value": "{{x-api-key}}",
-						"type": "text"
-					},
-					{
-						"key": "server-hash",
-						"value": "{{server-hash}}",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "{{base_url}}/bank-connect/v1/entity/{{entity_id}}/recurring_transactions/",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"bank-connect",
-						"v1",
-						"entity",
-						"{{entity_id}}",
-						"recurring_transactions",
-						""
-					]
-				},
-				"description": "Fetch recurring transactions for a given `entity_id`"
 			},
 			"response": []
 		},

@@ -691,6 +691,63 @@ The response fields are the same as in [List Accounts](/bank-connect/rest-api.ht
 - `balance`: account balance just after this transaction
 - `transaction_channel`: refer to [this](/bank-connect/appendix.html#transaction-channel) list for possible values.
 
+## Expense Categories <Badge text="New" />
+Get expense category wise percentage distribution of transaction amounts for a given entity.
+
+::: tip Endpoint
+GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/`<entity_id>`/get_expense_categories/**
+:::
+
+### Authentication
+Request headers `x-api-key` with API Key as value and `server-hash` with Server Hash as value must be present in request.
+
+### Response
+On fetching information successfully, the response would be of the following format with **200 HTTP code**:
+```json
+{
+    "entity_id": "uuid4_for_entity",
+    "progress": [
+        {
+            "statement_id": "uuid4_for_statement",
+            "status": "completed",
+            "message": null
+        }
+    ],
+    "categories": [
+        {
+            "category": "Transfers",
+            "percentage": 46
+        },
+        {
+            "category": "Bills",
+            "percentage": 42
+        },
+        {
+            "category": "Loans",
+            "percentage": 5
+        },
+        {
+            "category": "Ewallet",
+            "percentage": 5
+        },
+        {
+            "category": "Cash",
+            "percentage": 1
+        },
+        {
+            "category": "Others",
+            "percentage": 1
+        }
+    ]
+}
+```
+Here, the `progress` field holds an array of statement wise progress status, while the `categories` field holds a list of objects each having following fields:
+
+| Field | Type | Description |
+| - | - | - |
+| category | String | contains the expense category, it is a mix of [merchant category](/bank-connect/appendix.html#merchant-category) and [transaction channel](/bank-connect/appendix.html#transaction-channel) |
+| percentage | Integer | percentage for the expense category rounded to nearest integer with some of all percentage equal to 100 |
+
 ## Monthly Analysis <Badge text="New" />
 Get monthly analysis for a given entity.
 
