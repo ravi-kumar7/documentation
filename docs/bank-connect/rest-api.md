@@ -701,6 +701,13 @@ GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/`<enti
 ### Authentication
 Request headers `x-api-key` with API Key as value and `server-hash` with Server Hash as value must be present in request.
 
+### Query Parameters
+Query parameters can be appended at end of the URL like `/?account_id=somevalue`
+
+| Parameter | Optional | Type | Description |
+| - | - | - | - |
+| account_id | Yes | String | If specified, it filter outs the transactions for a particular account | 
+
 ### Response
 On fetching information successfully, the response would be of the following format with **200 HTTP code**:
 ```json
