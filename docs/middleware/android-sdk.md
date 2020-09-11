@@ -157,5 +157,20 @@ Possible values for `screen` are as follows:
 | `KYC Address` | KYC Submit address screen |
 | `KYC Analysis` | KYC Processing screen |
  
+## Customizations
 
- 
+1. The privacy policy URL needs to be updated to the company policy. The default privacy policy is pointing to FinBox privacy. Add a String resource to specify the policy URL.
+
+```xml
+<string name="finbox_lending_privacy_policy_url">https://finbox.in/about/privacy</string>
+```
+
+::: tip Note
+Make sure the value passed is a valid URL
+:::
+
+2. The toolbar title can be updated which will be visible in the Dashboard module. In order to update the toolbar just add a String resource for the same.
+
+```xml
+<string name="finbox_appbar_title">My App</string>
+```
