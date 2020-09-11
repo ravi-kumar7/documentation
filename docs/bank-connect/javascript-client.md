@@ -127,10 +127,11 @@ This is received whenever any error occurs in the user flow.
 ```js
 {
   type: "finbox-bankconnect",
-  status: "exit",
+  status: "error",
   payload: {
       "reason": "Reason for failure",
-      "linkId": "<USER_ID_PASSED>" //Link ID is the identifier that was passed while initializing the SDK
+      "linkId": "<USER_ID_PASSED>", //Link ID is the identifier that was passed while initializing the SDK
+      "error_type": "MUXXX",//MUXXX for Manual Upload and NBXXX for Net Banking
   }
 }
 ```
@@ -138,3 +139,19 @@ This is received whenever any error occurs in the user flow.
 :::warning Two Events
 In case an error occurs, you'll receive `OnError` event payload, and then if the user exits the SDK, you'll receive another event payload, this time for `OnExit`.
 :::
+
+##### Error types
+In case of Error, error_type of  ```MUXXX``` implies an error in Manual PDF Upload and ```NBXXX``` implies its from Netbanking.
+
+| Case | error_type | Sample payload|
+| - |  - | - |
+| Trial Expired for Dev Credentials  | MU002 | ```{"reason:"Trial Expired for Dev Credentials",linkID:"<USER_ID_PASSED>","error_type":"MU002"}```| 
+| PDF Password Incorrect | MU003 | ```{"reason:"Password Incorrect",linkID:"<USER_ID_PASSED>","error_type":"MU003"}```|
+| Specified bank doesn't match with detected bank | MU004 | ```{"reason:"Not axis statement",linkID:"<USER_ID_PASSED>","error_type":"MU004"}```|
+| Non Parsable PDF - PDF file is corrupted or has no selectable text (only scanned images)| MU006 | ```{"reason:"",linkID:"<USER_ID_PASSED>","error_type":"MU006"}```|
+| Not a valid statement or bank is not supported | MU020 | ```{"reason:"Not a valid statement or bank is not supported",linkID:"<USER_ID_PASSED>","error_type":"MU020"}```|
+| Invalid Date Range | MU021 | ```{"reason:"Please upload statements within the date range fromDate to toDate",linkID:"<USER_ID_PASSED>","error_type":"MU021"}```|
+| NetBanking Failed| NB000 | ```{"reason:"failure_message",linkID:"<USER_ID_PASSED>","error_type":"NB000"}```|
+| Netbanking Login Error | NB003 | ```{"reason:"failure_message",linkID:"<USER_ID_PASSED>","error_type":"NB003"}```|
+| Captcha Error | NB004 | ```{"reason:"Invalid Captcha",linkID:"<USER_ID_PASSED>","error_type":"NB004"}```|
+| Security Error | NB005 | ```{"reason:"failure_message",linkID:"<USER_ID_PASSED>","error_type":"NB005"}```|
