@@ -156,7 +156,7 @@ Possible values for `screen` are as follows:
 | `KYC` | KYC screen |
 | `Penny Drop` | Bank verification screen |
 | `Loan Details` | Loan details screen |
-| `Sign Aggreemnt` | Sign aggreement screen |
+| `Sign Agreement` | Sign agreement screen |
 | `KYC Address` | KYC Submit address screen |
 | `KYC Analysis` | KYC Processing screen |
  
