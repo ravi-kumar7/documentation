@@ -21,9 +21,27 @@ FinBox Lending SDK is a drop-in module that can add a digital lending journey to
         transitive = true
     }
     implementation("in.finbox.lending:onboarding-uat:<LENDING_SDK_VERSION>:uat@aar") {
+        exclude group: 'in.finbox', module: 'mobileriskmanager'
+        transitive = true
+    }
+    implementation("in.finbox.lending:dashboard-uat:<LENDING_SDK_VERSION>:uat@aar") {
+        exclude group: 'in.finbox.lending', module: 'core'
+        transitive = true
+    }
+    implementation("in.finbox.lending:preloan-uat:<LENDING_SDK_VERSION>:uat@aar") {
+        exclude group: 'in.finbox.lending', module: 'core'
+        transitive = true
+    }
+    implementation("in.finbox.lending:kyc-uat:<LENDING_SDK_VERSION>:uat@aar") {
+        exclude group: 'in.finbox.lending', module: 'core'
+        transitive = true
+    }
+    implementation("in.finbox.lending:pennydrop-uat:<LENDING_SDK_VERSION>:uat@aar") {
+        exclude group: 'in.finbox.lending', module: 'core'
         transitive = true
     }
     implementation("in.finbox:mobileriskmanager:<RISK_SDK_VERSION>:parent-release@aar") {
+        exclude group: 'in.finbox.lending', module: 'core'
         transitive = true
     }
    ```
@@ -43,7 +61,7 @@ Now that all required parameters are available, we can start the SDK flow as fol
 
 ```kotlin
 val REQUEST_CODE_ONBOARDING = 101
-FinBoxLending.Builder(context, REQUEST_CODE_ONBOARDING)
+FinBoxLending.Builder(context)
     .setCustomerId(<customer_id>)
     .setFinBoxApiKey(<client_api_key>)
     .setUserToken(<user_token>)
@@ -60,7 +78,7 @@ startActivityForResult(
 
 ```java
 private String REQUEST_CODE_ONBOARDING = 101;
-FinBoxLending builder = FinBoxLending.Builder(context, REQUEST_CODE_ONBOARDING)
+FinBoxLending builder = FinBoxLending.Builder(context)
     .setCustomerId(<customer_id>)
     .setFinBoxApiKey(<client_api_key>)
     .setUserToken(<user_token>)
@@ -122,15 +140,40 @@ Possible values for `resultCode` are as follows:
 | - | - | - |
 | `MW200` | Journey is completed successfully |
 | `MW500` | User exits the journey |
-| `MW400` | Some error occured in the SDK |
+| `MW400` | Some error occurred in the SDK |
  
 
 Possible values for `screen` are as follows:
 | Screen | Description |
 | - | - | - |
+| `Launcher` | Permission list screen |
 | `Permissions` | Permission list screen |
+| `SMS Permission` | Permission list screen |
 | `PAN Consent` | PAN consent screen |
 | `Profile` | Basic profile screen |
+| `Pre Loan` | Loan application screen |
+| `Dashboard` | Dashboard screen |
+| `KYC` | KYC screen |
+| `Penny Drop` | Bank verification screen |
+| `Loan Details` | Loan details screen |
+| `Sign Aggreemnt` | Sign aggreement screen |
+| `KYC Address` | KYC Submit address screen |
+| `KYC Analysis` | KYC Processing screen |
  
+## Customizations
 
- 
+1. The privacy policy URL needs to be updated to the company policy. The default privacy policy is pointing to FinBox privacy. Add a String resource to specify the policy URL.
+
+```xml
+<string name="finbox_lending_privacy_policy_url">https://finbox.in/about/privacy</string>
+```
+
+::: tip Note
+Make sure the value passed is a valid URL
+:::
+
+2. The toolbar title can be updated which will be visible in the Dashboard module. In order to update the toolbar just add a String resource for the same.
+
+```xml
+<string name="finbox_appbar_title">My App</string>
+```
