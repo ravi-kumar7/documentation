@@ -154,6 +154,9 @@ Possible values for `screen` are as follows:
 | `Pre Loan` | Loan application screen |
 | `Dashboard` | Dashboard screen |
 | `KYC` | KYC screen |
+| `Penny Drop` | Bank verification screen |
+| `Loan Details` | Loan details screen |
+| `Sign Aggreemnt` | Sign aggreement screen |
 | `KYC Address` | KYC Submit address screen |
 | `KYC Analysis` | KYC Processing screen |
  
