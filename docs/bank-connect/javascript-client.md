@@ -127,7 +127,7 @@ This is received whenever any error occurs in the user flow.
 ```js
 {
   type: "finbox-bankconnect",
-  status: "exit",
+  status: "error",
   payload: {
       "reason": "Reason for failure",
       "linkId": "<USER_ID_PASSED>", //Link ID is the identifier that was passed while initializing the SDK
