@@ -92,7 +92,7 @@ PFM Cutomizable Notifications
 
 1. Extend `FinanceMessagingService` instead of extending `FirebaseMessagingService`.
 
-```
+```java
 
     public class MyMessagingService extends FinanceMessagingService {
         
@@ -102,7 +102,7 @@ PFM Cutomizable Notifications
    
 2. Override the following methods and provide a pending intent that specifies the destinations.
 
-```
+```java
 
     @NotNull
     @Override
@@ -116,9 +116,7 @@ PFM Cutomizable Notifications
                 PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
-```
 
-```
     @NotNull
     @Override
     public PendingIntent generateHomeIntent() {
@@ -130,9 +128,7 @@ PFM Cutomizable Notifications
                 PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
-```
 
-```
     @NotNull
     @Override
     public PendingIntent generateWeeklySpendIntent(@NotNull Bundle bundle) {
@@ -145,9 +141,7 @@ PFM Cutomizable Notifications
                 PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
-```
 
-```
 
     @NotNull
     @Override
@@ -174,7 +168,7 @@ PFM Cutomizable Notifications
 
 3. Once the login is successful at the `LoginActivity`, take the user to the `DashboardActivity`. Now, check the extras and navigate the user to the `ExpenseActivity`.
 
-```
+```java
     private void decideDestinationFragment(@NotNull final Bundle extras) {
         final int requestCode = extras.getInt(REQUEST_CODE_NOTIFICATION_KEY_NAME, -1);
         if (requestCode == REQUEST_CODE_WEEK_ACCOUNT_SPEND) {
@@ -235,7 +229,7 @@ PFM Cutomizable Notifications
 
 4. Forward the notifications to the `FinanceMessagingService`.
 
-```
+```java
 
     if (FinanceMessagingService.forwardToFinBoxPfmSdk(message.getData())) {
         super.onMessageReceived(message);
