@@ -51,7 +51,7 @@ FinBox Lending SDK is a drop-in module that can add a digital lending journey to
 Once all dependencies are added, SDK requires 3 inputs: `customer_id`, `user_token` and `client_api_key`.
 
 ::: tip Note
-`user_token` needs to be generated against a `customer_id` on backend before starting the SDK. Refer [here](/middleware/sourcing-rest-api.html#get-eligibility)
+`user_token` needs to be generated against a `customer_id` on backend before starting the SDK. Refer [here](/middleware/sourcing-rest-api.html#generate-token)
 :::
 
 Now that all required parameters are available, we can start the SDK flow as follows:
@@ -146,19 +146,18 @@ Possible values for `resultCode` are as follows:
 Possible values for `screen` are as follows:
 | Screen | Description |
 | - | - | - |
-| `Launcher` | Permission list screen |
+| `Launcher` | The base screen (Hidden Activity) |
 | `Permissions` | Permission list screen |
-| `SMS Permission` | Permission list screen |
-| `PAN Consent` | PAN consent screen |
 | `Profile` | Basic profile screen |
-| `Pre Loan` | Loan application screen |
+| `PAN Consent` | PAN consent screen |
 | `Dashboard` | Dashboard screen |
+| `Loan Form` | Loan application screen |
 | `KYC` | KYC screen |
-| `Penny Drop` | Bank verification screen |
-| `Loan Details` | Loan details screen |
+| `Bank Verification` | Bank verification screen |
+| `Loan Offer` | Loan details screen |
 | `Sign Agreement` | Sign agreement screen |
-| `KYC Address` | KYC Submit address screen |
-| `KYC Analysis` | KYC Processing screen |
+
+
  
 ## Customizations
 
