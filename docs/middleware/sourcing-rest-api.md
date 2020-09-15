@@ -323,4 +323,28 @@ GET **`base_url`/v1/user/activity?customerID=`someCustomerID`**
 A list of all possible activities can be found [Appendix](/middleware/appendix.html#list of-user-activities)
 A list of all possible entity types can be found [Appendix](/middleware/appendix.html#list of-entity-types)
 
+## Webhook
+A webhook can be configured to receive events on different actions taken throughout the user journey.
 
+To configure webhook URL, you have to share with us a **valid endpoint**.
+
+:::tip A Valid Endpoint:
+- receives a POST request
+- receives a request body with content-type `application/json`
+- returns a 200 status code on successful reception.
+:::
+
+We'll be sending JSON encoded body in the following payload format:
+```json
+{
+    "customerID": "some_customer_id",
+    "entityType": "sourcing_entity",
+    "eventDescription": "",
+    "eventType": "eligibility_calculated",
+    "loanApplicationID": "",
+    "loggedAt": "2020-09-15 21:58:31"
+}
+```
+`loanApplicationID` is available once the loan application is created.
+A list of all possible activities can be found [Appendix](/middleware/appendix.html#list of-user-activities)
+A list of all possible entity types can be found [Appendix](/middleware/appendix.html#list of-entity-types)
