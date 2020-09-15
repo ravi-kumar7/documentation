@@ -320,8 +320,10 @@ GET **`base_url`/v1/user/activity?customerID=`someCustomerID`**
     }
 }
 ```
-A list of all possible activities can be found [Appendix](/middleware/appendix.html#list of-user-activities)
-A list of all possible entity types can be found [Appendix](/middleware/appendix.html#list of-entity-types)
+
+A list of all possible activities can be found [Appendix](/middleware/appendix.html#list-of-user-activities)
+
+A list of all possible entity types can be found [Appendix](/middleware/appendix.html#list-of-entity-types)
 
 ## Webhook
 A webhook can be configured to receive events on different actions taken throughout the user journey.
@@ -346,5 +348,7 @@ We'll be sending JSON encoded body in the following payload format:
 }
 ```
 `loanApplicationID` is available once the loan application is created.
-A list of all possible activities can be found [Appendix](/middleware/appendix.html#list of-user-activities)
-A list of all possible entity types can be found [Appendix](/middleware/appendix.html#list of-entity-types)
+
+A list of all possible activities can be found [Appendix](/middleware/appendix.html#list-of-user-activities)
+
+A list of all possible entity types can be found [Appendix](/middleware/appendix.html#list-of-entity-types)
