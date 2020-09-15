@@ -1,6 +1,6 @@
 # Appendix
 
-## List of Customer status
+## List of customer status
 | Value | Description |
 | - | - |
 | USER_CREATED | Customer was created via server APIs |
@@ -25,7 +25,7 @@
 | SIGN_AGREEMENT |
 | DISBURSED |
 
-## List of Customer activities
+## List of customer activities
 | Value | Description | Entity |
 | - | - | - |
 | user_created | User was created against a customerID |  Sourcing Entity Server |

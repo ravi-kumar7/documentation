@@ -321,7 +321,7 @@ GET **`base_url`/v1/user/activity?customerID=`someCustomerID`**
 }
 ```
 
-A list of all possible activities can be found [Appendix](/middleware/appendix.html#list-of-user-activities)
+A list of all possible activities can be found [Appendix](/middleware/appendix.html#list-of-custom-activities)
 
 A list of all possible entity types can be found [Appendix](/middleware/appendix.html#list-of-entity-types)
 
@@ -349,6 +349,6 @@ We'll be sending JSON encoded body in the following payload format:
 ```
 `loanApplicationID` is available once the loan application is created.
 
-A list of all possible activities can be found [Appendix](/middleware/appendix.html#list-of-user-activities)
+A list of all possible activities can be found [Appendix](/middleware/appendix.html#list-of-customer-activities)
 
 A list of all possible entity types can be found [Appendix](/middleware/appendix.html#list-of-entity-types)
