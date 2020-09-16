@@ -282,7 +282,7 @@ Most of the parameters of the response are self-explainatory. Some key fields ar
 | loanApplicationNum | A readable loan number format is FBxxx |
 | appliedLoanAmount | The amount of loan applied by the user. Note that it might be different from the final loan offer |
 | residenceType | Type of residence - Rented or Owned |
-| maritalStaus | Single or Married |
+| maritalStaus | Unmarried or Married |
 | loanPurpose | Purpose of loan application |
 | ref1name | Name of First Reference Contact |
 | ref1phone | Phone number of First Reference Contact |
@@ -294,7 +294,55 @@ Most of the parameters of the response are self-explainatory. Some key fields ar
 | dob | Date of Birth in `YYYY-MM-DD` format |
 | createdAt | Date time of loan creation in `YYYY-MM-DD HH:MM:SS` format (UTC) |
 
+## Loan Offers
+Returns the loan offers made to a given loan application.
+::: tip Endpoint
+GET **`base_url`/v1/loan/offers?loanApplicationID=`someLongLoanApplicationUUID`**
+:::
 
+```json
+{
+    "data": [
+        {
+            "amount": 6500,
+            "tenureMonths": 6,
+            "annualInterest": 14.4,
+            "processingFee": 700,
+            "gst": 18,
+            "emi": 1161,
+            "emiCalculationMethod": "flat_rate",
+            "status": "offer_accepted",
+            "disbursalAmount": 5674,
+            "totalPayableAmount": 6966,
+            "emiDates": [
+                "2020-11-05",
+                "2020-12-07",
+                "2021-01-05",
+                "2021-02-05",
+                "2021-03-05",
+                "2021-04-05"
+            ]
+        }
+    ],
+    "error": "",
+    "status": true
+}
+```
+
+Response fields are explained below:
+| Field | Type | Description |
+| - | - | - |
+| amount | Float | Loan Amount |
+| tenureMonths | Integer | Tenure in Months |
+| annualInterest | Float | Annual Interest Rate in Percentage |
+| processingFee | Float | Processing Fee |
+| gst| Float | GST Percentage |
+| emi | Float | EMI Amount |
+| emiCalculationMethod | String | Can be `flat_rate` or `reducing_balance` |
+| status | String | Can be `offer_accepted` or `offered` |
+| disbursalAmount | Float | Final Disbursal Amount |
+| totalPayableAmount | Float | Total Payable Amount |
+| emiDates | Array of String | EMI Dates in `YYYY-MM-DD` format |
 
 ## User Activity History
 Returns the activity 

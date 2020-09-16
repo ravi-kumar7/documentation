@@ -246,6 +246,49 @@
 			"response": []
 		},
 		{
+			"name": "Loan Offers",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"type": "text",
+						"value": "{{server_api_key}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/v1/loan/offers?loanApplicationID=some-long-uuid-version4",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"v1",
+						"loan",
+						"offers"
+					],
+					"query": [
+						{
+							"key": "loanApplicationID",
+							"value": "some-long-uuid-version4"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "List Users",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
