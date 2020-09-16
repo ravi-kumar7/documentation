@@ -173,6 +173,8 @@ GET **`base_url`/v1/user/profile?customerID=`someCustomerID`**
 ```
 Different values of user status can be found in [Appendix](/middleware/appendix.html)
 
+`createdAt` indicates the date time of user creation in `YYYY-MM-DD HH:MM:SS` format (UTC)
+
 ## List Loans
 Lists all the loan applications created from a given sourcing entity's account. It's a paginated API.
 ::: tip Endpoint
@@ -218,6 +220,8 @@ Query parameters can be appended at end of the URL like `/?account_id=somevalue`
 ```
 Different values of loan status can be found in [Appendix](/middleware/appendix.html#list-of-loan-status)
 
+`createdAt` indicates the date time of loan creation in `YYYY-MM-DD HH:MM:SS` format (UTC)
+
 ## Loan Details
 Returns the details of a given loan application.
 ::: tip Endpoint
@@ -233,14 +237,14 @@ GET **`base_url`/v1/loan/details?loanApplicationID=`someLongLoanApplicationUUID`
         "loanApplicationNum": "FB1600196175625806",
         "appliedLoanAmount":15000,
         "status": "BANK_ADDED",
-        "createdAt": "2020-09-15 18:56:15.630492",
+        "createdAt": "2020-09-15 18:56:15",
         "userDetails": {
             "name": "Amazing User",
             "email": "username@email.com",
             "mobile": "9999999999",
             "gender": "Male",
             "dob": "1992-12-09",
-            "maritalStatus": "Male",
+            "maritalStatus": "Married",
             "currentAddress": "{\"line1\": \"22, 80 Feet Rd\", \"line2\": \"Koramangala\", \"city\": \"Bengaluru\", \"pincode\": \"560095\", \"state\": \"Karnataka\"}",
             "workExperience": "2 years 0 months",
             "loanPurpose": "Education",
@@ -278,6 +282,7 @@ Most of the parameters of the response are self-explainatory. Some key fields ar
 | loanApplicationNum | A readable loan number format is FBxxx |
 | appliedLoanAmount | The amount of loan applied by the user. Note that it might be different from the final loan offer |
 | residenceType | Type of residence - Rented or Owned |
+| maritalStaus | Single or Married |
 | loanPurpose | Purpose of loan application |
 | ref1name | Name of First Reference Contact |
 | ref1phone | Phone number of First Reference Contact |
@@ -286,7 +291,8 @@ Most of the parameters of the response are self-explainatory. Some key fields ar
 | fisScore | User's FinBox Inclusion Score |
 | bureauScore | User's bureau score from one of the credit bureaus |
 | accountHolderName | Verified name as per user's bank account |
-
+| dob | Date of Birth in `YYYY-MM-DD` format |
+| createdAt | Date time of loan creation in `YYYY-MM-DD HH:MM:SS` format (UTC) |
 
 
 

@@ -15,6 +15,7 @@
 | - |
 | FRESH_LOAN |
 | LOAN_DETAILS_SUBMITTED |
+| KYC_PROCESSING |
 | KYC_SUCCESS |
 | KYC_REJECTED |
 | LENDER_APPROVAL_REJECTED |
@@ -44,6 +45,7 @@
 | lender_assigned | A lender was assigned to finance the loan application | System |
 | loan_approved | Loan was approved by a lender | System / Lender |
 | loan_rejected | Loan was rejected by a lender | System / Lender |
+| loan_offer_accepted | Loan offer was accepted by customer | Customer |
 | bank_details_added | Customer updated bank details - acc number & IFSC | Customer |
 | bank_verification_failed | Bank could not be verified | System |
 | bank_details_verified | Bank verification successful | System |
