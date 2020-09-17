@@ -252,10 +252,12 @@ GET **`base_url`/v1/loan/details?loanApplicationID=`someLongLoanApplicationUUID`
             "fathersName": "",
             "pan": "ABCDP0000N",
             "customerID": "someCustomerID",
-            "ref1name": "UncleSam",
+            "ref1name": "Sam Wilson",
+            "ref1contactName": "Uncle Sam",
             "ref1phone": "9999988888",
             "ref1relation": "Uncle",
-            "ref2name": "CoworkerBud",
+            "ref2name": "Shourya",
+            "ref2contactName": "Shourya FinBox",
             "ref2phone": "9999900000",
             "ref2relation": "Coworker",
             "salary": null,
@@ -287,6 +289,7 @@ Most of the parameters of the response are self-explainatory. Some key fields ar
 | ref1name | Name of First Reference Contact |
 | ref1phone | Phone number of First Reference Contact |
 | ref1relation | Relationship with First Reference Contact |
+| ref1contactName | Name with which reference is saved in contacts |
 | dependents | Number of dependents |
 | fisScore | User's FinBox Inclusion Score |
 | bureauScore | User's bureau score from one of the credit bureaus |
