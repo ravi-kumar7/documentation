@@ -41,10 +41,20 @@ FinBox Lending SDK is a drop-in module that can add a digital lending journey to
         transitive = true
     }
     implementation("in.finbox:mobileriskmanager:<RISK_SDK_VERSION>:parent-release@aar") {
-        exclude group: 'in.finbox.lending', module: 'core'
         transitive = true
     }
    ```
+3. SDK requires java 8 version for project, add next lines to your module's build.gradle file
+
+```groovy
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+```
 
 ## Start SDK flow
 
