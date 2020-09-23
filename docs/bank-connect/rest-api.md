@@ -3,7 +3,7 @@ base_url: https://portal.finbox.in/bank-connect #base URL for the API
 version: v1 # version of API
 ---
 
-# BankConnect: Uploading using REST API
+# BankConnect: Fetching Enriched data using REST API
 BankConnect REST APIs can be used to fetch enriched data for an entity. This guide first lists some basic fields like [Progress](/bank-connect/rest-api.html#progress-field) and [Fraud](/bank-connect/rest-api.html#fraud-field), and then explores different enriched data APIs.
 
 You can also try these APIs on Postman. Check out [this](/bank-connect/#postman-collection) article for more details.
