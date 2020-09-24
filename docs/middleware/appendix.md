@@ -35,7 +35,7 @@
 | bureau_consent_given | Customer submitted PAN number and gave consent to fetch credit bureau data | Customer |
 | user_qualified | Customer is qualified to move ahead and is shown hook offer | System |
 | user_disqualified | The Customer is disqualified from the loan. Same as Loan Rejected | System |
-| user_not_recognizes_bureau_phone | Customer denied having any phone number linked with credit report | Customer |
+| user_does_not_recognize_bureau_phone | Customer denied having any phone number linked with credit report | Customer |
 | loan_application_created | Customer clicked on Apply for Loan button & a loan application was created | Customer |
 | form_updated | Customer filled the loan application form | Customer |
 | kyc_submitted | KYC documents submitted by the Customer | Customer |
@@ -64,3 +64,11 @@
 | lender | Lender - NBFC or Bank |
 | lender_agent | An authorized agent of the lender |
 | system | Automated system |
+
+## List of bureau status
+| Identifier | Description |
+| - | - |
+| not_fetched | Bureau data not fetched yet |
+| record_not_found | No bureau data found the user |
+| completed | Bureau data successfully fetched |
+| failed | Bureau data fetching failed |

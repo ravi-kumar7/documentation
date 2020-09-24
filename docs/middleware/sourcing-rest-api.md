@@ -109,8 +109,8 @@ Query parameters can be appended at end of the URL like `/?account_id=somevalue`
 | - | - | - | - |
 | limit | Yes | Number | Records Per Page. Default Value is 10 | 
 | page | Yes | Number | Page Number. Default Value is 1 | 
-| from | Yes | Date | Filter by a given start date. Defaults to beginning of time. Format `yyyy-mm-dd`. Needs to be used with query param `to` | 
-| to | Yes | Date | Filter by a given end date. Defaults to current date. Format `yyyy-mm-dd`. Needs to be used with query param `from` | 
+| from | Yes | Date | Filter by a given start date (IST). Defaults to beginning of time. Format `yyyy-mm-dd`. Needs to be used with query param `to` | 
+| to | Yes | Date | Filter by a given end date (IST). Defaults to current date. Format `yyyy-mm-dd`. Needs to be used with query param `from` | 
 | customerID | Yes | String | Filter all users of a given `%customerID%` pattern. | 
 | mobile | Yes | String | Filter all users of a given `%mobileNumber%` pattern.  | 
 | statusText | Yes | String | Filter all loan applications of a given loan status. Status list in [Appendix](/middleware/appendix.md) | 
@@ -164,6 +164,7 @@ GET **`base_url`/v1/user/profile?customerID=`someCustomerID`**
             "pan": "ABCDN0000P",
             "fisScore": 0.006962299255855537,
             "bureauScore": 830,
+            "bureauStatus": "completed",
             "loanApplicationIDs": ["someLongUUID1"]
         }
     },
@@ -171,9 +172,9 @@ GET **`base_url`/v1/user/profile?customerID=`someCustomerID`**
     "status": true
 }
 ```
-Different values of user status can be found in [Appendix](/middleware/appendix.html)
-
-`createdAt` indicates the date time of user creation in `YYYY-MM-DD HH:MM:SS` format (UTC)
+- Different values of `status` (customer status) can be found in [Appendix](/middleware/appendix.html)
+- `createdAt` indicates the date time of user creation in `YYYY-MM-DD HH:MM:SS` format (UTC)
+- Different values of `bureauStatus` can be found in [Appendix](/middleware/appendix.html#list-of-bureau-status)
 
 ## List Loans
 Lists all the loan applications created from a given sourcing entity's account. It's a paginated API.
@@ -189,8 +190,8 @@ Query parameters can be appended at end of the URL like `/?account_id=somevalue`
 | - | - | - | - |
 | limit | Yes | Number | Records Per Page. Default Value is 10 | 
 | page | Yes | Number | Page Number. Default Value is 1 | 
-| from | Yes | Date | Filter by a given start date. Defaults to beginning of time. Format `yyyy-mm-dd` | 
-| to | Yes | Date | Filter by a given end date. Defaults to current date. Format `yyyy-mm-dd` | 
+| from | Yes | Date | Filter by a given start date (IST). Defaults to beginning of time. Format `yyyy-mm-dd` | 
+| to | Yes | Date | Filter by a given end date (IST). Defaults to current date. Format `yyyy-mm-dd` | 
 | customerID | Yes | String | Filter all loan applications of a given `%customerID%` pattern.  | 
 | mobile | Yes | String | Filter all loan applications of a given `%mobileNumber%` pattern.  | 
 | statusText | Yes | String | Filter all loan applications of a given loan status. Status list in [Appendix](/middleware/appendix.html#list-of-loan-status) | 
@@ -265,7 +266,8 @@ GET **`base_url`/v1/loan/details?loanApplicationID=`someLongLoanApplicationUUID`
             "dependents": 0,
             "expenses": 5000,
             "fisScore": 0.006962299255855537,
-            "bureauScore": 830
+            "bureauScore": 830,
+            "bureauStatus": "completed"
         },
         "bankDetails": {
             "accountNumber": "50100100100999",
@@ -293,6 +295,7 @@ Most of the parameters of the response are self-explainatory. Some key fields ar
 | dependents | Number of dependents |
 | fisScore | User's FinBox Inclusion Score |
 | bureauScore | User's bureau score from one of the credit bureaus |
+| bureauStatus | Indicates the bureau data fetch status. Possible values can be found in [Appendix](/middleware/appendix.html#list-of-bureau-status) |
 | accountHolderName | Verified name as per user's bank account |
 | dob | Date of Birth in `YYYY-MM-DD` format |
 | createdAt | Date time of loan creation in `YYYY-MM-DD HH:MM:SS` format (UTC) |
