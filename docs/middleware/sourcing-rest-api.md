@@ -53,7 +53,10 @@ POST **`base_url`/v1/user/create**
 ```
 
 ## Get Eligibility
-This API checks for a user's eligibility and returns the eligible amount
+This API checks for a user's eligibility and returns the eligible amount. Partner platform data and data from DeviceConnect SDK is used to prequalify the customers. The `customer_id` in DeviceConnect SDK should be same as the `customer_id` of user. 
+
+<img src="https://finbox-cdn.s3.ap-south-1.amazonaws.com/prequalification_illustration.png" alt="Prequalification API Workflow" />
+
 ::: tip Endpoint
 GET **`base_url`/v1/user/eligibility?customerID=`somecustomerid`**
 :::
@@ -70,6 +73,9 @@ GET **`base_url`/v1/user/eligibility?customerID=`somecustomerid`**
 }
 ```
 Here `is_eligible` is a **boolean** indicating whether the user is eligible or not, while `eligibility_amount` is a **float** that indicates the loan eligibility amount.
+
+
+
 
 ## Generate Token
 This API can be called multiple times for an eligible user, and is used to get a valid token that can be used by the Android App to initialize the SDK.
@@ -349,6 +355,35 @@ Response fields are explained below:
 | disbursalAmount | Float | Final Disbursal Amount |
 | totalPayableAmount | Float | Total Payable Amount |
 | emiDates | Array of String | EMI Dates in `YYYY-MM-DD` format |
+
+## Repay Loan
+Marks the repayment of a given loan EMI
+::: tip Endpoint
+POST **`base_url`/v1/loan/repay**
+:::
+
+**Request Format**
+```json
+{
+    "loanApplicationID": "someLoanApplicationID",
+    "emi_id": "loanEMIID",
+    "amount": 12500,
+    "paid_date": "2020-09-01 12:00:00",
+    "payment_mode": "upi",
+    "reference_id":"someUTRNumber"
+}
+```
+**Response Format**
+
+```json
+{
+    "data": {
+        "reference_id": "FinBoxReferenceIDforRecon"
+    },
+    "error": "",
+    "status": true
+}
+```
 
 ## User Activity History
 Returns the activity 
