@@ -70,5 +70,7 @@
 | - | - |
 | not_fetched | Bureau data not fetched yet |
 | record_not_found | No bureau data found the user |
-| completed | Bureau data successfully fetched |
+| completed_no_score | Bureau data successfully fetch but user had no score |
+| completed | Bureau data with score successfully fetched |
+| waiting | Bureau data is being fetched (in progress) |
 | failed | Bureau data fetching failed |
