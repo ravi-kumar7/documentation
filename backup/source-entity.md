@@ -68,7 +68,7 @@ Requires `token` in header
 Here `dob` indicates Date of Birth, `pan` indicates PAN Number and `gender` value can be:
 - 0 for Female
 - 1 for Male
-- 2 for Others
+- 2 for Other
 
 ### Submit FCM Token
 This step is used to submit FCM token.
@@ -134,7 +134,7 @@ Requires `token` in header
 Here `dob` indicates Date of Birth, `pan` indicates PAN Number and `gender` value can be:
 - 0 for Female
 - 1 for Male
-- 2 for Others
+- 2 for Other
 
 ### Get Eligible Amount
 This API gives a tentative eligible amount for the customer.
