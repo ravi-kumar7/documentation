@@ -87,7 +87,7 @@ __Category Color and Category Icons__
 Colors specific for the category shown in the UI are customizable on the backend in addition to their logos.
 
 
-PFM Cutomizable Notifications
+PFM Customizable Notifications
 =============================
 
 1. Extend `FinanceMessagingService` instead of extending `FirebaseMessagingService`.
