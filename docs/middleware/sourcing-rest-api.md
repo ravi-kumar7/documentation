@@ -366,11 +366,11 @@ POST **`base_url`/v1/loan/repay**
 ```json
 {
     "loanApplicationID": "someLoanApplicationID",
-    "emi_id": "loanEMIID",
-    "amount": 12500,
-    "paid_date": "2020-09-01 12:00:00",
-    "payment_mode": "upi",
-    "reference_id":"someUTRNumber"
+    "installmentNum": 2,
+    "amountReceived": 12500,
+    "paymentDate": "2020-09-01 12:00:00",
+    "paymentMode": "upi",
+    "transactionID":"someUTRNumber"
 }
 ```
 **Response Format**
@@ -378,7 +378,7 @@ POST **`base_url`/v1/loan/repay**
 ```json
 {
     "data": {
-        "reference_id": "FinBoxReferenceIDforRecon"
+        "referenceID": "FinBoxReferenceIDforRecon"
     },
     "error": "",
     "status": true
