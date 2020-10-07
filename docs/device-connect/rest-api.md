@@ -196,9 +196,10 @@ func GetSaltForCustomer(customerId string, serverHash string) string {
 You can cross check each individual step of your salt generation logic by using the following parameters
 
 ```
-customer_id = A145BC6312B50CA2B58233288F81C02114A6A74E9A62482169F9F
-server_hash = abd5039bbc854e3abfe2a8be34a4533b
+customer_id = 82169C6312B50CA8233482169F9F288F812B5C02114A6A74E9A62
+server_hash = 5f8cd80c69a34b9785dc66298eabe95b
 ```
+
 
 **Step A Result - Hexdigest of MD5Hash** 
 
@@ -210,7 +211,7 @@ server_hash = abd5039bbc854e3abfe2a8be34a4533b
 `7B85689C14D32209779241F14A09C29B5f8cd80c69a34b9785dc66298eabe95b`
 
 
-**Step C Result - Hexdigest verion**
+**Step C Result - Hexdigest Version**
 
  `2a2e163b66dbcd838bd6d122e17038e90f2ba5c0b6ca295364c84e19746ca8e4`
 
