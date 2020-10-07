@@ -1,4 +1,4 @@
-# PersonalFinanceManager: Introduction
+# Personal Finance Manager: Introduction
 Personal Finance Manager SDK helps people manage their financial activities.
 
 1. Users can track the spends made on Food, Entertainment, Transportation ...
@@ -8,12 +8,12 @@ Personal Finance Manager SDK helps people manage their financial activities.
 5. Fetch the Account balances through our Call to Regfresh balance feature.
 6. Easily analyse the spending patterns in a month and across months.
 
-::: tip Try PersonalFinanceManager
+::: tip Try Personal Finance Manager
 Click [here](https://finbox.in/contact-us) to contact us and request for a pilot.
 :::
 
 ## Getting Started
-FinBox PersonalFinanceManager requires two integrations - first is for the **user to share data**:
+FinBox Personal Finance Manager requires two integrations - first is for the **user to share data**:
 - [Android SDK](/device-connect/android.html)
 - [React Native](/device-connect/react-native.html)
 - [Cordova](/device-connect/cordova.html)
