@@ -121,14 +121,11 @@ Below are the list of Runtime permissions the sdk adds to the application Manife
 <uses-permission android:name="android.permission.READ_CALENDAR" />
 <uses-permission android:name="android.permission.READ_SMS" />
 <uses-permission android:name="android.permission.RECEIVE_SMS" />
-<uses-permission android:name="android.permission.READ_CALL_LOG" />
 <uses-permission android:name="android.permission.READ_CONTACTS" />
 <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+<uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-<uses-permission
-    android:name="android.permission.PACKAGE_USAGE_STATS"
-    tools:ignore="ProtectedPermissions" />
 ```
 
 <!-- ::: warning WARNING
@@ -139,7 +136,7 @@ In the case of Xiaomi we need to ask for a special Service SMS Permission so tha
 To remove the unused permissions, add a `remove` rule to that permission as shown below:
 ```xml
 <uses-permission
-    android:name="android.permission.READ_CALL_LOG"
+    android:name="android.permission.READ_CONTACTS"
     tools:node="remove" />
 ```
 
