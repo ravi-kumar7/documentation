@@ -75,7 +75,7 @@ implementation('in.finbox:mobileriskmanager:<DC_SDK_VERSION>:parent-release@aar'
 }
 implementation('in.finbox.personalfinancemanager:core:<PFM_SDK_VERSION>:release@aar') {
         transitive = true
-    }
+}
 implementation ('in.finbox:common:<COMMON_SDK_VERSION>:release@aar') {
     transitive = true
 }
@@ -200,7 +200,7 @@ public class MyMessagingService extends FinanceMessagingService {
 <template v-slot:kotlin>
 
 ```kotlin
-override fun generateAccountSpendsIntent(bundle: Bundle): PendingIntent? {
+override fun generateAccountSpendsIntent(bundle: Bundle): PendingIntent {
     val intent = Intent(this, LoginActivity::class.java)
     bundle.putInt(REQUEST_CODE_NOTIFICATION_KEY_NAME, REQUEST_CODE_WEEK_ACCOUNT_SPEND)
     intent.putExtras(bundle)
@@ -212,8 +212,7 @@ override fun generateAccountSpendsIntent(bundle: Bundle): PendingIntent? {
     )
 }
 
-
-override fun generateHomeIntent(): PendingIntent? {
+override fun generateHomeIntent(): PendingIntent {
     val intent = Intent(this, LoginActivity::class.java)
     intent.putExtra(REQUEST_CODE_NOTIFICATION_KEY_NAME, REQUEST_CODE_WEEK_HOME)
     return PendingIntent.getActivity(
@@ -224,8 +223,7 @@ override fun generateHomeIntent(): PendingIntent? {
     )
 }
 
-
-override fun generateWeeklySpendIntent(bundle: Bundle): PendingIntent? {
+override fun generateWeeklySpendIntent(bundle: Bundle): PendingIntent {
     val intent = Intent(this, LoginActivity::class.java)
     bundle.putInt(REQUEST_CODE_NOTIFICATION_KEY_NAME, REQUEST_CODE_WEEK_SPEND)
     intent.putExtras(bundle)
@@ -237,7 +235,7 @@ override fun generateWeeklySpendIntent(bundle: Bundle): PendingIntent? {
     )
 }
 
-override fun getUnCategorizedIntent(bundle: Bundle): PendingIntent? {
+override fun getUnCategorizedIntent(bundle: Bundle): PendingIntent {
     val intent = Intent(this, LoginActivity::class.java)
     bundle.putInt(REQUEST_CODE_NOTIFICATION_KEY_NAME, REQUEST_CODE_CATEGORIZE_SPEND)
     intent.putExtras(bundle)
@@ -266,7 +264,6 @@ public PendingIntent generateAccountSpendsIntent(@NotNull Bundle bundle) {
             PendingIntent.FLAG_UPDATE_CURRENT);
 }
 
-
 @NotNull
 @Override
 public PendingIntent generateHomeIntent() {
@@ -277,7 +274,6 @@ public PendingIntent generateHomeIntent() {
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT);
 }
-
 
 @NotNull
 @Override
@@ -290,8 +286,6 @@ public PendingIntent generateWeeklySpendIntent(@NotNull Bundle bundle) {
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT);
 }
-
-
 
 @NotNull
 @Override
