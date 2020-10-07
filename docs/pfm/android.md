@@ -1,7 +1,7 @@
 Personal Finance Manager SDK
 ============================
 
-Personal Finance Manager SDK helps people manage their financial activities. These include but limited to the spends made on Food, Investments, Credit Card Bills Paid and more.
+Personal Finance Manager SDK helps people manage their financial activities. These include but not limited to the spends made on Food, Investments, Credit Card Bills Paid and more.
 
 
 Requirements
@@ -15,30 +15,87 @@ Add Dependency
 
 In the project level `build.gradle` file, add the repository urls to all `allprojects` block.
 
-    maven {
-        url "s3://risk-manager-android-sdk/artifacts"
-        credentials(AwsCredentials) {
-            accessKey = ACCESS_KEY
-            secretKey = SECRET_KEY
-        }
+<CodeSwitcher :languages="{kotlin:'Kotlin',groovy:'Groovy'}">
+<template v-slot:kotlin>
+
+```kotlin
+maven {
+    setUrl("s3://risk-manager-android-sdk/artifacts")
+    credentials(AwsCredentials::class) {
+        accessKey = <ACCESS_KEY>
+        secretKey = <SECRET_KEY>
     }
-    maven { url 'https://jitpack.io' }
+}
+maven { setUrl("https://jitpack.io") }
+```
+
+</template>
+<template v-slot:groovy>
+
+```groovy
+maven {
+    url "s3://risk-manager-android-sdk/artifacts"
+    credentials(AwsCredentials) {
+        accessKey = <ACCESS_KEY>
+        secretKey = <SECRET_KEY>
+    }
+}
+maven { url 'https://jitpack.io' }
+```
+
+</template>
+</CodeSwitcher>
 
 Add the Personal Finance Manager sdk to module level `build.gradle` file.
 
-    implementation('in.finbox.personalfinancemanager:core:pfmVersion:release@aar') {
-        transitive = true
-    }
-    implementation('in.finbox:mobileriskmanager:riskVersion:parent-release@aar') {
-        transitive = true
-    }
-    implementation ("in.finbox:common:commonVersion:release@aar") {
-        transitive = true
-    }
-    implementation ("in.finbox:logger:loggerVersion:release@aar") {
-        transitive = true
-    }
+<CodeSwitcher :languages="{kotlin:'Kotlin',groovy:'Groovy'}">
+<template v-slot:kotlin>
 
+```kotlin
+implementation("in.finbox:mobileriskmanager:<DC_SDK_VERSION>:parent-release@aar") {
+    isTransitive = true
+}
+implementation("in.finbox.personalfinancemanager:core:<PFM_SDK_VERSION>:release@aar") {
+    isTransitive = true
+}
+implementation("in.finbox:common:<COMMON_SDK_VERSION>:release@aar") {
+    isTransitive = true
+}
+implementation("in.finbox:logger:<LOGGER_SDK_VERSION>:release@aar") {
+    isTransitive = true
+}
+```
+
+</template>
+<template v-slot:groovy>
+
+```groovy
+implementation('in.finbox:mobileriskmanager:<DC_SDK_VERSION>:parent-release@aar') {
+    transitive = true
+}
+implementation('in.finbox.personalfinancemanager:core:<PFM_SDK_VERSION>:release@aar') {
+        transitive = true
+    }
+implementation ("in.finbox:common:<COMMON_SDK_VERSION>:release@aar") {
+    transitive = true
+}
+implementation ("in.finbox:logger:<LOGGER_SDK_VERSION>:release@aar") {
+    transitive = true
+}
+```
+
+</template>
+</CodeSwitcher>
+
+::: warning NOTE
+Following will be shared by FinBox team at the time of integration:
+- `ACCESS_KEY`
+- `SECRET_KEY`
+- `DC_SDK_VERSION`
+- `PFM_SDK_VERSION`
+- `COMMON_SDK_VERSION`
+- `LOGGER_SDK_VERSION`
+:::
 
 Personal Finance Manager Screen
 -------------------------------
