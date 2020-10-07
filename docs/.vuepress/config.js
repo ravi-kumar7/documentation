@@ -189,29 +189,29 @@ module.exports = {
           path: '/middleware/appendix.html',
           collapsable: false
         },
+      ],
+      '/pfm/': [
+        {
+          title: 'Overview',
+          collapsable: false,
+          children: [
+            {
+              title: 'Introduction',
+              path: '/pfm/'
+            }
+          ]
+        },
+        {
+          title: 'Fetching Spends',
+          collapsable: false,
+          children: [
+            {
+              title: 'Android SDK',
+              path: '/pfm/android.html'
+            }
+          ]
+        },
       ]
+    }
     },
-    '/pfm/': [
-      {
-        title: 'Overview',
-        collapsable: false,
-        children: [
-          {
-            title: 'Introduction',
-            path: '/pfm/'
-          }
-        ]
-      },
-      {
-        title: 'Fetching Spends',
-        collapsable: false,
-        children: [
-          {
-            title: 'Android SDK',
-            path: '/pfm/android.html'
-          }
-        ]
-      },
-    ]
-  }
 }
