@@ -121,8 +121,10 @@ startActivity(new Intent(this, HomeActivity.class));
 </template>
 </CodeSwitcher>
 
-Customize Themes and Colors to match the brand
-----------------------------------------------
+Customize Themes and Colors
+---------------------------
+
+Customize our SDK themes and colors to match your company brand.
 
 __App Bar Text__
 
