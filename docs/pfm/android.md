@@ -100,7 +100,7 @@ Following will be shared by FinBox team at the time of integration:
 Personal Finance Manager Screen
 -------------------------------
 
-The developer can show the finance manager UI by starting the activity.
+Once the [user is created](/device-connect/android.html#create-user-method) and [syncs are started](/device-connect/android.html#start-periodic-sync-method), the developer can show the finance manager UI by starting the activity.
 
 __Display Activity__
 
