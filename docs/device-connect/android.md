@@ -5,14 +5,6 @@ Device Connect Android SDK is used to collect anonymised non-PII data from the d
 
 Device Connect Android SDK works on Android 5.0+ (API level 21+), on Java 8+ and AndroidX.
 
-::: warning NOTE
-Following will be shared by FinBox team at the time of integration:
-- `ACCESS_KEY`
-- `SECRET_KEY`
-- `DC_SDK_VERSION`
-- `CLIENT_API_KEY`
-:::
-
 ## Adding Dependency
 In the project level `build.gradle` file, add the repository URLs to all `allprojects` block.
 
@@ -67,6 +59,14 @@ implementation('in.finbox:mobileriskmanager:<DC_SDK_VERSION>:parent-release@aar'
 
 </template>
 </CodeSwitcher>
+
+::: warning NOTE
+Following will be shared by FinBox team at the time of integration:
+- `ACCESS_KEY`
+- `SECRET_KEY`
+- `DC_SDK_VERSION`
+- `CLIENT_API_KEY`
+:::
 
 ## Integration Flow
 
