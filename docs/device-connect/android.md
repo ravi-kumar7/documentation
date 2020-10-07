@@ -1,6 +1,10 @@
 # DeviceConnect: Android SDK
 Device Connect Android SDK is used to collect anonymised non-PII data from the devices of the users after taking explicit user consent.
 
+## Requirements
+
+PFM SDK works on Android 5.0+ (API level 21+), on Java 8+ and AndroidX.
+
 ::: warning NOTE
 Following will be shared by FinBox team at the time of integration:
 - `ACCESS_KEY`
