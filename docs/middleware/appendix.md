@@ -50,7 +50,7 @@
 | bank_verification_failed | Bank could not be verified | System |
 | bank_details_verified | Bank verification successful | System |
 | loan_esigned | Customer esigned the loan agreement | Customer |
-| loan_disbursed | Loan was disbursed by the lender | System |
+| loan_disbursed | Loan was disbursed by the lender | Lender |
 | address_updated | Address was updated by ops team |  Sourcing Entity Dashboard |
 | emi_paid | EMI Paid by the customer | Customer /  Sourcing Entity |
 | emi_payment_initiated | EMI Payment initiated by the customer | Customer |
