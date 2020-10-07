@@ -1,13 +1,9 @@
 # DeviceConnect: Android SDK
 Device Connect Android SDK is used to collect anonymised non-PII data from the devices of the users after taking explicit user consent.
 
-::: warning NOTE
-Following will be shared by FinBox team at the time of integration:
-- `ACCESS_KEY`
-- `SECRET_KEY`
-- `DC_SDK_VERSION`
-- `CLIENT_API_KEY`
-:::
+## Requirements
+
+Device Connect Android SDK works on Android 5.0+ (API level 21+), on Java 8+ and AndroidX.
 
 ## Adding Dependency
 In the project level `build.gradle` file, add the repository URLs to all `allprojects` block.
@@ -50,6 +46,12 @@ Now add the dependency to module level `build.gradle.kts` or `build.gradle` file
 implementation("in.finbox:mobileriskmanager:<DC_SDK_VERSION>:parent-release@aar") {
     isTransitive = true
 }
+implementation("in.finbox:common:<COMMON_SDK_VERSION>:release@aar") {
+    isTransitive = true
+}
+implementation("in.finbox:logger:<LOGGER_SDK_VERSION>:release@aar") {
+    isTransitive = true
+}
 ```
 
 </template>
@@ -59,10 +61,26 @@ implementation("in.finbox:mobileriskmanager:<DC_SDK_VERSION>:parent-release@aar"
 implementation('in.finbox:mobileriskmanager:<DC_SDK_VERSION>:parent-release@aar') {
     transitive = true
 }
+implementation ('in.finbox:common:<COMMON_SDK_VERSION>:release@aar') {
+    transitive = true
+}
+implementation ('in.finbox:logger:<LOGGER_SDK_VERSION>:release@aar') {
+    transitive = true
+}
 ```
 
 </template>
 </CodeSwitcher>
+
+::: warning NOTE
+Following will be shared by FinBox team at the time of integration:
+- `ACCESS_KEY`
+- `SECRET_KEY`
+- `DC_SDK_VERSION`
+- `COMMON_SDK_VERSION`
+- `LOGGER_SDK_VERSION`
+- `CLIENT_API_KEY`
+:::
 
 ## Integration Flow
 
@@ -71,10 +89,10 @@ Assuming the dependency has been added for your project, the following would be 
 <img src="/client_workflow.png" alt="Client Workflow" style="width:80%;height:80%" />
 
 ### Step 1: Requesting Runtime Permissions
-It is required to show what all permissions you will be needing from users in your app, and then ask them for the permissions. Please refer [this](/device-connect/android.html#handle-permissions) section to get the list of permissions the SDK needs. Also in case you want to exclude certain permissions, you can use a `remove` rule as mentioned in the same article.
+It is required to show what all permissions you will be needing from users in your app, and then ask them for the permissions. Please refer [Handle Permissions](/device-connect/android.html#handle-permissions) section to get the list of permissions the SDK needs. Also in case you want to exclude certain permissions, you can use node marker value `remove` as mentioned in the same article.
 
 ### Step 2: Creating the User
-After requesting, the `createUser` method can be called specifying a `CUSTOMER_ID` (Refer to [this](/device-connect/android.html#create-user-method) section for sample code and response), which represents a unique identifier for the user.
+After requesting, the `createUser` method can be called specifying a `CUSTOMER_ID` (Refer to [Create User](/device-connect/android.html#create-user-method) section for sample code and response), which represents a unique identifier for the user.
 
 ::: tip TIP
 - It is recommended that `CUSTOMER_ID` is a masked value not a unique personal identifier like a phone number or email id so that the user remains anonymous to FinBox.
@@ -84,12 +102,13 @@ After requesting, the `createUser` method can be called specifying a `CUSTOMER_I
 `createUser` in general acts as a check for API credentials. For the first time when the user doesn't exists, it will create a user on the FinBox side. The next step will work only if this function returns a success response.
 
 ### Step 3: Start Syncing Data
-If the `createUser` response is successful, you can call `startPeriodicSync` function (Refer [this](/device-connect/android.html#start-periodic-sync-method) article) which will sync data in period intervals in background.
+If the `createUser` response is successful, you can call `startPeriodicSync` function (Refer [Start Periodic Sync](/device-connect/android.html#start-periodic-sync-method) section) which will sync data in period intervals in background.
 
 ::: danger IMPORTANT
 - The recommended approach is to call `createUser` (and then `startPeriodicSync` on success) method every time user accesses the app, so that the background sync process remains in check.
-- In certain cases, the FinBox server often communicates with SDK directly, to make sure this works it is required to **forward FCM Notifications to SDK**. Refer to [this](/device-connect/android.html#forward-notifications-to-sdk) article for it.
-- In the case of a multi-process application, it is required to initialize the SDK manually before calling the `createUser` method. Refer [here](/device-connect/android.html#multi-process-support) for such cases.
+- In certain cases, the FinBox server often communicates with SDK directly, to make sure this works it is required to **forward Notifications to SDK**. Refer [Forward Notifications to SDK
+](/device-connect/android.html#forward-notifications-to-sdk) section for it.
+- In the case of a multi-process application, it is required to initialize the SDK manually before calling the `createUser` method. Refer [Multi-Process Support](/device-connect/android.html#multi-process-support) section for such cases.
 :::
 
 ## Handle Permissions
@@ -103,14 +122,11 @@ Below are the list of Runtime permissions the sdk adds to the application Manife
 <uses-permission android:name="android.permission.READ_CALENDAR" />
 <uses-permission android:name="android.permission.READ_SMS" />
 <uses-permission android:name="android.permission.RECEIVE_SMS" />
-<uses-permission android:name="android.permission.READ_CALL_LOG" />
 <uses-permission android:name="android.permission.READ_CONTACTS" />
 <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+<uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-<uses-permission
-    android:name="android.permission.PACKAGE_USAGE_STATS"
-    tools:ignore="ProtectedPermissions" />
 ```
 
 <!-- ::: warning WARNING
@@ -118,10 +134,10 @@ In the case of Xiaomi we need to ask for a special Service SMS Permission so tha
 `CommonUtils.showServiceSmsPermissionSetting(this);` and then listening to the callback in `OnActivityResult` with RequestCode `REQUEST_SMS_PERMISSION_CODE`
 ::: -->
 
-To remove the unused permissions, add a `remove` rule to that permission as shown below:
+To remove the unused permissions, add node marker value as `remove` to that permission as shown below:
 ```xml
 <uses-permission
-    android:name="android.permission.READ_CALL_LOG"
+    android:name="android.permission.READ_CONTACTS"
     tools:node="remove" />
 ```
 
@@ -174,7 +190,7 @@ FinBox.createUser("CLIENT_API_KEY", "CUSTOMER_ID",
 </template>
 </CodeSwitcher>
 
-You can read about the error codes in [this](/device-connect/android.html#error-codes) section.
+You can read about the errors in the [Error Codes](/device-connect/android.html#error-codes) section.
 
 ## Start Periodic Sync Method
 
