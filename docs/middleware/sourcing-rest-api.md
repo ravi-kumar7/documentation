@@ -395,6 +395,10 @@ Response fields are explained below:
 | paidDate | String | Date of payment in `YYYY-MM-DD` format, if not paid the value is blank string `""` |
 | totalPayable | Float | Total amount (to be) paid by user |
 
+::: warning NOTE
+Loan Repayments API works only for **disbursed** loans.
+:::
+
 ## Repay Loan
 Marks the repayment of a given loan EMI
 ::: tip Endpoint
