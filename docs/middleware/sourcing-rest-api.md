@@ -356,6 +356,45 @@ Response fields are explained below:
 | totalPayableAmount | Float | Total Payable Amount |
 | emiDates | Array of String | EMI Dates in `YYYY-MM-DD` format |
 
+## Loan Repayments
+Returns the repayments information for a given loan application.
+::: tip Endpoint
+GET **`base_url`/v1/loan/repayments?loanApplicationID=`someLongLoanApplicationUUID`**
+:::
+
+```json
+{
+    "data": {
+        "emiList": [
+            {
+                "loanPaymentID": "1c9387b3-c1f8-4d81-89e9-eabd06e8536c",
+                "amount": 15375,
+                "installmentNum": 1,
+                "lateCharge": 0,
+                "status": "UNPAID",
+                "dueDate": "2020-11-10",
+                "paidDate": "",
+                "totalPayable": 15375
+            }
+        ]
+    },
+    "error": "",
+    "status": true
+}
+```
+
+Response fields are explained below:
+| Field | Type | Description |
+| - | - | - |
+| loanPaymentID | String | A UUID identifying an installment |
+| amount | Float | EMI amount |
+| installmentNum | Integer | Instalment number varies from 1 to `tenureMonths` (from loan offer API) |
+| lateCharge | Float | Late charge (if any otherwise 0) |
+| status | String | Can be `PAID`, `UNPAID` or `PENDING` |
+| dueDate | String | Due date for the installment in `YYYY-MM-DD` format |
+| paidDate | String | Date of payment in `YYYY-MM-DD` format, if not paid the value is blank string `""` |
+| totalPayable | Float | Total amount (to be) paid by user |
+
 ## Repay Loan
 Marks the repayment of a given loan EMI
 ::: tip Endpoint
