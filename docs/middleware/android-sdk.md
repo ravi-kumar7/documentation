@@ -186,3 +186,25 @@ Make sure the value passed is a valid URL
 ```xml
 <string name="finbox_appbar_title">My App</string>
 ```
+
+3. SDK fonts can be customized to match the parent application. The SDK used 3 main fonts as mentioned below:
+
+```xml
+<style name="FBLendingAppTheme.FinBox.TextPrimary" parent="TextAppearance.AppCompat">
+    <item name="fontFamily">bold-font</item>
+</style>
+
+<style name="FBLendingAppTheme.FinBox.TextSecondary" parent="TextAppearance.AppCompat">
+    <item name="fontFamily">regular-font</item>
+</style>
+
+<style name="FBLendingAppTheme.FinBox.TextSubHead" parent="TextAppearance.AppCompat">
+    <item name="fontFamily">semibold-font</item>
+</style>
+```
+
+a) `FBLendingAppTheme.FinBox.TextPrimary` is used for all buttons and bold headers
+b) `FBLendingAppTheme.FinBox.TextSecondary` is the regular font that is used for regular text
+b) `FBLendingAppTheme.FinBox.TextSubHead` is the medium bold font that is used for Sections or subheadings
+
+Customize the SDK font by adding the application `fontFamily` in the styles.
