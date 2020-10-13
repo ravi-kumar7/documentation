@@ -203,8 +203,8 @@ Make sure the value passed is a valid URL
 </style>
 ```
 
-a) `FBLendingAppTheme.FinBox.TextPrimary` is used for all buttons and bold headers
-b) `FBLendingAppTheme.FinBox.TextSecondary` is the regular font that is used for regular text
-b) `FBLendingAppTheme.FinBox.TextSubHead` is the medium bold font that is used for Sections or subheadings
+- `FBLendingAppTheme.FinBox.TextPrimary` is used for all buttons and bold headers
+- `FBLendingAppTheme.FinBox.TextSecondary` is the regular font that is used for regular text
+- `FBLendingAppTheme.FinBox.TextSubHead` is the medium bold font that is used for Sections or subheadings
 
 Customize the SDK font by adding the application `fontFamily` in the styles.
