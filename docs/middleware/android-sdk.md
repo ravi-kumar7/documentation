@@ -36,6 +36,18 @@ FinBox Lending SDK is a drop-in module that can add a digital lending journey to
         exclude group: 'in.finbox.lending', module: 'core'
         transitive = true
     }
+    implementation("in.finbox.lending:esign-uat:<LENDING_SDK_VERSION>:uat@aar") {
+        exclude group: 'in.finbox.lending', module: 'core'
+        transitive = true
+    }
+    implementation("in.finbox.lending:enach-uat:<LENDING_SDK_VERSION>:uat@aar") {
+        exclude group: 'in.finbox.lending', module: 'core'
+        transitive = true
+    }
+    implementation("in.finbox.lending:payment-uat:<LENDING_SDK_VERSION>:uat@aar") {
+        exclude group: 'in.finbox.lending', module: 'core'
+        transitive = true
+    }
     implementation("in.finbox.lending:pennydrop-uat:<LENDING_SDK_VERSION>:uat@aar") {
         exclude group: 'in.finbox.lending', module: 'core'
         transitive = true
