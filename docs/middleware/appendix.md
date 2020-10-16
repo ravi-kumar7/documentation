@@ -25,12 +25,14 @@
 | BANK_ADDED |
 | SIGN_AGREEMENT |
 | DISBURSED |
+| CANCELLED |
+| CLOSED |
 
 ## List of customer activities
 | Value | Description | Entity |
 | - | - | - |
-| user_created | User was created against a customerID |  Sourcing Entity Server |
-| eligibility_calculated | Loan Eligibility was calculated |  Sourcing Entity Server |
+| user_created | User was created against a customerID |  Sourcing Entity |
+| eligibility_calculated | Loan Eligibility was calculated |  Sourcing Entity |
 | profile_updated | Customer updated the profile | Customer |
 | bureau_consent_given | Customer submitted PAN number and gave consent to fetch credit bureau data | Customer |
 | user_qualified | Customer is qualified to move ahead and is shown hook offer | System |
@@ -52,8 +54,13 @@
 | loan_esigned | Customer esigned the loan agreement | Customer |
 | loan_disbursed | Loan was disbursed by the lender | Lender |
 | address_updated | Address was updated by ops team |  Sourcing Entity Dashboard |
-| emi_paid | EMI Paid by the customer | Customer /  Sourcing Entity |
+| emi_paid | EMI Paid by the customer | Customer /  Sourcing Entity / System / Lender |
 | emi_payment_initiated | EMI Payment initiated by the customer | Customer |
+| loan_signed_agreement_generated | Signed agreement PDF is generated for the customer | System |
+| loan_closed | Loan was closed | System / Lender |
+| loan_cancelled | Loan was cancelled | System / Sourcing Entity |
+| late_fee_added | Late Fee was added | System |
+| late_fee_updated | Late Fee was updated | System |
 
 ## List of entity types
 | Identifier | Description |

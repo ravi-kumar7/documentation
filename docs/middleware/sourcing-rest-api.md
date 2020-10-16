@@ -308,6 +308,11 @@ Most of the parameters of the response are self-explainatory. Some key fields ar
 
 ## Loan Offers
 Returns the loan offers made to a given loan application.
+
+::: warning NOTE
+Loan Offers API works only once loan is **approved**
+:::
+
 ::: tip Endpoint
 GET **`base_url`/v1/loan/offers?loanApplicationID=`someLongLoanApplicationUUID`**
 :::
@@ -356,8 +361,37 @@ Response fields are explained below:
 | totalPayableAmount | Float | Total Payable Amount |
 | emiDates | Array of String | EMI Dates in `YYYY-MM-DD` format |
 
+## Get Signed Agreement
+Returns the presigned url for signed agreement PDF File
+
+::: warning NOTE
+- This API works only after `loan_signed_agreement_generated` event has been triggered
+- The presigned URL in response is valid for 300 seconds
+:::
+
+::: tip Endpoint
+GET **`base_url`/v1/loan/agreement?loanApplicationID=`someLongLoanApplicationUUID`**
+:::
+
+```json
+{
+    "data": [
+        {
+            "signedAgreementURL": "https://somelongurl/somefile.pdf?someparam=somevalue&somemoreparam=somevalue2",
+        }
+    ],
+    "error": "",
+    "status": true
+}
+```
+
 ## Loan Repayments
 Returns the repayments information for a given loan application.
+
+::: warning NOTE
+Loan Repayments API works only after loan **disbursal**.
+:::
+
 ::: tip Endpoint
 GET **`base_url`/v1/loan/repayments?loanApplicationID=`someLongLoanApplicationUUID`**
 :::
@@ -395,12 +429,13 @@ Response fields are explained below:
 | paidDate | String | Date of payment in `YYYY-MM-DD` format, if not paid the value is blank string `""` |
 | totalPayable | Float | Total amount (to be) paid by user |
 
-::: warning NOTE
-Loan Repayments API works only for **disbursed** loans.
-:::
-
 ## Repay Loan
 Marks the repayment of a given loan EMI
+
+::: warning NOTE
+This API is **disabled** by default. If required, request FinBox team to enable this API.
+:::
+
 ::: tip Endpoint
 POST **`base_url`/v1/loan/repay**
 :::
