@@ -376,7 +376,7 @@ GET **`base_url`/v1/loan/agreement?loanApplicationID=`someLongLoanApplicationUUI
 ```json
 {
     "data": {
-            "signedAgreementURL": "https://somelongurl/somefile.pdf?someparam=somevalue&somemoreparam=somevalue2",
+            "signedAgreementURL": "https://somelongurl/somefile.pdf?someparam=somevalue&somemoreparam=somevalue2"
     },
     "error": "",
     "status": true
