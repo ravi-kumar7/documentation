@@ -81,3 +81,14 @@
 | completed | Bureau data with score successfully fetched |
 | waiting | Bureau data is being fetched (in progress) |
 | failed | Bureau data fetching failed |
+
+## Servicing Hooks and Actions
+| Activity | Action | Examples |
+| - | - | - |
+| emi_due_in_7_days | Send notification | <a href = "https://finbox-cdn.s3.ap-south-1.amazonaws.com/docs/assets/servicing/Notification-l.png"> Sample Notification </a> |
+| emi_due_in_3_days | Send notification and show banner on home screen | <a href = "https://finbox-cdn.s3.ap-south-1.amazonaws.com/docs/assets/servicing/Notification-lII.png"> Sample Notification </a> <a href = "https://finbox-cdn.s3.ap-south-1.amazonaws.com/docs/assets/servicing/Banner-l.png"> Sample Banner </a> |
+| emi_due_tomorrow | Send notification and show banner on every screen| <a href = "https://finbox-cdn.s3.ap-south-1.amazonaws.com/docs/assets/servicing/Notification-lV.png"> Sample Notification </a> <a href = "https://finbox-cdn.s3.ap-south-1.amazonaws.com/docs/assets/servicing/Banner-l.png"> Sample Banner </a> |
+| emi_overdue | Send notification and show full screen banner on app open | <a href = "https://finbox-cdn.s3.ap-south-1.amazonaws.com/docs/assets/servicing/Notification-lI.png"> Sample Notification </a> <a href = "https://finbox-cdn.s3.ap-south-1.amazonaws.com/docs/assets/servicing/Banner-lI.png"> Sample Banner </a> |
+| late_fee_added | Send notification and show banner on every screen | <a href = "https://finbox-cdn.s3.ap-south-1.amazonaws.com/docs/assets/servicing/Notification-lI.png"> Sample Notification </a> <a href = "https://finbox-cdn.s3.ap-south-1.amazonaws.com/docs/assets/servicing/Banner-lI.png"> Sample Banner </a> |
+| late_fee_updated | Send notification** and show banner on every screen | <a href = "https://finbox-cdn.s3.ap-south-1.amazonaws.com/docs/assets/servicing/Notification-lI.png"> Sample Notification </a> <a href = "https://finbox-cdn.s3.ap-south-1.amazonaws.com/docs/assets/servicing/Banner-lI.png"> Sample Banner </a> |
+| emi_paid | Send notification for payment confirmation | <a href = "https://finbox-cdn.s3.ap-south-1.amazonaws.com/docs/assets/servicing/Notification-lI.png"> Sample Notification </a> <a href = "https://finbox-cdn.s3.ap-south-1.amazonaws.com/docs/assets/servicing/Banner-lI.png"> Sample Banner </a> |
