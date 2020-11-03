@@ -53,8 +53,9 @@ POST **`base_url`/v1/user/create**
 ```
 
 **Error Cases**
-| message | HTTP Code |
+| Case | HTTP Code |
 | - | - |
+| Missing / Incorrect Fields | 403 |
 | User already exists | 409 |
 
 
@@ -81,8 +82,9 @@ GET **`base_url`/v1/user/eligibility?customerID=`somecustomerid`**
 Here `is_eligible` is a **boolean** indicating whether the user is eligible or not, while `eligibility_amount` is a **float** that indicates the loan eligibility amount.
 
 **Error Cases**
-| message | HTTP Code |
+| Case | HTTP Code |
 | - | - |
+| Missing / Incorrect Fields | 403 |
 | User not found | 400 |
 | User does not have eligibility data | 409 |
 
@@ -111,8 +113,9 @@ POST **`base_url`/v1/user/token**
 Here `token` field indicates the token.
 
 **Error Cases**
-| message | HTTP Code |
+| Case | HTTP Code |
 | - | - |
+| Missing / Incorrect Fields | 403 |
 | User does not exist | 404 |
 | User eligibility not available | 400 |
 | User not eligible for loan | 403 |
