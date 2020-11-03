@@ -34,14 +34,14 @@ This API creates a FinBox lending user for a given customer ID.
 POST **`base_url`/v1/user/create**
 :::
 
-**Request Format**
+### Request Format
 ```json
 {
     "customerID": "somecustomerid",
     "mobile": "9999999999"
 }
 ```
-**Response**
+### Response
 ```json
 {
     "data": {
@@ -52,7 +52,7 @@ POST **`base_url`/v1/user/create**
 }
 ```
 
-**Error Cases**
+### Error Cases
 | Case | HTTP Code |
 | - | - |
 | Missing / Incorrect Fields | 403 |
@@ -68,7 +68,7 @@ This API checks for a user's eligibility and returns the eligible amount. Partne
 GET **`base_url`/v1/user/eligibility?customerID=`somecustomerid`**
 :::
 
-**Response**
+### Response
 ```json
 {
     "data": {
@@ -81,7 +81,7 @@ GET **`base_url`/v1/user/eligibility?customerID=`somecustomerid`**
 ```
 Here `is_eligible` is a **boolean** indicating whether the user is eligible or not, while `eligibility_amount` is a **float** that indicates the loan eligibility amount.
 
-**Error Cases**
+### Error Cases
 | Case | HTTP Code |
 | - | - |
 | Missing / Incorrect Fields | 403 |
@@ -94,13 +94,13 @@ This API can be called multiple times for an eligible user, and is used to get a
 POST **`base_url`/v1/user/token**
 :::
 
-**Request Format**
+### Request Format
 ```json
 {
     "customerID": "somecustomerid"
 }
 ```
-**Response**
+### Response
 ```json
 {
     "data": {
@@ -112,7 +112,7 @@ POST **`base_url`/v1/user/token**
 ```
 Here `token` field indicates the token.
 
-**Error Cases**
+### Error Cases
 | Case | HTTP Code |
 | - | - |
 | Missing / Incorrect Fields | 403 |
@@ -140,7 +140,7 @@ Query parameters can be appended at end of the URL like `/?account_id=somevalue`
 | mobile | Yes | String | Filter all users of a given `%mobileNumber%` pattern.  | 
 | statusText | Yes | String | Filter all loan applications of a given loan status. Status list in [Appendix](/middleware/appendix.md) | 
 
-**Response**
+### Response
 ```json
 {
     "data": {
@@ -173,7 +173,7 @@ GET **`base_url`/v1/user/profile?customerID=`someCustomerID`**
 :::
 
 
-**Response**
+### Response
 ```json
 {
     "data": {
@@ -221,7 +221,7 @@ Query parameters can be appended at end of the URL like `/?account_id=somevalue`
 | mobile | Yes | String | Filter all loan applications of a given `%mobileNumber%` pattern.  | 
 | statusText | Yes | String | Filter all loan applications of a given loan status. Status list in [Appendix](/middleware/appendix.html#list-of-loan-status) | 
 
-**Response**
+### Response
 ```json
 {
     "data": {
@@ -255,7 +255,7 @@ GET **`base_url`/v1/loan/details?loanApplicationID=`someLongLoanApplicationUUID`
 :::
 
 
-**Response**
+### Response
 ```json
 {
     "data": {
@@ -457,7 +457,7 @@ This API is **disabled** by default. If required, request FinBox team to enable 
 POST **`base_url`/v1/loan/repay**
 :::
 
-**Request Format**
+### Request Format
 ```json
 {
     "loanApplicationID": "someLoanApplicationID",
@@ -487,7 +487,7 @@ GET **`base_url`/v1/user/activity?customerID=`someCustomerID`**
 :::
 
 
-**Response**
+### Response
 ```json
 {
     "data": {
