@@ -52,6 +52,12 @@ POST **`base_url`/v1/user/create**
 }
 ```
 
+**Error Cases**
+| message | HTTP Code |
+| - | - |
+| User already exists | 409 |
+
+
 ## Get Eligibility
 This API checks for a user's eligibility and returns the eligible amount. Partner platform data and data from DeviceConnect SDK is used to prequalify the customers. The `customer_id` in DeviceConnect SDK should be same as the `customer_id` of user. 
 
@@ -74,8 +80,11 @@ GET **`base_url`/v1/user/eligibility?customerID=`somecustomerid`**
 ```
 Here `is_eligible` is a **boolean** indicating whether the user is eligible or not, while `eligibility_amount` is a **float** that indicates the loan eligibility amount.
 
-
-
+**Error Cases**
+| message | HTTP Code |
+| - | - |
+| User not found | 400 |
+| User does not have eligibility data | 409 |
 
 ## Generate Token
 This API can be called multiple times for an eligible user, and is used to get a valid token that can be used by the Android App to initialize the SDK.
@@ -100,6 +109,13 @@ POST **`base_url`/v1/user/token**
 }
 ```
 Here `token` field indicates the token.
+
+**Error Cases**
+| message | HTTP Code |
+| - | - |
+| User does not exist | 404 |
+| User eligibility not available | 400 |
+| User not eligible for loan | 403 |
 
 ## List Users
 Lists all the users created from a given sourcing entity's account. It's a paginated API.
