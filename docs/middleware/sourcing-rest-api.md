@@ -55,7 +55,9 @@ POST **`base_url`/v1/user/create**
 ### Error Cases
 | Case | HTTP Code |
 | - | - |
-| Missing / Incorrect Fields | 403 |
+| Missing customerID | 403 |
+| Missing mobile number | 403 |
+| Invalid mobile number | 403 |
 | User already exists | 409 |
 
 
@@ -84,7 +86,7 @@ Here `is_eligible` is a **boolean** indicating whether the user is eligible or n
 ### Error Cases
 | Case | HTTP Code |
 | - | - |
-| Missing / Incorrect Fields | 403 |
+| Missing customerID | 403 |
 | User not found | 400 |
 | User does not have eligibility data | 409 |
 
@@ -115,7 +117,7 @@ Here `token` field indicates the token.
 ### Error Cases
 | Case | HTTP Code |
 | - | - |
-| Missing / Incorrect Fields | 403 |
+| Missing customerID | 403 |
 | User does not exist | 404 |
 | User eligibility not available | 400 |
 | User not eligible for loan | 403 |
