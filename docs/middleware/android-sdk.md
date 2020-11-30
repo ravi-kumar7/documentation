@@ -83,10 +83,10 @@ Now that all required parameters are available, we can start the SDK flow as fol
 
 ```kotlin
 val REQUEST_CODE_ONBOARDING = 101
-FinBoxLending.Builder(context)
-    .setCustomerId(<customer_id>)
-    .setFinBoxApiKey(<client_api_key>)
-    .setUserToken(<user_token>)
+val builder = FinBoxLending.Builder(context)
+    .setCustomerId("<customer_id>")
+    .setFinBoxApiKey("<client_api_key>")
+    .setUserToken("<user_token>")
     .build()
 
 startActivityForResult(

@@ -160,8 +160,7 @@ This section list the events in detail:
 ```json  
 {
     "entityId": "uuid4_for_entity",
-    "linkId": "your_link_id",
-    "statementId": "uuid4_for_statement"
+    "linkId": "your_link_id"
 }  
 ```
 
@@ -171,7 +170,8 @@ This section list the events in detail:
 Its payload structure is as follows:
 ```json  
 {
-    "linkId" : "your_link_id"
+    "linkId" : "your_link_id",
+    "message": "exit message"
 }  
 ```
 

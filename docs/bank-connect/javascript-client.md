@@ -117,7 +117,8 @@ This is received when user exits the SDK.
   type: "finbox-bankconnect",
   status: "exit",
   payload: {
-      "linkId": "<USER_ID_PASSED>" //Link ID is the identifier that was passed while initializing the SDK
+      "linkId": "<USER_ID_PASSED>", //Link ID is the identifier that was passed while initializing the SDK
+      "message": "<exit message>"
   }
 }
 ```
