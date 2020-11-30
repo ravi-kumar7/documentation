@@ -223,6 +223,7 @@ In case of successful upload, you'll get the `status` field value as `1`. Follow
 | Specified bank doesn't match with detected bank | 400 | 4 | `{"entity_id": "some_long_uuid4", "message": "Not axis statement", "status": 4}` |
 | Cannot Detect Bank (Bank less APIs only) | 400 | 5 | `{"entity_id": "some_long_uuid4", "message": "Unable to detect bank. Please provide BANK NAME.", "status": 5}` |
 | Non Parsable PDF - PDF file is corrupted or has no selectable text (only scanned images) | 400 | 6 | `{"entity_id": "some_long_uuid4", "message": "PDF is not parsable", "status": 6}` |
+| Balance, date and amount columns are not present in the statement | 400 | 7 | `{"entity_id": "some_long_uuid4", "message": "Unsupported Bank Statement Format. It should have balance, date and amount columns.", "status": 7}` |
 
 ::: danger IMPORTANT
 - We do not support scanned PDF images, if uploaded we throw a **400 HTTP Code** with the `status` as `6`
