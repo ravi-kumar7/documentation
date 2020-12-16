@@ -20,7 +20,7 @@ maven { url  "https://dl.bintray.com/finbox/BankConnect" }
 
 Then add the following dependency to your Gradle file:  
 ```groovy  
-implementation 'in.finbox.bankconnect:bankconnect:1.0.8'  
+implementation 'in.finbox.bankconnect:bankconnect:1.3.52'  
 ```
 
 ## Integration Workflow
@@ -160,8 +160,7 @@ This section list the events in detail:
 ```json  
 {
     "entityId": "uuid4_for_entity",
-    "linkId": "your_link_id",
-    "statementId": "uuid4_for_statement"
+    "linkId": "your_link_id"
 }  
 ```
 
@@ -171,7 +170,8 @@ This section list the events in detail:
 Its payload structure is as follows:
 ```json  
 {
-    "linkId" : "your_link_id"
+    "linkId" : "your_link_id",
+    "message": "exit message"
 }  
 ```
 
@@ -202,9 +202,3 @@ Since FinBox BankConnect is a view embedded in your application, in order to mak
 	</style>
 	```
 	Button style can be modified here as per application.
-2. Theme: `light` and `dark` 
-	```xml
-	<style name="FinBoxView" parent="Theme.FinBox">
-	  <item name="backgroundColor">@color/colorAccent</item>
-	</style>	
-	```

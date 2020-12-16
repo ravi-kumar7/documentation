@@ -40,6 +40,22 @@ FinBox Lending SDK is a drop-in module that can add a digital lending journey to
         exclude group: 'in.finbox.lending', module: 'core'
         transitive = true
     }
+    implementation("in.finbox.lending:loan-uat:<LENDING_SDK_VERSION>:uat@aar") {
+        exclude group: 'in.finbox.lending', module: 'core'
+        transitive = true
+    }
+    implementation("in.finbox.lending:esign-uat:<LENDING_SDK_VERSION>:uat@aar") {
+        exclude group: 'in.finbox.lending', module: 'core'
+        transitive = true
+    }
+    implementation("in.finbox.lending:enach-uat:<LENDING_SDK_VERSION>:uat@aar") {
+        exclude group: 'in.finbox.lending', module: 'core'
+        transitive = true
+    }
+    implementation("in.finbox.lending:payment-uat:<LENDING_SDK_VERSION>:uat@aar") {
+        exclude group: 'in.finbox.lending', module: 'core'
+        transitive = true
+    }
     implementation("in.finbox.lending:pennydrop-uat:<LENDING_SDK_VERSION>:uat@aar") {
         exclude group: 'in.finbox.lending', module: 'core'
         transitive = true
@@ -75,10 +91,10 @@ Now that all required parameters are available, we can start the SDK flow as fol
 
 ```kotlin
 val REQUEST_CODE_ONBOARDING = 101
-FinBoxLending.Builder(context)
-    .setCustomerId(<customer_id>)
-    .setFinBoxApiKey(<client_api_key>)
-    .setUserToken(<user_token>)
+val builder = FinBoxLending.Builder(context)
+    .setCustomerId("<customer_id>")
+    .setFinBoxApiKey("<client_api_key>")
+    .setUserToken("<user_token>")
     .build()
 
 startActivityForResult(
@@ -190,3 +206,38 @@ Make sure the value passed is a valid URL
 ```xml
 <string name="finbox_appbar_title">My App</string>
 ```
+
+3. SDK fonts can be customised to match the parent application. The SDK used 3 main fonts as mentioned below:
+
+```xml
+<style name="FBLendingAppTheme.FinBox.TextPrimary" parent="TextAppearance.AppCompat">
+    <item name="fontFamily">bold-font</item>
+</style>
+
+<style name="FBLendingAppTheme.FinBox.TextSecondary" parent="TextAppearance.AppCompat">
+    <item name="fontFamily">regular-font</item>
+</style>
+
+<style name="FBLendingAppTheme.FinBox.TextSubHead" parent="TextAppearance.AppCompat">
+    <item name="fontFamily">semibold-font</item>
+</style>
+```
+
+- `FBLendingAppTheme.FinBox.TextPrimary` is used for all buttons and bold headers
+- `FBLendingAppTheme.FinBox.TextSecondary` is the regular font that is used for regular text
+- `FBLendingAppTheme.FinBox.TextSubHead` is the medium bold font that is used for Sections or subheadings
+
+Customize the SDK font by adding the application `fontFamily` in the styles.
+
+4. SDK Buttons can be customized by overriding `FBLendingAppTheme`
+
+```xml
+<style name="FBLendingAppTheme.FinBox.Button" parent="Widget.MaterialComponents.Button">
+    <item name="cornerRadius">16dp</item>
+    <item name="fontFamily">button-font</item>
+</style>
+
+<style name="FBLendingAppTheme.FinBox.TextButton" parent="Widget.MaterialComponents.Button.TextButton"></style>
+```
+
+Change button corner radius and text font as per your application theme.

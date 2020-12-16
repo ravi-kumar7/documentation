@@ -128,7 +128,7 @@ The list below indicates the possible value for `merchant_category` field:
 | ewallet | E-Wallet |
 | loans | Lender |
 
-## What is the FinBox Startup Program?
+<!-- ## What is the FinBox Startup Program?
 Our mission is to democratize financial services for the next billion Indians. We realized that the infrastructure for distribution and access to financial services in India is broken and we are fixing it one API at a time. Through FinBox Startup Program, we want to support other early-stage FinTech companies who are building financial services and products for the next billion Indians.
 
 ### Eligibility
@@ -171,4 +171,4 @@ _* can vary based on affiliated accelerator and VC partners._
 
 **What happens when my credits expire?** Once you’ve used your total credits, you might be eligible to renew your contract at a discounted rate. Further commercials will include a monthly minimum commitment on monthly billing based on usage needs. Any existing balance will be adjusted in consequent billings.
 
-**How do I know if my accelerator/incubator/VC firm has a relationship with FinBox?** Ask your program manager to see if they participate in the FinBox Startup Program. If they do not, you can request that they apply to become a partner.
+**How do I know if my accelerator/incubator/VC firm has a relationship with FinBox?** Ask your program manager to see if they participate in the FinBox Startup Program. If they do not, you can request that they apply to become a partner. -->

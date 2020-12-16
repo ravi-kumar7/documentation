@@ -1,5 +1,6 @@
 {
   "devDependencies": {
+    "v-dialogs": "^2.1.4",
     "vuepress": "^1.5.2"
   },
   "scripts": {
@@ -7,6 +8,7 @@
     "docs:build": "vuepress build docs"
   },
   "dependencies": {
+    "crypto-js": "^4.0.0",
     "vuepress-plugin-code-copy": "^1.0.6",
     "vuepress-plugin-code-switcher": "^1.0.3"
   }
