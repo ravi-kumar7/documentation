@@ -25,12 +25,14 @@
 | BANK_ADDED |
 | SIGN_AGREEMENT |
 | DISBURSED |
+| CANCELLED |
+| CLOSED |
 
 ## List of customer activities
 | Value | Description | Entity |
 | - | - | - |
-| user_created | User was created against a customerID |  Sourcing Entity Server |
-| eligibility_calculated | Loan Eligibility was calculated |  Sourcing Entity Server |
+| user_created | User was created against a customerID |  Sourcing Entity |
+| eligibility_calculated | Loan Eligibility was calculated |  Sourcing Entity |
 | profile_updated | Customer updated the profile | Customer |
 | bureau_consent_given | Customer submitted PAN number and gave consent to fetch credit bureau data | Customer |
 | user_qualified | Customer is qualified to move ahead and is shown hook offer | System |
@@ -52,8 +54,13 @@
 | loan_esigned | Customer esigned the loan agreement | Customer |
 | loan_disbursed | Loan was disbursed by the lender | Lender |
 | address_updated | Address was updated by ops team |  Sourcing Entity Dashboard |
-| emi_paid | EMI Paid by the customer | Customer /  Sourcing Entity |
+| emi_paid | EMI Paid by the customer | Customer /  Sourcing Entity / System / Lender |
 | emi_payment_initiated | EMI Payment initiated by the customer | Customer |
+| loan_signed_agreement_generated | Signed agreement PDF is generated for the customer | System |
+| loan_closed | Loan was closed | System / Lender |
+| loan_cancelled | Loan was cancelled | System / Sourcing Entity |
+| late_fee_added | Late Fee was added | System |
+| late_fee_updated | Late Fee was updated | System |
 
 ## List of entity types
 | Identifier | Description |
@@ -74,3 +81,14 @@
 | completed | Bureau data with score successfully fetched |
 | waiting | Bureau data is being fetched (in progress) |
 | failed | Bureau data fetching failed |
+
+## Servicing Hooks and Actions
+| Activity | Action | Examples |
+| - | - | - |
+| emi_due_in_7_days | Send notification | <a href = "https://finbox-cdn.s3.ap-south-1.amazonaws.com/docs/assets/servicing/Notification-l.png" target="_blank"> Sample Notification </a> |
+| emi_due_in_3_days | Send notification and show banner on home screen | <a href = "https://finbox-cdn.s3.ap-south-1.amazonaws.com/docs/assets/servicing/Notification-lll.png" target="_blank"> Sample Notification </a> <a href = "https://finbox-cdn.s3.ap-south-1.amazonaws.com/docs/assets/servicing/Banner-l.png" target="_blank"> Sample Banner </a> |
+| emi_due_tomorrow | Send notification and show banner on every screen| <a href = "https://finbox-cdn.s3.ap-south-1.amazonaws.com/docs/assets/servicing/Notification-lV.png" target="_blank"> Sample Notification </a> <a href = "https://finbox-cdn.s3.ap-south-1.amazonaws.com/docs/assets/servicing/Banner-l.png" target="_blank"> Sample Banner </a> |
+| emi_overdue | Send notification and show full screen banner on app open | <a href = "https://finbox-cdn.s3.ap-south-1.amazonaws.com/docs/assets/servicing/Notification-ll.png" target="_blank"> Sample Notification </a> <a href = "https://finbox-cdn.s3.ap-south-1.amazonaws.com/docs/assets/servicing/Banner-ll.png" target="_blank"> Sample Banner </a> |
+| late_fee_added | Send notification and show banner on every screen | <a href = "https://finbox-cdn.s3.ap-south-1.amazonaws.com/docs/assets/servicing/Notification-ll.png" target="_blank"> Sample Notification </a> <a href = "https://finbox-cdn.s3.ap-south-1.amazonaws.com/docs/assets/servicing/Banner-ll.png" target="_blank"> Sample Banner </a> |
+| late_fee_updated | Send notification** and show banner on every screen | <a href = "https://finbox-cdn.s3.ap-south-1.amazonaws.com/docs/assets/servicing/Notification-ll.png" target="_blank"> Sample Notification </a> <a href = "https://finbox-cdn.s3.ap-south-1.amazonaws.com/docs/assets/servicing/Banner-ll.png" target="_blank"> Sample Banner </a> |
+| emi_paid | Send notification for payment confirmation | <a href = "https://finbox-cdn.s3.ap-south-1.amazonaws.com/docs/assets/servicing/Notification-ll.png" target="_blank"> Sample Notification </a> <a href = "https://finbox-cdn.s3.ap-south-1.amazonaws.com/docs/assets/servicing/Banner-ll.png" target="_blank"> Sample Banner </a> |

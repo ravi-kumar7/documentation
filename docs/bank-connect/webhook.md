@@ -1,5 +1,5 @@
 ---
-base_url: https://portal.finbox.in #base URL in python library
+base_url: https://portal.finbox.in/bank-connect #base URL in python library
 version: v1 # version of API
 ---
 

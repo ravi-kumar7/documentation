@@ -29,7 +29,14 @@ In case wrong/incomplete/no keys were passed in headers, response will have **40
 ## Progress Field
 When a statement is uploaded, identity information and basic fraud checks happen at the same time. However other statement analyses, like transaction extraction, salary, recurring transactions, advanced fraud checks, enrichment happen in parallel. Hence all the GET APIs for these **analysis fields** have a `progress` field. You can track the progress of a statement uploaded using this.
 
-`progress` is an array of objects. Each object represents a statement and has a `status` field that can be `processing`, `completed` or `failed` and `statement_id` field which identifies a statement uniquely.
+`progress` is an array of objects. Each object represents a statement and has the following fields:
+
+| Field | Type | Description |
+| - | - | - |
+| `status` | String or `null` | Indicates the progress for a statement, and can be `processing`, `completed` or `failed`|
+| `statement_id` | String | Identifies a statement uniquely |
+| `source` | String | Indicates the source by which the PDF came from. Can be `online` (Net Banking Mode) or `pdf` |
+| `message` | String or `null` | An additional message about the progress of the statement |
 
 Sample `progress` value:
 ```json
@@ -37,12 +44,14 @@ Sample `progress` value:
   {
     "status": "completed",
     "message": null,
-    "statement_id": "some_uuid4_1"
+    "statement_id": "some_uuid4_1",
+    "source": "pdf"
   },
   {
     "status": "processing",
     "message": null,
-    "statement_id": "some_uuid4_2"
+    "statement_id": "some_uuid4_2",
+    "source": "online"
   }
 ]
 ```
@@ -106,7 +115,8 @@ On fetching information successfully, the response would be of the following for
         {
             "status": "completed",
             "message": null,
-            "statement_id": "uuid4_for_statement"
+            "statement_id": "uuid4_for_statement",
+            "source": "pdf"
         }
     ],
     "accounts": [
@@ -179,7 +189,8 @@ On fetching information successfully, the response would be of the following for
         {
             "status": "completed",
             "message": null,
-            "statement_id": "uuid4_for_statement"
+            "statement_id": "uuid4_for_statement",
+            "source": "pdf"
         }
     ],
     "accounts": [
@@ -260,7 +271,8 @@ On fetching information successfully, the response would be of the following for
         {
             "status": "completed",
             "message": null,
-            "statement_id": "uuid4_for_statement"
+            "statement_id": "uuid4_for_statement",
+            "source": "pdf"
         }
     ],
     "accounts": [
@@ -350,7 +362,8 @@ On fetching information successfully, the response would be of the following for
         {
             "status": "completed",
             "message": null,
-            "statement_id": "uuid4_for_statement"
+            "statement_id": "uuid4_for_statement",
+            "source": "pdf"
         }
     ],
     "accounts": [
@@ -457,7 +470,8 @@ On fetching information successfully, the response would be of the following for
         {
             "status": "completed",
             "message": null,
-            "statement_id": "uuid4_for_statement"
+            "statement_id": "uuid4_for_statement",
+            "source": "pdf"
         }
     ],
     "accounts": [
@@ -616,7 +630,8 @@ On fetching information successfully, the response would be of the following for
         {
             "status": "completed",
             "message": null,
-            "statement_id": "uuid4_for_statement"
+            "statement_id": "uuid4_for_statement",
+            "source": "pdf"
         }
     ],
     "accounts": [
@@ -717,7 +732,8 @@ On fetching information successfully, the response would be of the following for
         {
             "statement_id": "uuid4_for_statement",
             "status": "completed",
-            "message": null
+            "message": null,
+            "source": "pdf"
         }
     ],
     "categories": [
@@ -774,7 +790,8 @@ On fetching information successfully, the response would be of the following for
         {
             "status": "completed",
             "message": null,
-            "statement_id": "uuid4_for_statement"
+            "statement_id": "uuid4_for_statement",
+            "source": "pdf"
         }
     ],
     "monthly_analysis": {
@@ -935,7 +952,8 @@ On fetching information successfully, the response would be of the following for
         {
             "status": "completed",
             "message": null,
-            "statement_id": "uuid4_for_statement"
+            "statement_id": "uuid4_for_statement",
+            "source": "pdf"
         }
     ],
     "reports": [
@@ -972,7 +990,8 @@ On fetching information successfully, the response would be of the following for
         {
             "status": "completed",
             "message": null,
-            "statement_id": "uuid4_for_statement"
+            "statement_id": "uuid4_for_statement",
+            "source": "pdf"
         }
     ],
     "predictors": [

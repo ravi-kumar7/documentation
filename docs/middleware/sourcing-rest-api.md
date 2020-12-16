@@ -34,14 +34,14 @@ This API creates a FinBox lending user for a given customer ID.
 POST **`base_url`/v1/user/create**
 :::
 
-**Request Format**
+### Request Format
 ```json
 {
     "customerID": "somecustomerid",
     "mobile": "9999999999"
 }
 ```
-**Response**
+### Response
 ```json
 {
     "data": {
@@ -52,6 +52,15 @@ POST **`base_url`/v1/user/create**
 }
 ```
 
+### Error Cases
+| Case | HTTP Code |
+| - | - |
+| Missing customerID | 403 |
+| Missing mobile number | 403 |
+| Invalid mobile number | 403 |
+| User already exists | 409 |
+
+
 ## Get Eligibility
 This API checks for a user's eligibility and returns the eligible amount. Partner platform data and data from DeviceConnect SDK is used to prequalify the customers. The `customer_id` in DeviceConnect SDK should be same as the `customer_id` of user. 
 
@@ -61,7 +70,7 @@ This API checks for a user's eligibility and returns the eligible amount. Partne
 GET **`base_url`/v1/user/eligibility?customerID=`somecustomerid`**
 :::
 
-**Response**
+### Response
 ```json
 {
     "data": {
@@ -74,8 +83,12 @@ GET **`base_url`/v1/user/eligibility?customerID=`somecustomerid`**
 ```
 Here `is_eligible` is a **boolean** indicating whether the user is eligible or not, while `eligibility_amount` is a **float** that indicates the loan eligibility amount.
 
-
-
+### Error Cases
+| Case | HTTP Code |
+| - | - |
+| Missing customerID | 403 |
+| User not found | 400 |
+| User does not have eligibility data | 409 |
 
 ## Generate Token
 This API can be called multiple times for an eligible user, and is used to get a valid token that can be used by the Android App to initialize the SDK.
@@ -83,13 +96,13 @@ This API can be called multiple times for an eligible user, and is used to get a
 POST **`base_url`/v1/user/token**
 :::
 
-**Request Format**
+### Request Format
 ```json
 {
     "customerID": "somecustomerid"
 }
 ```
-**Response**
+### Response
 ```json
 {
     "data": {
@@ -100,6 +113,14 @@ POST **`base_url`/v1/user/token**
 }
 ```
 Here `token` field indicates the token.
+
+### Error Cases
+| Case | HTTP Code |
+| - | - |
+| Missing customerID | 403 |
+| User does not exist | 404 |
+| User eligibility not available | 400 |
+| User not eligible for loan | 403 |
 
 ## List Users
 Lists all the users created from a given sourcing entity's account. It's a paginated API.
@@ -121,7 +142,7 @@ Query parameters can be appended at end of the URL like `/?account_id=somevalue`
 | mobile | Yes | String | Filter all users of a given `%mobileNumber%` pattern.  | 
 | statusText | Yes | String | Filter all loan applications of a given loan status. Status list in [Appendix](/middleware/appendix.md) | 
 
-**Response**
+### Response
 ```json
 {
     "data": {
@@ -154,7 +175,7 @@ GET **`base_url`/v1/user/profile?customerID=`someCustomerID`**
 :::
 
 
-**Response**
+### Response
 ```json
 {
     "data": {
@@ -202,7 +223,7 @@ Query parameters can be appended at end of the URL like `/?account_id=somevalue`
 | mobile | Yes | String | Filter all loan applications of a given `%mobileNumber%` pattern.  | 
 | statusText | Yes | String | Filter all loan applications of a given loan status. Status list in [Appendix](/middleware/appendix.html#list-of-loan-status) | 
 
-**Response**
+### Response
 ```json
 {
     "data": {
@@ -236,7 +257,7 @@ GET **`base_url`/v1/loan/details?loanApplicationID=`someLongLoanApplicationUUID`
 :::
 
 
-**Response**
+### Response
 ```json
 {
     "data": {
@@ -308,6 +329,11 @@ Most of the parameters of the response are self-explainatory. Some key fields ar
 
 ## Loan Offers
 Returns the loan offers made to a given loan application.
+
+::: warning NOTE
+Loan Offers API works only once loan is **approved**
+:::
+
 ::: tip Endpoint
 GET **`base_url`/v1/loan/offers?loanApplicationID=`someLongLoanApplicationUUID`**
 :::
@@ -356,8 +382,35 @@ Response fields are explained below:
 | totalPayableAmount | Float | Total Payable Amount |
 | emiDates | Array of String | EMI Dates in `YYYY-MM-DD` format |
 
+## Get Signed Agreement
+Returns the presigned url for signed agreement PDF File
+
+::: warning NOTE
+- This API works only after `loan_signed_agreement_generated` event has been triggered
+- The presigned URL in response is valid for 300 seconds
+:::
+
+::: tip Endpoint
+GET **`base_url`/v1/loan/agreement?loanApplicationID=`someLongLoanApplicationUUID`**
+:::
+
+```json
+{
+    "data": {
+            "signedAgreementURL": "https://somelongurl/somefile.pdf?someparam=somevalue&somemoreparam=somevalue2"
+    },
+    "error": "",
+    "status": true
+}
+```
+
 ## Loan Repayments
 Returns the repayments information for a given loan application.
+
+::: warning NOTE
+Loan Repayments API works only after loan **disbursal**.
+:::
+
 ::: tip Endpoint
 GET **`base_url`/v1/loan/repayments?loanApplicationID=`someLongLoanApplicationUUID`**
 :::
@@ -395,17 +448,18 @@ Response fields are explained below:
 | paidDate | String | Date of payment in `YYYY-MM-DD` format, if not paid the value is blank string `""` |
 | totalPayable | Float | Total amount (to be) paid by user |
 
-::: warning NOTE
-Loan Repayments API works only for **disbursed** loans.
-:::
-
 ## Repay Loan
 Marks the repayment of a given loan EMI
+
+::: warning NOTE
+This API is **disabled** by default. If required, request FinBox team to enable this API.
+:::
+
 ::: tip Endpoint
 POST **`base_url`/v1/loan/repay**
 :::
 
-**Request Format**
+### Request Format
 ```json
 {
     "loanApplicationID": "someLoanApplicationID",
@@ -435,7 +489,7 @@ GET **`base_url`/v1/user/activity?customerID=`someCustomerID`**
 :::
 
 
-**Response**
+### Response
 ```json
 {
     "data": {

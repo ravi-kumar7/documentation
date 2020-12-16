@@ -12,6 +12,10 @@ FinBox Lending SDK is a drop-in module that can add a digital lending journey to
             accessKey = 'ACCESS_KEY'
             secretKey = 'SECRET_KEY'
        }
+      content {
+            includeGroup("in.finbox")
+            includeGroup("in.finbox.lending")
+      }
    }
    ```
 2. Add the Lending SDK dependency in the app `build.gradle` file

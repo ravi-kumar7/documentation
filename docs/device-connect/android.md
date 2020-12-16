@@ -18,6 +18,9 @@ maven {
         accessKey = <ACCESS_KEY>
         secretKey = <SECRET_KEY>
     }
+    content {
+        includeGroup("in.finbox")
+    }
 }
 ```
 
@@ -30,6 +33,9 @@ maven {
     credentials(AwsCredentials) {
         accessKey = <ACCESS_KEY>
         secretKey = <SECRET_KEY>
+    }
+    content {
+        includeGroup("in.finbox")
     }
 }
 ```
