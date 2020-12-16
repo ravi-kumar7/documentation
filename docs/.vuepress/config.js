@@ -171,7 +171,11 @@ module.exports = {
             {
               title: 'REST API',
               path: '/middleware/sourcing-rest-api.html'
-            }
+            },
+            {
+              title: 'Web SDK',
+              path: '/middleware/web-sdk.html'
+            },
           ]
         },
         {
