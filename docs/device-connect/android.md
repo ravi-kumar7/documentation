@@ -236,6 +236,8 @@ if (MessagingService.forwardToFinBoxSDK(remoteMessage.data)) {
     val firebaseMessagingService = MessagingService()
     firebaseMessagingService.attachContext(this)
     firebaseMessagingService.onMessageReceived(remoteMessage)
+} else {
+    // Rest of your FCM logic
 }
 ```
 
@@ -247,6 +249,8 @@ if(MessagingService.forwardToFinBoxSDK(remoteMessage.getData())) {
     final MessagingService firebaseMessagingService = new MessagingService();
     firebaseMessagingService.attachContext(this);
     firebaseMessagingService.onMessageReceived(remoteMessage);
+} else {
+    // Rest of your FCM logic
 }
 ```
 

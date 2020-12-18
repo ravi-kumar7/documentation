@@ -177,7 +177,7 @@ Colors specific for the category shown in the UI are customizable on the backend
 
 
 PFM Customizable Notifications
-=============================
+---------------------------
 
 1. Extend `FinanceMessagingService` instead of extending `FirebaseMessagingService`.
 
@@ -446,6 +446,8 @@ private void showIntroFragment(@NotNull final Bundle bundle) {
 ```kotlin
 if (FinanceMessagingService.forwardToFinBoxPfmSdk(message.data)) {
     super.onMessageReceived(message)
+} else {
+    // Rest of your FCM logic
 }
 ```
 
@@ -455,7 +457,8 @@ if (FinanceMessagingService.forwardToFinBoxPfmSdk(message.data)) {
 ```java
 if (FinanceMessagingService.forwardToFinBoxPfmSdk(message.getData())) {
     super.onMessageReceived(message);
-    return
+} else {
+    // Rest of your FCM logic
 }
 ```
 
