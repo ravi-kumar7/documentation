@@ -20,7 +20,7 @@ Now everytime user initiates/resumes their lending journey by clicking on a bann
 To start with the integration, call the following API to create a user session:
 
 ::: tip Endpoint
-POST **`base_url`/v1/user/session/**
+POST **`base_url`/v1/user/session**
 :::
 
 ### Authentication
