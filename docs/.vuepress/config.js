@@ -169,6 +169,10 @@ module.exports = {
               path: '/middleware/android-sdk.html'
             },
             {
+              title: 'React Native',
+              path: '/middleware/react-native.html'
+            },
+            {
               title: 'REST API',
               path: '/middleware/sourcing-rest-api.html'
             },
