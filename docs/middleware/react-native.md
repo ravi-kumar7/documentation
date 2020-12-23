@@ -31,10 +31,11 @@ FinBox Lending SDK is a drop-in module that can add a digital lending journey to
     ```
     
     Following keys will be shared by the FinBox team:
+
     - ACCESS_KEY & SECRET_KEY - These keys will give access to the AWS bucket to fetch SDK
     - LENDING_SDK_VERSION - Middleware Lending SDK version
     - RISK_SDK_VERSION - Device Connect SDK version
-    - ENVIRONMENT - SDK environment supports [uat & prod]
+    - ENVIRONMENT - SDK environment supports [`uat` & `prod`]
 
 5. Final change required is in the `MainApplication` class of your native app.
     ```java
