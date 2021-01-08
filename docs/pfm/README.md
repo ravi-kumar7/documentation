@@ -13,10 +13,5 @@ Click [here](https://finbox.in/contact-us) to contact us and request for a pilot
 :::
 
 ## Getting Started
-FinBox Personal Finance Manager requires two integrations - first is for the **user to share data**:
-- [Android SDK](/device-connect/android.html)
-- [React Native](/device-connect/react-native.html)
-- [Cordova](/device-connect/cordova.html)
-
-And then to **retrieve the data** and show the spends in beautiful charts:
+FinBox Personal Finance Manager SDK integration guide can be found here:
 - [Android SDK](/pfm/android.html)
