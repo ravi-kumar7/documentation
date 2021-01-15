@@ -267,34 +267,37 @@ GET **`base_url`/v1/loan/details?loanApplicationID=`someLongLoanApplicationUUID`
         "status": "BANK_ADDED",
         "createdAt": "2020-09-15 18:56:15",
         "userDetails": {
+            "customerID": "someCustomerID",
             "name": "Amazing User",
             "email": "username@email.com",
             "mobile": "9999999999",
             "gender": "Male",
             "dob": "1992-12-09",
-            "maritalStatus": "Married",
-            "currentAddress": "{\"line1\": \"22, 80 Feet Rd\", \"line2\": \"Koramangala\", \"city\": \"Bengaluru\", \"pincode\": \"560095\", \"state\": \"Karnataka\"}",
-            "workExperience": "2 years 0 months",
-            "loanPurpose": "Education",
-            "residenceType": "Rented",
-            "fathersName": "",
             "pan": "ABCDP0000N",
-            "customerID": "someCustomerID",
-            "ref1name": "Sam Wilson",
-            "ref1contactName": "Uncle Sam",
-            "ref1phone": "9999988888",
-            "ref1relation": "Uncle",
-            "ref2name": "Shourya",
-            "ref2contactName": "Shourya FinBox",
-            "ref2phone": "9999900000",
-            "ref2relation": "Coworker",
-            "salary": null,
-            "income": 12000,
-            "dependents": 0,
-            "expenses": 5000,
             "fisScore": 0.006962299255855537,
             "bureauScore": 830,
-            "bureauStatus": "completed"
+            "bureauStatus": "completed",
+            "currentAddress": {
+                "line1": "22, 80 Feet Rd", 
+                "line2": "Koramangala",
+                "city": "Bengaluru",
+                "pincode": "560095", 
+                "state": "Karnataka"
+            },
+            "loanFormData": {
+                "dependents": "0",
+                "educationLevel": "MBBS",
+                "expenses": "515231",
+                "fathersName": "Ram",
+                "income": "515241",
+                "loanPurpose": "Marriage",
+                "maritalStatus": "Unmarried",
+                "reference1Contact": "+919999999999",
+                "reference1ContactName": "Papa",
+                "reference1Name": "Ram Kumar",
+                "reference1Relationship": "Father"
+            },
+            "residenceType": "Rented",
         },
         "bankDetails": {
             "accountNumber": "50100100100999",
@@ -313,19 +316,13 @@ Most of the parameters of the response are self-explainatory. Some key fields ar
 | loanApplicationNum | A readable loan number format is FBxxx |
 | appliedLoanAmount | The amount of loan applied by the user. Note that it might be different from the final loan offer |
 | residenceType | Type of residence - Rented or Owned |
-| maritalStaus | Unmarried or Married |
-| loanPurpose | Purpose of loan application |
-| ref1name | Name of First Reference Contact |
-| ref1phone | Phone number of First Reference Contact |
-| ref1relation | Relationship with First Reference Contact |
-| ref1contactName | Name with which reference is saved in contacts |
-| dependents | Number of dependents |
 | fisScore | User's FinBox Inclusion Score |
 | bureauScore | User's bureau score from one of the credit bureaus |
 | bureauStatus | Indicates the bureau data fetch status. Possible values can be found in [Appendix](/middleware/appendix.html#list-of-bureau-status) |
 | accountHolderName | Verified name as per user's bank account |
 | dob | Date of Birth in `YYYY-MM-DD` format |
 | createdAt | Date time of loan creation in `YYYY-MM-DD HH:MM:SS` format (UTC) |
+| loanFormData | Fields in this key varies for every sourcing entity, exact keys will be shared for this during the integration |
 
 ## Loan Offers
 Returns the loan offers made to a given loan application.
@@ -347,18 +344,36 @@ GET **`base_url`/v1/loan/offers?loanApplicationID=`someLongLoanApplicationUUID`*
             "annualInterest": 14.4,
             "processingFee": 700,
             "gst": 18,
-            "emi": 1161,
+            "advanceEMIAmount": 0,
             "emiCalculationMethod": "flat_rate",
             "status": "offer_accepted",
             "disbursalAmount": 5674,
             "totalPayableAmount": 6966,
-            "emiDates": [
-                "2020-11-05",
-                "2020-12-07",
-                "2021-01-05",
-                "2021-02-05",
-                "2021-03-05",
-                "2021-04-05"
+            "emis": [
+                {
+                    "emiDate": "2021-02-03",
+                    "emiAmount": 1161
+                },
+                {
+                    "emiDate": "2021-03-03",
+                    "emiAmount": 1161
+                },
+                {
+                    "emiDate": "2021-04-05",
+                    "emiAmount": 1161
+                },
+                {
+                    "emiDate": "2021-05-03",
+                    "emiAmount": 1161
+                },
+                {
+                    "emiDate": "2021-06-03",
+                    "emiAmount": 1161
+                },
+                {
+                    "emiDate": "2021-07-05",
+                    "emiAmount": 1161
+                }
             ]
         }
     ],
@@ -375,12 +390,14 @@ Response fields are explained below:
 | annualInterest | Float | Annual Interest Rate in Percentage |
 | processingFee | Float | Processing Fee |
 | gst| Float | GST Percentage |
-| emi | Float | EMI Amount |
+| advanceEMIAmount | Float | Advance EMI Amount |
 | emiCalculationMethod | String | Can be `flat_rate` or `reducing_balance` |
 | status | String | Can be `offer_accepted` or `offered` |
 | disbursalAmount | Float | Final Disbursal Amount |
 | totalPayableAmount | Float | Total Payable Amount |
-| emiDates | Array of String | EMI Dates in `YYYY-MM-DD` format |
+| emis | Array of Objects | Contains emi objects containing date and amount sorted in sequence of installments |
+| emiAmount | Float | Tells the EMI Amount |
+| emiDate | String | Contains `YYYY-MM-DD` format |
 
 ## Get Signed Agreement
 Returns the presigned url for signed agreement PDF File
