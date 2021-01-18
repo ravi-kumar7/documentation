@@ -499,6 +499,116 @@ POST **`base_url`/v1/loan/repay**
 }
 ```
 
+## Credit Line Details
+Returns credit line details for a given user using the `customerID`
+
+::: tip Endpoint
+GET **`base_url`/v1/creditline/details?customerID=`someCustomerID`**
+:::
+
+**Response Format**
+
+```json
+{
+    "data": {
+        "status": "ACTIVE",
+        "maxLimit": 100000,
+        "availableLimit": 98800,
+        "validity": "2022-01-18",
+        "inactiveReason": ""
+    },
+    "error": "",
+    "status": true
+}
+```
+
+Response fields are explained below:
+| Field | Type | Description |
+| - | - | - |
+| status | String | Status of credit line, can be `ACTIVE` or `INACTIVE` |
+| maxLimit | Float | Maximum credit limit assigned to the user |
+| availableLimit | Float | Currently available limit of the user |
+| validity | String | Indicates the expiry date of credit line in `YYYY-MM-DD` |
+| inactiveReason | String | Reason for status to be `INACTIVE` |
+
+### Error Cases
+| Case | HTTP Code |
+| - | - |
+| Missing customerID | 403 |
+| user with credit line not found | 404 |
+
+## Credit Line Transactions
+Returns credit line transactions for a given user using the `customerID`
+
+::: tip Endpoint
+GET **`base_url`/v1/creditline/transactions?customerID=`someCustomerID`**
+:::
+
+**Response Format**
+
+```json
+{
+    "data": {
+        "transactions": [
+            {
+                "txnID": "1234OD123312",
+                "txnStatus": "CONFIRMED",
+                "amount": 1200,
+                "interest": 0,
+                "emiCalculationMethod": "reducing_balance",
+                "subvention": 24,
+                "gst": 18,
+                "disbursalAmount": 1171.68,
+                "createdAt": "2020-02-12 13:02:12",
+                "emis": [
+                    {
+                        "amount": 1200,
+                        "installmentNum": 1,
+                        "lateCharge": 0,
+                        "status": "PAID",
+                        "dueDate": "2020-02-14",
+                        "paidDate": "2020-02-13",
+                        "totalPayable": 1200,
+                    }
+                ]
+            }
+        ]
+    },
+    "error": "",
+    "status": true
+}
+```
+
+Response fields are explained below:
+| Field | Type | Description |
+| - | - | - |
+| txnID | String | Transaction ID passed on Client SDK |
+| txnStatus | String | Status of transaction can be `PROCESSING`, `CONFIRMED`, `DISBURSED`, `PAID`, `CANCELLED`, `OVERDUE`|
+| amount | Float | Transaction amount |
+| interest | Float | Interest user is paying for this transaction |
+| subvention | Float | Subvention amount on this transaction |
+| gst | Float | Indicates GST in percentage |
+| disbursalAmount | Float | Indicates the final amount that will be disbursed |
+| emiCalculationMethod | String | Can be `flat_rate` or `reducing_balance` |
+| createdAt | String | Transaction creation time in `YYYY-MM-DD HH:MM:SS` format |
+
+objects in `emis` contain:
+| Field | Type | Description |
+| - | - | - |
+| amount | Float | Indicates the EMI Amount |
+| installmentNum | Integer | Installment Number |
+| lateCharge | Float | Total late charge |
+| status | String | Payment status can be `UNPAID`, `PAID`, `PENDING` |
+| dueDate | String | Due date in `YYYY-MM-DD` format | 
+| paidDate | String | Payment completion in `YYYY-MM-DD` format, if not paid is blank string `""` |
+| totalPayable | Float | Total payable amount for the EMI |
+
+### Error Cases
+| Case | HTTP Code |
+| - | - |
+| Missing customerID | 403 |
+| user with credit line not found | 404 |
+
 ## User Activity History
 Returns the activity 
 ::: tip Endpoint
