@@ -106,7 +106,7 @@ const callModule = () => {
     )
 }
 ```
-- `WITHDRAW_AMOUNT` is the method that will contain the amount that a user is trying to withdraw
+- `WITHDRAW_AMOUNT` indicates the amount that a user is trying to withdraw
 - `TRANSACTION_ID` will hold the transaction id for the withdrawal flow
 
 ## Callback
