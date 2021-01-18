@@ -68,9 +68,11 @@ FinBox Lending SDK is a drop-in module that can add a digital lending journey to
         transitive = true
     }
    ```
-    ::: tip Note
-    For `creditline` journey `pennydrop` module can be excluded
-    :::
+
+:::warning Optional Dependencies
+- For Credit Line journey `pennydrop` module can be excluded
+- For Personal/Business Loan journey, `creditline` module can be excluded
+:::
 
 3. SDK requires java 8 version for project, add next lines to your module's build.gradle file
 
@@ -132,9 +134,9 @@ startActivityForResult(
 </template>
 </CodeSwitcher>
 
-## CreditLine
+## Credit Line
 
-Once the lending journey is completed, whenever a person wants to opt-in for a credit. Then use the following method to start the credit line journey.
+In case of credit line product, once the lending journey is completed, user can opt-in for a credit while doing a transaction. For such a case use following method to start the credit line withdrawl journey:
 
 <CodeSwitcher :languages="{kotlin:'Kotlin',java:'Java'}">
 <template v-slot:kotlin>
@@ -174,8 +176,11 @@ startActivityForResult(
 )
 
 ```
-`setCreditLineAmount` is the method that will contain the amount that a user is trying to withdraw
-`setCreditLineTransactionId` will hold the transaction id for the withdrawal flow
+</template>
+</CodeSwitcher>
+
+- `setCreditLineAmount` is the method that will contain the amount that a user is trying to withdraw
+- `setCreditLineTransactionId` will hold the transaction id for the withdrawal flow
 
 ## Callback
 
