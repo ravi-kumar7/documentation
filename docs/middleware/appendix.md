@@ -41,8 +41,8 @@
 | loan_application_created | Customer clicked on Apply for Loan button & a loan application was created | Customer | - |
 | form_updated | Customer filled the loan application form | Customer | - |
 | kyc_submitted | KYC documents submitted by the Customer | Customer | - |
-| kyc_verified | KYC documents verified |  Sourcing Entity Dashboard or System | - |
-| kyc_doc_rejected | Any KYC document was rejected |  Sourcing Entity Dashboard or System | - |
+| kyc_verified | KYC documents verified |  Sourcing Entity Dashboard / System | - |
+| kyc_doc_rejected | Any KYC document was rejected |  Sourcing Entity Dashboard / System | - |
 | kyc_resubmitted | KYC document re-submitted by Customer | Customer | - |
 | lender_assigned | A lender was assigned to finance the loan application | System | - |
 | loan_approved | Loan was approved by a lender | System / Lender | - |
