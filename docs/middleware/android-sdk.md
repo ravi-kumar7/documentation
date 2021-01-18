@@ -60,10 +60,18 @@ FinBox Lending SDK is a drop-in module that can add a digital lending journey to
         exclude group: 'in.finbox.lending', module: 'core'
         transitive = true
     }
+    implementation("in.finbox.lending:creditline-uat:<LENDING_SDK_VERSION>:uat@aar") {
+        exclude group: 'in.finbox.lending', module: 'core'
+        transitive = true
+    }
     implementation("in.finbox:mobileriskmanager:<RISK_SDK_VERSION>:parent-release@aar") {
         transitive = true
     }
    ```
+    ::: tip Note
+    For `creditline` journey `pennydrop` module can be excluded
+    :::
+
 3. SDK requires java 8 version for project, add next lines to your module's build.gradle file
 
 ```groovy
@@ -124,6 +132,51 @@ startActivityForResult(
 </template>
 </CodeSwitcher>
 
+## CreditLine
+
+Once the lending journey is completed, whenever a person wants to opt-in for a credit. Then use the following method to start the credit line journey.
+
+<CodeSwitcher :languages="{kotlin:'Kotlin',java:'Java'}">
+<template v-slot:kotlin>
+
+```kotlin
+val REQUEST_CODE_ONBOARDING = 101
+val builder = FinBoxLending.Builder(context)
+    .setCustomerId("<customer_id>")
+    .setFinBoxApiKey("<client_api_key>")
+    .setUserToken("<user_token>")
+    .setCreditLineAmount("<withdraw_amount>")
+    .setCreditLineTransactionId("<transaction_id>")
+    .build()
+
+startActivityForResult(
+    builder.getLendingIntent(context),
+    REQUEST_CODE_ONBOARDING
+)
+```
+
+</template>
+<template v-slot:java>
+
+```java
+private String REQUEST_CODE_ONBOARDING = 101;
+FinBoxLending builder = FinBoxLending.Builder(context)
+    .setCustomerId("<customer_id>")
+    .setFinBoxApiKey("<client_api_key>")
+    .setUserToken("<user_token>")
+    .setCreditLineAmount("<withdraw_amount>")
+    .setCreditLineTransactionId("<transaction_id>")
+    .build();
+
+startActivityForResult(
+ builder.getLendingIntent(getContext()),
+ REQUEST_CODE_ONBOARDING
+)
+
+```
+`setCreditLineAmount` is the method that will contain the amount that a user is trying to withdraw
+`setCreditLineTransactionId` will hold the transaction id for the withdrawal flow
+
 ## Callback
 
 The callback will be provided when the user exits the SDK. You can track the status of user exit actions in the `onActivityResult` callback function
@@ -171,7 +224,8 @@ Possible values for `resultCode` are as follows:
 | `MW200` | Journey is completed successfully |
 | `MW500` | User exits the journey |
 | `MW400` | Some error occurred in the SDK |
- 
+| `CL200` | Credit line withdrawal success |
+| `CL500` | Credit line withdrawal failed |
 
 Possible values for `screen` are as follows:
 | Screen | Description |
