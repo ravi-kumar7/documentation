@@ -81,6 +81,34 @@ const callModule = () => {
 }
 ```
 
+## Credit Line
+
+In case of credit line product, once the lending journey is completed, user can opt-in for a credit while doing a transaction. For such a case use following method to start the credit line withdrawl journey:
+
+```javascript
+import FinBoxMiddlewareSdk from 'react-native-finbox-middleware-sdk';
+//Function to trigger credit line withdrawl
+const callModule = () => {
+    FinBoxMiddlewareSdk.startCreditLineWithdrawl(
+        "CLIENT_API_KEY",
+        "CUSTOMER_ID",
+        "TOKEN",
+        "WITHDRAW_AMOUNT",
+        "TRANSACTION_ID",
+        (errorMessage) => {
+	    // Error Callback
+            console.log("Error message -> ", errorMessage)
+        }, 
+        (resultCode) => {
+            // Success Callback, once the user exits from the journey
+	    console.log("resultCode", resultCode)
+	}
+    )
+}
+```
+- `WITHDRAW_AMOUNT` is the method that will contain the amount that a user is trying to withdraw
+- `TRANSACTION_ID` will hold the transaction id for the withdrawal flow
+
 ## Callback
 
 There are 2 callbacks that needs to be handled. 
@@ -94,6 +122,8 @@ Success Callback will have a `resultCode`. Possible values for `resultCode` are 
 | `MW200` | Journey is completed successfully |
 | `MW500` | User exits the journey |
 | `MW400` | Some error occurred in the SDK |
+| `CL200` | Credit line withdrawal success |
+| `CL500` | Credit line withdrawal failed |
 
 
 ### errorCallback
