@@ -603,11 +603,44 @@ objects in `emis` contain:
 | paidDate | String | Payment completion in `YYYY-MM-DD` format, if not paid is blank string `""` |
 | totalPayable | Float | Total payable amount for the EMI |
 
+:::warning emis key
+Array of objects in `emis` will be empty in case of `CANCELLED` and `PROCESSING` transactions.
+:::
+
 ### Error Cases
 | Case | HTTP Code |
 | - | - |
 | Missing customerID | 403 |
 | user with credit line not found | 404 |
+
+## Credit Line Update Transaction Status
+Updates Credit Line Transaction Status
+
+::: tip Endpoint
+POST **`base_url`/v1/creditline/status**
+:::
+
+**Request Format**
+```json
+{
+    "txnID": "27d71hd87187h",
+    "status": "CONFIRMED"
+}
+```
+| Field | Type | Description |
+| - | - | - |
+| txnID | String | Transaction ID which was passed on Client SDK |
+| status | String | Can be `CONFIRMED` or `CANCELLED` |
+
+On successful updating the status, API will give a response with 200 HTTP status code.
+
+### Error Cases
+| Case | HTTP Code |
+| - | - |
+| Missing customerID | 403 |
+| Invalid status value | 400 |
+| txnID not found | 404 |
+| only transaction with status PROCESSING can be updated | 403 |
 
 ## User Activity History
 Returns the activity 
