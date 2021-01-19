@@ -147,7 +147,7 @@ val builder = FinBoxLending.Builder(context)
     .setCustomerId("<customer_id>")
     .setFinBoxApiKey("<client_api_key>")
     .setUserToken("<user_token>")
-    .setCreditLineAmount("<withdraw_amount>")
+    .setCreditLineAmount(<withdraw_amount>)
     .setCreditLineTransactionId("<transaction_id>")
     .build()
 
@@ -166,7 +166,7 @@ FinBoxLending builder = FinBoxLending.Builder(context)
     .setCustomerId("<customer_id>")
     .setFinBoxApiKey("<client_api_key>")
     .setUserToken("<user_token>")
-    .setCreditLineAmount("<withdraw_amount>")
+    .setCreditLineAmount(<withdraw_amount>)
     .setCreditLineTransactionId("<transaction_id>")
     .build();
 
@@ -179,8 +179,8 @@ startActivityForResult(
 </template>
 </CodeSwitcher>
 
-- `setCreditLineAmount` is the method that will contain the amount that a user is trying to withdraw
-- `setCreditLineTransactionId` will hold the transaction id for the withdrawal flow
+- `setCreditLineAmount` is the method that will contain the amount (in **Float**) that a user is trying to withdraw
+- `setCreditLineTransactionId` will hold the transaction id (in **String**) for the withdrawal flow
 
 ## Callback
 

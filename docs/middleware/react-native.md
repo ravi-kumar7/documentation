@@ -93,7 +93,7 @@ const callModule = () => {
         "CLIENT_API_KEY",
         "CUSTOMER_ID",
         "TOKEN",
-        "WITHDRAW_AMOUNT",
+        WITHDRAW_AMOUNT,
         "TRANSACTION_ID",
         (errorMessage) => {
 	    // Error Callback
@@ -106,8 +106,11 @@ const callModule = () => {
     )
 }
 ```
-- `WITHDRAW_AMOUNT` indicates the amount that a user is trying to withdraw
-- `TRANSACTION_ID` will hold the transaction id for the withdrawal flow
+
+| Field | Type | Description |
+| - | - | - |
+| `WITHDRAW_AMOUNT` | Float | indicates the amount that a user is trying to withdraw |
+| `TRANSACTION_ID` | String | will hold the transaction id for the withdrawal flow |
 
 ## Callback
 
