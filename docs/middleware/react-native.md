@@ -89,7 +89,7 @@ In case of credit line product, once the lending journey is completed, user can 
 import FinBoxMiddlewareSdk from 'react-native-finbox-middleware-sdk';
 //Function to trigger credit line withdrawl
 const callModule = () => {
-    FinBoxMiddlewareSdk.startCreditLineWithdrawl(
+    FinBoxMiddlewareSdk.startLendingJourney(
         "CLIENT_API_KEY",
         "CUSTOMER_ID",
         "TOKEN",
