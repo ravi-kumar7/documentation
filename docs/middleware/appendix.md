@@ -61,8 +61,13 @@
 | loan_cancelled | Loan was cancelled | System / Sourcing Entity | - |
 | late_fee_added | Late Fee was added | System | `{"installmentNum": 1, "lateCharge": 250.00}` |
 | late_fee_updated | Late Fee was updated | System | `{"installmentNum": 1, "lateCharge": 500.00}` |
+| emi_due_in_7_days | EMI is due in 7 days | System | `{"installmentNum": 1}` |
+| emi_due_in_3_days | EMI is due in 3 days | System | `{"installmentNum": 1}` |
+| emi_due_in_tomorrow | EMI is due tomorrow | System | `{"installmentNum": 1}` |
+| emi_overdue | EMI is overdue | System | `{"installmentNum": 1}` |
 | credit_line_created | Credit Line Created | System | `{"limit": 100000.00}`
-| credit_line_withdrew | Credit Line Transaction Created / Withdrawl Made | Customer | `{"amount": 2323.00, "txnID": "your_txn_id"}` |
+| credit_line_withdrew | Credit Line Transaction Created / Withdrawl Made | Customer | `{"amount": 2323.00, "txnID": "your_txn_id", "refID": "some_reference_id"}` |
+| credit_line_withdrew_failed | Credit Line Transaction Withdrawl Failed | Customer | `{"amount": 2323.00, "txnID": "your_txn_id", "refID": "some_reference_id"}` |
 | credit_line_limit_updated | Credit Line Limit Updated | System | `{"availableLimit": 50000.00}` |
 | credit_line_txn_confirmed | Credit Line Transaction Confirmed | Sourcing Entity | `{"txnID": "your_txn_id"}` |
 | credit_line_txn_cancelled | Credit Line Transaction Cancelled | Sourcing Entity | `{"txnID": "your_txn_id"}` |
@@ -78,6 +83,10 @@ In case of credit line, event description formats will be as follows:
 | emi_payment_initiated | `{"installmentNum": 1, "txnID": "your_txn_id"}` |
 | late_fee_added | `{"installmentNum": 1, "lateCharge": 250, "txnID": "your_txn_id"}` |
 | late_fee_updated | `{"installmentNum": 1, "lateCharge": 500, "txnID": "your_txn_id"}` |
+| emi_due_in_7_days | `{"installmentNum": 1, "txnID": "your_txn_id"}` |
+| emi_due_in_3_days | `{"installmentNum": 1, "txnID": "your_txn_id"}` |
+| emi_due_tomorrow | `{"installmentNum": 1, "txnID": "your_txn_id"}` |
+| emi_overdue | `{"installmentNum": 1, "txnID": "your_txn_id"}` |
 :::
 
 ## List of entity types
