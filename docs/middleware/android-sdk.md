@@ -60,19 +60,10 @@ FinBox Lending SDK is a drop-in module that can add a digital lending journey to
         exclude group: 'in.finbox.lending', module: 'core'
         transitive = true
     }
-    implementation("in.finbox.lending:creditline-uat:<LENDING_SDK_VERSION>:uat@aar") {
-        exclude group: 'in.finbox.lending', module: 'core'
-        transitive = true
-    }
     implementation("in.finbox:mobileriskmanager:<RISK_SDK_VERSION>:parent-release@aar") {
         transitive = true
     }
    ```
-
-:::warning Optional Dependencies
-- For Credit Line journey `pennydrop` module can be excluded
-- For Personal/Business Loan journey, `creditline` module can be excluded
-:::
 
 3. SDK requires java 8 version for project, add next lines to your module's build.gradle file
 
@@ -135,6 +126,14 @@ startActivityForResult(
 </CodeSwitcher>
 
 ## Credit Line
+
+For credit line journey, include the following dependency in the app `build.gradle` file:
+```groovy
+implementation("in.finbox.lending:creditline-uat:<LENDING_SDK_VERSION>:uat@aar") {
+    exclude group: 'in.finbox.lending', module: 'core'
+    transitive = true
+}
+```
 
 In case of credit line product, once the lending journey is completed, user can opt-in for a credit while doing a transaction. For such a case use following method to start the credit line withdrawl journey:
 
