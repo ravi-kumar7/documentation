@@ -92,6 +92,12 @@ Here `is_eligible` is a **boolean** indicating whether the user is eligible or n
 
 ## Generate Token
 This API can be called multiple times for an eligible user, and is used to get a valid token that can be used by the Android App to initialize the SDK.
+
+::: warning Token Validity
+- In case of **production** environment, the token is valid for **24 hours** and in **UAT** it is valid for **1 week**.
+- It is recommended to call this API everytime user clicks on the banner on app, so that a fresh token is issued for the user session everytime.
+:::
+
 ::: tip Endpoint
 POST **`base_url`/v1/user/token**
 :::
@@ -680,7 +686,7 @@ A list of all possible entity types can be found [Appendix](/middleware/appendix
 ## Webhook
 A webhook can be configured to receive events on different actions taken throughout the user journey.
 
-To configure webhook URL, you have to share with us a **valid endpoint**.
+To configure this, you can update the webhook URL in **Settings** page of **FinBox Dashboard**. The webhook URL should be a  **valid endpoint**.
 
 :::tip A Valid Endpoint:
 - receives a POST request
