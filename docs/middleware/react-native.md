@@ -133,6 +133,42 @@ Success Callback will have a `resultCode`. Possible values for `resultCode` are 
 
 Error callback will contain the error message.
 
+## Notifications
+
+FinBox Lending SDK sends notifications of its own for mandatory events. It is expected that the client app has Firebase configured and can forward the notification payload to the SDK. In order for SDK to capture the notifications add the following:
+
+
+```js
+import messaging from '@react-native-firebase/messaging';
+
+
+useEffect(() => {
+    
+    // Send the notification payload to a common function. If sent by FinBox team notification will be shown.
+    const pushPayloadToFinBox = () => {
+        FinBoxMiddlewareSdk.canForwardToFinBoxLendingSdk(
+            JSON.stringify(remoteMessage.data),
+            (success) => {
+            if (success)
+                FinBoxMiddlewareSdk.forwardToFinBoxLendingSdk(
+                    JSON.stringify(remoteMessage.data),
+                    "CLIENT_API_KEY",
+                    "CUSTOMER_ID",
+                    "TOKEN",
+                );
+            },
+        );
+    };
+    const unsubscribe = messaging().onMessage(async (remoteMessage) => {
+        pushPayloadToFinBox();
+    });
+    messaging().setBackgroundMessageHandler(async (remoteMessage) => {
+        pushPayloadToFinBox();
+    });
+    return unsubscribe;
+}, []);
+```
+
 ## Customizations
 
 1. The privacy policy URL needs to be updated to the company policy. The default privacy policy is pointing to FinBox privacy. Add a String resource to specify the policy URL.
