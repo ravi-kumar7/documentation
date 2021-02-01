@@ -56,6 +56,10 @@ FinBox Lending SDK is a drop-in module that can add a digital lending journey to
         exclude group: 'in.finbox.lending', module: 'core'
         transitive = true
     }
+    implementation ("in.finbox.lending:bankconnect-uat:<LENDING_SDK_VERSION>:uat@aar") {
+        exclude group: 'in.finbox.lending', module: 'core'
+        transitive = true
+    }
     implementation("in.finbox.lending:pennydrop-uat:<LENDING_SDK_VERSION>:uat@aar") {
         exclude group: 'in.finbox.lending', module: 'core'
         transitive = true
@@ -76,6 +80,13 @@ FinBox Lending SDK is a drop-in module that can add a digital lending journey to
         jvmTarget = "1.8"
     }
 ```
+
+:::warning ProGuard
+While generating a signed application, make sure **ProGuard** file uses `proguard-android.txt` **not** `proguard-android-optimize.txt`, i.e. make sure it is:
+```groovy
+proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+```
+:::
 
 ## Start SDK flow
 
