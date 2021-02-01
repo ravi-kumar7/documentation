@@ -180,6 +180,10 @@ module.exports = {
               title: 'Web SDK',
               path: '/middleware/web-sdk.html'
             },
+            {
+              title: 'Banner',
+              path: '/middleware/banner.html'
+            },
           ]
         },
         {

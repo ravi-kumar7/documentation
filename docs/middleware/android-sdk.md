@@ -292,51 +292,52 @@ FinBox Lending SDK sends notifications of its own for mandatory events. It is ex
 
 ```kotlin
 
-class SampleMessService: `FirebaseMessagingService()`, `FinBoxLendingMessagingImpl`
+class SampleMessService: FirebaseMessagingService(), FinBoxLendingMessagingImpl {
 
-override fun onMessageReceived(remoteMessage: RemoteMessage) {
-    super.onMessageReceived(remoteMessage)
-    FinBoxLendingMessagingService.initLendingMessagingService(this)
-    //.... Client app level logic
-    if (remoteMessage.data.isNotEmpty()) {
-        if (FinBoxLendingMessagingService.forwardToFinBoxLendingSDK(remoteMessage.data)) {
-            FinBoxLendingMessagingService.buildLendingNotification(applicationContext, remoteMessage.data)
-        } else {
-            // Show client app notification
+    override fun onMessageReceived(remoteMessage: RemoteMessage) {
+        super.onMessageReceived(remoteMessage)
+        FinBoxLendingMessagingService.initLendingMessagingService(this)
+        //.... Client app level logic
+        if (remoteMessage.data.isNotEmpty()) {
+            if (FinBoxLendingMessagingService.forwardToFinBoxLendingSDK(remoteMessage.data)) {
+                FinBoxLendingMessagingService.buildLendingNotification(applicationContext, remoteMessage.data)
+            } else {
+                // Show client app notification
+            }
         }
     }
-}
 
-override fun getLendingIntent(): PendingIntent {
-    val intent = generateFinBoxLending().getLendingIntent(applicationContext)
-    // Create the TaskStackBuilder
-    return PendingIntent.getActivity(
-        this,
-        REQUEST_CODE_NOTIFICATION_LOAN_STATUS,
-        intent,
-        PendingIntent.FLAG_UPDATE_CURRENT
-    )
-}
+    override fun getLendingIntent(): PendingIntent {
+        val intent = generateFinBoxLending().getLendingIntent(applicationContext)
+        // Create the TaskStackBuilder
+        return PendingIntent.getActivity(
+            this,
+            REQUEST_CODE_NOTIFICATION_LOAN_STATUS,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
+    }
 
-override fun getRepayLendingIntent(): PendingIntent {
-    val intent = generateFinBoxLending().getRepayLendingIntent(applicationContext)
-    // Create the TaskStackBuilder
-    return PendingIntent.getActivity(
-        this,
-        REQUEST_CODE_NOTIFICATION_LOAN_REPAY_STATUS,
-        intent,
-        PendingIntent.FLAG_UPDATE_CURRENT
-    )
-}
+    override fun getRepayLendingIntent(): PendingIntent {
+        val intent = generateFinBoxLending().getRepayLendingIntent(applicationContext)
+        // Create the TaskStackBuilder
+        return PendingIntent.getActivity(
+            this,
+            REQUEST_CODE_NOTIFICATION_LOAN_REPAY_STATUS,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
+    }
 
-//Common builder object to start lending SDK
-private fun generateFinBoxLending(): FinBoxLending {
-    val builder = FinBoxLending.Builder(applicationContext)
-        .setFinBoxApiKey("<client_api_key>")
-        .setCustomerId("<customer_id>")
-        .setUserToken("<user_token>")
-        .build()
-    return builder
+    //Common builder object to start lending SDK
+    private fun generateFinBoxLending(): FinBoxLending {
+        val builder = FinBoxLending.Builder(applicationContext)
+            .setFinBoxApiKey("<client_api_key>")
+            .setCustomerId("<customer_id>")
+            .setUserToken("<user_token>")
+            .build()
+        return builder
+    }
 }
 
 ```
@@ -345,59 +346,60 @@ private fun generateFinBoxLending(): FinBoxLending {
 <template v-slot:java>
 
 ```java
-class SampleMessService extends `FirebaseMessagingService` implements `FinBoxLendingMessagingImpl`
+class SampleMessService extends FirebaseMessagingService implements FinBoxLendingMessagingImpl {
 
-@Override
-public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
-    super.onMessageReceived(remoteMessage);
-    FinBoxLendingMessagingService.INSTANCE.initLendingMessagingService(this);
-    //.... Client app level logic
-    if(!remoteMessage.getData().isEmpty()) {
-        if (FinBoxLendingMessagingService.INSTANCE.forwardToFinBoxLendingSDK(remoteMessage.getData())) {
-            FinBoxLendingMessagingService.INSTANCE.buildLendingNotification(getApplicationContext(), remoteMessage.getData());
-        } else {
-            // Show app notification
+    @Override
+    public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
+        super.onMessageReceived(remoteMessage);
+        FinBoxLendingMessagingService.INSTANCE.initLendingMessagingService(this);
+        //.... Client app level logic
+        if(!remoteMessage.getData().isEmpty()) {
+            if (FinBoxLendingMessagingService.INSTANCE.forwardToFinBoxLendingSDK(remoteMessage.getData())) {
+                FinBoxLendingMessagingService.INSTANCE.buildLendingNotification(getApplicationContext(), remoteMessage.getData());
+            } else {
+                // Show app notification
+            }
         }
     }
-}
 
-@NotNull
-@Override
-public PendingIntent getLendingIntent() {
-    Intent intent = generateFinBoxLending().getLendingIntent(getApplicationContext());
-    return PendingIntent.getActivity(
-            this,
-            REQUEST_CODE_NOTIFICATION_LOAN_STATUS,
-            intent,
-            PendingIntent.FLAG_UPDATE_CURRENT
-    );
-}
-
-@NotNull
-@Override
-public PendingIntent getRepayLendingIntent() {
-    Intent intent = generateFinBoxLending().getRepayLendingIntent(getApplicationContext());
-    return PendingIntent.getActivity(
-            this,
-            REQUEST_CODE_NOTIFICATION_LOAN_REPAY_STATUS,
-            intent,
-            PendingIntent.FLAG_UPDATE_CURRENT
-    );
-}
-
-//Common builder object to start lending SDK
-private FinBoxLending generateFinBoxLending() {
-    FinBoxLending builder = null;
-    try {
-        builder = new FinBoxLending.Builder(getApplicationContext())
-                .setFinBoxApiKey("<client_api_key>")
-                .setCustomerId("<customer_id>")
-                .setUserToken("<user_token>")
-                .build();
-    } catch (Exception e) {
-        e.printStackTrace();
+    @NotNull
+    @Override
+    public PendingIntent getLendingIntent() {
+        Intent intent = generateFinBoxLending().getLendingIntent(getApplicationContext());
+        return PendingIntent.getActivity(
+                this,
+                REQUEST_CODE_NOTIFICATION_LOAN_STATUS,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT
+        );
     }
-    return builder;
+
+    @NotNull
+    @Override
+    public PendingIntent getRepayLendingIntent() {
+        Intent intent = generateFinBoxLending().getRepayLendingIntent(getApplicationContext());
+        return PendingIntent.getActivity(
+                this,
+                REQUEST_CODE_NOTIFICATION_LOAN_REPAY_STATUS,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT
+        );
+    }
+
+    //Common builder object to start lending SDK
+    private FinBoxLending generateFinBoxLending() {
+        FinBoxLending builder = null;
+        try {
+            builder = new FinBoxLending.Builder(getApplicationContext())
+                    .setFinBoxApiKey("<client_api_key>")
+                    .setCustomerId("<customer_id>")
+                    .setUserToken("<user_token>")
+                    .build();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return builder;
+    }
 }
 
 ```
