@@ -4,7 +4,8 @@ FinBox Lending SDK is a drop-in module that can add a digital lending journey to
 
 ## Setting up the SDK
 
-1. Add the repository url in the project `build.gradle` file
+1. FinBox Lending SDK requires a `minSdkVersion` of **21**
+2. Add the repository url in the project `build.gradle` file
    ```groovy
    maven {
      url "s3://risk-manager-android-sdk/artifacts"
@@ -18,7 +19,7 @@ FinBox Lending SDK is a drop-in module that can add a digital lending journey to
       }
    }
    ```
-2. Add the Lending SDK dependency in the app `build.gradle` file
+3. Add the Lending SDK dependency in the app `build.gradle` file
 
    ```groovy
     implementation("in.finbox.lending:core-uat:<LENDING_SDK_VERSION>:uat@aar") {
@@ -69,7 +70,7 @@ FinBox Lending SDK is a drop-in module that can add a digital lending journey to
     }
    ```
 
-3. SDK requires java 8 version for project, add next lines to your module's build.gradle file
+4. SDK requires java 8 version for project, add next lines to your module's build.gradle file
 
 ```groovy
     compileOptions {
@@ -80,6 +81,25 @@ FinBox Lending SDK is a drop-in module that can add a digital lending journey to
         jvmTarget = "1.8"
     }
 ```
+::: tip Note
+Lending SDK needs `SMS` and `Location` permission as mandatory. Make sure you **dont** have any node markers that remove these permissions in your manifest file
+
+Manifest **should not** have any of the following
+```xml
+<uses-permission
+    android:name="android.permission.RECEIVE_SMS"
+    tools:node="remove" />
+<uses-permission
+    android:name="android.permission.READ_SMS"
+    tools:node="remove" />
+<uses-permission
+    android:name="android.permission.ACCESS_COARSE_LOCATION"
+    tools:node="remove" />
+<uses-permission
+    android:name="android.permission.ACCESS_FINE_LOCATION"
+    tools:node="remove" />
+```
+:::
 
 :::warning ProGuard
 While generating a signed application, make sure **ProGuard** file uses `proguard-android.txt` **not** `proguard-android-optimize.txt`, i.e. make sure it is:
@@ -257,6 +277,131 @@ Possible values for `screen` are as follows:
 | `Sign Agreement` | Sign agreement screen |
 
 
+## Notifications
+
+FinBox Lending SDK sends notifications of its own for mandatory events. It is expected that the client app has Firebase configured and can forward the notification payload to the SDK. In order for SDK to capture the notifications add the following:
+
+1. implement `FinBoxLendingMessagingImpl` interface
+2. Override `getLendingIntent` & `getRepayLendingIntent` to provide intent to open the SDK
+3. initialize the lending messaging service
+4. `forwardToFinBoxLendingSDK` will check if the notification payload was triggered by FinBox lending team
+5. `buildLendingNotification` will build the notification and show it to the user
+
+<CodeSwitcher :languages="{kotlin:'Kotlin',java:'Java'}">
+<template v-slot:kotlin>
+
+```kotlin
+
+class SampleMessService: `FirebaseMessagingService()`, `FinBoxLendingMessagingImpl`
+
+override fun onMessageReceived(remoteMessage: RemoteMessage) {
+    super.onMessageReceived(remoteMessage)
+    FinBoxLendingMessagingService.initLendingMessagingService(this)
+    //.... Client app level logic
+    if (remoteMessage.data.isNotEmpty()) {
+        if (FinBoxLendingMessagingService.forwardToFinBoxLendingSDK(remoteMessage.data)) {
+            FinBoxLendingMessagingService.buildLendingNotification(applicationContext, remoteMessage.data)
+        } else {
+            // Show client app notification
+        }
+    }
+}
+
+override fun getLendingIntent(): PendingIntent {
+    val intent = generateFinBoxLending().getLendingIntent(applicationContext)
+    // Create the TaskStackBuilder
+    return PendingIntent.getActivity(
+        this,
+        REQUEST_CODE_NOTIFICATION_LOAN_STATUS,
+        intent,
+        PendingIntent.FLAG_UPDATE_CURRENT
+    )
+}
+
+override fun getRepayLendingIntent(): PendingIntent {
+    val intent = generateFinBoxLending().getRepayLendingIntent(applicationContext)
+    // Create the TaskStackBuilder
+    return PendingIntent.getActivity(
+        this,
+        REQUEST_CODE_NOTIFICATION_LOAN_REPAY_STATUS,
+        intent,
+        PendingIntent.FLAG_UPDATE_CURRENT
+    )
+}
+
+//Common builder object to start lending SDK
+private fun generateFinBoxLending(): FinBoxLending {
+    val builder = FinBoxLending.Builder(applicationContext)
+        .setFinBoxApiKey("<client_api_key>")
+        .setCustomerId("<customer_id>")
+        .setUserToken("<user_token>")
+        .build()
+    return builder
+}
+
+```
+
+</template>
+
+class SampleMessService extends `FirebaseMessagingService` implements `FinBoxLendingMessagingImpl`
+
+```java
+@Override
+public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
+    super.onMessageReceived(remoteMessage);
+    FinBoxLendingMessagingService.INSTANCE.initLendingMessagingService(this);
+    //.... Client app level logic
+    if(!remoteMessage.getData().isEmpty()) {
+        if (FinBoxLendingMessagingService.INSTANCE.forwardToFinBoxLendingSDK(remoteMessage.getData())) {
+            FinBoxLendingMessagingService.INSTANCE.buildLendingNotification(getApplicationContext(), remoteMessage.getData());
+        } else {
+            // Show app notification
+        }
+    }
+}
+
+@NotNull
+@Override
+public PendingIntent getLendingIntent() {
+    Intent intent = generateFinBoxLending().getLendingIntent(getApplicationContext());
+    return PendingIntent.getActivity(
+            this,
+            REQUEST_CODE_NOTIFICATION_LOAN_STATUS,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT
+    );
+}
+
+@NotNull
+@Override
+public PendingIntent getRepayLendingIntent() {
+    Intent intent = generateFinBoxLending().getRepayLendingIntent(getApplicationContext());
+    return PendingIntent.getActivity(
+            this,
+            REQUEST_CODE_NOTIFICATION_LOAN_REPAY_STATUS,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT
+    );
+}
+
+//Common builder object to start lending SDK
+private FinBoxLending generateFinBoxLending() {
+    FinBoxLending builder = null;
+    try {
+        builder = new FinBoxLending.Builder(getApplicationContext())
+                .setFinBoxApiKey("<client_api_key>")
+                .setCustomerId("<customer_id>")
+                .setUserToken("<user_token>")
+                .build();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return builder;
+}
+```
+
+</template>
+</CodeSwitcher>
  
 ## Customizations
 
