@@ -342,10 +342,11 @@ private fun generateFinBoxLending(): FinBoxLending {
 ```
 
 </template>
-
-class SampleMessService extends `FirebaseMessagingService` implements `FinBoxLendingMessagingImpl`
+<template v-slot:java>
 
 ```java
+class SampleMessService extends `FirebaseMessagingService` implements `FinBoxLendingMessagingImpl`
+
 @Override
 public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
     super.onMessageReceived(remoteMessage);
@@ -398,6 +399,7 @@ private FinBoxLending generateFinBoxLending() {
     }
     return builder;
 }
+
 ```
 
 </template>
