@@ -8,6 +8,7 @@
     "docs:build": "vuepress build docs"
   },
   "dependencies": {
+    "@vuepress/plugin-medium-zoom": "^1.8.0",
     "crypto-js": "^4.0.0",
     "vuepress-plugin-code-copy": "^1.0.6",
     "vuepress-plugin-code-switcher": "^1.0.3"

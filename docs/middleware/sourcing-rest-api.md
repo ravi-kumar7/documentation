@@ -677,7 +677,9 @@ GET **`base_url`/v1/user/activity?customerID=`someCustomerID`**
                 "loanApplicationID": "someLongUUID"
             }
         ]
-    }
+    },
+    "error": "",
+    "status": true
 }
 ```
 

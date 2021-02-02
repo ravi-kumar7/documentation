@@ -5,7 +5,7 @@ module.exports = {
     color: "#3eaf7c"
   }], ['@vuepress/search', {
     test: ["^((?!device-connect\/transactions).)*$"]
-  }]],
+  }],  '@vuepress/medium-zoom'],
   mounted() {
     const hash = document.location.hash;
     if (hash.length > 1) {
