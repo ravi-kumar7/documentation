@@ -710,9 +710,9 @@ We'll be sending JSON encoded body in the following payload format:
 
 :::warning IMPORTANT
 - `loanApplicationID` is available once the loan application is created, and will not be available for credit line activities.
-- `eventDescription` is always a **string**, in some cases you might get string encoded JSON as well. These specific cases are mentioned in [Appendix](/middleware/appendix.html#list-of-customer-activities) along with activities.
+- `eventDescription` is always a **string**, in some cases you might get string encoded JSON as well. These specific cases are mentioned in [Appendix](/middleware/appendix.html#list-of-user-activities) along with activities.
 :::
 
-A list of all possible activities can be found [Appendix](/middleware/appendix.html#list-of-customer-activities)
+A list of all possible activities can be found [Appendix](/middleware/appendix.html#list-of-user-activities)
 
 A list of all possible entity types with descriptions can be found [Appendix](/middleware/appendix.html#list-of-entity-types)

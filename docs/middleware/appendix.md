@@ -28,7 +28,12 @@
 | CANCELLED |
 | CLOSED |
 
-## List of customer activities
+## List of user activities
+
+:::warning Event Description
+Please note that the event description is always a **string**
+:::
+
 | Value | Description | Entity | Event Description String Example |
 | - | - | - | - |
 | user_created | User was created against a customerID |  Sourcing Entity | - |
@@ -109,7 +114,7 @@ In case of credit line, event description formats will be as follows:
 | waiting | Bureau data is being fetched (in progress) |
 | failed | Bureau data fetching failed |
 
-## Servicing Hooks and Actions
+<!-- ## Servicing Hooks and Actions
 | Activity | Action | Examples |
 | - | - | - |
 | emi_due_in_7_days | Send notification | <a href = "https://finbox-cdn.s3.ap-south-1.amazonaws.com/docs/assets/servicing/Notification-l.png" target="_blank"> Sample Notification </a> |
@@ -118,4 +123,4 @@ In case of credit line, event description formats will be as follows:
 | emi_overdue | Send notification and show full screen banner on app open | <a href = "https://finbox-cdn.s3.ap-south-1.amazonaws.com/docs/assets/servicing/Notification-ll.png" target="_blank"> Sample Notification </a> <a href = "https://finbox-cdn.s3.ap-south-1.amazonaws.com/docs/assets/servicing/Banner-ll.png" target="_blank"> Sample Banner </a> |
 | late_fee_added | Send notification and show banner on every screen | <a href = "https://finbox-cdn.s3.ap-south-1.amazonaws.com/docs/assets/servicing/Notification-ll.png" target="_blank"> Sample Notification </a> <a href = "https://finbox-cdn.s3.ap-south-1.amazonaws.com/docs/assets/servicing/Banner-ll.png" target="_blank"> Sample Banner </a> |
 | late_fee_updated | Send notification** and show banner on every screen | <a href = "https://finbox-cdn.s3.ap-south-1.amazonaws.com/docs/assets/servicing/Notification-ll.png" target="_blank"> Sample Notification </a> <a href = "https://finbox-cdn.s3.ap-south-1.amazonaws.com/docs/assets/servicing/Banner-ll.png" target="_blank"> Sample Banner </a> |
-| emi_paid | Send notification for payment confirmation | <a href = "https://finbox-cdn.s3.ap-south-1.amazonaws.com/docs/assets/servicing/Notification-ll.png" target="_blank"> Sample Notification </a> <a href = "https://finbox-cdn.s3.ap-south-1.amazonaws.com/docs/assets/servicing/Banner-ll.png" target="_blank"> Sample Banner </a> |
+| emi_paid | Send notification for payment confirmation | <a href = "https://finbox-cdn.s3.ap-south-1.amazonaws.com/docs/assets/servicing/Notification-ll.png" target="_blank"> Sample Notification </a> <a href = "https://finbox-cdn.s3.ap-south-1.amazonaws.com/docs/assets/servicing/Banner-ll.png" target="_blank"> Sample Banner </a> | -->
