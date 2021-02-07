@@ -621,7 +621,7 @@ Array of objects in `emis` will be empty in case of `CANCELLED` and `PROCESSING`
 | Missing customerID | 403 |
 | user with credit line not found | 404 |
 
-## Credit Line Update Transaction Status
+<!-- ## Credit Line Update Transaction Status
 Updates Credit Line Transaction Status
 
 ::: tip Endpoint
@@ -648,7 +648,7 @@ On successful updating the status, API will give a response with 200 HTTP status
 | Missing customerID | 403 |
 | Invalid status value | 400 |
 | txnID not found | 404 |
-| only transaction with status PROCESSING can be updated | 403 |
+| only transaction with status PROCESSING can be updated | 403 | -->
 
 ## User Activity History
 Returns the activity 
