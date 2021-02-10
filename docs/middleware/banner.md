@@ -31,7 +31,7 @@ The table below indicates the possible values of `banner` key, and **sample bann
 
 | `banner` key | Description | Sample Banner Design |
 | - | - | - |
-| `APPLY` | This step symbolises the start of the loan journey and should be shown to eligible users. In case the user with the `customer_id` is not created in our systems, this is the default value returned by the Banner API | <img src="/apply_for_loan.svg" alt="Apply for loan" /><br /><br /><a href="/apply_for_loan.svg" download>Download SVG</a> |
+| `APPLY` | This step symbolises the start of the application and should be shown to eligible users. In case the user with the `customer_id` is not created in our systems, this is the default value returned by the Banner API | <img src="/apply_for_loan.svg" alt="Apply for loan" /><br /><br /><a href="/apply_for_loan.svg" download>Download SVG</a> |
 | `INCOMPLETE` | This step implies that the application was started, but was left in the middle. In this case, prompt the user to complete the application | <img src="/incomplete_loan.svg" alt="Incomplete loan" /><br /><br /><a href="/incomplete_loan.svg" download>Download SVG</a> |
 | `APPROVED` | After application is approved from lender, show user a state informing them that the application has been approved and they can proceed to the next step (like signing the agreement) | <img src="/loan_approved.svg" alt="Loan Approved" /><br /><br /><a href="/loan_approved.svg" download>Download SVG</a> |
 | `REJECTED` | In case the application is rejected you can notify the user that his loan/credit line application has been rejected | <img src="/loan_rejected.svg" alt="Loan rejected" /><br /><br /><a href="/loan_rejected.svg" download>Download SVG</a> |
