@@ -56,6 +56,10 @@ Please note that the event description is always a **string**
 | bank_details_added | Customer updated bank details - acc number & IFSC | Customer | - |
 | bank_verification_failed | Bank could not be verified | System | - |
 | bank_details_verified | Bank verification successful | System | - |
+| enach_started | E-Mandate journey started | Customer | - |
+| enach_auth_success | E-Mandate journey authorization completed | Customer | - |
+| enach_auth_failed | E-Mandate journey authorization failed | Customer | - |
+| enach_completed | E-Mandate journey completed after confirmation from bank | System | - |
 | loan_esigned | Customer esigned the loan agreement | Customer | - |
 | loan_disbursed | Loan was disbursed by the lender | Lender | - |
 | address_updated | Address was updated by ops team |  Sourcing Entity Dashboard | - |
