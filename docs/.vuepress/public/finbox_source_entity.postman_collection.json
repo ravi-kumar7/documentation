@@ -465,7 +465,92 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Credit Line Details",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"type": "text",
+						"value": "{{server_api_key}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/v1/creditline/details?customerID=somecustomerid",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"v1",
+						"creditline",
+						"details"
+					],
+					"query": [
+						{
+							"key": "customerID",
+							"value": "somecustomerid"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Credit Line Transactions",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"type": "text",
+						"value": "{{server_api_key}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/v1/creditline/transactions?customerID=somecustomerid",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"v1",
+						"creditline",
+						"transactions"
+					],
+					"query": [
+						{
+							"key": "customerID",
+							"value": "somecustomerid"
+						}
+					]
+				}
+			},
+			"response": []
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }

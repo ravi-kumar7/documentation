@@ -5,7 +5,7 @@ module.exports = {
     color: "#3eaf7c"
   }], ['@vuepress/search', {
     test: ["^((?!device-connect\/transactions).)*$"]
-  }]],
+  }],  '@vuepress/medium-zoom'],
   mounted() {
     const hash = document.location.hash;
     if (hash.length > 1) {
@@ -169,9 +169,21 @@ module.exports = {
               path: '/middleware/android-sdk.html'
             },
             {
+              title: 'React Native',
+              path: '/middleware/react-native.html'
+            },
+            {
               title: 'REST API',
               path: '/middleware/sourcing-rest-api.html'
-            }
+            },
+            {
+              title: 'Web SDK',
+              path: '/middleware/web-sdk.html'
+            },
+            {
+              title: 'Banner',
+              path: '/middleware/banner.html'
+            },
           ]
         },
         {

@@ -36,9 +36,11 @@ The table below lists the supported banks with their corresponding identifier. T
 | indbnk | Indian Bank |
 | indusind | IndusInd Bank |
 | iob | Indian Overseas Bank |
+| jantasahakari | Janata Sahakari Bank Ltd |
 | jnkbnk | Jammu and Kashmir Bank |
 | karnataka | Karnataka Bank |
 | karur | Karur Vysya Bank |
+| khattri | Khattri Coop Urban Bank Ltd |
 | kotak | Kotak Mahindra Bank |
 | mahabk | Bank of Maharashtra |
 | mahagrambnk | Maharashtra Gramin Bank |

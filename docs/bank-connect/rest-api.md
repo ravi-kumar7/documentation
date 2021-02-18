@@ -876,7 +876,7 @@ Different fields that hold this monthly analysis are as follows:
 - `cnt_upi_debit`: Number of Debit Transactions through UPI
 - `cnt_investment` : Number of Investment
 - `cnt_credit_card_bill_debit` : Number of Credit Card Bill Transactions
-- `cnt_loan_credis`: Number of Loan Credit Transactions
+- `cnt_loan_credits`: Number of Loan Credit Transactions
 - `max_bal`: Maximum Balance
 - `max_eod_balance`: Maximum EOD Balance
 - `median_balance`: Median Balance* ( = Median of EOD Balances after filling in missing daily Balances) 

@@ -92,6 +92,12 @@ Here `is_eligible` is a **boolean** indicating whether the user is eligible or n
 
 ## Generate Token
 This API can be called multiple times for an eligible user, and is used to get a valid token that can be used by the Android App to initialize the SDK.
+
+::: warning Token Validity
+- In case of **production** environment, the token is valid for **24 hours** and in **UAT** it is valid for **1 week**.
+- It is recommended to call this API everytime user clicks on the banner on app, so that a fresh token is issued for the user session everytime.
+:::
+
 ::: tip Endpoint
 POST **`base_url`/v1/user/token**
 :::
@@ -267,34 +273,37 @@ GET **`base_url`/v1/loan/details?loanApplicationID=`someLongLoanApplicationUUID`
         "status": "BANK_ADDED",
         "createdAt": "2020-09-15 18:56:15",
         "userDetails": {
+            "customerID": "someCustomerID",
             "name": "Amazing User",
             "email": "username@email.com",
             "mobile": "9999999999",
             "gender": "Male",
             "dob": "1992-12-09",
-            "maritalStatus": "Married",
-            "currentAddress": "{\"line1\": \"22, 80 Feet Rd\", \"line2\": \"Koramangala\", \"city\": \"Bengaluru\", \"pincode\": \"560095\", \"state\": \"Karnataka\"}",
-            "workExperience": "2 years 0 months",
-            "loanPurpose": "Education",
-            "residenceType": "Rented",
-            "fathersName": "",
             "pan": "ABCDP0000N",
-            "customerID": "someCustomerID",
-            "ref1name": "Sam Wilson",
-            "ref1contactName": "Uncle Sam",
-            "ref1phone": "9999988888",
-            "ref1relation": "Uncle",
-            "ref2name": "Shourya",
-            "ref2contactName": "Shourya FinBox",
-            "ref2phone": "9999900000",
-            "ref2relation": "Coworker",
-            "salary": null,
-            "income": 12000,
-            "dependents": 0,
-            "expenses": 5000,
             "fisScore": 0.006962299255855537,
             "bureauScore": 830,
-            "bureauStatus": "completed"
+            "bureauStatus": "completed",
+            "currentAddress": {
+                "line1": "22, 80 Feet Rd", 
+                "line2": "Koramangala",
+                "city": "Bengaluru",
+                "pincode": "560095", 
+                "state": "Karnataka"
+            },
+            "loanFormData": {
+                "dependents": "0",
+                "educationLevel": "MBBS",
+                "expenses": "515231",
+                "fathersName": "Ram",
+                "income": "515241",
+                "loanPurpose": "Marriage",
+                "maritalStatus": "Unmarried",
+                "reference1Contact": "+919999999999",
+                "reference1ContactName": "Papa",
+                "reference1Name": "Ram Kumar",
+                "reference1Relationship": "Father"
+            },
+            "residenceType": "Rented",
         },
         "bankDetails": {
             "accountNumber": "50100100100999",
@@ -313,19 +322,13 @@ Most of the parameters of the response are self-explainatory. Some key fields ar
 | loanApplicationNum | A readable loan number format is FBxxx |
 | appliedLoanAmount | The amount of loan applied by the user. Note that it might be different from the final loan offer |
 | residenceType | Type of residence - Rented or Owned |
-| maritalStaus | Unmarried or Married |
-| loanPurpose | Purpose of loan application |
-| ref1name | Name of First Reference Contact |
-| ref1phone | Phone number of First Reference Contact |
-| ref1relation | Relationship with First Reference Contact |
-| ref1contactName | Name with which reference is saved in contacts |
-| dependents | Number of dependents |
 | fisScore | User's FinBox Inclusion Score |
 | bureauScore | User's bureau score from one of the credit bureaus |
 | bureauStatus | Indicates the bureau data fetch status. Possible values can be found in [Appendix](/middleware/appendix.html#list-of-bureau-status) |
 | accountHolderName | Verified name as per user's bank account |
 | dob | Date of Birth in `YYYY-MM-DD` format |
 | createdAt | Date time of loan creation in `YYYY-MM-DD HH:MM:SS` format (UTC) |
+| loanFormData | Fields in this key varies for every sourcing entity, exact keys will be shared for this during the integration |
 
 ## Loan Offers
 Returns the loan offers made to a given loan application.
@@ -347,18 +350,36 @@ GET **`base_url`/v1/loan/offers?loanApplicationID=`someLongLoanApplicationUUID`*
             "annualInterest": 14.4,
             "processingFee": 700,
             "gst": 18,
-            "emi": 1161,
+            "advanceEMIAmount": 0,
             "emiCalculationMethod": "flat_rate",
             "status": "offer_accepted",
             "disbursalAmount": 5674,
             "totalPayableAmount": 6966,
-            "emiDates": [
-                "2020-11-05",
-                "2020-12-07",
-                "2021-01-05",
-                "2021-02-05",
-                "2021-03-05",
-                "2021-04-05"
+            "emis": [
+                {
+                    "emiDate": "2021-02-03",
+                    "emiAmount": 1161
+                },
+                {
+                    "emiDate": "2021-03-03",
+                    "emiAmount": 1161
+                },
+                {
+                    "emiDate": "2021-04-05",
+                    "emiAmount": 1161
+                },
+                {
+                    "emiDate": "2021-05-03",
+                    "emiAmount": 1161
+                },
+                {
+                    "emiDate": "2021-06-03",
+                    "emiAmount": 1161
+                },
+                {
+                    "emiDate": "2021-07-05",
+                    "emiAmount": 1161
+                }
             ]
         }
     ],
@@ -375,12 +396,14 @@ Response fields are explained below:
 | annualInterest | Float | Annual Interest Rate in Percentage |
 | processingFee | Float | Processing Fee |
 | gst| Float | GST Percentage |
-| emi | Float | EMI Amount |
+| advanceEMIAmount | Float | Advance EMI Amount |
 | emiCalculationMethod | String | Can be `flat_rate` or `reducing_balance` |
 | status | String | Can be `offer_accepted` or `offered` |
 | disbursalAmount | Float | Final Disbursal Amount |
 | totalPayableAmount | Float | Total Payable Amount |
-| emiDates | Array of String | EMI Dates in `YYYY-MM-DD` format |
+| emis | Array of Objects | Contains emi objects containing date and amount sorted in sequence of installments |
+| emiAmount | Float | Tells the EMI Amount |
+| emiDate | String | Contains `YYYY-MM-DD` format |
 
 ## Get Signed Agreement
 Returns the presigned url for signed agreement PDF File
@@ -482,6 +505,151 @@ POST **`base_url`/v1/loan/repay**
 }
 ```
 
+## Credit Line Details
+Returns credit line details for a given user using the `customerID`
+
+::: tip Endpoint
+GET **`base_url`/v1/creditline/details?customerID=`someCustomerID`**
+:::
+
+**Response Format**
+
+```json
+{
+    "data": {
+        "status": "ACTIVE",
+        "maxLimit": 100000,
+        "availableLimit": 98800,
+        "validity": "2022-01-18",
+        "inactiveReason": ""
+    },
+    "error": "",
+    "status": true
+}
+```
+
+Response fields are explained below:
+| Field | Type | Description |
+| - | - | - |
+| status | String | Status of credit line, can be `ACTIVE` or `INACTIVE` |
+| maxLimit | Float | Maximum credit limit assigned to the user |
+| availableLimit | Float | Currently available limit of the user |
+| validity | String | Indicates the expiry date of credit line in `YYYY-MM-DD` |
+| inactiveReason | String | Reason for status to be `INACTIVE` |
+
+### Error Cases
+| Case | HTTP Code |
+| - | - |
+| Missing customerID | 403 |
+| user with credit line not found | 404 |
+
+## Credit Line Transactions
+Returns credit line transactions for a given user using the `customerID`
+
+::: tip Endpoint
+GET **`base_url`/v1/creditline/transactions?customerID=`someCustomerID`**
+:::
+
+**Response Format**
+
+```json
+{
+    "data": {
+        "transactions": [
+            {
+                "txnID": "1234OD123312",
+                "txnStatus": "CONFIRMED",
+                "amount": 1200,
+                "interest": 0,
+                "emiCalculationMethod": "reducing_balance",
+                "subventionAmount": 24,
+                "processingFee": 0,
+                "gst": 18,
+                "disbursalAmount": 1171.68,
+                "createdAt": "2020-02-12 13:02:12",
+                "emis": [
+                    {
+                        "amount": 1200,
+                        "installmentNum": 1,
+                        "lateCharge": 0,
+                        "status": "PAID",
+                        "dueDate": "2020-02-14",
+                        "paidDate": "2020-02-13",
+                        "totalPayable": 1200,
+                    }
+                ]
+            }
+        ]
+    },
+    "error": "",
+    "status": true
+}
+```
+
+Response fields are explained below:
+| Field | Type | Description |
+| - | - | - |
+| txnID | String | Transaction ID passed on Client SDK |
+| txnStatus | String | Status of transaction can be `PROCESSING`, `CONFIRMED`, `DISBURSED`, `PAID`, `CANCELLED`, `OVERDUE`|
+| amount | Float | Transaction amount |
+| interest | Float | Annual Interest Percentage user is paying for this transaction |
+| subventionAmount | Float | Subvention amount on this transaction |
+| Processing Fee | Float | Processing Fee on this transaction |
+| gst | Float | Indicates GST in percentage |
+| disbursalAmount | Float | Indicates the final amount that will be disbursed |
+| emiCalculationMethod | String | Can be `flat_rate` or `reducing_balance` |
+| createdAt | String | Transaction creation time in `YYYY-MM-DD HH:MM:SS` format |
+
+objects in `emis` contain:
+| Field | Type | Description |
+| - | - | - |
+| amount | Float | Indicates the EMI Amount |
+| installmentNum | Integer | Installment Number |
+| lateCharge | Float | Total late charge |
+| status | String | Payment status can be `UNPAID`, `PAID`, `PENDING` |
+| dueDate | String | Due date in `YYYY-MM-DD` format | 
+| paidDate | String | Payment completion in `YYYY-MM-DD` format, if not paid is blank string `""` |
+| totalPayable | Float | Total payable amount for the EMI |
+
+:::warning emis key
+Array of objects in `emis` will be empty in case of `CANCELLED` and `PROCESSING` transactions.
+:::
+
+### Error Cases
+| Case | HTTP Code |
+| - | - |
+| Missing customerID | 403 |
+| user with credit line not found | 404 |
+
+<!-- ## Credit Line Update Transaction Status
+Updates Credit Line Transaction Status
+
+::: tip Endpoint
+POST **`base_url`/v1/creditline/status**
+:::
+
+**Request Format**
+```json
+{
+    "txnID": "27d71hd87187h",
+    "status": "CONFIRMED"
+}
+```
+| Field | Type | Description |
+| - | - | - |
+| txnID | String | Transaction ID which was passed on Client SDK |
+| status | String | Can be `CONFIRMED` or `CANCELLED` |
+
+On successful updating the status, API will give a response with 200 HTTP status code.
+
+### Error Cases
+| Case | HTTP Code |
+| - | - |
+| Missing customerID | 403 |
+| Invalid status value | 400 |
+| txnID not found | 404 |
+| only transaction with status PROCESSING can be updated | 403 | -->
+
 ## User Activity History
 Returns the activity 
 ::: tip Endpoint
@@ -509,7 +677,9 @@ GET **`base_url`/v1/user/activity?customerID=`someCustomerID`**
                 "loanApplicationID": "someLongUUID"
             }
         ]
-    }
+    },
+    "error": "",
+    "status": true
 }
 ```
 
@@ -520,7 +690,7 @@ A list of all possible entity types can be found [Appendix](/middleware/appendix
 ## Webhook
 A webhook can be configured to receive events on different actions taken throughout the user journey.
 
-To configure webhook URL, you have to share with us a **valid endpoint**.
+To configure this, you can update the webhook URL in **Settings** page of **FinBox Dashboard**. The webhook URL should be a  **valid endpoint**.
 
 :::tip A Valid Endpoint:
 - receives a POST request
@@ -539,8 +709,12 @@ We'll be sending JSON encoded body in the following payload format:
     "loggedAt": "2020-09-15 21:58:31"
 }
 ```
-`loanApplicationID` is available once the loan application is created.
 
-A list of all possible activities can be found [Appendix](/middleware/appendix.html#list-of-customer-activities)
+:::warning IMPORTANT
+- `loanApplicationID` is available once the loan application is created, and will not be available for credit line activities.
+- `eventDescription` is always a **string**, in some cases you might get string encoded JSON as well. These specific cases are mentioned in [Appendix](/middleware/appendix.html#list-of-user-activities) along with activities.
+:::
 
-A list of all possible entity types can be found [Appendix](/middleware/appendix.html#list-of-entity-types)
+A list of all possible activities can be found [Appendix](/middleware/appendix.html#list-of-user-activities)
+
+A list of all possible entity types with descriptions can be found [Appendix](/middleware/appendix.html#list-of-entity-types)
