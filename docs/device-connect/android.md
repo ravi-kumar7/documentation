@@ -222,6 +222,57 @@ finbox.startPeriodicSync();
 </template>
 </CodeSwitcher>
 
+## Match Details on Device
+
+Device matching enables additional pattern recognition to match email, phone numbers and name. The matching happens on the device and the user phone numbers, email addresses won't leave the device.
+
+Create the builder by passing email address, phone number and name of the customer.
+
+<CodeSwitcher :languages="{kotlin:'Kotlin',java:'Java'}">
+<template v-slot:kotlin>
+
+```kotlin
+val deviceMatch = DeviceMatch.Builder().apply {
+    setEmail("useremail@gmail.com")
+    setPhone("User Name")
+    setName("9999999999")
+}.build()
+```
+
+</template>
+
+<template v-slot:java>
+
+```java
+final DeviceMatch.Builder builder = new DeviceMatch.Builder();
+builder.setEmail("useremail@gmail.com");
+builder.setName("User Name");
+builder.setPhone("9999999999");
+final DeviceMatch deviceMatch = builder.build();
+```
+
+</template>
+</CodeSwitcher>
+
+
+Once the in-device values are set, call `setDeviceMatch` before starting the syncs.
+
+
+```kotlin
+finBox.setDeviceMatch()
+```
+
+</template>
+
+<template v-slot:java>
+
+```java
+finBox.setDeviceMatch();
+```
+
+</template>
+</CodeSwitcher>
+
 ## Forward Notifications to SDK
 
 In certain cases, FinBox server often requests critical data from SDK directly (other than scheduled sync period), to make sure this works it is required to forward FCM Notifications to SDK.
