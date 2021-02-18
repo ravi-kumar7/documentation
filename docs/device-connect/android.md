@@ -257,6 +257,8 @@ final DeviceMatch deviceMatch = builder.build();
 
 Once the in-device values are set, call `setDeviceMatch` before starting the syncs.
 
+<CodeSwitcher :languages="{kotlin:'Kotlin',java:'Java'}">
+<template v-slot:kotlin>
 
 ```kotlin
 finBox.setDeviceMatch(deviceMatch)
