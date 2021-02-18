@@ -259,7 +259,7 @@ Once the in-device values are set, call `setDeviceMatch` before starting the syn
 
 
 ```kotlin
-finBox.setDeviceMatch()
+finBox.setDeviceMatch(deviceMatch)
 ```
 
 </template>
@@ -267,7 +267,7 @@ finBox.setDeviceMatch()
 <template v-slot:java>
 
 ```java
-finBox.setDeviceMatch();
+finBox.setDeviceMatch(deviceMatch);
 ```
 
 </template>
