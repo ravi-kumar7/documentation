@@ -826,6 +826,7 @@ Different fields that hold this monthly analysis are as follows:
 - `amt_cash_withdrawl_debit`: Total Amount of Cash Withdrawal
 - `amt_chq_credit`: Total Amount Credited through Cheque
 - `amt_chq_debit`: Total Amount Debited through Cheque
+- `amt_income_credit`: Total Amount of Income Credited
 - `amt_credit`: Total Amount Credited
 - `amt_debit`: Total Amount Debited
 - `amt_debit_card_debit`: Total Amount Spend through Debit card
@@ -836,11 +837,14 @@ Different fields that hold this monthly analysis are as follows:
 - `amt_net_banking_transfer_debit`: Total Amount Debited through transfers
 - `amt_outward_cheque_bounce_debit`: Total Amount Debited through Outward Cheque Bounce
 - `amt_inward_cheque_bounce_credit`: Total Amount Credited through Inward Cheque Bounce
+- `amt_outward_cheque_bounce_insuff_funds_debit`: Total Amount Debited through Outward Cheque Bounce Insufficient Funds
+- `amt_inward_cheque_bounce_insuff_funds_credit`: Total Amount Credited through Inward Cheque Bounce Insufficient Funds
 - `amt_payment_gateway_purchase_debit`: Total Amount of Payment Gateway Purchase
 - `amt_refund_credit`: Total Amount of Refund
 - `amt_upi_credit`: Total Amount Credited through UPI
 - `amt_upi_debit`: Total Amount Debited through UPI
 - `amt_emi_debit`: Total Amount Debited as Loan EMI
+- `amt_emi_bounce_credit`: Total Amount Credited through EMI Bounce
 - `amt_credit_card_bill_debit` : Total Amount Debited for Credit Card Bill
 - `amt_investment` : Total Amount of Investments
 - `amt_loan_credits`: Total Amount of Loan Credits
@@ -858,6 +862,7 @@ Different fields that hold this monthly analysis are as follows:
 - `cnt_cash_withdrawl_debit`: Number of Cash Withdrawal Transactions
 - `cnt_chq_credit`: Number of Credit Transactions through cheque
 - `cnt_chq_debit`: Number of Debit Transactions through cheque
+- `cnt_income_credit`: Number of Income Credit Transactions
 - `cnt_credit`: Number of Credit Transactions
 - `cnt_debit`: Number of Debit Transactions
 - `cnt_debit_card_debit`: Number of Debit Card Transactions
@@ -868,8 +873,11 @@ Different fields that hold this monthly analysis are as follows:
 - `cnt_net_banking_transfer_debit`: Number of Net Banking Debit Transactions
 - `cnt_outward_cheque_bounce_debit`: Number of Debit Transactions through Outward Cheque Bounce
 - `cnt_inward_cheque_bounce_credit`: Number of Credit Transactions through Inward Cheque Bounce
+- `cnt_inward_cheque_bounce_insuff_funds_credit`: Number of Credit Transactions through Inward Cheque Bounce Insufficient Funds
+- `cnt_outward_cheque_bounce_insuff_funds_debit`: Number of Debit Transactions through Outward Cheque Bounce Insufficient Funds
 - `cnt_payment_gateway_purchase_debit`: Number of Payment Gateway Purchase
 - `cnt_emi_debit`: Number of Loan EMI Debit Transactions
+- `cnt_emi_bounce_credit`: Number of Credit Transactions through EMI Bounce
 - `cnt_refund_credit`: Number of Refund Transactions
 - `cnt_transactions`: Number of Transactions
 - `cnt_upi_credit`: Number of Credit Transactions through UPI
