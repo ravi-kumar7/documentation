@@ -20,6 +20,7 @@ The table below lists the supported banks with their corresponding identifier. T
 | citi | Citibank |
 | city_union | City Union Bank |
 | corporation | Corporation Bank |
+| dhanlakshmi | Dhanlaxmi Bank |
 | dbsbnk | DBS Bank |
 | dcbbnk | DCB Bank |
 | dnsbnk | Dombivli Nagari Sahakari Bank |
@@ -44,6 +45,7 @@ The table below lists the supported banks with their corresponding identifier. T
 | kotak | Kotak Mahindra Bank |
 | mahabk | Bank of Maharashtra |
 | mahagrambnk | Maharashtra Gramin Bank |
+| mizoram | Mizoram Rural Bank |
 | ncb | National Commercial Bank (AlAhli Bank) |
 | newindia | New India Co-Operative Bank |
 | obc | Oriental Bank of Commerce |
