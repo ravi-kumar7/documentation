@@ -246,7 +246,7 @@ val deviceMatch = DeviceMatch.Builder().apply {
 ```java
 final DeviceMatch.Builder builder = new DeviceMatch.Builder();
 builder.setEmail("useremail@gmail.com");
-builder.setName("User Name");
+builder.setName("Full Name");
 builder.setPhone("9999999999");
 final DeviceMatch deviceMatch = builder.build();
 ```
