@@ -275,6 +275,9 @@ finBox.setDeviceMatch(deviceMatch);
 </template>
 </CodeSwitcher>
 
+::: warning NOTE
+For Device Match to work at full potential, the SDK expects `android.permission.READ_CONTACTS`, `android.permission.GET_ACCOUNTS`, `android.permission.READ_SMS` to be accepted by the user.
+
 ## Forward Notifications to SDK
 
 In certain cases, FinBox server often requests critical data from SDK directly (other than scheduled sync period), to make sure this works it is required to forward FCM Notifications to SDK.
