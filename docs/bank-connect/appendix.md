@@ -5,6 +5,7 @@ The table below lists the supported banks with their corresponding identifier. T
 
 | Identifier | Bank Name |
 | - | - |
+| airtel | Airtel Payments Bank |
 | allahabad | Allahabad Bank |
 | alrajhi | Al Rajhi Bank |
 | andhra | Andhra Bank |
