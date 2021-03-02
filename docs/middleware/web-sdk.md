@@ -63,6 +63,25 @@ Use `url` to open up the Lending SDK. This URL can be:
 | User eligibility not available | 400 |
 | User not eligible for loan | 403 |
 
+## Credit Line
+In case of credit line, once the lending journey is completed, user can opt-in for a credit while doing a transaction.For such a case use the **Session API** with two extra inputs `withdrawAmount` and `transactionID`.
+
+::: tip Endpoint
+POST **`base_url`/v1/user/session**
+:::
+
+### Request Format
+```json
+{
+    "customerID": "somecustomerid",
+    "redirectURL": "https://yoururl/redirect/to/after/user/exits",
+    "withdrawAmount": 18000,
+    "transactionID": "some_txn_id"
+}
+```
+- `withdrawAmount` is the amount (in **Float**) that the user is trying to withdraw.
+- `transactionID` is the transaction ID (in **String**) for the withdrawal.
+
 ## Customizations
 
 You can share the following JSON (or its subset) with FinBox team to customize the look and feel of the lending journey:
