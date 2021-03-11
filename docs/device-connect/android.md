@@ -222,6 +222,63 @@ finbox.startPeriodicSync();
 </template>
 </CodeSwitcher>
 
+## Match Details on Device
+
+Device matching enables additional pattern recognition to match email, phone numbers and name. The matching happens on the device and the user phone numbers, email addresses won't leave the device.
+
+Create the builder by passing email address, phone number and name of the customer.
+
+<CodeSwitcher :languages="{kotlin:'Kotlin',java:'Java'}">
+<template v-slot:kotlin>
+
+```kotlin
+val deviceMatch = DeviceMatch.Builder().apply {
+    setEmail("useremail@gmail.com")
+    setPhone("User Name")
+    setName("9999999999")
+}.build()
+```
+
+</template>
+
+<template v-slot:java>
+
+```java
+final DeviceMatch.Builder builder = new DeviceMatch.Builder();
+builder.setEmail("useremail@gmail.com");
+builder.setName("Full Name");
+builder.setPhone("9999999999");
+final DeviceMatch deviceMatch = builder.build();
+```
+
+</template>
+</CodeSwitcher>
+
+
+Once the in-device values are set, call `setDeviceMatch` before starting the syncs.
+
+<CodeSwitcher :languages="{kotlin:'Kotlin',java:'Java'}">
+<template v-slot:kotlin>
+
+```kotlin
+finBox.setDeviceMatch(deviceMatch)
+```
+
+</template>
+
+<template v-slot:java>
+
+```java
+finBox.setDeviceMatch(deviceMatch);
+```
+
+</template>
+</CodeSwitcher>
+
+::: tip TIP
+For Device Match to work at full potential, the SDK expects `android.permission.READ_CONTACTS`, `android.permission.GET_ACCOUNTS`, `android.permission.READ_SMS` to be accepted by the user.
+:::
+
 ## Forward Notifications to SDK
 
 In certain cases, FinBox server often requests critical data from SDK directly (other than scheduled sync period), to make sure this works it is required to forward FCM Notifications to SDK.
@@ -236,6 +293,8 @@ if (MessagingService.forwardToFinBoxSDK(remoteMessage.data)) {
     val firebaseMessagingService = MessagingService()
     firebaseMessagingService.attachContext(this)
     firebaseMessagingService.onMessageReceived(remoteMessage)
+} else {
+    // Rest of your FCM logic
 }
 ```
 
@@ -247,6 +306,8 @@ if(MessagingService.forwardToFinBoxSDK(remoteMessage.getData())) {
     final MessagingService firebaseMessagingService = new MessagingService();
     firebaseMessagingService.attachContext(this);
     firebaseMessagingService.onMessageReceived(remoteMessage);
+} else {
+    // Rest of your FCM logic
 }
 ```
 
