@@ -41,6 +41,7 @@ The table below lists the supported banks with their corresponding identifier. T
 | jantasahakari | Janata Sahakari Bank Ltd |
 | jnkbnk | Jammu and Kashmir Bank |
 | karnataka | Karnataka Bank |
+| karnavati | Karnavati Co-op Bank Ltd |
 | karur | Karur Vysya Bank |
 | khattri | Khattri Coop Urban Bank Ltd |
 | kotak | Kotak Mahindra Bank |
