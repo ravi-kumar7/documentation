@@ -5,6 +5,7 @@ The table below lists the supported banks with their corresponding identifier. T
 
 | Identifier | Bank Name |
 | - | - |
+| ahmedabad_mercantile | The Ahmedabad Mercantile Co-operative Bank Limited |
 | airtel | Airtel Payments Bank |
 | allahabad | Allahabad Bank |
 | alrajhi | Al Rajhi Bank |
@@ -50,6 +51,7 @@ The table below lists the supported banks with their corresponding identifier. T
 | mizoram | Mizoram Rural Bank |
 | ncb | National Commercial Bank (AlAhli Bank) |
 | newindia | New India Co-Operative Bank |
+| nutan_sahakari | Nutan Nagarik Sahakari Bank Limited |
 | obc | Oriental Bank of Commerce |
 | paytm | Paytm Payments Bank |
 | pnbbnk | Punjab National Bank |
