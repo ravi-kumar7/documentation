@@ -117,6 +117,74 @@
 			"response": []
 		},
 		{
+			"name": "Generate Web URL",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{server_api_key}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"customerID\": \"somecustomerid\",\n    \"redirectURL\": \"https://finbox.in\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/v1/user/session",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"v1",
+						"user",
+						"session"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Generate Credit Line Withdrawl Web URL",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{server_api_key}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"customerID\": \"somecustomerid\",\n    \"redirectURL\": \"https://finbox.in\",\n    \"withdrawAmount\": 18000,\n    \"transactionID\": \"some_txn_id\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/v1/user/session",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"v1",
+						"user",
+						"session"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "User Activity",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
@@ -460,6 +528,49 @@
 						{
 							"key": "page",
 							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User Banner",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"type": "text",
+						"value": "{{server_api_key}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/v1/user/activity?customerID=somecustomerid",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"v1",
+						"user",
+						"activity"
+					],
+					"query": [
+						{
+							"key": "customerID",
+							"value": "somecustomerid"
 						}
 					]
 				}
