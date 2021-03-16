@@ -1,3 +1,4 @@
+
 # FinBox Lending: Web
 
 FinBox Lending SDK is a drop-in module that can add a digital lending journey to any mobile or web application.
@@ -62,6 +63,15 @@ Use `url` to open up the Lending SDK. This URL can be:
 | User does not exist | 404 |
 | User eligibility not available | 400 |
 | User not eligible for loan | 403 |
+
+## Integrating DeviceConnect
+
+Web SDK holds the entire lending journey without capturing any user device information (alternate data). Loan approval rate depends on the data that is available, to boost the approval rate of a customer without any bureau data we recommend the use of **DeviceConnect**. 
+
+We support DeviceConnect integration for the following platforms. Please refer the integration doc for the same below:
+1. [Android SDK | FinBox Documentation](https://docs.finbox.in/device-connect/android.html)
+2. [React Native | FinBox Documentation](https://docs.finbox.in/device-connect/react-native.html)
+3. [Cordova | FinBox Documentation](https://docs.finbox.in/device-connect/cordova.html)
 
 ## Credit Line
 In case of credit line, once the lending journey is completed, user can opt-in for a credit while doing a transaction.For such a case use the **Session API** with two extra inputs `withdrawAmount` and `transactionID`.
