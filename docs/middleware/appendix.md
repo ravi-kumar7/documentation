@@ -58,7 +58,6 @@ Please note that the event description is always a **string**
 | form_updated | Customer filled the loan application form | Customer | - |
 | address_updated | Customer updated the address | Customer | - |
 | business_address_updated | Customer updated the business address | Customer | - |
-| form_updated | Customer filled the loan application form | Customer | - |
 | kyc_submitted | KYC documents submitted by the Customer | Customer | - |
 | kyc_verified | KYC documents verified |  Sourcing Entity Dashboard / System | - |
 | kyc_doc_rejected | Any KYC document was rejected |  Sourcing Entity Dashboard / System | - |
@@ -71,8 +70,8 @@ Please note that the event description is always a **string**
 | bank_verification_failed | Bank could not be verified | System | - |
 | bank_details_verified | Bank verification successful | System | - |
 | enach_started | E-Mandate journey started | Customer | - |
-| enach_auth_success | E-Mandate journey authorization completed | Customer | - |
-| enach_auth_failed | E-Mandate journey authorization failed | Customer | - |
+| enach_auth_success | E-Mandate journey authorization completed | System | - |
+| enach_auth_failed | E-Mandate journey authorization failed | System | - |
 | enach_completed | E-Mandate journey completed after confirmation from bank | System | - |
 | physical_mandate_downloaded | Physical Mandate form was downloaded | Customer | - |
 | physical_mandate_emailed | Physical Mandate form was emailed | Customer | - |
