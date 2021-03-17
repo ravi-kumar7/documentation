@@ -56,6 +56,9 @@ Please note that the event description is always a **string**
 | bank_connect_failed | Bank Statement analysis failed | System | - |
 | loan_application_created | Customer clicked on Apply for Loan button & a loan application was created | Customer | - |
 | form_updated | Customer filled the loan application form | Customer | - |
+| address_updated | Customer updated the address | Customer | - |
+| business_address_updated | Customer updated the business address | Customer | - |
+| form_updated | Customer filled the loan application form | Customer | - |
 | kyc_submitted | KYC documents submitted by the Customer | Customer | - |
 | kyc_verified | KYC documents verified |  Sourcing Entity Dashboard / System | - |
 | kyc_doc_rejected | Any KYC document was rejected |  Sourcing Entity Dashboard / System | - |
@@ -77,7 +80,6 @@ Please note that the event description is always a **string**
 | physical_mandate_approved | Physical Mandate was approved | System | - |
 | loan_esigned | Customer esigned the loan agreement | Customer | - |
 | loan_disbursed | Loan was disbursed by the lender | Lender | - |
-| address_updated | Address was updated by ops team |  Sourcing Entity Dashboard | - |
 | emi_paid | EMI Paid by the customer | Customer /  Sourcing Entity / System / Lender | `{"installmentNum": 1}` |
 | emi_payment_initiated | EMI Payment initiated by the customer | Customer | `{"installmentNum": 1}` |
 | loan_signed_agreement_generated | Signed agreement PDF is generated for the customer | System | - |
