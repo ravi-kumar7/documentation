@@ -39,10 +39,21 @@ Please note that the event description is always a **string**
 | user_created | User was created against a customerID |  Sourcing Entity | - |
 | eligibility_calculated | Loan Eligibility was calculated |  Sourcing Entity | `25000.00` |
 | profile_updated | Customer updated the profile | Customer | - |
-| bureau_consent_given | Customer submitted PAN number and gave consent to fetch credit bureau data | Customer |- |
+| bureau_consent_given | Customer has given consent to fetch credit bureau data | Customer | - |
+| pan_info_updated | Customer submitted PAN number | Customer | - |
+| bureau_auth_answer_submitted | Answers to additional questions asked by bureau were submitted | Customer | - |
+| user_disqualified | The Customer is disqualified from the loan. Same as Loan Rejected | System | - |
 | user_qualified | Customer is qualified to move ahead and is shown hook offer | System | - |
-| user_disqualified | The Customer is disqualified from the loan. Same as Loan Rejected | System | `rejected due to some reason` |
-| user_does_not_recognize_bureau_phone | Customer denied having any phone number linked with credit report | Customer | - |
+| business_info_updated | Customer submitted business information | Customer | - |
+| gst_skipped | GST Module was skipped by customer | Customer | - |
+| gstin_added | Customer has added a GSTIN | Customer | - |
+| gst_connect_attempted | GST Connect was attempted by user by entering GST Port credentials | Customer | - |
+| gst_connect_failed | GST Connect failed | System | - |
+| gst_connected | GST successfully connected | System | - |
+| gst_completed | GST module was completed by customer | Customer | - |
+| bank_connect_uploaded | Bank Statement was uploaded | Customer | - |
+| bank_connect_completed | Bank Statement was successfully analysed | System | - |
+| bank_connect_failed | Bank Statement analysis failed | System | - |
 | loan_application_created | Customer clicked on Apply for Loan button & a loan application was created | Customer | - |
 | form_updated | Customer filled the loan application form | Customer | - |
 | kyc_submitted | KYC documents submitted by the Customer | Customer | - |
@@ -51,7 +62,7 @@ Please note that the event description is always a **string**
 | kyc_resubmitted | KYC document re-submitted by Customer | Customer | - |
 | lender_assigned | A lender was assigned to finance the loan application | System | - |
 | loan_approved | Loan was approved by a lender | System / Lender | - |
-| loan_rejected | Loan was rejected by a lender | System / Lender | `rejected due to some reason` |
+| loan_rejected | Loan was rejected by a lender | System / Lender | - |
 | loan_offer_accepted | Loan offer was accepted by customer | Customer | - |
 | bank_details_added | Customer updated bank details - acc number & IFSC | Customer | - |
 | bank_verification_failed | Bank could not be verified | System | - |
@@ -60,6 +71,10 @@ Please note that the event description is always a **string**
 | enach_auth_success | E-Mandate journey authorization completed | Customer | - |
 | enach_auth_failed | E-Mandate journey authorization failed | Customer | - |
 | enach_completed | E-Mandate journey completed after confirmation from bank | System | - |
+| physical_mandate_downloaded | Physical Mandate form was downloaded | Customer | - |
+| physical_mandate_emailed | Physical Mandate form was emailed | Customer | - |
+| physical_mandate_submitted | Physical Mandate was submitted | Customer | - |
+| physical_mandate_approved | Physical Mandate was approved | System | - |
 | loan_esigned | Customer esigned the loan agreement | Customer | - |
 | loan_disbursed | Loan was disbursed by the lender | Lender | - |
 | address_updated | Address was updated by ops team |  Sourcing Entity Dashboard | - |
