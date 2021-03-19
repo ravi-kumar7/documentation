@@ -78,7 +78,8 @@ On fetching information successfully, the response would be of the following for
             "statement_id": "statement_uuid4_here",
             "bank_name": "axis",
             "pdf_password": null,
-            "pdf_url": "https://long_url_here"
+            "pdf_url": "https://long_url_here",
+            "account_id": "account_uuid4_here"
         }
     ]
 }
