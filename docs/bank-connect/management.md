@@ -91,6 +91,7 @@ Here, `statements` key will contain a list of statements for the given entity. E
 - `bank_name`: a valid bank identifier
 - `pdf_password`: Password for the PDF file. Will be `null` if no password.
 - `pdf_url`: Contains a URL for the PDF file.
+- `account_id`: a unique identifier for a customer bank account
 
 :::danger IMPORTANT
 - Statement files on our system get automatically deleted after 30 days of upload date has passed. Post this, the "pdf_url" key will be a blank string. `""`.
