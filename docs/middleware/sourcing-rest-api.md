@@ -128,6 +128,9 @@ Here `token` field indicates the token.
 | User eligibility not available | 400 |
 | User not eligible for loan | 403 |
 
+::: warning Tracking Source
+In case you are using same API key across different platforms, and want to track the source of the user, also pass a string field `source` in the request body, indicating a unique source from which the user is accessing the SDK from.
+:::
 ## List Users
 Lists all the users created from a given sourcing entity's account. It's a paginated API.
 ::: tip Endpoint

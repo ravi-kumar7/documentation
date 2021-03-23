@@ -40,6 +40,10 @@ This API require a **Server API Key** to be passed in `x-api-key` **header**. Th
 - Make sure this API is called only when the user is created and eligibility is fetched.
 :::
 
+::: warning Tracking Source
+In case you are using same API key across different platforms, and want to track the source of the user, also pass a string field `source` in the request body, indicating a unique source from which the user is accessing the SDK from.
+:::
+
 ### Response
 ```json
 {
@@ -91,6 +95,11 @@ POST **`base_url`/v1/user/session**
 ```
 - `withdrawAmount` is the amount (in **Float**) that the user is trying to withdraw.
 - `transactionID` is the transaction ID (in **String**) for the withdrawal.
+
+### Error Cases
+| Case | HTTP Code |
+| - | - |
+| transactionID already exists | 409 |
 
 ## Customizations
 
