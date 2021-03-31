@@ -22,50 +22,70 @@ FinBox Lending SDK is a drop-in module that can add a digital lending journey to
 3. Add the Lending SDK dependency in the app `build.gradle` file
 
    ```groovy
-    implementation("in.finbox.lending:core-uat:<LENDING_SDK_VERSION>:uat@aar") {
-        transitive = true
-    }
-    implementation("in.finbox.lending:onboarding-uat:<LENDING_SDK_VERSION>:uat@aar") {
+    implementation ("in.finbox.lending:onboarding:<LENDING_SDK_VERSION>:release@aar") {
         exclude group: 'in.finbox', module: 'mobileriskmanager'
+        exclude group: 'in.finbox', module: 'common'
+        exclude group: 'in.finbox', module: 'logger'
         transitive = true
     }
-    implementation("in.finbox.lending:dashboard-uat:<LENDING_SDK_VERSION>:uat@aar") {
+    implementation ("in.finbox.lending:preloan:<LENDING_SDK_VERSION>:release@aar") {
         exclude group: 'in.finbox.lending', module: 'core'
         transitive = true
     }
-    implementation("in.finbox.lending:preloan-uat:<LENDING_SDK_VERSION>:uat@aar") {
+    implementation ("in.finbox.lending:dashboard:<LENDING_SDK_VERSION>:release@aar") {
         exclude group: 'in.finbox.lending', module: 'core'
         transitive = true
     }
-    implementation("in.finbox.lending:kyc-uat:<LENDING_SDK_VERSION>:uat@aar") {
+    implementation ("in.finbox.lending:kyc:<LENDING_SDK_VERSION>:release@aar") {
         exclude group: 'in.finbox.lending', module: 'core'
         transitive = true
     }
-    implementation("in.finbox.lending:loan-uat:<LENDING_SDK_VERSION>:uat@aar") {
+    implementation ("in.finbox.lending:loan:<LENDING_SDK_VERSION>:release@aar") {
         exclude group: 'in.finbox.lending', module: 'core'
         transitive = true
     }
-    implementation("in.finbox.lending:esign-uat:<LENDING_SDK_VERSION>:uat@aar") {
+    implementation ("in.finbox.lending:esign:<LENDING_SDK_VERSION>:release@aar") {
         exclude group: 'in.finbox.lending', module: 'core'
         transitive = true
     }
-    implementation("in.finbox.lending:enach-uat:<LENDING_SDK_VERSION>:uat@aar") {
+    implementation ("in.finbox.lending:enach:<LENDING_SDK_VERSION>:release@aar") {
         exclude group: 'in.finbox.lending', module: 'core'
         transitive = true
     }
-    implementation("in.finbox.lending:payment-uat:<LENDING_SDK_VERSION>:uat@aar") {
+    implementation ("in.finbox.lending:payment:<LENDING_SDK_VERSION>:release@aar") {
         exclude group: 'in.finbox.lending', module: 'core'
         transitive = true
     }
-    implementation("in.finbox.lending:bankconnect-uat:<LENDING_SDK_VERSION>:uat@aar") {
+    implementation ("in.finbox.lending:bankconnect:<LENDING_SDK_VERSION>:release@aar") {
+        exclude group: 'in.finbox.lending', module: 'core'
+        exclude group: 'in.finbox', module: 'bankconnect'
+        transitive = true
+    }
+    implementation ("in.finbox.lending:pennydrop:<LENDING_SDK_VERSION>:release@aar") {
         exclude group: 'in.finbox.lending', module: 'core'
         transitive = true
     }
-    implementation("in.finbox.lending:pennydrop-uat:<LENDING_SDK_VERSION>:uat@aar") {
+    implementation ("in.finbox.lending:gst:<LENDING_SDK_VERSION>:release@aar") {
         exclude group: 'in.finbox.lending', module: 'core'
         transitive = true
     }
-    implementation("in.finbox:mobileriskmanager:<RISK_SDK_VERSION>:parent-release@aar") {
+    implementation ("in.finbox.lending:videokyc:<LENDING_SDK_VERSION>:release@aar") {
+        exclude group: 'in.finbox.lending', module: 'core'
+        transitive = true
+    }
+    implementation ("in.finbox.lending:core:<LENDING_SDK_VERSION>:release@aar") {
+        transitive = true
+    }
+    implementation('in.finbox:mobileriskmanager:<RISK_SDK_VERSION>:parent-release@aar') {
+        transitive = true
+    }
+    implementation("in.finbox:common:0.4.2:release@aar") {
+        transitive = true
+    }
+    implementation("in.finbox:logger:0.4.0:release@aar") {
+        transitive = true
+    }
+    implementation('in.finbox:bankconnect:1.5.39:release@aar') {
         transitive = true
     }
    ```
@@ -110,10 +130,13 @@ proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pr
 
 ## Start SDK flow
 
-Once all dependencies are added, SDK requires 3 inputs: `customer_id`, `user_token` and `client_api_key`.
+Once all dependencies are added, SDK requires 3 inputs: `CUSTOMER_ID`, `USER_TOKEN` and `CLIENT_API_KEY`.
+`ENVIRONMENT` is an optional field. Default value of environment is UAT.
 
 ::: tip Note
-`user_token` needs to be generated against a `customer_id` on backend before starting the SDK. Refer [here](/middleware/sourcing-rest-api.html#generate-token)
+`USER_TOKEN` needs to be generated against a `CUSTOMER_ID` on backend before starting the SDK. Refer [here](/middleware/sourcing-rest-api.html#generate-token)
+
+`ENVIRONMENT` needs to be updated to `PROD` when migrating application to production.
 :::
 
 Now that all required parameters are available, we can start the SDK flow as follows:
@@ -124,9 +147,10 @@ Now that all required parameters are available, we can start the SDK flow as fol
 ```kotlin
 val REQUEST_CODE_ONBOARDING = 101
 val builder = FinBoxLending.Builder(context)
-    .setCustomerId("<customer_id>")
-    .setFinBoxApiKey("<client_api_key>")
-    .setUserToken("<user_token>")
+    .setLendingEnvironment("<ENVIRONMENT>")
+    .setCustomerId("<CUSTOMER_ID>")
+    .setFinBoxApiKey("<CLIENT_API_KEY>")
+    .setUserToken("<USER_TOKEN>")
     .build()
 
 startActivityForResult(
@@ -141,9 +165,10 @@ startActivityForResult(
 ```java
 private String REQUEST_CODE_ONBOARDING = 101;
 FinBoxLending builder = FinBoxLending.Builder(context)
-    .setCustomerId(<customer_id>)
-    .setFinBoxApiKey(<client_api_key>)
-    .setUserToken(<user_token>)
+    .setLendingEnvironment(<ENVIRONMENT>)
+    .setCustomerId(<CUSTOMER_ID>)
+    .setFinBoxApiKey(<CLIENT_API_KEY>)
+    .setUserToken(<USER_TOKEN>)
     .build();
 
 startActivityForResult(
@@ -174,11 +199,12 @@ In case of credit line product, once the lending journey is completed, user can 
 ```kotlin
 val REQUEST_CODE_ONBOARDING = 101
 val builder = FinBoxLending.Builder(context)
-    .setCustomerId("<customer_id>")
-    .setFinBoxApiKey("<client_api_key>")
-    .setUserToken("<user_token>")
-    .setCreditLineAmount(<withdraw_amount>)
-    .setCreditLineTransactionId("<transaction_id>")
+    .setLendingEnvironment(<ENVIRONMENT>)
+    .setCustomerId("<CUSTOMER_ID>")
+    .setFinBoxApiKey("<CLIENT_API_KEY>")
+    .setUserToken("<USER_TOKEN>")
+    .setCreditLineAmount(<WITHDRAW_AMOUNT>)
+    .setCreditLineTransactionId("<TRANSACTION_ID>")
     .build()
 
 startActivityForResult(
@@ -193,11 +219,12 @@ startActivityForResult(
 ```java
 private String REQUEST_CODE_ONBOARDING = 101;
 FinBoxLending builder = FinBoxLending.Builder(context)
-    .setCustomerId("<customer_id>")
-    .setFinBoxApiKey("<client_api_key>")
-    .setUserToken("<user_token>")
-    .setCreditLineAmount(<withdraw_amount>)
-    .setCreditLineTransactionId("<transaction_id>")
+    .setLendingEnvironment(<ENVIRONMENT>)
+    .setCustomerId("<CUSTOMER_ID>")
+    .setFinBoxApiKey("<CLIENT_API_KEY>")
+    .setUserToken("<USER_TOKEN>")
+    .setCreditLineAmount(<WITHDRAW_AMOUNT>)
+    .setCreditLineTransactionId("<TRANSACTION_ID>")
     .build();
 
 startActivityForResult(
@@ -332,9 +359,10 @@ class SampleMessService: FirebaseMessagingService(), FinBoxLendingMessagingImpl 
     //Common builder object to start lending SDK
     private fun generateFinBoxLending(): FinBoxLending {
         val builder = FinBoxLending.Builder(applicationContext)
-            .setFinBoxApiKey("<client_api_key>")
-            .setCustomerId("<customer_id>")
-            .setUserToken("<user_token>")
+            .setLendingEnvironment(<ENVIRONMENT>)
+            .setFinBoxApiKey("<CLIENT_API_KEY>")
+            .setCustomerId("<CUSTOMER_ID>")
+            .setUserToken("<USER_TOKEN>")
             .build()
         return builder
     }
@@ -391,9 +419,10 @@ class SampleMessService extends FirebaseMessagingService implements FinBoxLendin
         FinBoxLending builder = null;
         try {
             builder = new FinBoxLending.Builder(getApplicationContext())
-                    .setFinBoxApiKey("<client_api_key>")
-                    .setCustomerId("<customer_id>")
-                    .setUserToken("<user_token>")
+                    .setLendingEnvironment(<ENVIRONMENT>)
+                    .setFinBoxApiKey("<CLIENT_API_KEY>")
+                    .setCustomerId("<CUSTOMER_ID>")
+                    .setUserToken("<USER_TOKEN>")
                     .build();
         } catch (Exception e) {
             e.printStackTrace();
