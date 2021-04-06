@@ -64,6 +64,7 @@ The table below lists the supported banks with their corresponding identifier. T
 | svcbnk | SVC Co-Operative Bank |
 | syndicate | Syndicate Bank |
 | tamil_mercantile | Tamilnad Mercantile Bank |
+| tjsb_sahakari | TJSB Sahakari Bank Ltd |
 | ubi | Union Bank of India |
 | uco | UCO Bank |
 | ujjivan | Ujjivan Small Finance Bank |
