@@ -101,6 +101,32 @@ POST **`base_url`/v1/user/session**
 | - | - |
 | transactionID already exists | 409 |
 
+## Events
+
+Some events are given by the SDK when user exits the SDK , application completed ...etc.
+
+| Event | Description |
+| - | - |
+| APPLICATION_COMPLETED | Loan Application completed |
+| EXIT | User exits SDK |
+| PAYMENT_SUCCESSFULL | Credit Line withdraw successful |
+| OTP_LIMIT_EXCEEDED | Too many incorrect OTP in Credit Line withdrawal |
+
+Above Events can be recieved in two ways
+
+1. Listen to window postMessage via `target.addEventListener("message", (event) =>{});`
+   Eg: Post Message
+   ```json
+   {
+       "type":"finbox-lending",
+       "status":"EXIT"
+   }
+   ```
+2. The events are also passed through the configured redirect URL.
+   Eg: Redirect
+   `https://your-redirect.url/?status=EXIT`
+
+
 ## Customizations
 
 You can share the following JSON (or its subset) with FinBox team to customize the look and feel of the lending journey:
