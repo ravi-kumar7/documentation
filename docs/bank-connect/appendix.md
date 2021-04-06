@@ -69,6 +69,7 @@ The table below lists the supported banks with their corresponding identifier. T
 | uco | UCO Bank |
 | ujjivan | Ujjivan Small Finance Bank |
 | united | United Bank of India |
+| vaidyanath | The Vaidyanath Urban Co-Op Bank Ltd |
 | vijaya | Vijaya Bank |
 | vilas | Lakshmi Vilas Bank |
 | yesbnk | Yes Bank |
