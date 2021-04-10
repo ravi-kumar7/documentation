@@ -185,7 +185,7 @@ startActivityForResult(
 
 For credit line journey, include the following dependency in the app `build.gradle` file:
 ```groovy
-implementation("in.finbox.lending:creditline-uat:<LENDING_SDK_VERSION>:uat@aar") {
+implementation("in.finbox.lending:creditline:<LENDING_SDK_VERSION>:release@aar") {
     exclude group: 'in.finbox.lending', module: 'core'
     transitive = true
 }
