@@ -576,7 +576,20 @@ GET **`base_url`/v1/creditline/transactions?customerID=`someCustomerID`**
                     {
                         "amount": 1200,
                         "installmentNum": 1,
-                        "lateCharge": 0,
+                        "charges": [
+                            {
+                                "chargeType": "LATE_CHARGE",
+                                "charge": 0
+                            },
+                            {
+                                "chargeType": "NACH_BOUNCE_CHARGE",
+                                "charge": 0
+                            },
+                            {
+                                "chargeType": "LATE_INTEREST_CHARGE",
+                                "charge": 0
+                            }
+                        ],
                         "status": "PAID",
                         "dueDate": "2020-02-14",
                         "paidDate": "2020-02-13",
@@ -612,7 +625,7 @@ objects in `emis` contain:
 | - | - | - |
 | amount | Float | Indicates the EMI Amount |
 | installmentNum | Integer | Installment Number |
-| lateCharge | Float | Total late charge |
+| charges | Array of objects | Contains array of different charges, possible `chargeType` are `LATE_CHARGE`, `NACH_BOUNCE_CHARGE`, `LATE_INTEREST_CHARGE` |
 | status | String | Payment status can be `UNPAID`, `PAID`, `PENDING` |
 | dueDate | String | Due date in `YYYY-MM-DD` format | 
 | paidDate | String | Payment completion in `YYYY-MM-DD` format, if not paid is blank string `""` |
