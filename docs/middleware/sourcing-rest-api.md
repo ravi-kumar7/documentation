@@ -631,6 +631,13 @@ objects in `emis` contain:
 | paidDate | String | Payment completion in `YYYY-MM-DD` format, if not paid is blank string `""` |
 | totalPayable | Float | Total payable amount for the EMI |
 
+:::warning charges
+Different meanings of charges are as follows:
+- `LATE_CHARGE`: late fee added because of late in EMI payment
+- `LATE_INTEREST_CHARGE`: total day wise interest added due to EMI payment delay
+- `NACH_BOUNCE_CHARGE`: this is added if nach was presented, but bounced 
+:::
+
 :::warning emis key
 Array of objects in `emis` will be empty in case of `CANCELLED` and `PROCESSING` transactions.
 :::
