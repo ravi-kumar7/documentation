@@ -737,8 +737,13 @@ We'll be sending JSON encoded body in the following payload format:
 }
 ```
 
+:::warning Retries and Timeout
+1. If the webhook endpoint gives a non 200 HTTP status code, or if the API call fails, then maximum 3 times retry is attempted with exponential backoff.
+2. Every webhook endpoint call has a timeout set of maximum 90 seconds.
+:::
+
 :::warning IMPORTANT
-- `loanApplicationID` is available once the loan application is created, and will not be available for credit line activities.
+- `loanApplicationID` is available once the loan application is created, and will not be available for credit line specific activities.
 - `eventDescription` is always a **string**, in some cases you might get string encoded JSON as well. These specific cases are mentioned in [Appendix](/middleware/appendix.html#list-of-user-activities) along with activities.
 :::
 
