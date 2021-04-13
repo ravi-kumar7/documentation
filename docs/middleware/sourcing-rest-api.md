@@ -722,7 +722,7 @@ To configure this, you can update the webhook URL in **Settings** page of **FinB
 :::tip A Valid Endpoint:
 - receives a POST request
 - receives a request body with content-type `application/json`
-- returns a 200 status code on successful reception.
+- returns a 2xx status code on successful reception.
 :::
 
 We'll be sending JSON encoded body in the following payload format:
@@ -738,7 +738,7 @@ We'll be sending JSON encoded body in the following payload format:
 ```
 
 :::warning Retries and Timeout
-1. If the webhook endpoint gives a non 200 HTTP status code, or if the API call fails, then maximum 3 times retry is attempted with exponential backoff.
+1. If the webhook endpoint gives a non 2xx HTTP status code, or if the API call fails, then maximum 3 times retry is attempted with exponential backoff.
 2. Every webhook endpoint call has a timeout set of maximum 90 seconds.
 :::
 
