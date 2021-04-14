@@ -738,7 +738,7 @@ We'll be sending JSON encoded body in the following payload format:
 ```
 
 :::warning Retries and Timeout
-1. If the webhook endpoint gives a non 2xx HTTP status code, or if the API call fails, then maximum 3 times retry is attempted with exponential backoff.
+1. If the webhook endpoint gives a non 2xx HTTP status code, or if the API call fails, then maximum 3 times retry is attempted (maximum 4 attempts) with exponential backoff.
 2. Every webhook endpoint call has a timeout set of maximum 90 seconds.
 :::
 

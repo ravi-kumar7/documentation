@@ -57,6 +57,7 @@ The table below lists the supported banks with their corresponding identifier. T
 | pnbbnk | Punjab National Bank |
 | punjab_sind | Punjab & Sind Bank |
 | rbl | RBL Bank |
+| saraswat | Saraswat Co-operative Bank |
 | sbi | State Bank of India |
 | shinhan | Shinhan Bank India |
 | sib | South Indian Bank |
