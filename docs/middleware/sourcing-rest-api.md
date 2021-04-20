@@ -198,7 +198,7 @@ GET **`base_url`/v1/user/profile?customerID=`someCustomerID`**
             "dob": "1992-11-09",
             "gender": "Male",
             "pan": "ABCDN0000P",
-            "fisScore": 0.006962299255855537,
+            "fisScore": 640,
             "bureauScore": 830,
             "bureauStatus": "completed",
             "loanApplicationIDs": ["someLongUUID1"]
@@ -283,7 +283,7 @@ GET **`base_url`/v1/loan/details?loanApplicationID=`someLongLoanApplicationUUID`
             "gender": "Male",
             "dob": "1992-12-09",
             "pan": "ABCDP0000N",
-            "fisScore": 0.006962299255855537,
+            "fisScore": 640,
             "bureauScore": 830,
             "bureauStatus": "completed",
             "currentAddress": {
