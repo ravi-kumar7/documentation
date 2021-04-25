@@ -756,7 +756,7 @@ On successful updating the status, API will give a response with 200 HTTP status
 1. Please make sure sum of amounts add up to the original transaction amount being split
 2. API will throw an error if total amount exceeds the original transaction amount being split
 3. In case sum of amounts is less than original transaction amount, another transaction with no invoiceNo and left over amount will be created, and split will proceed
-4. After split is complete sub transactions will have same `partnerTxnID` but different `finboxTxnID`. In such cases, `invoiceNo` and `amount` fields in [Credit Line Transactions API](/middleware/sourcing-rest-api.html#credit-line-transactions) can be used to distinguish between the sub transactions.
+4. After split is complete sub transactions will have same `partnerTxnID` but different `txnID` (FinBox Transaction ID). In such cases, `invoiceNo` and `amount` fields in [Credit Line Transactions API](/middleware/sourcing-rest-api.html#credit-line-transactions) can be used to distinguish between the sub transactions.
 :::
 
 ### Error Cases
