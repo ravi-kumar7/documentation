@@ -648,34 +648,125 @@ Array of objects in `emis` will be empty in case of `CANCELLED` and `PROCESSING`
 | Missing customerID | 403 |
 | user with credit line not found | 404 |
 
-<!-- ## Credit Line Update Transaction Status
-Updates Credit Line Transaction Status
+## Confirm Credit Line Transaction
+Confirms Credit Line Transaction in processing state
+
+::: warning NOTE
+1. This API's request format is specific to e-commerce use case, and is disabled by default for clients with a different use case.
+2. For other use cases, FinBox team will share a different API for updating the status.
+:::
 
 ::: tip Endpoint
-POST **`base_url`/v1/creditline/status**
+POST **`base_url`/v1/creditline/txn/confirm**
 :::
 
 **Request Format**
 ```json
 {
-    "txnID": "27d71hd87187h",
-    "status": "CONFIRMED"
+    "txnID": "573d04f2-6e25-44ac-8247-0565df5cbd0d",
+    "awbNo": "AWB_NO_HERE",
+    "invoiceNo": "INVOICE_NO_HERE",
+    "podExtension": "jpg",
+    "podBase64": "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",
+    "invoiceExtension": "pdf",
+    "invoiceBase64": "JVBERi0xLjMNCiXi48/TDQoNCjEgMCBvYmoNCjw8DQovVHlwZSAvQ2F0YWxvZw0KL091dGxpbmVzIDIgMCBSDQovUGFnZXMgMyAwIFINCj4+DQplbmRvYmoNCg0KMiAwIG9iag0KPDwNCi9UeXBlIC9PdXRsaW5lcw0KL0NvdW50IDANCj4+DQplbmRvYmoNCg0KMyAwIG9iag0KPDwNCi9UeXBlIC9QYWdlcw0KL0NvdW50IDINCi9LaWRzIFsgNCAwIFIgNiAwIFIgXSANCj4+DQplbmRvYmoNCg0KNCAwIG9iag0KPDwNCi9UeXBlIC9QYWdlDQovUGFyZW50IDMgMCBSDQovUmVzb3VyY2VzIDw8DQovRm9udCA8PA0KL0YxIDkgMCBSIA0KPj4NCi9Qcm9jU2V0IDggMCBSDQo+Pg0KL01lZGlhQm94IFswIDAgNjEyLjAwMDAgNzkyLjAwMDBdDQovQ29udGVudHMgNSAwIFINCj4+DQplbmRvYmoNCg0KNSAwIG9iag0KPDwgL0xlbmd0aCAxMDc0ID4+DQpzdHJlYW0NCjIgSg0KQlQNCjAgMCAwIHJnDQovRjEgMDAyNyBUZg0KNTcuMzc1MCA3MjIuMjgwMCBUZA0KKCBBIFNpbXBsZSBQREYgRmlsZSApIFRqDQpFVA0KQlQNCi9GMSAwMDEwIFRmDQo2OS4yNTAwIDY4OC42MDgwIFRkDQooIFRoaXMgaXMgYSBzbWFsbCBkZW1vbnN0cmF0aW9uIC5wZGYgZmlsZSAtICkgVGoNCkVUDQpCVA0KL0YxIDAwMTAgVGYNCjY5LjI1MDAgNjY0LjcwNDAgVGQNCigganVzdCBmb3IgdXNlIGluIHRoZSBWaXJ0dWFsIE1lY2hhbmljcyB0dXRvcmlhbHMuIE1vcmUgdGV4dC4gQW5kIG1vcmUgKSBUag0KRVQNCkJUDQovRjEgMDAxMCBUZg0KNjkuMjUwMCA2NTIuNzUyMCBUZA0KKCB0ZXh0LiBBbmQgbW9yZSB0ZXh0LiBBbmQgbW9yZSB0ZXh0LiBBbmQgbW9yZSB0ZXh0LiApIFRqDQpFVA0KQlQNCi9GMSAwMDEwIFRmDQo2OS4yNTAwIDYyOC44NDgwIFRkDQooIEFuZCBtb3JlIHRleHQuIEFuZCBtb3JlIHRleHQuIEFuZCBtb3JlIHRleHQuIEFuZCBtb3JlIHRleHQuIEFuZCBtb3JlICkgVGoNCkVUDQpCVA0KL0YxIDAwMTAgVGYNCjY5LjI1MDAgNjE2Ljg5NjAgVGQNCiggdGV4dC4gQW5kIG1vcmUgdGV4dC4gQm9yaW5nLCB6enp6ei4gQW5kIG1vcmUgdGV4dC4gQW5kIG1vcmUgdGV4dC4gQW5kICkgVGoNCkVUDQpCVA0KL0YxIDAwMTAgVGYNCjY5LjI1MDAgNjA0Ljk0NDAgVGQNCiggbW9yZSB0ZXh0LiBBbmQgbW9yZSB0ZXh0LiBBbmQgbW9yZSB0ZXh0LiBBbmQgbW9yZSB0ZXh0LiBBbmQgbW9yZSB0ZXh0LiApIFRqDQpFVA0KQlQNCi9GMSAwMDEwIFRmDQo2OS4yNTAwIDU5Mi45OTIwIFRkDQooIEFuZCBtb3JlIHRleHQuIEFuZCBtb3JlIHRleHQuICkgVGoNCkVUDQpCVA0KL0YxIDAwMTAgVGYNCjY5LjI1MDAgNTY5LjA4ODAgVGQNCiggQW5kIG1vcmUgdGV4dC4gQW5kIG1vcmUgdGV4dC4gQW5kIG1vcmUgdGV4dC4gQW5kIG1vcmUgdGV4dC4gQW5kIG1vcmUgKSBUag0KRVQNCkJUDQovRjEgMDAxMCBUZg0KNjkuMjUwMCA1NTcuMTM2MCBUZA0KKCB0ZXh0LiBBbmQgbW9yZSB0ZXh0LiBBbmQgbW9yZSB0ZXh0LiBFdmVuIG1vcmUuIENvbnRpbnVlZCBvbiBwYWdlIDIgLi4uKSBUag0KRVQNCmVuZHN0cmVhbQ0KZW5kb2JqDQoNCjYgMCBvYmoNCjw8DQovVHlwZSAvUGFnZQ0KL1BhcmVudCAzIDAgUg0KL1Jlc291cmNlcyA8PA0KL0ZvbnQgPDwNCi9GMSA5IDAgUiANCj4+DQovUHJvY1NldCA4IDAgUg0KPj4NCi9NZWRpYUJveCBbMCAwIDYxMi4wMDAwIDc5Mi4wMDAwXQ0KL0NvbnRlbnRzIDcgMCBSDQo+Pg0KZW5kb2JqDQoNCjcgMCBvYmoNCjw8IC9MZW5ndGggNjc2ID4+DQpzdHJlYW0NCjIgSg0KQlQNCjAgMCAwIHJnDQovRjEgMDAyNyBUZg0KNTcuMzc1MCA3MjIuMjgwMCBUZA0KKCBTaW1wbGUgUERGIEZpbGUgMiApIFRqDQpFVA0KQlQNCi9GMSAwMDEwIFRmDQo2OS4yNTAwIDY4OC42MDgwIFRkDQooIC4uLmNvbnRpbnVlZCBmcm9tIHBhZ2UgMS4gWWV0IG1vcmUgdGV4dC4gQW5kIG1vcmUgdGV4dC4gQW5kIG1vcmUgdGV4dC4gKSBUag0KRVQNCkJUDQovRjEgMDAxMCBUZg0KNjkuMjUwMCA2NzYuNjU2MCBUZA0KKCBBbmQgbW9yZSB0ZXh0LiBBbmQgbW9yZSB0ZXh0LiBBbmQgbW9yZSB0ZXh0LiBBbmQgbW9yZSB0ZXh0LiBBbmQgbW9yZSApIFRqDQpFVA0KQlQNCi9GMSAwMDEwIFRmDQo2OS4yNTAwIDY2NC43MDQwIFRkDQooIHRleHQuIE9oLCBob3cgYm9yaW5nIHR5cGluZyB0aGlzIHN0dWZmLiBCdXQgbm90IGFzIGJvcmluZyBhcyB3YXRjaGluZyApIFRqDQpFVA0KQlQNCi9GMSAwMDEwIFRmDQo2OS4yNTAwIDY1Mi43NTIwIFRkDQooIHBhaW50IGRyeS4gQW5kIG1vcmUgdGV4dC4gQW5kIG1vcmUgdGV4dC4gQW5kIG1vcmUgdGV4dC4gQW5kIG1vcmUgdGV4dC4gKSBUag0KRVQNCkJUDQovRjEgMDAxMCBUZg0KNjkuMjUwMCA2NDAuODAwMCBUZA0KKCBCb3JpbmcuICBNb3JlLCBhIGxpdHRsZSBtb3JlIHRleHQuIFRoZSBlbmQsIGFuZCBqdXN0IGFzIHdlbGwuICkgVGoNCkVUDQplbmRzdHJlYW0NCmVuZG9iag0KDQo4IDAgb2JqDQpbL1BERiAvVGV4dF0NCmVuZG9iag0KDQo5IDAgb2JqDQo8PA0KL1R5cGUgL0ZvbnQNCi9TdWJ0eXBlIC9UeXBlMQ0KL05hbWUgL0YxDQovQmFzZUZvbnQgL0hlbHZldGljYQ0KL0VuY29kaW5nIC9XaW5BbnNpRW5jb2RpbmcNCj4+DQplbmRvYmoNCg0KMTAgMCBvYmoNCjw8DQovQ3JlYXRvciAoUmF2ZSBcKGh0dHA6Ly93d3cubmV2cm9uYS5jb20vcmF2ZVwpKQ0KL1Byb2R1Y2VyIChOZXZyb25hIERlc2lnbnMpDQovQ3JlYXRpb25EYXRlIChEOjIwMDYwMzAxMDcyODI2KQ0KPj4NCmVuZG9iag0KDQp4cmVmDQowIDExDQowMDAwMDAwMDAwIDY1NTM1IGYNCjAwMDAwMDAwMTkgMDAwMDAgbg0KMDAwMDAwMDA5MyAwMDAwMCBuDQowMDAwMDAwMTQ3IDAwMDAwIG4NCjAwMDAwMDAyMjIgMDAwMDAgbg0KMDAwMDAwMDM5MCAwMDAwMCBuDQowMDAwMDAxNTIyIDAwMDAwIG4NCjAwMDAwMDE2OTAgMDAwMDAgbg0KMDAwMDAwMjQyMyAwMDAwMCBuDQowMDAwMDAyNDU2IDAwMDAwIG4NCjAwMDAwMDI1NzQgMDAwMDAgbg0KDQp0cmFpbGVyDQo8PA0KL1NpemUgMTENCi9Sb290IDEgMCBSDQovSW5mbyAxMCAwIFINCj4+DQoNCnN0YXJ0eHJlZg0KMjcxNA0KJSVFT0YNCg=="
 }
 ```
 | Field | Type | Description |
 | - | - | - |
-| txnID | String | Transaction ID which was passed on Client SDK |
-| status | String | Can be `CONFIRMED` or `CANCELLED` |
+| txnID | String | Unique FinBox Transaction ID, this can be fetched using the [Credit Line Transactions API](/middleware/sourcing-rest-api.html#credit-line-transactions) |
+| awbNo | String | Air Waybill Number |
+| invoiceNo | String | Invoice Number |
+| podExtension | String | File extension for proof of delivery, can be `jpg`, `png` or `pdf` |
+| podBase64 | String | Base 64 encoded file content of proof of delivery |
+| invoiceExtension | String | File extension for invoice, can be `jpg`, `png` or `pdf` |
+| invoiceBase64 | String | Base 64 encoded file content of invoice |
 
 On successful updating the status, API will give a response with 200 HTTP status code.
 
 ### Error Cases
 | Case | HTTP Code |
 | - | - |
-| Missing customerID | 403 |
-| Invalid status value | 400 |
+| Missing txnID | 403 |
+| Any other missing field | 400 |
+| Invalid extension | 400 |
+| Error decoding base 64 string | 400 |
+| Error processing file | 400 |
 | txnID not found | 404 |
-| only transaction with status PROCESSING can be updated | 403 | -->
+| only transaction with status PROCESSING can be updated | 403 |
+
+## Cancel Credit Line Transaction
+Cancels Credit Line Transaction in processing state
+
+::: tip Endpoint
+POST **`base_url`/v1/creditline/txn/cancel**
+:::
+
+**Request Format**
+```json
+{
+    "txnID": "0e882dbd-3768-4c68-8986-57b68d0669d3"
+}
+```
+| Field | Type | Description |
+| - | - | - |
+| txnID | String | Unique FinBox Transaction ID, this can be fetched using the [Credit Line Transactions API](/middleware/sourcing-rest-api.html#credit-line-transactions) |
+
+On successful updating the status, API will give a response with 200 HTTP status code.
+
+### Error Cases
+| Case | HTTP Code |
+| - | - |
+| Missing txnID | 403 |
+| txnID not found | 404 |
+| only transaction with status PROCESSING can be updated | 403 |
+
+## Split Credit Line Transaction
+Splits Credit Line Transaction in processing state into different transactions. Useful when same order has different invoices, shipment or deliveries. After splitting, each transaction can further be splitted or moved to cancelled / confirmed state. 
+
+::: warning NOTE
+1. This API's request format is specific to e-commerce use case, and is disabled by default for clients with a different use case.
+2. For other use cases if this is required, FinBox team will share a different API.
+:::
+
+::: tip Endpoint
+POST **`base_url`/v1/creditline/txn/split**
+:::
+
+**Request Format**
+```json
+{
+    "txnID": "039b0552-31e3-4724-a35c-0d5edd663bcf",
+    "invoices": [
+        {"invoiceNo": "DEFS123", "amount": 1000},
+        {"invoiceNo": "ABNC456", "amount": 500},
+        {"invoiceNo": "", "amount": 1500}
+    ]
+}
+```
+| Field | Type | Description |
+| - | - | - |
+| txnID | String | Unique FinBox Transaction ID, this can be fetched using the [Credit Line Transactions API](/middleware/sourcing-rest-api.html#credit-line-transactions)  |
+| invoiceNo | String | Invoice Number. This is optional and can be skipped by passing blank string |
+| amount | Float | Amount of the sub transaction |
+
+On successful updating the status, API will give a response with 200 HTTP status code.
+
+::: warning NOTE
+1. Please make sure sum of amounts add up to the original transaction amount being split
+2. API will throw an error if total amount exceeds the original transaction amount being split
+3. In case sum of amounts is less than original transaction amount, another transaction with no invoiceNo and left over amount will be created, and split will proceed
+4. After split is complete sub transactions will have same `partnerTxnID` but different `finboxTxnID`. In such cases, `invoiceNo` and `amount` fields in [Credit Line Transactions API](/middleware/sourcing-rest-api.html#credit-line-transactions) can be used to distinguish between the sub transactions.
+:::
+
+### Error Cases
+| Case | HTTP Code |
+| - | - |
+| Missing txnID | 403 |
+| txnID not found | 404 |
+| only transaction with status PROCESSING can be splitted | 403 |
+| amount should be greater than 0 | 400 |
+| sum of invoice amounts cannot exceed transaction amount | 400 |
 
 ## User Activity History
 Returns the activity 
