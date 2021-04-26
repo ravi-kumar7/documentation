@@ -826,12 +826,12 @@ Different fields that hold this monthly analysis are as follows:
 - `amt_cash_withdrawl_debit`: Total Amount of Cash Withdrawal
 - `amt_chq_credit`: Total Amount Credited through Cheque
 - `amt_chq_debit`: Total Amount Debited through Cheque
-- `amt_income_credit`: Total Amount of Income Credited
+- `amt_income_credit`: Total Amount Credited excluding inward cheque bounce, auto debit payment bounce, international transaction arbitrage credits and loan credits
 - `amt_credit`: Total Amount Credited
 - `amt_debit`: Total Amount Debited
 - `amt_debit_card_debit`: Total Amount Spend through Debit card
-- `amt_international_transaction_arbitrage_credit`: Total Amount of International Credit
-- `amt_international_transaction_arbitrage_debit`: Total Amount of International Debit
+- `amt_international_transaction_arbitrage_credit`: Total Amount of credit due to difference in buying and selling of an asset in two diffrent market (credit)
+- `amt_international_transaction_arbitrage_debit`: Total Amount of debit due to difference in buying and selling of an asset in two diffrent market (debit)
 - `amt_investment_cashin_credit`: Total Amount of Investment Cash-ins
 - `amt_net_banking_transfer_credit`: Total Amount Credited through transfers
 - `amt_net_banking_transfer_debit`: Total Amount Debited through transfers
@@ -891,7 +891,7 @@ Different fields that hold this monthly analysis are as follows:
 - `min_bal`: Minimum Balance
 - `min_eod_balance`: Minimum EOD Balance
 - `mode_balance`: Mode Balance* ( = Mode of EOD Balances after filling in missing daily Balances)
-- `net_cash_inflow`: Net Cashflow
+- `net_cash_inflow`: Net Cashflow (Total amount credited - Total amount debited )
 - `opening_balance`: Opening Balance
 - `number_of_salary_transactions`: Number of Salary Transactions
 - `total_amount_of_salary`: Total Amount of Salary
@@ -903,6 +903,163 @@ Different fields that hold this monthly analysis are as follows:
 
 > \* We extrapolate previous available EOD balance as a proxy for EOD balances for dates missing in the statement. In case when no previous EOD balance is available, EOD balance of the closest available dates are used.
 
+## Rolling Monthly Analysis <Badge text="New" />
+Get Rolling monthly analysis for a given entity.
+
+::: tip Endpoint
+GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/`<entity_id>`/rolling_monthly_analysis/**
+:::
+
+### Authentication
+Request headers `x-api-key` with API Key as value and `server-hash` with Server Hash as value must be present in request.
+
+### Response
+On fetching information successfully, the response would be of the following format with **200 HTTP code**:
+```json
+
+{
+    "entity_id": "uuid4_for_entity",
+    "progress": [
+        {
+            "status": "completed",
+            "message": null,
+            "statement_id": "uuid4_for_statement",
+            "source": "pdf"
+        }
+    ],
+    "monthly_analysis": {
+      "monthly_analysis": {
+            "months_order": [
+            "month_2",
+            "month_1",
+            "month_0",
+            "3_months_group"
+        ],
+        "month_2": {
+            "opening_balance": {
+                "avg": 10687.84,
+                "max": 68149.99,
+                "min": 68149.99,
+                "count": 1,
+                "amt": "10687.84"
+            },
+            "credit": {
+                "sum": 6181099.43,
+                "avg": 3090549.71,
+                "max": 3181099.43,
+                "min": 3000000.0,
+                "count": 2,
+                "max_date": "19-Mar-21",
+                "min_date": "18-Mar-21",
+                "amt": "6181099.43"
+            },
+            "cash_deposit_credit": {
+                "sum": 0,
+                "avg": 0,
+                "max": null,
+                "min": null,
+                "count": 0,
+                "max_date": null,
+                "min_date": null,
+                "amt": "0"
+            },
+            "calander_months_order": [
+              "Jan-21",
+              "Feb-21",
+              "Mar-21"
+              ],
+              "Jan-21": {},
+              "Feb-21": {},
+              "Mar-21": {},
+              "3_months_group": {
+                    "credit": {
+                        "sum": 266474.0,
+                        "avg": 20498.0,
+                        "max": 191298.0,
+                        "min": 1.0,
+                        "count": 13,
+                        "max_date": "02-Mar-21",
+                        "min_date": "21-Jan-21",
+                        "amt": "266474.0"
+            },
+        ...
+    }
+}
+```
+Here, the `progress` field holds an array of statement wise progress status, while the `rolling_monthly_analysis` field holds an object of fields, each having an object of month-wise keys having numerical values.
+
+Months are represented in `Mmm-YYYY` format in key.
+
+Different fields that hold this monthly analysis are as follows:
+| Fields(Unique)                       | Finbox variables                           | Definition                                                                                                                                                        | Amount Present| Sum | Avg | Max | Min | Count | Max Date | Min Date | Tx Type         | Data format     |
+|--------------------------------------|--------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|-----|-----|-----|-----|-------|----------|----------|-----------------|-----------------|
+| Bank Balance (Daily Closing Balance) | closing_balance                            | Closing balance                                                                                                                                                   | Yes           | NA  | Yes | Yes | Yes | Yes   | Yes      | Yes      | Debit or Credit | rolling 30 days |
+| Banking Turnover                     | income                                     | Total Amount of credit in month excluding amount of inward cheque bounce, auto debit payment bounce, international transaction arbitrage credits and loan credits | Yes           | Yes | Yes | Yes | Yes | Yes   | NA       | NA       | Credit          | rolling 30 days |
+| EMI                                  | emi_debit                                  | Total Amount Debited as Loan EMI                                                                                                                                  | Yes           | Yes | NA  | Yes | Yes | Yes   | Yes      | Yes      | Debit           | rolling 30 days |
+| Total Inward Bounce                  | inward_cheque_bounce_credit                | Total Amount Credited through Inward Cheque Bounce                                                                                                                | Yes           | Yes | Yes | Yes | Yes | Yes   | Yes      | Yes      | Credit          | rolling 30 days |
+| Total Outward Bounce                 | outward_cheque_bounce_debit                | Total Amount Debited through Outward Cheque Bounce                                                                                                                | Yes           | Yes | Yes | Yes | Yes | Yes   | Yes      | Yes      | Debit           | rolling 30 days |
+| EMI Bounce                           | emi_bounce                                 | Total Amount credited due to emi bounce                                                                                                                           | Yes           | Yes | Yes | Yes | Yes | Yes   | Yes      | Yes      | Credit          | rolling 30 days |
+| Credit Transactions                  | credit                                     | Total Amount of credit transactions                                                                                                                               | Yes           | Yes | Yes | Yes | Yes | Yes   | Yes      | Yes      | Credit          | rolling 30 days |
+| Debit Transactions                   | debit                                      | Total Amount of debit transactions                                                                                                                                | Yes           | Yes | Yes | Yes | Yes | Yes   | Yes      | Yes      | Debit           | rolling 30 days |
+| Salary                               | salary                                     | Total Amount of Salary Transactions                                                                                                                               | Yes           | Yes | Yes | Yes | Yes | Yes   | Yes      | Yes      | Credit          | rolling 30 days |
+| Credit Card Payment                  | credit_card_bill_debit                     | Total Amount Debited for Credit Card Bill                                                                                                                         | Yes           | Yes | Yes | Yes | Yes | Yes   | Yes      | Yes      | Debit           | rolling 30 days |
+| Cash Withdrawl                       | cash_withdrawl_debit                       | Total Amount of Cash Withdrawal                                                                                                                                   | Yes           | Yes | Yes | Yes | Yes | Yes   | Yes      | Yes      | Debit           | rolling 30 days |
+| Investment                           | investment                                 | Total Amount of Investments                                                                                                                                       | Yes           | Yes | Yes | Yes | Yes | Yes   | Yes      | Yes      | Debit           | rolling 30 days |
+| Interest Earned                      | bank_interest_credit                       | Total Amount of Bank Interest                                                                                                                                     | Yes           | Yes | Yes | Yes | Yes | Yes   | Yes      | Yes      | Credit          | rolling 30 days |
+| Cash Deposits                        | cash_deposit_credit                        | Total Amount of Cash Deposited                                                                                                                                    | Yes           | Yes | Yes | Yes | Yes | Yes   | Yes      | Yes      | Credit          | rolling 30 days |
+| Loan Credit                          | loan_credits                               | Total Amount of Loan Credits                                                                                                                                      | Yes           | Yes | NA  | Yes | Yes | Yes   | Yes      | Yes      | Credit          | rolling 30 days |
+| Cheque issued                        | chq_debit                                  | Total Amount Debited through Cheque                                                                                                                               | Yes           | Yes | Yes | Yes | Yes | Yes   | Yes      | Yes      | Debit           | rolling 30 days |
+| Cheque Deposit                       | chq_credit                                 | Total Amount Credited through Cheque                                                                                                                              | Yes           | Yes | Yes | Yes | Yes | Yes   | Yes      | Yes      | Credit          | rolling 30 days |
+| Ecommerce                            | shopping                                   | i.e. amazon , flipkart,  myntra                                                                                                                                   | Yes           | Yes | Yes | Yes | Yes | Yes   | Yes      | Yes      | Debit           | rolling 30 days |
+| Bank Charges                         | bank_charge_debit                          | Total Amount of Bank Charges                                                                                                                                      | Yes           | Yes | Yes | Yes | Yes | Yes   | Yes      | Yes      | Debit           | rolling 30 days |
+| Travel                               | travel                                     | i.e. redbus , olacabs, irctc                                                                                                                                      | Yes           | Yes | Yes | Yes | Yes | Yes   | Yes      | Yes      | Debit           | rolling 30 days |
+| Fuel                                 | fuel                                       | i.e. petrol , hpcl , gasoline                                                                                                                                     | Yes           | Yes | Yes | Yes | Yes | Yes   | Yes      | Yes      | Debit           | rolling 30 days |
+| food                                 | food                                       | i.e. zomato , swiggy , burgerking                                                                                                                                 | Yes           | Yes | Yes | Yes | Yes | Yes   | Yes      | Yes      | Debit           | rolling 30 days |
+| shopping                             | shopping                                   | i.e. supermarket , megamart                                                                                                                                       | Yes           | Yes | Yes | Yes | Yes | Yes   | Yes      | Yes      | Debit           | rolling 30 days |
+| No of Negative Balance days          | negative_balance_days                      | Number of negative balance days                                                                                                                                   | Yes           | Yes | Yes | Yes | Yes | NA    | NA       | NA       | Debit or Credit | rolling 30 days |
+| Digital Payments Presence            | digital_payments                           | i.e. paytm , phonepe, freecharge                                                                                                                                  | Yes           | Yes | Yes | Yes | Yes | Yes   | Yes      | Yes      | Debit           | rolling 30 days |
+| Discretionary spends                 | discretionary_spends                       | i.e. investments  , medical , entertainment                                                                                                                       | Yes           | Yes | Yes | Yes | Yes | Yes   | Yes      | Yes      | Debit           | rolling 30 days |
+| Maturity of investment               | investments                                | Number of Investments                                                                                                                                             | Yes           | Yes | Yes | Yes | Yes | Yes   | Yes      | Yes      | Credit          | rolling 30 days |
+| Opening Balance                      | closing_balance                            | Closing balance                                                                                                                                                   | Yes           | NA  | Yes | Yes | Yes | Yes   | NA       | NA       | Debit or Credit | rolling 30 days |
+| Closing Balance                      | opening_balance                            | Opening Balance                                                                                                                                                   | Yes           | NA  | Yes | Yes | Yes | Yes   | NA       | NA       | Debit or Credit | rolling 30 days |
+| Net Cashflow                         | net_cash_inflow                            | Net Cashflow (credit-debit)                                                                                                                                       | Yes           | Yes | Yes | Yes | Yes | NA    | NA       | NA       | Debit or Credit | rolling 30 days |
+| Average Balance /Average monthly Emi | abb_isto_emi                               | Average Balance / Avg Emi of month (If avg emi is 0 , then avg value will be 99)                                                                                  | Yes           | Yes | Yes | Yes | Yes | NA    | NA       | NA       | Debit or Credit | rolling 30 days |
+| Refund                               | refund_credit                              | Total Amount of Refund                                                                                                                                            | Yes           | Yes | Yes | Yes | Yes | Yes   | Yes      | Yes      | Credit          | rolling 30 days |
+| Auto Debit                           | auto_debit_payment_debit                   | Total Amount of Auto-Debit Payments                                                                                                                               | Yes           | Yes | Yes | Yes | Yes | Yes   | Yes      | Yes      | Debit           | rolling 30 days |
+| International Debit                  | international_transaction_arbitrage_debit  | Total Amount of International Debit                                                                                                                               | Yes           | Yes | Yes | Yes | Yes | Yes   | Yes      | Yes      | Debit           | rolling 30 days |
+| International Credit                 | international_transaction_arbitrage_credit | Total Amount of International Credit                                                                                                                              | Yes           | Yes | Yes | Yes | Yes | Yes   | Yes      | Yes      | Credit          | rolling 30 days |
+| Negative Balance                     | negative_balance                           | Same day multiple transactions with balance < 0 will be count as 1, EOD balance is negative with no transaction on that date will be count as 1                   | Yes           | NA  | Yes | Yes | Yes | Yes   | Yes      | Yes      | Debit or Credit | rolling 30 days |
+| Min Balance charges                  | min_balance_charge                         | work in progress                                                                                                                                                  | Yes           | Yes | Yes | Yes | Yes | Yes   | Yes      | Yes      | Debit           | rolling 30 days |
+| Tax Paid                             | tax_paid                                   | work in progress                                                                                                                                                  | Yes           | Yes | Yes | Yes | Yes | Yes   | Yes      | Yes      | Debit           | rolling 30 days |
+| Telephone                            | telephone                                  | work in progress                                                                                                                                                  | Yes           | Yes | Yes | Yes | Yes | Yes   | Yes      | Yes      | Debit           | rolling 30 days |
+| Utilities                            | utilities                                  | work in progress                                                                                                                                                  | Yes           | Yes | Yes | Yes | Yes | Yes   | Yes      | Yes      | Debit           | rolling 30 days |
+| Bank Balance on 1st                  | balance_on_1st                             | EOD balance on 1st of month                                                                                                                                       | Yes           | NA  | Yes | Yes | Yes | Yes   | NA       | NA       | Debit or Credit | Calander month  |
+| Bank Balance on 5th                  | balance_on_5th                             | EOD balance on 5st of month                                                                                                                                       | Yes           | NA  | Yes | Yes | Yes | Yes   | NA       | NA       | Debit or Credit | Calander month  |
+| Bank Balance on 10th                 | balance_on_10th                            | EOD balance on 10st of month                                                                                                                                      | Yes           | NA  | Yes | Yes | Yes | Yes   | NA       | NA       | Debit or Credit | Calander month  |
+| Bank Balance on 15th                 | balance_on_15th                            | EOD balance on 15st of month                                                                                                                                      | Yes           | NA  | Yes | Yes | Yes | Yes   | NA       | NA       | Debit or Credit | Calander month  |
+| Bank Balance on 20th                 | balance_on_20th                            | EOD balance on 20st of month                                                                                                                                      | Yes           | NA  | Yes | Yes | Yes | Yes   | NA       | NA       | Debit or Credit | Calander month  |
+| Bank Balance on 25th                 | balance_on_25th                            | EOD balance on 25st of month                                                                                                                                      | Yes           | NA  | Yes | Yes | Yes | Yes   | NA       | NA       | Debit or Credit | Calander month  |
+| Bank Balance on 30th/31st            | balance_on_30th                            | EOD balance on 30st of month                                                                                                                                      | Yes           | NA  | Yes | Yes | Yes | Yes   | NA       | NA       | Debit or Credit | Calander month  |
+| Adjusted EOD Balance on 1st          | balance_net_off_on_1st_0                   | eod balance on 1st of month 0 excluding loan credits                                                                                                              | Yes           | NA  | Yes | Yes | Yes | Yes   | NA       | NA       | Debit or Credit | Calander month  |
+| Adjusted EOD Balance on 5th          | balance_net_off_on_5th_0                   | eod balance on 5th of month 0 excluding loan credits                                                                                                              | Yes           | NA  | Yes | Yes | Yes | Yes   | NA       | NA       | Debit or Credit | Calander month  |
+| Adjusted EOD Balance on 10th         | balance_net_off_on_10th_0                  | eod balance on 10th of month 0 excluding loan credits                                                                                                             | Yes           | NA  | Yes | Yes | Yes | Yes   | NA       | NA       | Debit or Credit | Calander month  |
+| Adjusted EOD Balance on 15th         | balance_net_off_on_15th_0                  | eod balance on 15th of month 0 excluding loan credits                                                                                                             | Yes           | NA  | Yes | Yes | Yes | Yes   | NA       | NA       | Debit or Credit | Calander month  |
+| Adjusted EOD Balance on 20th         | balance_net_off_on_20th_0                  | eod balance on 20th of month 0 excluding loan credits                                                                                                             | Yes           | NA  | Yes | Yes | Yes | Yes   | NA       | NA       | Debit or Credit | Calander month  |
+| Adjusted EOD Balance on 25th         | balance_net_off_on_25th_0                  | eod balance on 25th of month 0 excluding loan credits                                                                                                             | Yes           | NA  | Yes | Yes | Yes | Yes   | NA       | NA       | Debit or Credit | Calander month  |
+| Adjusted EOD Balance on 30th/31st    | balance_net_off_on_30th_0                  | eod balance on 30th of month 0 excluding loan credits                                                                                                             | Yes           | NA  | Yes | Yes | Yes | Yes   | NA       | NA       | Debit or Credit | Calander month  |
+| Auto Debit Bounce                    | auto_debit_payment_bounce_credit           |  Total Amount of Auto debit bounce                                                                                                                                | Yes           | Yes | Yes | Yes | Yes | Yes   | Yes      | Yes      | Credit          | rolling 30 days |
+| Penal Charges                        | total_bounce_or_penal_charge               | total amount of bounce or penal charges in last 6 months                                                                                                          | Yes           | Yes | Yes | Yes | Yes | Yes   | Yes      | Yes      | Debit           | rolling 30 days |
+| Debit Card payments                  | debit_card_debit                           |  Total Amount Spend through Debit card                                                                                                                            | Yes           | Yes | Yes | Yes | Yes | Yes   | Yes      | Yes      | Debit           | rolling 30 days |
+| Digital Payments done                | net_banking_transfer_debit                 |  Total Amount Debited through transfers                                                                                                                           | Yes           | Yes | Yes | Yes | Yes | Yes   | Yes      | Yes      | Debit           | rolling 30 days |
+| Digital Payments Received            | upi_credit                                 |  Total Amount Credited through UPI, net banking, etc                                                                                                              | Yes           | Yes | Yes | Yes | Yes | Yes   | Yes      | Yes      | Credit          | rolling 30 days |
+| EOD balance                          | avg_bal                                    |  Average Balance* ( = Average of EOD Balances after filling in missing daily Balances)                                                                            | Yes           | NA  | Yes | Yes | Yes | Yes   | Yes      | Yes      | Debit or Credit | rolling 30 days |                                                                                                                                                   | NA  |     | Yes | Yes | Yes | Yes |                 |                 |
+
+:::warning NOTE
+- If input is for 3 months statement, then 0-2 months of monthly data (type monthly), and one aggregated data for 3 months
+- If input is for 6 months statement, then 0-5 months of monthly data (type monthly), and two aggregated data for 3 and 6 months 
+- If input is for 12 months statement, then 0-11 months of monthly data (type monthly), and three aggregated data for 3, 6 and 12 months
+- Validation on  finbox end to throw error in case complete 3 months, or 6 months or, 12 months data not received
+:::
 
 <!-- ## Transactions in Excel Workbook <Badge text="New" />
 Get **enriched transactions** and **monthly analysis** for a given entity **account wise** in .xlsx (Excel workbook) format.
@@ -1021,224 +1178,233 @@ The list value of `predictors` key will be empty if any one of the statements ha
 
 `predictors` key present in each of the account-wise object, will have following keys:
 
-| Field                         | Type            | Description                                                  |
-| ----------------------------- | --------------- | ------------------------------------------------------------ |
-| customer_name                 | String or `null`  | name of the account holder                                   |
-| bank_name                     | String or `null`  | bank identifier to which the account belongs                 |
-| account_type                  | String or `null`  | account category                                             |
-| accountnumber                 | Integer or `null` | account number                                               |
-| ifsc_code                     | String or `null`  | IFSC code of bank account                                    |
-| month_0                       | String or `null`  | name of the month 0 in format (Mmm-yy)                       |
-| month_1                       | String or `null`  | name of the month 1 in format (Mmm-yy)                       |
-| month_2                       | String or `null`  | name of the month 2 in format (Mmm-yy)                       |
-| month_3                       | String or `null`  | name of the month 3 in format (Mmm-yy)                       |
-| month_4                       | String or `null`  | name of the month 4 in format (Mmm-yy)                       |
-| month_5                       | String or `null`  | name of the month 5 in format (Mmm-yy)                       |
-| end_date                      | Float or `null`   | last date of transaction in 6 months                         |
-| start_date                    | String or `null`  | first date of transaction                                    |
-| month_duration                | Integer         | total number of months                                       |
-| annualised_credit             | Float           | total amount credited in 1 year (credits/total days)*365)    |
-| avg_balance_0                 | Float or `null`   | average eod balance of month 0 (filling in missing balances) |
-| avg_balance_1                 | Float or `null`   | average eod balance of month 1 (filling in missing balances) |
-| avg_balance_2                 | Float or `null`   | average eod balance of month 2 (filling in missing balances) |
-| avg_balance_3                 | Float or `null`   | average eod balance of month 3 (filling in missing balances) |
-| avg_balance_4                 | Float or `null`   | average eod balance of month 4 (filling in missing balances) |
-| avg_balance_5                 | Float or `null`   | average eod balance of month 5 (filling in missing balances) |
-| avg_daily_closing_balance     | Float           | average of sum of closing balance to total days              |
-| avg_monthly_closing_balance   | Float           | average of sum of closing balance to month duration          |
-| bal_last_0                    | Float or `null`   | eod balance on last date of month 0 (filling in missing balances) |
-| bal_last_1                    | Float or `null`   | eod balance on last date of month 1 (filling in missing balances) |
-| bal_last_2                    | Float or `null`   | eod balance on last date of month 2 (filling in missing balances) |
-| bal_last_3                    | Float or `null`   | eod balance on last date of month 3 (filling in missing balances) |
-| bal_last_4                    | Float or `null`   | eod balance on last date of month 4 (filling in missing balances) |
-| bal_last_5                    | Float or `null`   | eod balance on last date of month 5 (filling in missing balances) |
-| balance_on_10th_0             | Float or `null`   | eod balance on 10th of month 0 (filling in missing balances) |
-| balance_on_10th_1             | Float or `null`   | eod balance on 10th of month 1 (filling in missing balances) |
-| balance_on_10th_2             | Float or `null`   | eod balance on 10th of month 2 (filling in missing balances) |
-| balance_on_10th_3             | Float or `null`   | eod balance on 10th of month 3 (filling in missing balances) |
-| balance_on_10th_4             | Float or `null`   | eod balance on 10th of month 4 (filling in missing balances) |
-| balance_on_10th_5             | Float or `null`   | eod balance on 10th of month 5 (filling in missing balances) |
-| balance_on_15th_0             | Float or `null`   | eod balance on 15th of month 0 (filling in missing balances) |
-| balance_on_15th_1             | Float or `null`   | eod balance on 15th of month 1 (filling in missing balances) |
-| balance_on_15th_2             | Float or `null`   | eod balance on 15th of month 2 (filling in missing balances) |
-| balance_on_15th_3             | Float or `null`   | eod balance on 15th of month 3 (filling in missing balances) |
-| balance_on_15th_4             | Float or `null`   | eod balance on 15th of month 4 (filling in missing balances) |
-| balance_on_15th_5             | Float or `null`   | eod balance on 15th of month 5 (filling in missing balances) |
-| balance_on_1st_0              | Float or `null`   | eod balance on 1st of month 0 (filling in missing balances)  |
-| balance_on_1st_1              | Float or `null`   | eod balance on 1st of month 1 (filling in missing balances)  |
-| balance_on_1st_2              | Float or `null`   | eod balance on 1st of month 2 (filling in missing balances)  |
-| balance_on_1st_3              | Float or `null`   | eod balance on 1st of month 3 (filling in missing balances)  |
-| balance_on_1st_4              | Float or `null`   | eod balance on 1st of month 4 (filling in missing balances)  |
-| balance_on_1st_5              | Float or `null`   | eod balance on 1st of month 5 (filling in missing balances)  |
-| balance_on_20th_0             | Float or `null`   | eod balance on 20th of month 0 (filling in missing balances) |
-| balance_on_20th_1             | Float or `null`   | eod balance on 20th of month 1 (filling in missing balances) |
-| balance_on_20th_2             | Float or `null`   | eod balance on 20th of month 2 (filling in missing balances) |
-| balance_on_20th_3             | Float or `null`   | eod balance on 20th of month 3 (filling in missing balances) |
-| balance_on_20th_4             | Float or `null`   | eod balance on 20th of month 4 (filling in missing balances) |
-| balance_on_20th_5             | Float or `null`   | eod balance on 20th of month 5 (filling in missing balances) |
-| balance_on_25th_0             | Float or `null`   | eod balance on 25th of month 0 (filling in missing balances) |
-| balance_on_25th_1             | Float or `null`   | eod balance on 25th of month 1 (filling in missing balances) |
-| balance_on_25th_2             | Float or `null`   | eod balance on 25th of month 2 (filling in missing balances) |
-| balance_on_25th_3             | Float or `null`   | eod balance on 25th of month 3 (filling in missing balances) |
-| balance_on_25th_4             | Float or `null`   | eod balance on 25th of month 4 (filling in missing balances) |
-| balance_on_25th_5             | Float or `null`   | eod balance on 25th of month 5 (filling in missing balances) |
-| balance_on_30th_0             | Float or `null`   | eod balance on 30th of month 0 (filling in missing balances) |
-| balance_on_30th_1             | Float or `null`   | eod balance on 30th of month 1 (filling in missing balances) |
-| balance_on_30th_2             | Float or `null`   | eod balance on 30th of month 2 (filling in missing balances) |
-| balance_on_30th_3             | Float or `null`   | eod balance on 30th of month 3 (filling in missing balances) |
-| balance_on_30th_4             | Float or `null`   | eod balance on 30th of month 4 (filling in missing balances) |
-| balance_on_30th_5             | Float or `null`   | eod balance on 30th of month 5 (filling in missing balances) |
-| balance_on_5th_0              | Float or `null`   | eod balance on 5th of month 0 (filling in missing balances)  |
-| balance_on_5th_1              | Float or `null`   | eod balance on 5th of month 1 (filling in missing balances)  |
-| balance_on_5th_2              | Float or `null`   | eod balance on 5th of month 2 (filling in missing balances)  |
-| balance_on_5th_3              | Float or `null`   | eod balance on 5th of month 3 (filling in missing balances)  |
-| balance_on_5th_4              | Float or `null`   | eod balance on 5th of month 4 (filling in missing balances)  |
-| balance_on_5th_5              | Float or `null`   | eod balance on 5th of month 5 (filling in missing balances)  |
-| bal_avgof_6dates_0            | Float or `null`   | average eod balances of 6 days for month 0 (filling in missing balances) |
-| bal_avgof_6dates_1            | Float or `null`   | average eod balances of 6 days for month 1 (filling in missing balances) |
-| bal_avgof_6dates_2            | Float or `null`   | average eod balances of 6 days for month 2 (filling in missing balances) |
-| bal_avgof_6dates_3            | Float or `null`   | average eod balances of 6 days for month 3 (filling in missing balances) |
-| bal_avgof_6dates_4            | Float or `null`   | average eod balances of 6 days for month 4 (filling in missing balances) |
-| bal_avgof_6dates_5            | Float or `null`   | average eod balances of 6 days for month 5 (filling in missing balances) |
-| cash_withdrawals              | Integer         | number of cash withdrawal transactions in last 6 months      |
-| chq_deposits                  | Integer         | number of credit transactions through cheque in last 6 months |
-| chq_issues                    | Integer         | number of debit transactions through cheque in last 6 months |
-| credits                       | Float           | total amount of credit transactions in last 6 months         |
-| credits_0                     | Float or `null`   | total amount of credit transactions in month 0               |
-| credits_1                     | Float or `null`   | total amount of credit transactions in month 1               |
-| credits_2                     | Float or `null`   | total amount of credit transactions in month 2               |
-| credits_3                     | Float or `null`   | total amount of credit transactions in month 3               |
-| credits_4                     | Float or `null`   | total amount of credit transactions in month 4               |
-| credits_5                     | Float or `null`   | total amount of credit transactions in month 5               |
-| debitless_charges             | Float           | total amount of bank charges in last 6 months                |
-| debitless_charges_0           | Float or `null`   | total amount of bank charges in month 0                      |
-| debitless_charges_1           | Float or `null`   | total amount of bank charges in month 1                      |
-| debitless_charges_2           | Float or `null`   | total amount of bank charges in month 2                      |
-| debitless_charges_3           | Float or `null`   | total amount of bank charges in month 3                      |
-| debitless_charges_4           | Float or `null`   | total amount of bank charges in month 4                      |
-| debitless_charges_5           | Float or `null`   | total amount of bank charges in month 5                      |
-| debits                        | Float           | total amount of debit transactions in last 6 months          |
-| debits_0                      | Float or `null`   | total amount of debit transactions in month 0                |
-| debits_1                      | Float or `null`   | total amount of debit transactions in month 1                |
-| debits_2                      | Float or `null`   | total amount of debit transactions in month 2                |
-| debits_3                      | Float or `null`   | total amount of debit transactions in month 3                |
-| debits_4                      | Float or `null`   | total amount of debit transactions in month 4                |
-| debits_5                      | Float or `null`   | total amount of debit transactions in month 5                |
-| expense_0                     | Float or `null`   | total amount of debit in month 0 excluding amount of outward cheque bounce |
-| expense_1                     | Float or `null`   | total amount of debit in month 1 excluding amount of outward cheque bounce |
-| expense_2                     | Float or `null`   | total amount of debit in month 2 excluding amount of outward cheque bounce |
-| expense_3                     | Float or `null`   | total amount of debit in month 3 excluding amount of outward cheque bounce |
-| expense_4                     | Float or `null`   | total amount of debit in month 4 excluding amount of outward cheque bounce |
-| expense_5                     | Float or `null`   | total amount of debit in month 5 excluding amount of outward cheque bounce |
-| avg_monthly_expense           | Float           | average of total amount of expense to month duration         |
-| expense_to_income_ratio_5     | Float or `null`   | ratio of expense to income for month 5                       |
-| income_0                      | Float or `null`   | total amount of credit in month 0 excluding amount of inward cheque bounce, auto debit payment bounce, international transaction arbitrage credits and loan credits |
-| income_1                      | Float or `null`   | total amount of credit in month 1 excluding amount of inward cheque bounce, auto debit payment bounce, international transaction arbitrage credits and loan credits  |
-| income_2                      | Float or `null`   | total amount of credit in month 2 excluding amount of inward cheque bounce, auto debit payment bounce, international transaction arbitrage credits and loan credits  |
-| income_3                      | Float or `null`   | total amount of credit in month 3 excluding amount of inward cheque bounce, auto debit payment bounce, international transaction arbitrage credits and loan credits  |
-| income_4                      | Float or `null`   | total amount of credit in month 4 excluding amount of inward cheque bounce, auto debit payment bounce, international transaction arbitrage credits and loan credits  |
-| income_5                      | Float or `null`   | total amount of credit in month 5 excluding amount of inward cheque bounce, auto debit payment bounce, international transaction arbitrage credits and loan credits  |
-| avg_monthly_income            | Float           | average of total amount of income to month duration                        |
-| avg_expense_to_income_perc    | Float           | average total amount of expense to total income percentage   |
-| expense_to_income_ratio_0     | Float or `null`   | ratio of expense to income for month 0                       |
-| expense_to_income_ratio_1     | Float or `null`   | ratio of expense to income for month 1                       |
-| expense_to_income_ratio_2     | Float or `null`   | ratio of expense to income for month 2                       |
-| expense_to_income_ratio_3     | Float or `null`   | ratio of expense to income for month 3                       |
-| expense_to_income_ratio_4     | Float or `null`   | ratio of expense to income for month 4                       |
-| inward_chq_bounces            | Float           | total amount credited through inward cheque bounce in last 6 months |
-| max_balance_0                 | Float or `null`   | maximum balance in month 0                                   |
-| max_balance_1                 | Float or `null`   | maximum balance in month 1                                   |
-| max_balance_2                 | Float or `null`   | maximum balance in month 2                                   |
-| max_balance_3                 | Float or `null`   | maximum balance in month 3                                   |
-| max_balance_4                 | Float or `null`   | maximum balance in month 4                                   |
-| max_balance_5                 | Float or `null`   | maximum balance in month 5                                   |
-| min_balance_0                 | Float or `null`   | minimum balance in month 0                                   |
-| min_balance_1                 | Float or `null`   | minimum balance in month 1                                   |
-| min_balance_2                 | Float or `null`   | minimum balance in month 2                                   |
-| min_balance_3                 | Float or `null`   | minimum balance in month 3                                   |
-| min_balance_4                 | Float or `null`   | minimum balance in month 4                                   |
-| min_balance_5                 | Float or `null`   | minimum balance in month 5                                   |
-| net_banking_credits           | Float           | total amount credited through transfers                      |
-| net_banking_debits            | Float           | total amount debited through transfers                       |
-| number_of_transactions_0      | Integer or `null` | number of transactions in month 0                            |
-| number_of_transactions_1      | Integer or `null` | number of transactions in month 1                            |
-| number_of_transactions_2      | Integer or `null` | number of transactions in month 2                            |
-| number_of_transactions_3      | Integer or `null` | number of transactions in month 3                            |
-| number_of_transactions_4      | Integer or `null` | number of transactions in month 4                            |
-| number_of_transactions_5      | Integer or `null` | number of transactions in month 5                            |
-| outward_chq_bounces           | Float           | total amount debited through outward cheque bounce in last 6 months |
-| pos_expenses                  | Float           | total amount spend through debit card in last 6 months       |
-| reversals                     | Float           | total amount of refund in last 6 months                      |
-| total_bounce_or_penal_charge  | Float           | total amount of bounce or penal charges in last 6 months     |
-| total_cash_withdrawal         | Float           | total amount of cash withdrawal in last 6 months             |
-| total_chq_deposit             | Float           | total amount credited through cheque in last 6 months        |
-| total_chq_issue               | Float           | total amount debited through cheque in last 6 months         |
-| total_creditcard_payment      | Float           | total amount of credit card payment in last 6 months         |
-| total_creditcard_payment_0    | Float or `null`   | total amount of credit card payment in month 0               |
-| total_creditcard_payment_1    | Float or `null`   | total amount of credit card payment in month 1               |
-| total_creditcard_payment_2    | Float or `null`   | total amount of credit card payment in month 2               |
-| total_creditcard_payment_3    | Float or `null`   | total amount of credit card payment in month 3               |
-| total_creditcard_payment_4    | Float or `null`   | total amount of credit card payment in month 4               |
-| total_creditcard_payment_5    | Float or `null`   | total amount of credit card payment in month 5               |
-| total_emi_ecs_loan            | Float           | total amount debited as loan emi in last 6 months            |
-| total_expense                 | Float           | total amount of expense in last 6 months                     |
-| total_income                  | Float           | total amount of income in last 6 months                      |
-| total_inward_payment_bounce_0 | Float or `null`   | total amount of inward payment bounce in month 0             |
-| total_inward_payment_bounce_1 | Float or `null`   | total amount of inward payment bounce in month 1             |
-| total_inward_payment_bounce_2 | Float or `null`   | total amount of inward payment bounce in month 2             |
-| total_inward_payment_bounce_3 | Float or `null`   | total amount of inward payment bounce in month 3             |
-| total_inward_payment_bounce_4 | Float or `null`   | total amount of inward payment bounce in month 4             |
-| total_inward_payment_bounce_5 | Float or `null`   | total amount of inward payment bounce in month 5             |
-| total_salary_0                | Float or `null`   | total amount of salary credited in month 0                   |
-| total_salary_1                | Float or `null`   | total amount of salary credited in month 1                   |
-| total_salary_2                | Float or `null`   | total amount of salary credited in month 2                   |
-| total_salary_3                | Float or `null`   | total amount of salary credited in month 3                   |
-| total_salary_4                | Float or `null`   | total amount of salary credited in month 4                   |
-| total_salary_5                | Float or `null`   | total amount of salary credited in month 5                   |
-| balance_net_off_on_1st_0 | Float or `null` | eod balance on 1st of month 0 excluding loan credits |
-| balance_net_off_on_1st_1 | Float or `null` | eod balance on 1st of month 1 excluding loan credits |
-| balance_net_off_on_1st_2 | Float or `null` | eod balance on 1st of month 2 excluding loan credits |
-| balance_net_off_on_1st_3 | Float or `null` | eod balance on 1st of month 3 excluding loan credits |
-| balance_net_off_on_1st_4 | Float or `null` | eod balance on 1st of month 4 excluding loan credits |
-| balance_net_off_on_1st_5 | Float or `null` | eod balance on 1st of month 5 excluding loan credits |
-| balance_net_off_on_5th_0 | Float or `null` | eod balance on 5th of month 0 excluding loan credits |
-| balance_net_off_on_5th_1 | Float or `null` | eod balance on 5th of month 1 excluding loan credits |
-| balance_net_off_on_5th_2 | Float or `null` | eod balance on 5th of month 2 excluding loan credits |
-| balance_net_off_on_5th_3 | Float or `null` | eod balance on 5th of month 3 excluding loan credits |
-| balance_net_off_on_5th_4 | Float or `null` | eod balance on 5th of month 4 excluding loan credits |
-| balance_net_off_on_5th_5 | Float or `null` | eod balance on 5th of month 5 excluding loan credits |
-| balance_net_off_on_10th_0 | Float or `null` | eod balance on 10th of month 0 excluding loan credits |
-| balance_net_off_on_10th_1 | Float or `null` | eod balance on 10th of month 1 excluding loan credits |
-| balance_net_off_on_10th_2 | Float or `null` | eod balance on 10th of month 2 excluding loan credits |
-| balance_net_off_on_10th_3 | Float or `null` | eod balance on 10th of month 3 excluding loan credits |
-| balance_net_off_on_10th_4 | Float or `null` | eod balance on 10th of month 4 excluding loan credits |
-| balance_net_off_on_10th_5 | Float or `null` | eod balance on 10th of month 5 excluding loan credits |
-| balance_net_off_on_15th_0 | Float or `null` | eod balance on 15th of month 0 excluding loan credits |
-| balance_net_off_on_15th_1 | Float or `null` | eod balance on 15th of month 1 excluding loan credits |
-| balance_net_off_on_15th_2 | Float or `null` | eod balance on 15th of month 2 excluding loan credits |
-| balance_net_off_on_15th_3 | Float or `null` | eod balance on 15th of month 3 excluding loan credits |
-| balance_net_off_on_15th_4 | Float or `null` | eod balance on 15th of month 4 excluding loan credits |
-| balance_net_off_on_15th_5 | Float or `null` | eod balance on 15th of month 5 excluding loan credits |
-| balance_net_off_on_20th_0 | Float or `null` | eod balance on 20th of month 0 excluding loan credits |
-| balance_net_off_on_20th_1 | Float or `null` | eod balance on 20th of month 1 excluding loan credits |
-| balance_net_off_on_20th_2 | Float or `null` | eod balance on 20th of month 2 excluding loan credits |
-| balance_net_off_on_20th_3 | Float or `null` | eod balance on 20th of month 3 excluding loan credits |
-| balance_net_off_on_20th_4 | Float or `null` | eod balance on 20th of month 4 excluding loan credits |
-| balance_net_off_on_20th_5 | Float or `null` | eod balance on 20th of month 5 excluding loan credits |
-| balance_net_off_on_25th_0 | Float or `null` | eod balance on 25th of month 0 excluding loan credits |
-| balance_net_off_on_25th_1 | Float or `null` | eod balance on 25th of month 1 excluding loan credits |
-| balance_net_off_on_25th_2 | Float or `null` | eod balance on 25th of month 2 excluding loan credits |
-| balance_net_off_on_25th_3 | Float or `null` | eod balance on 25th of month 3 excluding loan credits |
-| balance_net_off_on_25th_4 | Float or `null` | eod balance on 25th of month 4 excluding loan credits |
-| balance_net_off_on_25th_5 | Float or `null` | eod balance on 25th of month 5 excluding loan credits |
-| balance_net_off_on_30th_0 | Float or `null` | eod balance on 30th of month 0 excluding loan credits |
-| balance_net_off_on_30th_1 | Float or `null` | eod balance on 30th of month 1 excluding loan credits |
-| balance_net_off_on_30th_2 | Float or `null` | eod balance on 30th of month 2 excluding loan credits |
-| balance_net_off_on_30th_3 | Float or `null` | eod balance on 30th of month 3 excluding loan credits |
-| balance_net_off_on_30th_4 | Float or `null` | eod balance on 30th of month 4 excluding loan credits |
-| balance_net_off_on_30th_5 | Float or `null` | eod balance on 30th of month 5 excluding loan credits |
+| Field                             | Type            | Description                                                                                                                                                         |
+| --------------------------------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| customer\_name                    | String or null  | Name of the account holder                                                                                                                                          |
+| bank\_name                        | String or null  | Bank name linked to account statement                                                                                                                               |
+| account\_type                     | String or null  | Type of bank account category. i.e. current, savings account                                                                                                        |
+| accountnumber                     | Integer or null | Account number                                                                                                                                                      |
+| ifsc\_code                        | String or null  | Ifsc code of bank account                                                                                                                                           |
+| month\_0                          | String or null  | Name of the month 0 in format (mmm-yy)                                                                                                                              |
+| month\_1                          | String or null  | Name of the month 1 in format (mmm-yy)                                                                                                                              |
+| month\_2                          | String or null  | Name of the month 2 in format (mmm-yy)                                                                                                                              |
+| month\_3                          | String or null  | Name of the month 3 in format (mmm-yy)                                                                                                                              |
+| month\_4                          | String or null  | Name of the month 4 in format (mmm-yy)                                                                                                                              |
+| month\_5                          | String or null  | Name of the month 5 in format (mmm-yy)                                                                                                                              |
+| end\_date                         | String or null  | Last date of transaction in 6 months                                                                                                                                |
+| start\_date                       | String or null  | First date of transaction in 6 months                                                                                                                               |
+| month\_duration                   | Integer         | Total number of months                                                                                                                                              |
+| annualised\_credit                | Float           | Total amount credited in 1 year (credits/total days)\*365)                                                                                                          |                                                                                                                      |
+| cash\_withdrawals                 | Integer         | Number of cash withdrawal transactions in last 6 months                                                                                                             |
+| chq\_deposits                     | Integer         | Number of credit transactions through cheque in last 6 months                                                                                                       |
+| chq\_issues                       | Integer         | Number of debit transactions through cheque in last 6 months                                                                                                        |
+| credits                           | Float           | Total amount of credit transactions in last 6 months                                                                                                                |
+| credits\_0                        | Float or null   | Total amount of credit transactions in month 0                                                                                                                      |
+| credits\_1                        | Float or null   | Total amount of credit transactions in month 1                                                                                                                      |
+| credits\_2                        | Float or null   | Total amount of credit transactions in month 2                                                                                                                      |
+| credits\_3                        | Float or null   | Total amount of credit transactions in month 3                                                                                                                      |
+| credits\_4                        | Float or null   | Total amount of credit transactions in month 4                                                                                                                      |
+| credits\_5                        | Float or null   | Total amount of credit transactions in month 5                                                                                                                      |
+| debitless\_charges                | Float           | Total amount of bank charges in last 6 months                                                                                                                       |
+| debitless\_charges\_0             | Float or null   | Total amount of bank charges in month 0                                                                                                                             |
+| debitless\_charges\_1             | Float or null   | Total amount of bank charges in month 1                                                                                                                             |
+| debitless\_charges\_2             | Float or null   | Total amount of bank charges in month 2                                                                                                                             |
+| debitless\_charges\_3             | Float or null   | Total amount of bank charges in month 3                                                                                                                             |
+| debitless\_charges\_4             | Float or null   | Total amount of bank charges in month 4                                                                                                                             |
+| debitless\_charges\_5             | Float or null   | Total amount of bank charges in month 5                                                                                                                             |
+| debits                            | Float           | Total amount of debit transactions in last 6 months                                                                                                                 |
+| debits\_0                         | Float or null   | Total amount of debit transactions in month 0                                                                                                                       |
+| debits\_1                         | Float or null   | Total amount of debit transactions in month 1                                                                                                                       |
+| debits\_2                         | Float or null   | Total amount of debit transactions in month 2                                                                                                                       |
+| debits\_3                         | Float or null   | Total amount of debit transactions in month 3                                                                                                                       |
+| debits\_4                         | Float or null   | Total amount of debit transactions in month 4                                                                                                                       |
+| debits\_5                         | Float or null   | Total amount of debit transactions in month 5                                                                                                                       |
+| expense\_0                        | Float or null   | Total amount of debit in month 0 excluding outward cheque bounce                                                                                                    |
+| expense\_1                        | Float or null   | Total amount of debit in month 1 excluding outward cheque bounce                                                                                                    |
+| expense\_2                        | Float or null   | Total amount of debit in month 2 excluding outward cheque bounce                                                                                                    |
+| expense\_3                        | Float or null   | Total amount of debit in month 3 excluding outward cheque bounce                                                                                                    |
+| expense\_4                        | Float or null   | Total amount of debit in month 4 excluding outward cheque bounce                                                                                                    |
+| expense\_5                        | Float or null   | Total amount of debit in month 5 excluding outward cheque bounce                                                                                                    |
+| avg\_monthly\_expense             | Float           | Average of total amount of expense to total months                                                                                                                  |
+| income\_0                         | Float or null   | Total amount of credit in month 0 excluding amount of inward cheque bounce, auto debit payment bounce, international transaction arbitrage credits and loan credits |
+| income\_1                         | Float or null   | Total amount of credit in month 1 excluding amount of inward cheque bounce, auto debit payment bounce, international transaction arbitrage credits and loan credits |
+| income\_2                         | Float or null   | Total amount of credit in month 2 excluding amount of inward cheque bounce, auto debit payment bounce, international transaction arbitrage credits and loan credits |
+| income\_3                         | Float or null   | Total amount of credit in month 3 excluding amount of inward cheque bounce, auto debit payment bounce, international transaction arbitrage credits and loan credits |
+| income\_4                         | Float or null   | Total amount of credit in month 4 excluding amount of inward cheque bounce, auto debit payment bounce, international transaction arbitrage credits and loan credits |
+| income\_5                         | Float or null   | Total amount of credit in month 5 excluding amount of inward cheque bounce, auto debit payment bounce, international transaction arbitrage credits and loan credits |
+| avg\_monthly\_income              | Float           | Average of total income to total months                                                                                                                             |
+| avg\_expense\_to\_income\_perc    | Float           | Percentage of total expenses to total income                                                                                                                        |
+| expense\_to\_income\_ratio\_0     | Float or null   | Ratio of expense to income for month 0                                                                                                                              |
+| expense\_to\_income\_ratio\_1     | Float or null   | Ratio of expense to income for month 1                                                                                                                              |
+| expense\_to\_income\_ratio\_2     | Float or null   | Ratio of expense to income for month 2                                                                                                                              |
+| expense\_to\_income\_ratio\_3     | Float or null   | Ratio of expense to income for month 3                                                                                                                              |
+| expense\_to\_income\_ratio\_4     | Float or null   | Ratio of expense to income for month 4                                                                                                                              |
+| expense\_to\_income\_ratio\_5     | Float or null   | Ratio of expense to income for month 5                                                                                                                              |
+| inward\_chq\_bounces              | Float           | Total amount credited through inward cheque bounce in last 6 months                                                                                                 |                                                                                                                                   |
+| net\_banking\_credits             | Float           | Total amount credited through net banking transfer i.e. imps , neft or rtgs                                                                                         |
+| net\_banking\_debits              | Float           | Total amount debited through net banking transfer i.e. imps , neft or rtgs                                                                                          |
+| number\_of\_transactions\_0       | Integer or null | Number of transactions in month 0                                                                                                                                   |
+| number\_of\_transactions\_1       | Integer or null | Number of transactions in month 1                                                                                                                                   |
+| number\_of\_transactions\_2       | Integer or null | Number of transactions in month 2                                                                                                                                   |
+| number\_of\_transactions\_3       | Integer or null | Number of transactions in month 3                                                                                                                                   |
+| number\_of\_transactions\_4       | Integer or null | Number of transactions in month 4                                                                                                                                   |
+| number\_of\_transactions\_5       | Integer or null | Number of transactions in month 5                                                                                                                                   |
+| outward\_chq\_bounces             | Float           | Total amount debited through outward cheque bounce in last 6 months                                                                                                 |
+| pos\_expenses                     | Float           | Total amount spend through debit card in last 6 months                                                                                                              |
+| reversals                         | Float           | Total amount of transaction reversals (refund funds)                                                                                                                |
+| total\_bounce\_or\_penal\_charge  | Float           | Total amount of bounce or penal charges in last 6 months                                                                                                            |
+| total\_cash\_withdrawal           | Float           | Total amount of cash withdrawal in last 6 months                                                                                                                    |
+| total\_chq\_deposit               | Float           | Total amount credited through cheque in last 6 months                                                                                                               |
+| total\_chq\_issue                 | Float           | Total amount debited through cheque in last 6 months                                                                                                                |
+| total\_creditcard\_payment        | Float           | Total amount of credit card payment in last 6 months                                                                                                                |
+| total\_creditcard\_payment\_0     | Float or null   | Total amount of credit card payment in month 0                                                                                                                      |
+| total\_creditcard\_payment\_1     | Float or null   | Total amount of credit card payment in month 1                                                                                                                      |
+| total\_creditcard\_payment\_2     | Float or null   | Total amount of credit card payment in month 2                                                                                                                      |
+| total\_creditcard\_payment\_3     | Float or null   | Total amount of credit card payment in month 3                                                                                                                      |
+| total\_creditcard\_payment\_4     | Float or null   | Total amount of credit card payment in month 4                                                                                                                      |
+| total\_creditcard\_payment\_5     | Float or null   | Total amount of credit card payment in month 5                                                                                                                      |
+| total\_emi\_ecs\_loan             | Float           | Total amount debited as loan emi in last 6 months                                                                                                                   |
+| total\_expense                    | Float           | Total amount of expense in last 6 months                                                                                                                            |
+| total\_income                     | Float           | Total amount of income in last 6 months                                                                                                                             |
+| total\_inward\_payment\_bounce\_0 | Float or null   | Total amount of inward payment bounce in month 0                                                                                                                    |
+| total\_inward\_payment\_bounce\_1 | Float or null   | Total amount of inward payment bounce in month 1                                                                                                                    |
+| total\_inward\_payment\_bounce\_2 | Float or null   | Total amount of inward payment bounce in month 2                                                                                                                    |
+| total\_inward\_payment\_bounce\_3 | Float or null   | Total amount of inward payment bounce in month 3                                                                                                                    |
+| total\_inward\_payment\_bounce\_4 | Float or null   | Total amount of inward payment bounce in month 4                                                                                                                    |
+| total\_inward\_payment\_bounce\_5 | Float or null   | Total amount of inward payment bounce in month 5                                                                                                                    |
+| total\_salary\_0                  | Float or null   | Total amount of salary credited in month 0                                                                                                                          |
+| total\_salary\_1                  | Float or null   | Total amount of salary credited in month 1                                                                                                                          |
+| total\_salary\_2                  | Float or null   | Total amount of salary credited in month 2                                                                                                                          |
+| total\_salary\_3                  | Float or null   | Total amount of salary credited in month 3                                                                                                                          |
+| total\_salary\_4                  | Float or null   | Total amount of salary credited in month 4                                                                                                                          |
+| total\_salary\_5                  | Float or null   | Total amount of salary credited in month 5                                                                                                                          |
+| max\_balance\_0                   | Float or null   | Maximum balance in month 0                                                                                                                                          |
+| max\_balance\_1                   | Float or null   | Maximum balance in month 1                                                                                                                                          |
+| max\_balance\_2                   | Float or null   | Maximum balance in month 2                                                                                                                                          |
+| max\_balance\_3                   | Float or null   | Maximum balance in month 3                                                                                                                                          |
+| max\_balance\_4                   | Float or null   | Maximum balance in month 4                                                                                                                                          |
+| max\_balance\_5                   | Float or null   | Maximum balance in month 5                                                                                                                                          |
+| min\_balance\_0                   | Float or null   | Minimum balance in month 0                                                                                                                                          |
+| min\_balance\_1                   | Float or null   | Minimum balance in month 1                                                                                                                                          |
+| min\_balance\_2                   | Float or null   | Minimum balance in month 2                                                                                                                                          |
+| min\_balance\_3                   | Float or null   | Minimum balance in month 3                                                                                                                                          |
+| min\_balance\_4                   | Float or null   | Minimum balance in month 4                                                                                                                                          |
+| min\_balance\_5                   | Float or null   | Minimum balance in month 5       
+| avg\_balance\_0                   | Float or null   | Average eod balance of month 0 \*                                                                                                                                   |
+| avg\_balance\_1                   | Float or null   | Average eod balance of month 1 \*                                                                                                                                   |
+| avg\_balance\_2                   | Float or null   | Average eod balance of month 2 \*                                                                                                                                   |
+| avg\_balance\_3                   | Float or null   | Average eod balance of month 3 \*                                                                                                                                   |
+| avg\_balance\_4                   | Float or null   | Average eod balance of month 4 \*                                                                                                                                   |
+| avg\_balance\_5                   | Float or null   | Average eod balance of month 5 \*                                                                                                                                   |
+| avg\_daily\_closing\_balance      | Float           | Average of daily closing balance to total days                                                                                                                      |
+| avg\_monthly\_closing\_balance    | Float           | Average of monthly closing balance to total months                                                                                                                  |
+| bal\_last\_0                      | Float or null   | Eod balance on last date of month 0 \*                                                                                                                              |
+| bal\_last\_1                      | Float or null   | Eod balance on last date of month 1 \*                                                                                                                              |
+| bal\_last\_2                      | Float or null   | Eod balance on last date of month 2 \*                                                                                                                              |
+| bal\_last\_3                      | Float or null   | Eod balance on last date of month 3 \*                                                                                                                              |
+| bal\_last\_4                      | Float or null   | Eod balance on last date of month 4 \*                                                                                                                              |
+| bal\_last\_5                      | Float or null   | Eod balance on last date of month 5 \*                                                                                                                              |
+| balance\_on\_10th\_0              | Float or null   | Eod balance on 10th day of month 0 \*                                                                                                                               |
+| balance\_on\_10th\_1              | Float or null   | Eod balance on 10th day of month 1 \*                                                                                                                               |
+| balance\_on\_10th\_2              | Float or null   | Eod balance on 10th day of month 2 \*                                                                                                                               |
+| balance\_on\_10th\_3              | Float or null   | Eod balance on 10th day of month 3 \*                                                                                                                               |
+| balance\_on\_10th\_4              | Float or null   | Eod balance on 10th day of month 4 \*                                                                                                                               |
+| balance\_on\_10th\_5              | Float or null   | Eod balance on 10th day of month 5 \*                                                                                                                               |
+| balance\_on\_15th\_0              | Float or null   | Eod balance on 15th day of month 0 \*                                                                                                                               |
+| balance\_on\_15th\_1              | Float or null   | Eod balance on 15th day of month 1 \*                                                                                                                               |
+| balance\_on\_15th\_2              | Float or null   | Eod balance on 15th day of month 2 \*                                                                                                                               |
+| balance\_on\_15th\_3              | Float or null   | Eod balance on 15th day of month 3 \*                                                                                                                               |
+| balance\_on\_15th\_4              | Float or null   | Eod balance on 15th day of month 4 \*                                                                                                                               |
+| balance\_on\_15th\_5              | Float or null   | Eod balance on 15th day of month 5 \*                                                                                                                               |
+| balance\_on\_1st\_0               | Float or null   | Eod balance on 1st day of month 0 \*                                                                                                                                |
+| balance\_on\_1st\_1               | Float or null   | Eod balance on 1st day of month 1 \*                                                                                                                                |
+| balance\_on\_1st\_2               | Float or null   | Eod balance on 1st day of month 2 \*                                                                                                                                |
+| balance\_on\_1st\_3               | Float or null   | Eod balance on 1st day of month 3 \*                                                                                                                                |
+| balance\_on\_1st\_4               | Float or null   | Eod balance on 1st day of month 4 \*                                                                                                                                |
+| balance\_on\_1st\_5               | Float or null   | Eod balance on 1st day of month 5 \*                                                                                                                                |
+| balance\_on\_20th\_0              | Float or null   | Eod balance on 20th day of month 0 \*                                                                                                                               |
+| balance\_on\_20th\_1              | Float or null   | Eod balance on 20th day of month 1 \*                                                                                                                               |
+| balance\_on\_20th\_2              | Float or null   | Eod balance on 20th day of month 2 \*                                                                                                                               |
+| balance\_on\_20th\_3              | Float or null   | Eod balance on 20th day of month 3 \*                                                                                                                               |
+| balance\_on\_20th\_4              | Float or null   | Eod balance on 20th day of month 4 \*                                                                                                                               |
+| balance\_on\_20th\_5              | Float or null   | Eod balance on 20th day of month 5 \*                                                                                                                               |
+| balance\_on\_25th\_0              | Float or null   | Eod balance on 25th day of month 0 \*                                                                                                                               |
+| balance\_on\_25th\_1              | Float or null   | Eod balance on 25th day of month 1 \*                                                                                                                               |
+| balance\_on\_25th\_2              | Float or null   | Eod balance on 25th day of month 2 \*                                                                                                                               |
+| balance\_on\_25th\_3              | Float or null   | Eod balance on 25th day of month 3 \*                                                                                                                               |
+| balance\_on\_25th\_4              | Float or null   | Eod balance on 25th day of month 4 \*                                                                                                                               |
+| balance\_on\_25th\_5              | Float or null   | Eod balance on 25th day of month 5 \*                                                                                                                               |
+| balance\_on\_30th\_0              | Float or null   | Eod balance on 30th day of month 0 \*                                                                                                                               |
+| balance\_on\_30th\_1              | Float or null   | Eod balance on 30th day of month 1 \*                                                                                                                               |
+| balance\_on\_30th\_2              | Float or null   | Eod balance on 30th day of month 2 \*                                                                                                                               |
+| balance\_on\_30th\_3              | Float or null   | Eod balance on 30th day of month 3 \*                                                                                                                               |
+| balance\_on\_30th\_4              | Float or null   | Eod balance on 30th day of month 4 \*                                                                                                                               |
+| balance\_on\_30th\_5              | Float or null   | Eod balance on 30th day of month 5 \*                                                                                                                               |
+| balance\_on\_5th\_0               | Float or null   | Eod balance on 5th day of month 0 \*                                                                                                                                |
+| balance\_on\_5th\_1               | Float or null   | Eod balance on 5th day of month 1 \*                                                                                                                                |
+| balance\_on\_5th\_2               | Float or null   | Eod balance on 5th day of month 2 \*                                                                                                                                |
+| balance\_on\_5th\_3               | Float or null   | Eod balance on 5th day of month 3 \*                                                                                                                                |
+| balance\_on\_5th\_4               | Float or null   | Eod balance on 5th day of month 4 \*                                                                                                                                |
+| balance\_on\_5th\_5               | Float or null   | Eod balance on 5th day of month 5 \*                                                                                                                                |
+| bal\_avgof\_6dates\_0             | Float or null   | Average eod balances of 6 days(i.e. 1 ,5, 10, 15, 20, 25, 30) for month 0 \*                                                                                                                       |
+| bal\_avgof\_6dates\_1             | Float or null   | Average eod balances of 6 days(i.e. 1 ,5, 10, 15, 20, 25, 30) for month 1 \*                                                                                                                       |
+| bal\_avgof\_6dates\_2             | Float or null   | Average eod balances of 6 days(i.e. 1 ,5, 10, 15, 20, 25, 30) for month 2 \*                                                                                                                       |
+| bal\_avgof\_6dates\_3             | Float or null   | Average eod balances of 6 days(i.e. 1 ,5, 10, 15, 20, 25, 30) for month 3 \*                                                                                                                       |
+| bal\_avgof\_6dates\_4             | Float or null   | Average eod balances of 6 days(i.e. 1 ,5, 10, 15, 20, 25, 30) for month 4 \*                                                                                                                       |
+| bal\_avgof\_6dates\_5             | Float or null   | Average eod balances of 6 days(i.e. 1 ,5, 10, 15, 20, 25, 30) for month 5 \* 
+| balance\_net\_off\_on\_1st\_0     | Float or null   | Eod balance on 1st of month 0 excluding loan credits                                                                                                                |
+| balance\_net\_off\_on\_1st\_1     | Float or null   | Eod balance on 1st of month 1 excluding loan credits                                                                                                                |
+| balance\_net\_off\_on\_1st\_2     | Float or null   | Eod balance on 1st of month 2 excluding loan credits                                                                                                                |
+| balance\_net\_off\_on\_1st\_3     | Float or null   | Eod balance on 1st of month 3 excluding loan credits                                                                                                                |
+| balance\_net\_off\_on\_1st\_4     | Float or null   | Eod balance on 1st of month 4 excluding loan credits                                                                                                                |
+| balance\_net\_off\_on\_1st\_5     | Float or null   | Eod balance on 1st of month 5 excluding loan credits                                                                                                                |
+| balance\_net\_off\_on\_5th\_0     | Float or null   | Eod balance on 5th of month 0 excluding loan credits                                                                                                                |
+| balance\_net\_off\_on\_5th\_1     | Float or null   | Eod balance on 5th of month 1 excluding loan credits                                                                                                                |
+| balance\_net\_off\_on\_5th\_2     | Float or null   | Eod balance on 5th of month 2 excluding loan credits                                                                                                                |
+| balance\_net\_off\_on\_5th\_3     | Float or null   | Eod balance on 5th of month 3 excluding loan credits                                                                                                                |
+| balance\_net\_off\_on\_5th\_4     | Float or null   | Eod balance on 5th of month 4 excluding loan credits                                                                                                                |
+| balance\_net\_off\_on\_5th\_5     | Float or null   | Eod balance on 5th of month 5 excluding loan credits                                                                                                                |
+| balance\_net\_off\_on\_10th\_0    | Float or null   | Eod balance on 10th of month 0 excluding loan credits                                                                                                               |
+| balance\_net\_off\_on\_10th\_1    | Float or null   | Eod balance on 10th of month 1 excluding loan credits                                                                                                               |
+| balance\_net\_off\_on\_10th\_2    | Float or null   | Eod balance on 10th of month 2 excluding loan credits                                                                                                               |
+| balance\_net\_off\_on\_10th\_3    | Float or null   | Eod balance on 10th of month 3 excluding loan credits                                                                                                               |
+| balance\_net\_off\_on\_10th\_4    | Float or null   | Eod balance on 10th of month 4 excluding loan credits                                                                                                               |
+| balance\_net\_off\_on\_10th\_5    | Float or null   | Eod balance on 10th of month 5 excluding loan credits                                                                                                               |
+| balance\_net\_off\_on\_15th\_0    | Float or null   | Eod balance on 15th of month 0 excluding loan credits                                                                                                               |
+| balance\_net\_off\_on\_15th\_1    | Float or null   | Eod balance on 15th of month 1 excluding loan credits                                                                                                               |
+| balance\_net\_off\_on\_15th\_2    | Float or null   | Eod balance on 15th of month 2 excluding loan credits                                                                                                               |
+| balance\_net\_off\_on\_15th\_3    | Float or null   | Eod balance on 15th of month 3 excluding loan credits                                                                                                               |
+| balance\_net\_off\_on\_15th\_4    | Float or null   | Eod balance on 15th of month 4 excluding loan credits                                                                                                               |
+| balance\_net\_off\_on\_15th\_5    | Float or null   | Eod balance on 15th of month 5 excluding loan credits                                                                                                               |
+| balance\_net\_off\_on\_20th\_0    | Float or null   | Eod balance on 20th of month 0 excluding loan credits                                                                                                               |
+| balance\_net\_off\_on\_20th\_1    | Float or null   | Eod balance on 20th of month 1 excluding loan credits                                                                                                               |
+| balance\_net\_off\_on\_20th\_2    | Float or null   | Eod balance on 20th of month 2 excluding loan credits                                                                                                               |
+| balance\_net\_off\_on\_20th\_3    | Float or null   | Eod balance on 20th of month 3 excluding loan credits                                                                                                               |
+| balance\_net\_off\_on\_20th\_4    | Float or null   | Eod balance on 20th of month 4 excluding loan credits                                                                                                               |
+| balance\_net\_off\_on\_20th\_5    | Float or null   | Eod balance on 20th of month 5 excluding loan credits                                                                                                               |
+| balance\_net\_off\_on\_25th\_0    | Float or null   | Eod balance on 25th of month 0 excluding loan credits                                                                                                               |
+| balance\_net\_off\_on\_25th\_1    | Float or null   | Eod balance on 25th of month 1 excluding loan credits                                                                                                               |
+| balance\_net\_off\_on\_25th\_2    | Float or null   | Eod balance on 25th of month 2 excluding loan credits                                                                                                               |
+| balance\_net\_off\_on\_25th\_3    | Float or null   | Eod balance on 25th of month 3 excluding loan credits                                                                                                               |
+| balance\_net\_off\_on\_25th\_4    | Float or null   | Eod balance on 25th of month 4 excluding loan credits                                                                                                               |
+| balance\_net\_off\_on\_25th\_5    | Float or null   | Eod balance on 25th of month 5 excluding loan credits                                                                                                               |
+| balance\_net\_off\_on\_30th\_0    | Float or null   | Eod balance on 30th of month 0 excluding loan credits                                                                                                               |
+| balance\_net\_off\_on\_30th\_1    | Float or null   | Eod balance on 30th of month 1 excluding loan credits                                                                                                               |
+| balance\_net\_off\_on\_30th\_2    | Float or null   | Eod balance on 30th of month 2 excluding loan credits                                                                                                               |
+| balance\_net\_off\_on\_30th\_3    | Float or null   | Eod balance on 30th of month 3 excluding loan credits                                                                                                               |
+| balance\_net\_off\_on\_30th\_4    | Float or null   | Eod balance on 30th of month 4 excluding loan credits                                                                                                               |
+| balance\_net\_off\_on\_30th\_5    | Float or null   | Eod balance on 30th of month 5 excluding loan credits                                                                                                               |
+
+### Important terms 
+
+- `Outward Cheque Bounce `: cheque issued by you is being returned by your bank
+- `Inward Cheque Bounce `: cheque deposited by you has been returned unpaid by the banker of the person who issued the cheque.
+- `auto debit payment bounce`: Bounce on unprocessed  auto debit payments
+- `international transaction arbitrage credits`: Total Amount of credit due to difference in buying and selling of an asset in two diffrent market (credit)
+- `Penal charge `:  overdue charges on non-payment of installment on the due date
 
 :::warning NOTE
+- \* means filling in missing balances
 - month decreases going from 0 to 5, that is month 0 is the latest month while 5 is older
 - `null` value will come for some fields (mentioned in types), when that month's data is unavailable
 - total days = (`end_date` - `start_date`) in days
