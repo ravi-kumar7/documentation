@@ -785,14 +785,18 @@ GET **`base_url`/v1/user/activity?customerID=`someCustomerID`**
                 "loggedAt": "2020-09-15 17:52:58",
                 "eventType": "user_created",
                 "eventDescription": "",
-                "loanApplicationID": ""
+                "loanApplicationID": "",
+                "source": "",
+                "journeyType": "business_loan"
             },
             {
                 "entityType": "system",
                 "loggedAt": "2020-09-15 17:52:58",
                 "eventType": "loan_approved",
                 "eventDescription": "",
-                "loanApplicationID": "someLongUUID"
+                "loanApplicationID": "someLongUUID",
+                "source": "",
+                "journeyType": "business_loan"
             }
         ]
     },
@@ -801,9 +805,14 @@ GET **`base_url`/v1/user/activity?customerID=`someCustomerID`**
 }
 ```
 
-A list of all possible activities can be found [Appendix](/middleware/appendix.html#list-of-custom-activities)
+- `entityType` indicates who took the action event
+- `eventType` indicates the active event or activity
+- `source` indicates the **last source** passed in [Generate Token API](/middleware/sourcing-rest-api.html#generate-token) or [Session API](/middleware/web-sdk.html#session-api)
+- `journeyType` can be `business_loan`, `personal_loan` or `credit_line`
 
-A list of all possible entity types can be found [Appendix](/middleware/appendix.html#list-of-entity-types)
+A list of all possible activities (`eventType`) can be found [Appendix](/middleware/appendix.html#list-of-custom-activities)
+
+A list of all possible entity types (`entityType`) can be found [Appendix](/middleware/appendix.html#list-of-entity-types)
 
 ## Webhook
 A webhook can be configured to receive events on different actions taken throughout the user journey.
@@ -824,7 +833,9 @@ We'll be sending JSON encoded body in the following payload format:
     "eventDescription": "",
     "eventType": "eligibility_calculated",
     "loanApplicationID": "",
-    "loggedAt": "2020-09-15 21:58:31"
+    "loggedAt": "2020-09-15 21:58:31",
+    "journeyType": "business_loan",
+    "source": ""
 }
 ```
 
@@ -836,8 +847,10 @@ We'll be sending JSON encoded body in the following payload format:
 :::warning IMPORTANT
 - `loanApplicationID` is available once the loan application is created, and will not be available for credit line specific activities.
 - `eventDescription` is always a **string**, in some cases you might get string encoded JSON as well. These specific cases are mentioned in [Appendix](/middleware/appendix.html#list-of-user-activities) along with activities.
+- `source` indicates the **last source** passed in [Generate Token API](/middleware/sourcing-rest-api.html#generate-token) or [Session API](/middleware/web-sdk.html#session-api)
+- `journeyType` can be `business_loan`, `personal_loan` or `credit_line`
 :::
 
-A list of all possible activities can be found [Appendix](/middleware/appendix.html#list-of-user-activities)
+A list of all possible activities (`eventType`) can be found [Appendix](/middleware/appendix.html#list-of-custom-activities)
 
-A list of all possible entity types with descriptions can be found [Appendix](/middleware/appendix.html#list-of-entity-types)
+A list of all possible entity types (`entityType`) can be found [Appendix](/middleware/appendix.html#list-of-entity-types)
