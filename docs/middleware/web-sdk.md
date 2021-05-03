@@ -109,10 +109,10 @@ Some events are given by the SDK when user exits the SDK , application completed
 | - | - |
 | APPLICATION_COMPLETED | Loan Application completed |
 | EXIT | User exits SDK |
-| PAYMENT_SUCCESSFULL | Credit Line withdraw successful |
+| PAYMENT_SUCCESSFULL | Credit Line withdraw successful. Transaction ID will also be passed in the callback.|
 | OTP_LIMIT_EXCEEDED | Too many incorrect OTP in Credit Line withdrawal |
 
-Above Events can be recieved in two ways
+Above Events can be recieved in three ways
 
 1. Listen to window postMessage via `target.addEventListener("message", (event) =>{});`
    Eg: Post Message
@@ -122,10 +122,31 @@ Above Events can be recieved in two ways
        "status":"EXIT"
    }
    ```
+:::warning NOTE
+- In case of `PAYMENT_SUCCESSFULL` event :-
+
+```json
+   {
+       "type":"finbox-lending",
+       "status":"EXIT",
+       "txnID":"<Transaction ID>"
+   }
+```
+:::
+
 2. The events are also passed through the configured redirect URL.
    Eg: Redirect
    `https://your-redirect.url/?status=EXIT`
+:::warning NOTE
+- In case of `PAYMENT_SUCCESSFULL` event :-
+`https://your-redirect.url/?status=EXIT&txnID=<Transaction ID>`
+:::
 
+3. In case the SDK is used in a Android WebView. A [Javascript Interface](https://developer.android.com/guide/webapps/webview#UsingJavaScript) can be used to get the events.
+- Interface Name: `FinboxWebViewInterface`
+- Callback Function: `finboxCallBack`. Recieves two parameter
+    - `status`
+    - `txnID` in case of event `PAYMENT_SUCCESSFULL` 
 
 ## Customizations
 
