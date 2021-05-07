@@ -110,47 +110,24 @@ Request headers `x-api-key` with API Key as value and `server-hash` with Server 
 On fetching information successfully, the response would be of the following format with **200 HTTP code**:
 ```json
 {
-    "entity_id": "uuid4_for_entity",
-    "progress": [
-        {
-            "status": "completed",
-            "message": null,
-            "statement_id": "uuid4_for_statement",
-            "source": "pdf"
-        }
-    ],
-    "accounts": [
-        {
-            "months": [
-                "2018-11",
-                "2018-12",
-                "2019-01"
-            ],
-            "statements": [
-                "uuid4_for_statement"
-            ],
-            "account_id": "uuid4_for_account",
-            "ifsc": null,
-            "micr": null,
-            "account_number": "Account Number Extracted",
-            "account_category": "individual",
-            "bank": "axis"
-        }
-    ],
-    "fraud": {
-        "fraudulent_statements": [
-            "uuid4_for_statement"
-        ],
-        "fraud_type": [
-            {
-                "statement_id": "uuid4_for_statement",
-                "fraud_type": "some_fraud_type",
-                "account_id": "uuid4_for_account",
-                "fraud_category": "some_fraud_category",
-                "transaction_hash": null
-            }
-        ]
-    }
+    "bank_name": "sbi",
+    "statement_id": "9bebcf4b-0dca-43ce-8eb0-8456da7aa8da",
+    "entity_id": "fd872f56-5eeb-4db4-80f2-c2b846a1c69a",
+    "identity": {
+        "account_number": "00000099999999999",
+        "name": "MR. SHELDON PATEL",
+        "address": "H NO 123 BLOCK A RANDOM COLONY KORAMANGALA BENGALURU",
+        "account_category": "individual",
+        "credit_limit": 0,
+        "account_id": "ffb9f492-7ed9-4930-b2bf-b083bffe50b1"
+    },
+    "date_range": {
+        "from_date": "2019-12-25",
+        "to_date": "2020-03-26"
+    },
+    "is_fraud": false,
+    "fraud_type": null,
+    "status": 1
 }
 ```
 The response has the following fields:
@@ -166,6 +143,7 @@ The response has the following fields:
     | micr | string | MICR code of bank account |
     | account_category | string | account category, can be `individual` or `corporate` |
     | account_number | string | account number |
+    | credit_limit   | Integer |  limit up to which a company can withdraw from the working capital limit sanctioned |
 
 - `progress` (read more in [Progress Field](/bank-connect/rest-api.html#progress-field) section)
 - `fraud` (read more in [Fraud Field](/bank-connect/rest-api.html#fraud-field) section)
@@ -184,53 +162,46 @@ Request headers `x-api-key` with API Key as value and `server-hash` with Server 
 On fetching information successfully, the response would be of the following format with **200 HTTP code**:
 ```json
 {
-    "entity_id": "uuid4_for_entity",
+    "entity_id": "fd872f56-5eeb-4db4-80f2-c2b846a1c69a",
     "progress": [
         {
+            "statement_id": "9bebcf4b-0dca-43ce-8eb0-8456da7aa8da",
             "status": "completed",
             "message": null,
-            "statement_id": "uuid4_for_statement",
             "source": "pdf"
         }
     ],
     "accounts": [
         {
-            "months": [
-                "2018-11",
-                "2018-12",
-                "2019-01"
-            ],
-            "statements": [
-                "uuid4_for_statement"
-            ],
-            "account_id": "uuid4_for_account",
-            "ifsc": null,
-            "micr": null,
+            "account_number": "00000099999999999",
+            "bank": "sbi",
+            "account_id": "ffb9f492-7ed9-4930-b2bf-b083bffe50b1",
+            "micr": "110000000",
             "account_category": "individual",
-            "account_number": "Account Number Extracted",
-            "bank": "axis"
+            "statements": [
+                "9bebcf4b-0dca-43ce-8eb0-8456da7aa8da"
+            ],
+            "ifsc": "SBIN0000000",
+            "months": [
+                "2019-12",
+                "2020-01",
+                "2020-02",
+                "2020-03"
+            ]
         }
     ],
     "fraud": {
-        "fraudulent_statements": [
-            "uuid4_for_statement"
-        ],
-        "fraud_type": [
-            {
-                "statement_id": "uuid4_for_statement",
-                "fraud_type": "some_fraud_type",
-                "account_id": "uuid4_for_account",
-                "fraud_category": "some_fraud_category",
-                "transaction_hash": null
-            }
-        ]
+        "fraudulent_statements": [],
+        "fraud_type": []
     },
     "identity": [
         {
-            "address": "Extracted Address",
-            "account_number": "Extracted Account Number",
-            "account_id": "uuid4_for_account",
-            "name": "Extracted Name"
+            "name": "MR. SHELDON PATEL",
+            "account_category": "individual",
+            "credit_limit": 0,
+            "account_number": "00000099999999999",
+            "address": "H NO 123 BLOCK A RANDOM COLONY KORAMANGALA BENGALURU",
+            "account_id": "ffb9f492-7ed9-4930-b2bf-b083bffe50b1"
         }
     ]
 }
