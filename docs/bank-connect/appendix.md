@@ -101,6 +101,7 @@ The list below indicates the possible value for `transaction_channel` field:
 | bank_charge | Debit done by the bank for some service or tax like GST or SMS service |
 | auto_debit_payment_bounce | Debit bank charge because of auto-debit payment bounce |
 | auto_debit_payment | Debits like NACH or ECS |
+| self_transfer | Fund transfers within own accounts  |
 | Others | Others |
 
 ## Description
