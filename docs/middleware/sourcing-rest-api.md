@@ -572,6 +572,7 @@ GET **`base_url`/v1/creditline/transactions?customerID=`someCustomerID`**
                 "gst": 18,
                 "disbursalAmount": 1171.68,
                 "createdAt": "2020-02-12 13:02:12",
+                "disbursalUTR": "",
                 "emis": [
                     {
                         "amount": 1200,
@@ -619,6 +620,7 @@ Response fields are explained below:
 | disbursalAmount | Float | Indicates the final amount that will be disbursed |
 | emiCalculationMethod | String | Can be `flat_rate` or `reducing_balance` |
 | createdAt | String | Transaction creation time in `YYYY-MM-DD HH:MM:SS` format |
+| disbursalUTR | String | UTR number of disbursal made by lender |
 
 objects in `emis` contain:
 | Field | Type | Description |
