@@ -615,7 +615,7 @@ Response fields are explained below:
 | amount | Float | Transaction amount |
 | interest | Float | Annual Interest Percentage user is paying for this transaction |
 | subventionAmount | Float | Subvention amount on this transaction |
-| Processing Fee | Float | Processing Fee on this transaction |
+| processingFee | Float | Processing Fee on this transaction |
 | gst | Float | Indicates GST in percentage |
 | disbursalAmount | Float | Indicates the final amount that will be disbursed |
 | emiCalculationMethod | String | Can be `flat_rate` or `reducing_balance` |
