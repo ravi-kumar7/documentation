@@ -110,24 +110,48 @@ Request headers `x-api-key` with API Key as value and `server-hash` with Server 
 On fetching information successfully, the response would be of the following format with **200 HTTP code**:
 ```json
 {
-    "bank_name": "sbi",
-    "statement_id": "9bebcf4b-0dca-43ce-8eb0-8456da7aa8da",
-    "entity_id": "fd872f56-5eeb-4db4-80f2-c2b846a1c69a",
-    "identity": {
-        "account_number": "00000099999999999",
-        "name": "MR. SHELDON PATEL",
-        "address": "H NO 123 BLOCK A RANDOM COLONY KORAMANGALA BENGALURU",
-        "account_category": "individual",
-        "credit_limit": 0,
-        "account_id": "ffb9f492-7ed9-4930-b2bf-b083bffe50b1"
-    },
-    "date_range": {
-        "from_date": "2019-12-25",
-        "to_date": "2020-03-26"
-    },
-    "is_fraud": false,
-    "fraud_type": null,
-    "status": 1
+    "entity_id": "uuid4_for_entity",
+    "progress": [
+        {
+            "status": "completed",
+            "message": null,
+            "statement_id": "uuid4_for_statement",
+            "source": "pdf"
+        }
+    ],
+    "accounts": [
+        {
+            "months": [
+                "2018-11",
+                "2018-12",
+                "2019-01"
+            ],
+            "statements": [
+                "uuid4_for_statement"
+            ],
+            "account_id": "uuid4_for_account",
+            "ifsc": null,
+            "micr": null,
+            "account_number": "Account Number Extracted",
+            "account_category": "individual",
+            "credit_limit": "credit limit extracted ",
+            "bank": "axis"
+        }
+    ],
+    "fraud": {
+        "fraudulent_statements": [
+            "uuid4_for_statement"
+        ],
+        "fraud_type": [
+            {
+                "statement_id": "uuid4_for_statement",
+                "fraud_type": "some_fraud_type",
+                "account_id": "uuid4_for_account",
+                "fraud_category": "some_fraud_category",
+                "transaction_hash": null
+            }
+        ]
+    }
 }
 ```
 The response has the following fields:
@@ -162,10 +186,10 @@ Request headers `x-api-key` with API Key as value and `server-hash` with Server 
 On fetching information successfully, the response would be of the following format with **200 HTTP code**:
 ```json
 {
-    "entity_id": "fd872f56-5eeb-4db4-80f2-c2b846a1c69a",
+    "entity_id": "uuid4_for_entity",
     "progress": [
         {
-            "statement_id": "9bebcf4b-0dca-43ce-8eb0-8456da7aa8da",
+            "statement_id": "uuid4_for_statement",
             "status": "completed",
             "message": null,
             "source": "pdf"
@@ -173,15 +197,15 @@ On fetching information successfully, the response would be of the following for
     ],
     "accounts": [
         {
-            "account_number": "00000099999999999",
+            "account_number": "Account Number Extracted",
             "bank": "sbi",
-            "account_id": "ffb9f492-7ed9-4930-b2bf-b083bffe50b1",
-            "micr": "110000000",
+            "account_id": "uuid4_for_account",
+            "micr": null,
             "account_category": "individual",
             "statements": [
-                "9bebcf4b-0dca-43ce-8eb0-8456da7aa8da"
+                "uuid4_for_statement"
             ],
-            "ifsc": "SBIN0000000",
+            "ifsc": null,
             "months": [
                 "2019-12",
                 "2020-01",
@@ -196,12 +220,12 @@ On fetching information successfully, the response would be of the following for
     },
     "identity": [
         {
-            "name": "MR. SHELDON PATEL",
+            "name": "Extracted Name",
             "account_category": "individual",
             "credit_limit": 0,
-            "account_number": "00000099999999999",
-            "address": "H NO 123 BLOCK A RANDOM COLONY KORAMANGALA BENGALURU",
-            "account_id": "ffb9f492-7ed9-4930-b2bf-b083bffe50b1"
+            "account_number": "Extracted Account Number",
+            "address": "Extracted Address",
+            "account_id": "uuid4_for_account",
         }
     ]
 }
