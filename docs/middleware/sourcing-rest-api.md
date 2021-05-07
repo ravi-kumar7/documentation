@@ -139,7 +139,7 @@ GET **`base_url`/v1/users?limit=`totalRecords`&page=`numPages`**
 
 
 ### Query Parameters
-Query parameters can be appended at end of the URL like `/?account_id=somevalue`
+Query parameters can be appended at end of the URL like `/?limit=20&page=1`
 
 | Parameter | Optional | Type | Description |
 | - | - | - | - |
@@ -220,7 +220,7 @@ GET **`base_url`/v1/loans?limit=`totalRecords`&page=`numPages`**
 
 
 ### Query Parameters
-Query parameters can be appended at end of the URL like `/?account_id=somevalue`
+Query parameters can be appended at end of the URL like `/?limit=20&page=1`
 
 | Parameter | Optional | Type | Description |
 | - | - | - | - |
