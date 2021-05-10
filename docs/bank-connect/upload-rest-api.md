@@ -174,7 +174,7 @@ All the above APIs give the response in the format below in case of successful f
         "name": "Name Extracted",
         "address": "Address extracted",
         "account_category": "individual",
-        "credit_limit": "credit limit extracted",
+        "credit_limit": 0,
         "account_id": "uuid4_for_account"
     },
     "date_range": {

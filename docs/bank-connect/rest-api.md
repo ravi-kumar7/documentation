@@ -134,7 +134,7 @@ On fetching information successfully, the response would be of the following for
             "micr": null,
             "account_number": "Account Number Extracted",
             "account_category": "individual",
-            "credit_limit": "credit limit extracted ",
+            "credit_limit": 0,
             "bank": "axis"
         }
     ],
@@ -215,8 +215,18 @@ On fetching information successfully, the response would be of the following for
         }
     ],
     "fraud": {
-        "fraudulent_statements": [],
-        "fraud_type": []
+        "fraudulent_statements": [
+            "uuid4_for_statement"
+        ],
+        "fraud_type": [
+            {
+                "statement_id": "uuid4_for_statement",
+                "fraud_type": "some_fraud_type",
+                "account_id": "uuid4_for_account",
+                "fraud_category": "some_fraud_category",
+                "transaction_hash": null
+            }
+        ]
     },
     "identity": [
         {
