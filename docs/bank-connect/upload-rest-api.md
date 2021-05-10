@@ -166,21 +166,22 @@ All the above APIs give the response in the format below in case of successful f
 
 ```json
 {
-    "bank_name": "axis",
+    "bank_name": "sbi",
     "statement_id": "uuid4_for_statement",
     "entity_id": "uuid4_for_entity",
+    "identity": {
+        "account_number": "Account Number Extracted",
+        "name": "Name Extracted",
+        "address": "Address extracted",
+        "account_category": "individual",
+        "credit_limit": 0,
+        "account_id": "uuid4_for_account"
+    },
     "date_range": {
-        "from_date": "2018-11-18",
-        "to_date": "2019-01-18"
+        "from_date": "2019-12-25",
+        "to_date": "2020-03-26"
     },
     "is_fraud": false,
-    "identity": {
-        "account_id": "uuid4_for_account",
-        "account_number": "Account Number Extracted",
-        "address": "Address extracted",
-        "name": "Name Extracted",
-        "account_category": "individual"
-    },
     "fraud_type": null,
     "status": 1
 }
@@ -200,6 +201,7 @@ The identity information returned in the response can be used to verify the cust
 | account_id | string | unique identifier for account |
 | account_number | string | bank account number |
 | account_category | string | account category, can be `individual` or `corporate` |
+| credit_limit   | Integer |  limit up to which a company can withdraw from the working capital limit sanctioned |
 | address | string | address of the bank account holder |
 | name | string | name of the bank account holder |
 | status | integer | contains the status code for API, should be 1 for success. Other possible values are listed in Bad Requests(/bank-connect/upload-rest-api.html#bad-request-cases) section |

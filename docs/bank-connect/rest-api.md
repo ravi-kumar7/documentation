@@ -134,6 +134,7 @@ On fetching information successfully, the response would be of the following for
             "micr": null,
             "account_number": "Account Number Extracted",
             "account_category": "individual",
+            "credit_limit": 0,
             "bank": "axis"
         }
     ],
@@ -166,6 +167,7 @@ The response has the following fields:
     | micr | string | MICR code of bank account |
     | account_category | string | account category, can be `individual` or `corporate` |
     | account_number | string | account number |
+    | credit_limit   | Integer |  limit up to which a company can withdraw from the working capital limit sanctioned |
 
 - `progress` (read more in [Progress Field](/bank-connect/rest-api.html#progress-field) section)
 - `fraud` (read more in [Fraud Field](/bank-connect/rest-api.html#fraud-field) section)
@@ -187,28 +189,29 @@ On fetching information successfully, the response would be of the following for
     "entity_id": "uuid4_for_entity",
     "progress": [
         {
+            "statement_id": "uuid4_for_statement",
             "status": "completed",
             "message": null,
-            "statement_id": "uuid4_for_statement",
             "source": "pdf"
         }
     ],
     "accounts": [
         {
-            "months": [
-                "2018-11",
-                "2018-12",
-                "2019-01"
-            ],
+            "account_number": "Account Number Extracted",
+            "bank": "sbi",
+            "account_id": "uuid4_for_account",
+            "micr": null,
+            "account_category": "individual",
             "statements": [
                 "uuid4_for_statement"
             ],
-            "account_id": "uuid4_for_account",
             "ifsc": null,
-            "micr": null,
-            "account_category": "individual",
-            "account_number": "Account Number Extracted",
-            "bank": "axis"
+            "months": [
+                "2019-12",
+                "2020-01",
+                "2020-02",
+                "2020-03"
+            ]
         }
     ],
     "fraud": {
@@ -227,10 +230,12 @@ On fetching information successfully, the response would be of the following for
     },
     "identity": [
         {
-            "address": "Extracted Address",
+            "name": "Extracted Name",
+            "account_category": "individual",
+            "credit_limit": 0,
             "account_number": "Extracted Account Number",
+            "address": "Extracted Address",
             "account_id": "uuid4_for_account",
-            "name": "Extracted Name"
         }
     ]
 }
