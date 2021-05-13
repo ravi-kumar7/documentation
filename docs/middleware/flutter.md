@@ -175,6 +175,7 @@ CoreApp.initDi(this)
 </template>
 
 <template v-slot:java>
+
 ```java
 CoreApp.Companion.initDi(context);
 ```
