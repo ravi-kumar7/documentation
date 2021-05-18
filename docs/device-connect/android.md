@@ -52,10 +52,10 @@ Now add the dependency to module level `build.gradle.kts` or `build.gradle` file
 implementation("in.finbox:mobileriskmanager:<DC_SDK_VERSION>:parent-release@aar") {
     isTransitive = true
 }
-implementation("in.finbox:common:<COMMON_SDK_VERSION>:release@aar") {
+implementation("in.finbox:common:<COMMON_SDK_VERSION>:<COMMON_FLAVOR>-release@aar") {
     isTransitive = true
 }
-implementation("in.finbox:logger:<LOGGER_SDK_VERSION>:release@aar") {
+implementation("in.finbox:logger:<LOGGER_SDK_VERSION>:parent-release@aar") {
     isTransitive = true
 }
 ```
@@ -67,10 +67,10 @@ implementation("in.finbox:logger:<LOGGER_SDK_VERSION>:release@aar") {
 implementation('in.finbox:mobileriskmanager:<DC_SDK_VERSION>:parent-release@aar') {
     transitive = true
 }
-implementation ('in.finbox:common:<COMMON_SDK_VERSION>:release@aar') {
+implementation ('in.finbox:common:<COMMON_SDK_VERSION>:<COMMON_FLAVOR>-release@aar') {
     transitive = true
 }
-implementation ('in.finbox:logger:<LOGGER_SDK_VERSION>:release@aar') {
+implementation ('in.finbox:logger:<LOGGER_SDK_VERSION>:parent-release@aar') {
     transitive = true
 }
 ```

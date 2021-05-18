@@ -134,6 +134,7 @@ On fetching information successfully, the response would be of the following for
             "micr": null,
             "account_number": "Account Number Extracted",
             "account_category": "individual",
+            "credit_limit": 0,
             "bank": "axis"
         }
     ],
@@ -166,6 +167,7 @@ The response has the following fields:
     | micr | string | MICR code of bank account |
     | account_category | string | account category, can be `individual` or `corporate` |
     | account_number | string | account number |
+    | credit_limit   | Integer |  limit up to which a company can withdraw from the working capital limit sanctioned |
 
 - `progress` (read more in [Progress Field](/bank-connect/rest-api.html#progress-field) section)
 - `fraud` (read more in [Fraud Field](/bank-connect/rest-api.html#fraud-field) section)
@@ -187,28 +189,29 @@ On fetching information successfully, the response would be of the following for
     "entity_id": "uuid4_for_entity",
     "progress": [
         {
+            "statement_id": "uuid4_for_statement",
             "status": "completed",
             "message": null,
-            "statement_id": "uuid4_for_statement",
             "source": "pdf"
         }
     ],
     "accounts": [
         {
-            "months": [
-                "2018-11",
-                "2018-12",
-                "2019-01"
-            ],
+            "account_number": "Account Number Extracted",
+            "bank": "sbi",
+            "account_id": "uuid4_for_account",
+            "micr": null,
+            "account_category": "individual",
             "statements": [
                 "uuid4_for_statement"
             ],
-            "account_id": "uuid4_for_account",
             "ifsc": null,
-            "micr": null,
-            "account_category": "individual",
-            "account_number": "Account Number Extracted",
-            "bank": "axis"
+            "months": [
+                "2019-12",
+                "2020-01",
+                "2020-02",
+                "2020-03"
+            ]
         }
     ],
     "fraud": {
@@ -227,10 +230,12 @@ On fetching information successfully, the response would be of the following for
     },
     "identity": [
         {
-            "address": "Extracted Address",
+            "name": "Extracted Name",
+            "account_category": "individual",
+            "credit_limit": 0,
             "account_number": "Extracted Account Number",
+            "address": "Extracted Address",
             "account_id": "uuid4_for_account",
-            "name": "Extracted Name"
         }
     ]
 }
@@ -848,6 +853,9 @@ Different fields that hold this monthly analysis are as follows:
 - `amt_credit_card_bill_debit` : Total Amount Debited for Credit Card Bill
 - `amt_investment` : Total Amount of Investments
 - `amt_loan_credits`: Total Amount of Loan Credits
+- `amt_business_credit`: Total amount of Income credit transactions where amount is greater than 500
+- `amt_self_transfer_credit`: Total amount of self-transfer credit
+- `amt_self_transfer_debit`: Total amount of self-transfer debit
 - `avg_bal`: Average Balance* ( = Average of EOD Balances after filling in missing daily Balances) 
 - `avg_credit_transaction_size`: Average Credit Transaction Size
 - `avg_debit_transaction_size`: Average Debit Transaction Size
@@ -885,6 +893,9 @@ Different fields that hold this monthly analysis are as follows:
 - `cnt_investment` : Number of Investment
 - `cnt_credit_card_bill_debit` : Number of Credit Card Bill Transactions
 - `cnt_loan_credits`: Number of Loan Credit Transactions
+- `cnt_business_credit`: Number of Income credit transaction where amount is greater than 500
+- `cnt_self_transfer_debit`: Number of self-transfer debit
+- `cnt_self_transfer_credit`: Number of self-transfer credit
 - `max_bal`: Maximum Balance
 - `max_eod_balance`: Maximum EOD Balance
 - `median_balance`: Median Balance* ( = Median of EOD Balances after filling in missing daily Balances) 
@@ -1226,12 +1237,12 @@ The list value of `predictors` key will be empty if any one of the statements ha
 | expense\_4                        | Float or null   | Total amount of debit in month 4 excluding outward cheque bounce                                                                                                    |
 | expense\_5                        | Float or null   | Total amount of debit in month 5 excluding outward cheque bounce                                                                                                    |
 | avg\_monthly\_expense             | Float           | Average of total amount of expense to total months                                                                                                                  |
-| income\_0                         | Float or null   | Total amount of credit in month 0 excluding amount of inward cheque bounce, auto debit payment bounce, international transaction arbitrage credits and loan credits |
-| income\_1                         | Float or null   | Total amount of credit in month 1 excluding amount of inward cheque bounce, auto debit payment bounce, international transaction arbitrage credits and loan credits |
-| income\_2                         | Float or null   | Total amount of credit in month 2 excluding amount of inward cheque bounce, auto debit payment bounce, international transaction arbitrage credits and loan credits |
-| income\_3                         | Float or null   | Total amount of credit in month 3 excluding amount of inward cheque bounce, auto debit payment bounce, international transaction arbitrage credits and loan credits |
-| income\_4                         | Float or null   | Total amount of credit in month 4 excluding amount of inward cheque bounce, auto debit payment bounce, international transaction arbitrage credits and loan credits |
-| income\_5                         | Float or null   | Total amount of credit in month 5 excluding amount of inward cheque bounce, auto debit payment bounce, international transaction arbitrage credits and loan credits |
+| income\_0                         | Float or null   | Total amount of credit in month 0 excluding amount of inward cheque bounce, auto debit payment bounce, international transaction arbitrage credits and loan credits and self-transfers |
+| income\_1                         | Float or null   | Total amount of credit in month 1 excluding amount of inward cheque bounce, auto debit payment bounce, international transaction arbitrage credits and loan credits and self-transfers |
+| income\_2                         | Float or null   | Total amount of credit in month 2 excluding amount of inward cheque bounce, auto debit payment bounce, international transaction arbitrage credits and loan credits and self-transfers |
+| income\_3                         | Float or null   | Total amount of credit in month 3 excluding amount of inward cheque bounce, auto debit payment bounce, international transaction arbitrage credits and loan credits and self-transfers |
+| income\_4                         | Float or null   | Total amount of credit in month 4 excluding amount of inward cheque bounce, auto debit payment bounce, international transaction arbitrage credits and loan credits and self-transfers |
+| income\_5                         | Float or null   | Total amount of credit in month 5 excluding amount of inward cheque bounce, auto debit payment bounce, international transaction arbitrage credits and loan credits and self-transfers |
 | avg\_monthly\_income              | Float           | Average of total income to total months                                                                                                                             |
 | avg\_expense\_to\_income\_perc    | Float           | Percentage of total expenses to total income                                                                                                                        |
 | expense\_to\_income\_ratio\_0     | Float or null   | Ratio of expense to income for month 0                                                                                                                              |

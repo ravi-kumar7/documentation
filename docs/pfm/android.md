@@ -66,10 +66,10 @@ implementation("in.finbox:mobileriskmanager:<DC_SDK_VERSION>:parent-release@aar"
 implementation("in.finbox.personalfinancemanager:core:<PFM_SDK_VERSION>:release@aar") {
     isTransitive = true
 }
-implementation("in.finbox:common:<COMMON_SDK_VERSION>:release@aar") {
+implementation("in.finbox:common:<COMMON_SDK_VERSION>:<COMMON_FLAVOR>-release@aar") {
     isTransitive = true
 }
-implementation("in.finbox:logger:<LOGGER_SDK_VERSION>:release@aar") {
+implementation("in.finbox:logger:<LOGGER_SDK_VERSION>:parent-release@aar") {
     isTransitive = true
 }
 ```
@@ -84,10 +84,10 @@ implementation('in.finbox:mobileriskmanager:<DC_SDK_VERSION>:parent-release@aar'
 implementation('in.finbox.personalfinancemanager:core:<PFM_SDK_VERSION>:release@aar') {
         transitive = true
 }
-implementation ('in.finbox:common:<COMMON_SDK_VERSION>:release@aar') {
+implementation ('in.finbox:common:<COMMON_SDK_VERSION>:<COMMON_FLAVOR>-release@aar') {
     transitive = true
 }
-implementation ('in.finbox:logger:<LOGGER_SDK_VERSION>:release@aar') {
+implementation ('in.finbox:logger:<LOGGER_SDK_VERSION>:parent-release@aar') {
     transitive = true
 }
 ```
