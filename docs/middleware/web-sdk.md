@@ -153,21 +153,12 @@ Above Events can be recieved in three ways
 You can share the following JSON (or its subset) with FinBox team to customize the look and feel of the lending journey:
 ```json
 {
-    "primaryTextColor": "#3E3E3E",
-    "secondaryTextColor": "#24CA7A",
-    "secondaryTextBackground": "#d8f9ee",
-    "primaryButtonBackground": "#24CA7A",
-    "primaryButtonTextColor": "white",
-    "secondaryButtonBackground": "white",
-    "secondaryButtonTextColor": "#3E3E3E",
-    "secondaryButtonBorderColor": "#24CA7A",
-    "buttonDisabledBackground": "#d4d4d4",
-    "buttonDisabledTextColor": "white",
-    "cardBackground": "#F4F8FC",
-    "warningCardBackground": "#FFF2DC",
-    "tileBackground": "#F3F3F3",
-    "errorColor": "#ff6d55",
-    "focusColor": "#24CA7A",
-    "focusBackground": "#d8f9ee"
-}
+    "primaryDark": "#515F7F",
+    "primaryMedium": "#6F7A94",
+    "primaryLight": "#B7C5CF",
+    "accentColor": "#0075FF",
+    "tileBackground": "#F4F8FC",
+    "errorColor": "#F44336bb",
+    "warningBackground": "#FDF0EF",
+  }
 ```
