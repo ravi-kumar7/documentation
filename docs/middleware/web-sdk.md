@@ -159,6 +159,6 @@ You can share the following JSON (or its subset) with FinBox team to customize t
     "accentColor": "#0075FF",
     "tileBackground": "#F4F8FC",
     "errorColor": "#F44336bb",
-    "warningBackground": "#FDF0EF",
-  }
+    "warningBackground": "#FDF0EF"
+}
 ```
