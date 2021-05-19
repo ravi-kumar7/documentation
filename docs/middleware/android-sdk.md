@@ -139,6 +139,23 @@ Once all dependencies are added, SDK requires 3 inputs: `CUSTOMER_ID`, `USER_TOK
 `ENVIRONMENT` needs to be updated to `PROD` when migrating application to production.
 :::
 
+In the `onCreate` of your application class initialize dependencies required by the SDK:
+
+<CodeSwitcher :languages="{kotlin:'Kotlin',java:'Java'}">
+<template v-slot:kotlin>
+
+```kotlin
+CoreApp.initDi(this)
+```
+</template>
+<template v-slot:java>
+
+```java
+CoreApp.Companion.initDi(this)
+```
+</template>
+</CodeSwitcher>
+
 Now that all required parameters are available, we can start the SDK flow as follows:
 
 <CodeSwitcher :languages="{kotlin:'Kotlin',java:'Java'}">
