@@ -156,3 +156,30 @@ In case of Error, error_type of  ```MUXXX``` implies an error in Manual PDF Uplo
 | Netbanking Login Error | NB003 | ```{"reason:"failure_message",linkID:"<USER_ID_PASSED>","error_type":"NB003"}```|
 | Captcha Error | NB004 | ```{"reason:"Invalid Captcha",linkID:"<USER_ID_PASSED>","error_type":"NB004"}```|
 | Security Error | NB005 | ```{"reason:"failure_message",linkID:"<USER_ID_PASSED>","error_type":"NB005"}```|
+
+
+## Events
+Android and JS events are passed which can used for purposes such as analytics.The object passed is of the following format.
+```json
+{
+    "status":"<EVENT_NAME>",
+    "data":"EXTRA_INFO"
+}
+```
+
+| Event | status | data|
+| - |  - | - |
+|Bank selected|bank_selected|`<BANK NAME>`|
+|Manual upload screen opened|open_manual_upload|-|
+|Clicked back in Manual Upload|manual_upload_back|-|
+|Clicked back in Netbanking|net_banking_back|-|
+
+
+Above Events can be recieved in two ways
+
+1. Listen to window postMessage via `target.addEventListener("message", (event) =>{});`
+   
+
+2. In case the SDK is used in a Android WebView. A [Javascript Interface](https://developer.android.com/guide/webapps/webview#UsingJavaScript) can be used to get the events.
+- Interface Name: `BankConnectAndroid`
+- Callback Function: `onResult`.
