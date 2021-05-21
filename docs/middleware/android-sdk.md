@@ -139,6 +139,23 @@ Once all dependencies are added, SDK requires 3 inputs: `CUSTOMER_ID`, `USER_TOK
 `ENVIRONMENT` needs to be updated to `PROD` when migrating application to production.
 :::
 
+In the `onCreate` of your application class initialize dependencies required by the SDK:
+
+<CodeSwitcher :languages="{kotlin:'Kotlin',java:'Java'}">
+<template v-slot:kotlin>
+
+```kotlin
+CoreApp.initDi(this)
+```
+</template>
+<template v-slot:java>
+
+```java
+CoreApp.Companion.initDi(this)
+```
+</template>
+</CodeSwitcher>
+
 Now that all required parameters are available, we can start the SDK flow as follows:
 
 <CodeSwitcher :languages="{kotlin:'Kotlin',java:'Java'}">
@@ -260,13 +277,22 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) 
 <template v-slot:java>
 
 ```java
+import static in.finbox.lending.core.constants.ConstantKt.FINBOX_JOURNEY_RESULT;
+import static in.finbox.lending.core.constants.ConstantKt.FINBOX_RESULT_CODE_ERROR;
+import static in.finbox.lending.core.constants.ConstantKt.FINBOX_RESULT_CODE_SUCCESS;
+
+
 @Override
-private void onActivityResult(int requestCode, int resultCode, Intent data) {
+protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
-    if (requestCode == REQUEST_CODE_ONBOARDING) {
-        if (resultCode == FinBoxLendingConstants.RESULT_EXIT) {
-            // callback when user exits the flow, intent data has information holding users state
-            FinBoxJourneyResult result = data.getExtras().getParcelable(FinBoxLendingConstants.FINBOX_JOURNEY_RESULT); // contains status of the journey
+    if (data != null && data.getExtras() != null) {
+        FinBoxJourneyResult result = data.getExtras().getParcelable(FINBOX_JOURNEY_RESULT);
+        if (result.getResultCode().equals(FINBOX_RESULT_CODE_SUCCESS)) {
+
+        } else if (result.getResultCode().equals(FINBOX_RESULT_CODE_ERROR)) {
+
+        } else if (result.getResultCode().equals(FINBOX_RESULT_CODE_ERROR)) {
+
         }
     }
 }
