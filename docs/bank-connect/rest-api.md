@@ -844,6 +844,9 @@ Different fields that hold this monthly analysis are as follows:
 - `amt_inward_cheque_bounce_credit`: Total Amount Credited through Inward Cheque Bounce
 - `amt_outward_cheque_bounce_insuff_funds_debit`: Total Amount Debited through Outward Cheque Bounce Insufficient Funds
 - `amt_inward_cheque_bounce_insuff_funds_credit`: Total Amount Credited through Inward Cheque Bounce Insufficient Funds
+- `amt_ach_bounce_charge`: Total Amount Debited through Ach Bounce Charge
+- `amt_chq_bounce_charge`: Total Amount Debited through Ach Bounce Charge
+- `amt_bounce_charge`: Total Amount Debited through Ach Bounce Charge and Cheque bounce charge
 - `amt_payment_gateway_purchase_debit`: Total Amount of Payment Gateway Purchase
 - `amt_refund_credit`: Total Amount of Refund
 - `amt_upi_credit`: Total Amount Credited through UPI
@@ -883,6 +886,9 @@ Different fields that hold this monthly analysis are as follows:
 - `cnt_inward_cheque_bounce_credit`: Number of Credit Transactions through Inward Cheque Bounce
 - `cnt_inward_cheque_bounce_insuff_funds_credit`: Number of Credit Transactions through Inward Cheque Bounce Insufficient Funds
 - `cnt_outward_cheque_bounce_insuff_funds_debit`: Number of Debit Transactions through Outward Cheque Bounce Insufficient Funds
+- `cnt_ach_bounce_charge`: Number of Debit Transactions through Ach Bounce Charge
+- `cnt_chq_bounce_charge`: Number of Debit Transactions through Chq Bounce Charge
+- `cnt_bounce_charge`: Number of Debit Transactions through Ach Bounce Charge and Cheque bounce charge
 - `cnt_payment_gateway_purchase_debit`: Number of Payment Gateway Purchase
 - `cnt_emi_debit`: Number of Loan EMI Debit Transactions
 - `cnt_emi_bounce_credit`: Number of Credit Transactions through EMI Bounce
