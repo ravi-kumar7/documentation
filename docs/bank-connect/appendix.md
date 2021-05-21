@@ -109,16 +109,16 @@ The list below indicates the possible values for `description` field of the tran
 
 | `description` | Description |
 | - | - |
-| penalty_charge | penalty charged by bank. Transaction channel is `bank_charge` |
-| ach_bounce_charge | ACH bounce charge. Transaction channel is `bank_charge` |
-| chq_bounce_charge | Cheque bounce charge. Transaction channel is `bank_charge` |
-| lender_transaction | lender transaction |
+| penalty_charge | penalty charged by bank due to insufficient balance or non-maintenance charges. Transaction channel is `bank_charge` |
+| ach_bounce_charge | charges imposed by banks and service providers when you send an ACH transfer that gets returned by the receivers bank. Transaction channel is `bank_charge` |
+| chq_bounce_charge | charges imposed by banks and service providers when cheque is not processed by bank. Transaction channel is `bank_charge` |
+| lender_transaction | transaction between lender and borrower |
 | credit_card_bill | credit card bill transaction. Transaction channel is `bill_payment` |
 | telco_bill | telecommunications bill transaction. Transaction channel is `bill_payment` |
 | electric_bill | electric bill transaction. Transaction channel is `bill_payment` |
 | deposit_by_machine | indicates cash deposit was made on an ATM/Kiosk. Transaction channel is `cash_deposit` |
-| chq_bounce_insuff_funds | check bounced due to insufficient funds. Transaction channel is `inward_cheque_bounce` or `outward_cheque_bounce` |
-| neft_return | NEFT return. Transaction channel is `refund` |
+| chq_bounce_insuff_funds | cheque bounced due to insufficient funds. Transaction channel is `inward_cheque_bounce` or `outward_cheque_bounce` |
+| neft_return | return transaction if money is not credited to beneficiary by means of neft . Transaction channel is `refund` |
 
 ## Merchant Category
 The list below indicates the possible value for `merchant_category` field:
