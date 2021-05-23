@@ -549,7 +549,7 @@ Response fields are explained below:
 ## Credit Line Transactions
 Returns credit line transactions for a given user using the `customerID`
 
-::: tip Endpoint
+:::tip Endpoint
 GET **`base_url`/v1/creditline/transactions?customerID=`someCustomerID`**
 :::
 
@@ -632,6 +632,12 @@ objects in `emis` contain:
 | dueDate | String | Due date in `YYYY-MM-DD` format | 
 | paidDate | String | Payment completion in `YYYY-MM-DD` format, if not paid is blank string `""` |
 | totalPayable | Float | Total payable amount for the EMI |
+
+:::warning filter basis of partnerTxnID
+You can also pass an optional field, `partnerTxnID` as query string parameter to filter out transactions basis of specified `partnerTxnID`, as follows:
+
+`base_url`/v1/creditline/transactions?customerID=`someCustomerID`&partnerTxnID=`AZ123ABC`
+:::
 
 :::warning charges
 Different meanings of charges are as follows:
