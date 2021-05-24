@@ -170,7 +170,7 @@ Android and JS events are passed which can used for purposes such as analytics.T
 | Event | status | data|
 | - |  - | - |
 |Bank selected|bank_selected|`<BANK NAME>`|
-|Manual upload screen opened|open_manual_upload|-|
+|Manual upload screen opened|manual|-|
 |Clicked back in Manual Upload|manual_upload_back|-|
 |Clicked back in Netbanking|net_banking_back|-|
 
