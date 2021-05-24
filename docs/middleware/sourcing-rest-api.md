@@ -770,6 +770,32 @@ On successful updating the status, API will give a response with 200 HTTP status
 | amount should be greater than 0 | 400 |
 | sum of invoice amounts cannot exceed transaction amount | 400 |
 
+## Refund Credit Line Transaction
+Marks a Credit Line Transaction in `DISBURSED` state for refund
+
+::: tip Endpoint
+POST **`base_url`/v1/creditline/txn/markForRefund**
+:::
+
+**Request Format**
+```json
+{
+    "txnID": "0e882dbd-3768-4c68-8986-57b68d0669d3"
+}
+```
+| Field | Type | Description |
+| - | - | - |
+| txnID | String | Unique FinBox Transaction ID, this can be fetched using the [Credit Line Transactions API](/middleware/sourcing-rest-api.html#credit-line-transactions) |
+
+On successful updating the status, API will give a response with 200 HTTP status code.
+
+### Error Cases
+| Case | HTTP Code |
+| - | - |
+| Missing txnID | 400 |
+| txnID not found | 404 |
+| only transaction with status DISBURSED can be updated | 403 |
+
 ## User Activity History
 Returns the activity 
 ::: tip Endpoint
