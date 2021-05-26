@@ -94,6 +94,10 @@ module.exports = {
               path: '/bank-connect/react.html'
             },
             {
+              title: 'Cordova SDK',
+              path: '/bank-connect/cordova.html'
+            },
+            {
               title: 'JavaScript Client SDK',
               path: '/bank-connect/javascript-client.html'
             },
