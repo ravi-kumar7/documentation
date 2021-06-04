@@ -21,6 +21,9 @@ FinBox Lending SDK is a drop-in module that can add a digital lending journey to
    ```
 3. Add the Lending SDK dependency in the app `build.gradle` file
 
+::: tip Note
+`LENDING_SDK_VERSION` & `PLATFORM_NAME` will be shared to you over mail
+
    ```groovy
     implementation ("in.finbox.lending:onboarding:<LENDING_SDK_VERSION>:release@aar") {
         exclude group: 'in.finbox', module: 'mobileriskmanager'
@@ -76,16 +79,16 @@ FinBox Lending SDK is a drop-in module that can add a digital lending journey to
     implementation ("in.finbox.lending:core:<LENDING_SDK_VERSION>:release@aar") {
         transitive = true
     }
-    implementation('in.finbox:mobileriskmanager:<RISK_SDK_VERSION>:parent-release@aar') {
+    implementation('in.finbox:mobileriskmanager:3.0:parent-release@aar') {
         transitive = true
     }
-    implementation("in.finbox:common:0.4.2:release@aar") {
+    implementation('in.finbox:common:0.5.0:<PLATFORM_NAME>-release@aar') {
         transitive = true
     }
-    implementation("in.finbox:logger:0.4.0:release@aar") {
+    implementation("in.finbox:logger:0.5.0:parent-release@aar") {
         transitive = true
     }
-    implementation('in.finbox:bankconnect:1.5.39:release@aar') {
+    implementation('in.finbox:bankconnect:1.5.43:release@aar') {
         transitive = true
     }
    ```
@@ -202,7 +205,7 @@ startActivityForResult(
 
 For credit line journey, include the following dependency in the app `build.gradle` file:
 ```groovy
-implementation("in.finbox.lending:creditline-uat:<LENDING_SDK_VERSION>:uat@aar") {
+implementation("in.finbox.lending:creditline:<LENDING_SDK_VERSION>:uat@aar") {
     exclude group: 'in.finbox.lending', module: 'core'
     transitive = true
 }
