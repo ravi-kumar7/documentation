@@ -62,7 +62,7 @@ Use `redirect_url` to open up the BankConnect SDK. This URL can be used embedded
 The flow for this involves following steps:
 - Create a session using [Session API](/bank-connect/javascript-client.html#session-api)
 - Get the URL received from above API and open it in a new tab
-- On success / failure, Client SDK will redirect to the specified redirect URL with parameters as follows:
+- On success / exit, Client SDK will redirect to the specified redirect URL with parameters as follows:
   - Exit: `{url}?success=false`
   - Success: `{url}?success=true&entity_id=<some-entity-id>`
 
