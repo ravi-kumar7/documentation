@@ -31,6 +31,7 @@ The table below lists the supported banks with their corresponding identifier. T
 | esafbnk | ESAF Small Finance Bank |
 | federal | Federal Bank |
 | fincarebnk | Fincare Small Finance Bank |
+| fingrowth | Fingrowth Co-Operative Bank | 
 | gsmahanagar | GS Mahanagar Co-Op Bank |
 | hdfc | HDFC Bank |
 | hsbc | HSBC Bank |
