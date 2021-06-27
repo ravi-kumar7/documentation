@@ -62,7 +62,7 @@ Use `redirect_url` to open up the BankConnect SDK. This URL can be used embedded
 The flow for this involves following steps:
 - Create a session using [Session API](/bank-connect/javascript-client.html#session-api)
 - Get the URL received from above API and open it in a new tab
-- On success / failure, Client SDK will redirect to the specified redirect URL with parameters as follows:
+- On success / exit, Client SDK will redirect to the specified redirect URL with parameters as follows:
   - Exit: `{url}?success=false`
   - Success: `{url}?success=true&entity_id=<some-entity-id>`
 
@@ -80,7 +80,7 @@ The flow for this involves the following steps:
 - You'll [receive callbacks](/bank-connect/javascript-client.html#receive-callbacks) by implementing an event listener. Based on the event you can close / hide the inline frame.
 
 ## Receive callbacks
-To receive callbacks in `<iframe>` workflow, you need to implement an event listener. It can be implemented as follows:
+1. To receive callbacks in `<iframe>` workflow, you need to implement an event listener. It can be implemented as follows:
 
 ```html
 <!DOCTYPE html>
@@ -96,10 +96,21 @@ To receive callbacks in `<iframe>` workflow, you need to implement an event list
 </html>
 ```
 
+2. To receive callbacks in `Android WebView`, a [Javascript Interface](https://developer.android.com/guide/webapps/webview#UsingJavaScript) can be used to get the events.
+- Interface Name: `BankConnectAndroid`
+- Callback Functions
+    - All Events: `onResult`
+    - Error: `onError`
+    - Exit: `onExit`
+    - Success: `onSuccess`
+    - Extra Info: `onInfo`
+
 ### Event Object
 The `event` object received by the listener can be one of the following:
 #### Success
 This is received when user completes the upload process.
+
+1. Iframe
 ```js
 {
   type: "finbox-bankconnect",
@@ -110,8 +121,21 @@ This is received when user completes the upload process.
   }
 }
 ```
+
+2. WebView
+
+`BankConnectAndroid.onSuccess`
+```js
+  {
+      "entityId": "1d1f-sfdrf-17hf-asda", //Unique ID that will used to fetch statement data
+      "linkId": "<USER_ID_PASSED>" //Link ID is the identifier that was passed while initializing the SDK
+  }
+```
+
 #### Exit
 This is received when user exits the SDK.
+
+1. Iframe
 ```js
 {
   type: "finbox-bankconnect",
@@ -122,9 +146,21 @@ This is received when user exits the SDK.
   }
 }
 ```
+
+2. WebView
+`BankConnectAndroid.onExit`
+
+```js
+{
+    "linkId": "<USER_ID_PASSED>", //Link ID is the identifier that was passed while initializing the SDK
+    "message": "<exit message>"
+}
+```
+
 #### Error
 This is received whenever any error occurs in the user flow.
 
+1. Iframe
 ```js
 {
   type: "finbox-bankconnect",
@@ -134,6 +170,17 @@ This is received whenever any error occurs in the user flow.
       "linkId": "<USER_ID_PASSED>", //Link ID is the identifier that was passed while initializing the SDK
       "error_type": "MUXXX",//MUXXX for Manual Upload and NBXXX for Net Banking
   }
+}
+```
+
+2. WebView
+`BankConnectAndroid.onError`
+
+```js
+{
+  "reason": "Reason for failure",
+  "linkId": "<USER_ID_PASSED>", //Link ID is the identifier that was passed while initializing the SDK
+  "error_type": "MUXXX",//MUXXX for Manual Upload and NBXXX for Net Banking
 }
 ```
 
@@ -158,28 +205,36 @@ In case of Error, error_type of  ```MUXXX``` implies an error in Manual PDF Uplo
 | Security Error | NB005 | ```{"reason:"failure_message",linkID:"<USER_ID_PASSED>","error_type":"NB005"}```|
 
 
-## Events
+#### Info Events
 Android and JS events are passed which can used for purposes such as analytics.The object passed is of the following format.
-```json
+
+1. Iframe
+```js
 {
-    "status":"<EVENT_NAME>",
-    "data":"EXTRA_INFO"
+  type: "finbox-bankconnect",
+  status: "info",
+  payload: {
+      "linkId": "<USER_ID_PASSED>", //Link ID is the identifier that was passed while initializing the SDK
+      "event_name": "bank_selected", // Name of the EVENT
+      "message": "HDFC BANK",//extra data passed in certain events
+  }
 }
 ```
 
-| Event | status | data|
+2. WebView
+`BankConnectAndroid.onInfo`
+
+```js
+{
+  "linkId": "<USER_ID_PASSED>", //Link ID is the identifier that was passed while initializing the SDK
+  "event_name": "manual_upload_back", // Name of the EVENT
+  "message": "",//extra data passed in certain events
+}
+```
+
+| Event | event_name | message|
 | - |  - | - |
 |Bank selected|bank_selected|`<BANK NAME>`|
 |Manual upload screen opened|manual|-|
 |Clicked back in Manual Upload|manual_upload_back|-|
 |Clicked back in Netbanking|net_banking_back|-|
-
-
-Above Events can be recieved in two ways
-
-1. Listen to window postMessage via `target.addEventListener("message", (event) =>{});`
-   
-
-2. In case the SDK is used in a Android WebView. A [Javascript Interface](https://developer.android.com/guide/webapps/webview#UsingJavaScript) can be used to get the events.
-- Interface Name: `BankConnectAndroid`
-- Callback Function: `onResult`.

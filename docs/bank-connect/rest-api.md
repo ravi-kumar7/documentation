@@ -776,6 +776,67 @@ Here, the `progress` field holds an array of statement wise progress status, whi
 | category | String | contains the expense category, it is a mix of [merchant category](/bank-connect/appendix.html#merchant-category) and [transaction channel](/bank-connect/appendix.html#transaction-channel) |
 | percentage | Integer | percentage for the expense category rounded to nearest integer with some of all percentage equal to 100 |
 
+## Top Debit Credit <Badge text="New" />
+Get top debits and credits for a given entity.
+
+::: tip Endpoint
+GET **{{$page.frontmatter.base_url}}/{{$page.frontmatter.version}}/entity/`<entity_id>`/top_credits_debits/**
+:::
+
+### Authentication
+Request headers `x-api-key` with API Key as value and `server-hash` with Server Hash as value must be present in request.
+
+### Response
+On fetching information successfully, the response would be of the following format with **200 HTTP code**:
+```json
+{
+    "entity_id": "uuid4_for_entity",
+    "progress": [
+        {
+            "statement_id":"uuid4_for_statement",
+            "status": "completed",
+            "message": null,
+            "source": "pdf"
+        }
+    ],
+    "top_5_credit_debit": {
+        "top_5_credit": {
+            "Jan-21": {
+               "SOME LONG TRANSACTION NOTE": 26365.0,
+               "SOME LONG TRANSACTION NOTE": 3778.0,
+               "SOME LONG TRANSACTION NOTE": 2900.0,
+               "SOME LONG TRANSACTION NOTE": 2000.0,
+               "SOME LONG TRANSACTION NOTE": 400.0
+            },
+            "Feb-21": {
+                "SOME LONG TRANSACTION NOTE": 25500.0,
+                "SOME LONG TRANSACTION NOTE": 3718.0,
+                "SOME LONG TRANSACTION NOTE": 2957.0,
+                "SOME LONG TRANSACTION NOTE": 2931.0,
+                "SOME LONG TRANSACTION NOTE": 1000.0
+            }
+            },
+        "top_5_debit": {
+            "Jan-21": {
+                "SOME LONG TRANSACTION NOTE": 45635.0,
+               "SOME LONG TRANSACTION NOTE": 33378.0,
+               "SOME LONG TRANSACTION NOTE": 2400.0,
+               "SOME LONG TRANSACTION NOTE": 2000.0,
+               "SOME LONG TRANSACTION NOTE": 400.0
+            },
+            "Feb-21": {
+               "SOME LONG TRANSACTION NOTE": 26365.0,
+               "SOME LONG TRANSACTION NOTE": 3778.0,
+               "SOME LONG TRANSACTION NOTE": 2900.0,
+               "SOME LONG TRANSACTION NOTE": 2000.0,
+               "SOME LONG TRANSACTION NOTE": 400.0
+            }
+        }
+    }
+}
+```
+Here, the `progress` field holds an array of statement wise progress status, while the `top_5_credit_debit` field holds top credits and top debits values (transaction notes with corresponding amount) for a given month.
+
 ## Monthly Analysis <Badge text="New" />
 Get monthly analysis for a given entity.
 
