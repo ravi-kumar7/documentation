@@ -134,7 +134,7 @@ proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pr
 ## Start SDK flow
 
 Once all dependencies are added, SDK requires 3 inputs: `CUSTOMER_ID`, `USER_TOKEN` and `CLIENT_API_KEY`.
-`ENVIRONMENT` is an optional field. Default value of environment is UAT.
+`ENVIRONMENT` is an optional field. Default value of environment is `PROD`.
 
 ::: tip Note
 `USER_TOKEN` needs to be generated against a `CUSTOMER_ID` on backend before starting the SDK. Refer [here](/middleware/sourcing-rest-api.html#generate-token)
@@ -356,7 +356,7 @@ class SampleMessService: FirebaseMessagingService(), FinBoxLendingMessagingImpl 
         //.... Client app level logic
         if (remoteMessage.data.isNotEmpty()) {
             if (FinBoxLendingMessagingService.forwardToFinBoxLendingSDK(remoteMessage.data)) {
-                FinBoxLendingMessagingService.buildLendingNotification(applicationContext, remoteMessage.data)
+                FinBoxLendingMessagingService.buildLendingNotification(applicationContext, remoteMessage)
             } else {
                 // Show client app notification
             }
@@ -412,7 +412,7 @@ class SampleMessService extends FirebaseMessagingService implements FinBoxLendin
         //.... Client app level logic
         if(!remoteMessage.getData().isEmpty()) {
             if (FinBoxLendingMessagingService.INSTANCE.forwardToFinBoxLendingSDK(remoteMessage.getData())) {
-                FinBoxLendingMessagingService.INSTANCE.buildLendingNotification(getApplicationContext(), remoteMessage.getData());
+                FinBoxLendingMessagingService.INSTANCE.buildLendingNotification(getApplicationContext(), remoteMessage);
             } else {
                 // Show app notification
             }
